@@ -14,7 +14,7 @@ function App() {
   const liffId = "1657832968-ZeGx3gbz";
 
   useEffect(() => {
-    //axios 호출시 인터셉트----
+    //axios 호출시 인터셉트--
     axios.interceptors.request.use(
       function (config) {
         if (config.url !== "/api/search/tags") {
