@@ -18,7 +18,7 @@ function App() {
     axios.interceptors.request.use(
       function (config) {
         if (config.url !== "/api/search/tags") {
-          // '/api/search/tags' API 요청이 아닌 경우만 로딩 상태 변경
+          // '/api/search/tags' API 요청이 아닌 경우만 로딩 상태 변경 00
           setLoading(true);
         }
         return config;
