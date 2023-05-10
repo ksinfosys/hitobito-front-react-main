@@ -257,7 +257,7 @@ function MessageReceptionBusiness() {
                   </select>
                   <div className="search block">
                     <input
-                      className="form-input form-control cu-search w-72"
+                      className="form-input form-control cu-search w-72 pr-12"
                       type="text"
                       placeholder="検索ワードを入力してください。"
                       onChange={(e) => setSearchValue(e.target.value)}
