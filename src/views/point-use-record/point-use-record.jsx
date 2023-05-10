@@ -141,11 +141,11 @@ const PointUseRecord = () => {
   }, [])
 
   const defaultLogobg = {
-    background: `url(https://${window.location.hostname}/api/files/logo/default_logo)no-repeat 50% center / cover`
+    background: `url(https://hitobito-net.com/api/files/logo/default_logo)no-repeat 50% center / cover`
   }
 
   const logobg = {
-    background: `url(https://${window.location.hostname}/api/files/logo/${userInfoV.cpUserName}_logo)no-repeat 50% center / cover`
+    background: `url(https://hitobito-net.com/api/files/logo/${userInfoV.cpUserName}_logo)no-repeat 50% center / cover`
   }
 
   return (
