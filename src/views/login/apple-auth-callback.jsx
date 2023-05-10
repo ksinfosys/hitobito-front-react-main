@@ -12,7 +12,7 @@ const AppleAuthCallback = () => {
 	const navigate = useNavigate();
 	const kakao_code = location.search.split('=')[1];
 
-	// 에러메시지 케이스 : S
+	// 에러메시지 케이스 : S  
 	const [oAuthTokenFail, setOAuthTokenFail] = useState(false);
 	const [socialIdFail, setSocialIdFail] = useState(false);
 	const [socialFail, setSocialFail] = useState(false);
