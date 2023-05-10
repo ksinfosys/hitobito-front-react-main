@@ -6,7 +6,7 @@ import LineIcon from "@/assets/images/line-icon.svg";
 const CustomLineLogin = ({ setSnsBody }) => {
   const [displayName, setDisplayName] = useState('');
   const [liffData, setLiffData] = useState()
-  const { error, isLoggedIn, isReady, liff } = useLiff();``
+  const { error, isLoggedIn, isReady, liff } = useLiff();
 
   useEffect(() => {
     if (!isLoggedIn) return;
