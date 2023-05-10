@@ -1041,12 +1041,12 @@ function SignUpBusiness() {
                                     </div>
                                 </div> */}
                 <div className="mt-5">
-                  <button className="btn btn-outline-primary flex items-center w-full">
-                    <a href="https://hitobito-net.com/api/files/company_sample.pdf" className="flex items-center" target='_blank'>
-                      サンプル·ダウンロード
+                  <a href="https://hitobito-net.com/api/files/company_sample.pdf" className="flex items-center" target='_blank'>
+                    <button className="btn btn-outline-primary flex items-center w-full">
                       <img src={Download} alt="" />
-                    </a>
-                  </button>
+                      サンプル·ダウンロード
+                    </button>
+                  </a>
                 </div>
               </div>
 
