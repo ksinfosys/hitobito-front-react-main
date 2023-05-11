@@ -36,7 +36,7 @@ const PointUseRecord = () => {
   const [result, setResult] = useState({});
 
   // 로고 있는지 없는지
-  const [logoFlag, setLogoFlag] = useState(false);
+  const [logoFlag, setLogoFlag] = useState(true);
   const [fetchLogo, setFetchLogo] = useState()
 
 
@@ -76,6 +76,10 @@ const PointUseRecord = () => {
       });
   };
 
+  useEffect(() => {
+    console.log("logoflog?",logoFlag)
+  }, [logoFlag])
+
   const getLogo = () => {
     axios
       .get(`/api/files/logo/${userInfoV.cpUserName}_logo`, {
@@ -94,7 +98,7 @@ const PointUseRecord = () => {
             // 로고가 없어 200 상태 이외의것이 나올때
             setLogoFlag(false);
           })()
-      });
+        });
   };
 
   const getBusinessUser = () => {

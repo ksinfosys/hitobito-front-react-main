@@ -1677,7 +1677,7 @@ tr.table-content:hover td {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-.find-wrap .term-wrap .term-div::-webkit-scrollbar {
+.find-wrap::-webkit-scrollbar {
   -webkit-appearance: none;
           appearance: none;
 }

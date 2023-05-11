@@ -256,7 +256,7 @@ function MessageSentBusiness() {
                             <div className="flex space-between">
                                 <div className="flex items-center gap-2">
                                     <select
-                                        className="form-select w-32"
+                                        className="form-select w-32 lg:w-36 shrink-0"
                                         onChange={(e) => setSearchCategory(e.target.value)}
                                     >
                                         <option value="20601">受信者</option>
@@ -622,7 +622,7 @@ function MessageSentBusiness() {
                                     }
                                     return;
                                 }}
-                            >임시저장</button>
+                            >内容保存</button>
                             <button
                                 type="button"
                                 className="btn btn-sm btn-business w-140"
