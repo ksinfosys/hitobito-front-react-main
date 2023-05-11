@@ -241,7 +241,7 @@ function MessageBoxBusiness() {
                                     <div className="search block">
                                         <input
                                             type="text"
-                                            className="form-input form-control cu-search w-72"
+                                            className="form-input form-control cu-search w-72 pr-12"
                                             placeholder="検索ワードを入力してください。"
                                             onChange={(e) => setSearchKeyword(e.target.value)}
                                             onKeyDown={(e) => {

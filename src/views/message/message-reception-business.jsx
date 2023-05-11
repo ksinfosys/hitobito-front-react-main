@@ -249,7 +249,7 @@ function MessageReceptionBusiness() {
               <div className="flex space-between">
                 <div className="flex items-center gap-2">
                   <select
-                    className="form-select w-32"
+                    className="form-select w-32 lg:w-36 shrink-0"
                     onChange={(e) => setSearchCategory(e.target.value)}
                   >
                     <option value="20601">送信者</option>
@@ -257,7 +257,7 @@ function MessageReceptionBusiness() {
                   </select>
                   <div className="search block">
                     <input
-                      className="form-input form-control cu-search w-72"
+                      className="form-input form-control cu-search w-72 pr-12"
                       type="text"
                       placeholder="検索ワードを入力してください。"
                       onChange={(e) => setSearchValue(e.target.value)}
