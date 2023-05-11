@@ -66,7 +66,7 @@ const UserLogin = () => {
 		}, 
 		apple: {
 			client_id: 'hitobito.ksinfo.com',
-			redirect_url: `https://${window.location.hostname}`,
+			redirect_url: `https://hitobito-net.com`,
 		}
 	})
 
@@ -172,7 +172,7 @@ const UserLogin = () => {
 	AppleID.auth.init({
 		clientId : 'hitobito.ksinfo.com',
 		scope : 'email',
-		redirectURI: 'https://hitobito.codeidea.io',
+		redirectURI: 'https://hitobito-net.com',
 		state : toString(array[0]),
 		usePopup: false
 	});
