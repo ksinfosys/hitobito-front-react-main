@@ -430,7 +430,7 @@ function SignUpBusiness() {
     }
 
     // 담당자 연락처 (숫자 이외의 것테스트)
-    const phonePattern = /^\d{2,3}-\d{3,4}-\d{4}$/; // 13자리 숫자와 하이픈으로 구성된 정규식
+    const phonePattern = /^\d{2,3}-\d{3,4}-\d{4}$/; // 13자리 숫자와 하이픈으로 구성된 정규식 
     if (!phonePattern.test(data.phoneNumber)) {
       setRegPhone(true);
       console.log(phoneNumberRef)
@@ -571,7 +571,7 @@ function SignUpBusiness() {
     // empCount,
     // salesAmount,
   ])
-  // 회원가
+  // 회원가입
   const handleSignUp = async () => {
     const updateData = {
       cpLoginId: cpLoginId,
@@ -646,6 +646,7 @@ function SignUpBusiness() {
     let newValue = e.target.value;
     newValue = newValue.replace(/-/g, ''); // 입력값에서 하이픈 제거
     const matchPattern = /^(\d{0,3})(\d{0,4})(\d{0,4})/; // 숫자 패턴 정규식
+
     const matches = newValue.match(matchPattern); // 입력값에서 숫자 패턴 찾기
 
     if (matches) {
@@ -662,6 +663,8 @@ function SignUpBusiness() {
     }
 
   };
+
+
 
 
   // 방 진입 시 데이터 가져오기
