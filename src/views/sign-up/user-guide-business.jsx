@@ -339,13 +339,21 @@ function UserGuideBusiness() {
               </p>
             </div>
           </div>
+
           <div className="flex items-center justify-center">
-            <button type="button" className="btn btn-pending w-80 mt-10 h-48">確認</button>
+            <button type="button" className="btn btn-pending w-80 mt-10 h-48" onClick={handleClick}>
+              確認</button>
           </div>
+
         </div>
       </div>
     </>
   );
 }
+
+function handleClick(e){
+  window.location.replace("/business")
+}
+
 
 export default UserGuideBusiness;

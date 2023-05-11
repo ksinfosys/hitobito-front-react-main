@@ -40,14 +40,14 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
     const ageTag = ageList.find(obj => obj.codeName === ageName);
     const ageCodeStart = parseInt(Math.min(...ageTagFilter));
     const ageCodeEnd = parseInt(Math.max(...ageTagFilter));
-    const ageCode = parseInt(ageTag.code);
+    const ageCode = parseInt(ageTag?.code);
     const ageActive = ageCodeStart <= ageCode && ageCode <= ageCodeEnd;
     // 学歴 조건
     const educationTagFilter = selectTags.filter((tag) => tag.codeType === '52').map(tag => tag.code).sort((a, b) => a.code - b.code);
     const education = educationList.find(obj => obj.codeName === educationName);
     const educationCodeStart = parseInt(Math.min(...educationTagFilter));
     const educationCodeEnd = parseInt(Math.max(...educationTagFilter));
-    const educationCode = parseInt(education.code);
+    const educationCode = parseInt(education?.code);
     const educationActive = educationCodeStart <= educationCode && educationCode <= educationCodeEnd;
     // 居住地 조건
     const residentialAreaNameTagFilter = selectTags.filter((tag) => tag.codeType === '58').map(tag => tag.codeName);
@@ -70,7 +70,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
     const hopeIncome = hopeIncomeList.find(obj => obj.codeName === hopeIncomeName);
     const hopeIncomeCodeStart = parseInt(Math.min(...hopeIncomeNameTagFilter));
     const hopeIncomeCodeEnd = parseInt(Math.max(...hopeIncomeNameTagFilter));
-    const hopeIncomeCode = parseInt(hopeIncome.code);
+    const hopeIncomeCode = parseInt(hopeIncome?.code);
     const hopeIncomeActive = hopeIncomeCodeStart <= hopeIncomeCode && hopeIncomeCode <= hopeIncomeCodeEnd;
     // 재직회사 업종 조건
     const businessTypeNameTagFilter = selectTags.filter((tag) => tag.codeType === '56').map(tag => tag.codeName);
