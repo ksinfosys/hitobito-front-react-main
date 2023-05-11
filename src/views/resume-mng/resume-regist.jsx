@@ -18,7 +18,7 @@ import { mobileStatus } from "../../stores/mobile-status";
 import { Lucide, Modal, ModalBody, ModalFooter, ModalHeader } from "@/base-components";
 import DepthSplit from "../../../util/DepthSplit";
 import ModalEvent from "./ModalEvent";
-import { result } from 'lodash';
+
 
 const ResumeRegist = () => {
   // const [selectPop, setselectPop] = useState(false);
