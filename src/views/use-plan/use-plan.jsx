@@ -154,7 +154,11 @@ const UsePlan = () => {
               setSessionId(response.data.result.sessionId);
               localStorage.setItem("sessionId", response.data.result.sessionId);
               setIsPmntPending(true);
-              window.open(response.data.result.sessionUrl, "_blank");
+              if (isPaymentMethod === "20901") {
+                window.location.href = response.data.result.sessionUrl;
+              } else {
+                window.open(response.data.result.sessionUrl, "_blank");
+              }
               setBusinessPlan({
                 isOpen: 1,
                 sessionId: response.data.result.sessionId
@@ -350,12 +354,12 @@ const UsePlan = () => {
                   <button
                     type="button"
                     className={
-                      planList.planCode === "P0002" || planList?.paymentMethod === "20906"
+                      planList.planCode === "P0001" || planList?.planEndDate === "21001231"
                         ? "btn btn--grey-pending mt-5 w-full"
                         : "btn btn-pending mt-5 w-full"
                     }
-                    onClick={planList?.paymentMethod !== "20906" ? () => {
-                      setIsPlanCode("P0002");
+                    onClick={planList?.planEndDate !== "21001231" ? () => {
+                      setIsPlanCode("P0001");
                       setPlanPaymentModal(true);
                     } : null}
                   >
@@ -414,11 +418,11 @@ const UsePlan = () => {
                   <button
                     type="button"
                     className={
-                      planList.planCode === "P0002" || planList?.paymentMethod === "20906"
+                      planList.planCode === "P0002" || planList?.planEndDate === "21001231"
                         ? "btn btn--grey-pending mt-5 w-full"
                         : "btn btn-pending mt-5 w-full"
                     }
-                    onClick={planList?.paymentMethod !== "20906" ? () => {
+                    onClick={planList?.planEndDate !== "21001231" ? () => {
                       setIsPlanCode("P0002");
                       setPlanPaymentModal(true);
                     } : null}
