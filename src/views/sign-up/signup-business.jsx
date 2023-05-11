@@ -339,7 +339,7 @@ function SignUpBusiness() {
   const handleChangeLogo = async (e, index) => {
     const file = e.target.files
     if (file.length !== 1) {
-      alert('1개 이미지만 업로드 해주시기 바랍니다.')
+      alert('1つの画像だけアップロードしてください。')
       return false
     }
 
@@ -594,7 +594,7 @@ function SignUpBusiness() {
     await formData.append('request', blob);
 
     rsFileImage.length > 0 ? rsFileImage.map(item => formData.append('file', item)) : formData.append('file', new File([], 'photo.jpg'))
-    rsLogoFilePhoto.length > 0 ? formData.append('logoFile', rsLogoFilePhoto) : formData.append('logoFile', new File([], 'photo.jpg'))
+    rsLogoFilePhoto.length == 0 ? formData.append('logoFile', new File([], 'photo.jpg')) : formData.append('logoFile', rsLogoFilePhoto)
     rsDocumentFile.length > 0 ? rsDocumentFile.map(item => formData.append('documentfile', item)) : formData.append('documentfile', new File([], 'document.pdf'))
 
     //서버로 보내기
@@ -1045,12 +1045,12 @@ function SignUpBusiness() {
                                     </div>
                                 </div> */}
                 <div className="mt-5">
-                  <button className="btn btn-outline-primary flex items-center w-full">
-                    <a href="https://hitobito-net.com/api/files/company_sample.pdf" className="flex items-center" target='_blank'>
-                      サンプル·ダウンロード
+                  <a href="https://hitobito-net.com/api/files/company_sample.pdf" className="flex items-center" target='_blank'>
+                    <button className="btn btn-outline-primary flex items-center w-full">
                       <img src={Download} alt="" />
-                    </a>
-                  </button>
+                      サンプル·ダウンロード
+                    </button>
+                  </a>
                 </div>
               </div>
 
