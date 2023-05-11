@@ -2199,10 +2199,6 @@ tr.table-content {
             height: 88px;
             overflow: auto;
             box-sizing: border-box;
-
-            &::-webkit-scrollbar {
-                appearance: none;
-            }
         }
 
     }
