@@ -753,6 +753,7 @@ function SignUpBusiness() {
                   </select>
                 </div>
                 <div className="flex flex-col gap-2">
+                  <div className="form-tit">本社<span>*</span></div>
                   <select name="" id="" className="form-select" onChange={(e) => setHeadOfficeRegion(e.target.value)}>
                     {/* <option value="">本社所在地</option> */}
                     <option value="">選択してください。</option>

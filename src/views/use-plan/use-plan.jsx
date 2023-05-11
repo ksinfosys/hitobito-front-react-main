@@ -349,11 +349,15 @@ const UsePlan = () => {
                 ) : (
                   <button
                     type="button"
-                    className="btn btn-pending mt-5 w-full"
-                    onClick={() => {
-                      setIsPlanCode("P0001");
+                    className={
+                      planList.planCode === "P0002" || planList?.paymentMethod === "20906"
+                        ? "btn btn--grey-pending mt-5 w-full"
+                        : "btn btn-pending mt-5 w-full"
+                    }
+                    onClick={planList?.paymentMethod !== "20906" ? () => {
+                      setIsPlanCode("P0002");
                       setPlanPaymentModal(true);
-                    }}
+                    } : null}
                   >
                     変更する
                   </button>
@@ -409,11 +413,15 @@ const UsePlan = () => {
                 ) : (
                   <button
                     type="button"
-                    className="btn btn-pending mt-5 w-full"
-                    onClick={() => {
+                    className={
+                      planList.planCode === "P0002" || planList?.paymentMethod === "20906"
+                        ? "btn btn--grey-pending mt-5 w-full"
+                        : "btn btn-pending mt-5 w-full"
+                    }
+                    onClick={planList?.paymentMethod !== "20906" ? () => {
                       setIsPlanCode("P0002");
                       setPlanPaymentModal(true);
-                    }}
+                    } : null}
                   >
                     変更する
                   </button>
