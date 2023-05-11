@@ -1081,6 +1081,14 @@ tr.table-content:hover td {
   word-break: break-all;
   color: #333333;
 }
+.attach-cont-file{
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+  max-width: 200px;
+  word-break: break-all;
+  color: #333333;
+}
 .resume-regist-cont .attach-cont-btn {
   height: auto;
 }
