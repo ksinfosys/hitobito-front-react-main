@@ -879,7 +879,7 @@ function SignUpBusiness() {
                         // console.log(file)
                         return (
                           <div className="attach-cont-item flex items-center space-between" key={index}>
-                            <div className="attach-cont-tit">
+                            <div className="attach-cont-file">
                               {file.name}
                             </div>
                             <button className="attach-cont-btn" onClick={() => handleFileDelete(index)}>
