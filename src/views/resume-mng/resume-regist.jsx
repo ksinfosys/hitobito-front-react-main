@@ -390,9 +390,9 @@ const ResumeRegist = () => {
       setMobileStatus({
         ...mobile,
         api: res.data.result,
-        businessDepthMenu: DepthSplit(mobile, 'businessDepthMenu', api.businessTypeList, 'businessType'),
-        jobDepthMenu: DepthSplit(mobile, 'jobDepthMenu', api.jobTypeList, 'jobType'),
-        hopeCareerDepthMenu: DepthSplit(mobile, 'hopeCareerDepthMenu', api.hopeCareerList, 'hopeCareer'),
+        businessDepthMenu: DepthSplit(mobile, 'businessDepthMenu', res.data.result.businessTypeList, 'businessType'),
+        jobDepthMenu: DepthSplit(mobile, 'jobDepthMenu', res.data.result.jobTypeList, 'jobType'),
+        hopeCareerDepthMenu: DepthSplit(mobile, 'hopeCareerDepthMenu', res.data.result.hopeCareerList, 'hopeCareer'),
       })
     })
   }, [])
