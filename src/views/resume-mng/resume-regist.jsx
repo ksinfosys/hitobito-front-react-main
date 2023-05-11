@@ -19,6 +19,7 @@ import { Lucide, Modal, ModalBody, ModalFooter, ModalHeader } from "@/base-compo
 import DepthSplit from "../../../util/DepthSplit";
 import ModalEvent from "./ModalEvent";
 
+
 const ResumeRegist = () => {
   // const [selectPop, setselectPop] = useState(false);
   const [mobile, setMobileStatus] = useRecoilState(mobileStatus);
@@ -389,9 +390,9 @@ const ResumeRegist = () => {
       setMobileStatus({
         ...mobile,
         api: res.data.result,
-        businessDepthMenu: DepthSplit(mobile, 'businessDepthMenu', 'businessTypeList', 'businessType'),
-        jobDepthMenu: DepthSplit(mobile, 'jobDepthMenu', 'jobTypeList', 'jobType'),
-        hopeCareerDepthMenu: DepthSplit(mobile, 'hopeCareerDepthMenu', 'hopeCareerList', 'hopeCareer'),
+        businessDepthMenu: DepthSplit(mobile, 'businessDepthMenu', api.businessTypeList, 'businessType'),
+        jobDepthMenu: DepthSplit(mobile, 'jobDepthMenu', api.jobTypeList, 'jobType'),
+        hopeCareerDepthMenu: DepthSplit(mobile, 'hopeCareerDepthMenu', api.hopeCareerList, 'hopeCareer'),
       })
     })
   }, [])
