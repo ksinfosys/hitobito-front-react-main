@@ -26,7 +26,8 @@ const Success = () => {
       .then(() => {
         setBusinessPlan({
           isOpen: 2,
-          sessionId: ''
+          sessionId: '',
+          isOpenWindow: BusinessPlan.isOpenWindow
         })
         window.location.replace("/use-plan");
       });
