@@ -39,7 +39,7 @@ const PointUseRecord = () => {
   const [logoFlag, setLogoFlag] = useState(true);
   const [fetchLogo, setFetchLogo] = useState()
 
-
+  let logoFlagCheck = 0;
 
   const getPointHistory = () => {
     axios
@@ -77,7 +77,7 @@ const PointUseRecord = () => {
   };
 
   useEffect(() => {
-    console.log("logoflog?",logoFlag)
+    console.log("useEfferct logoflog : ",logoFlag)
   }, [logoFlag])
 
   const getLogo = () => {
@@ -90,13 +90,16 @@ const PointUseRecord = () => {
         },
       })
       .then(response => {
+        console.log("response.statusText(gerLogo) : ",response.statusText)
         response.statusText === "200"
           ? (() => {
             setLogoFlag(true);
+            console.log("getlogo true!")
           })()
           : (() => {
             // 로고가 없어 200 상태 이외의것이 나올때
             setLogoFlag(false);
+            console.log("getlogo false!")
           })()
         });
   };
@@ -114,13 +117,20 @@ const PointUseRecord = () => {
         const {
           data: { result },
         } = response;
+        console.log("response.data.resultCode(getBusinessUser) : ",response.data.resultCode)
         response.data.resultCode === "200"
           ? (() => {
             // 회사 로고
+            console.log("result.logoFile(getBusinessUser) : ",result.logoFile)
             if (result.logoFile !== null) {
               getLogo();
-            }else{
+              logoFlagCheck++;
+              console.log("getBusinessUser true!")
+            }else if (result.logoFile === null && logoFlagCheck === 0){
               setLogoFlag(false);
+              console.log("getBusinessUser false!")
+            }else{
+              console.log("logoFilecheck error")
             }
           })()
           : console.log("fetching error:::", response);
