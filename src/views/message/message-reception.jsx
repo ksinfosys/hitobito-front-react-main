@@ -804,7 +804,7 @@ function MessageReception() {
                                     }
                                     return;
                                 }}
-                            >임시저장</button>
+                            >内容保存</button>
                             <button
                                 type="button"
                                 className="btn btn-sm btn-primary w-140"

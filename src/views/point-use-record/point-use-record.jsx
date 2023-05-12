@@ -76,27 +76,6 @@ const PointUseRecord = () => {
       });
   };
 
-  const getLogo = () => {
-    axios
-      .get(`/api/files/logo/${userInfoV.cpUserName}_logo`, {
-        withCredentials: true,
-        headers: {
-          accessToken: getCookie("accessToken"),
-          lastLoginTime: getCookie("lastLoginTime"),
-        },
-      })
-      .then(response => {
-        response.statusText === "200"
-          ? (() => {
-            setLogoFlag(true);
-          })()
-          : (() => {
-            // 로고가 없어 200 상태 이외의것이 나올때
-            setLogoFlag(false);
-          })()
-      });
-  };
-
   const getBusinessUser = () => {
     axios
       .get("/api/join/modify", {
@@ -114,7 +93,7 @@ const PointUseRecord = () => {
           ? (() => {
             // 회사 로고
             if (result.logoFile !== null) {
-              getLogo();
+              setLogoFlag(true);
             }else{
               setLogoFlag(false);
             }

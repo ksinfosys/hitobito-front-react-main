@@ -71,6 +71,8 @@ import {userInfo} from "../stores/user-info";
 import Resume from "../views/resume-mng/Resume";
 import Success from "../views/use-plan/Success";
 import Canceled from "../views/use-plan/Canceled";
+import PaymentSuccess from "../views/point/Success";
+import PaymentCanceled from "../views/point/Canceled";
 import AppleAuthCallback from "../views/login/apple-auth-callback";
 
 function Router() {
@@ -505,8 +507,8 @@ function Router() {
             {
               path: 'payment',
               children: [
-                {path: "success", element: <Success/>},
-                {path: "canceled", element: <Canceled/>},
+                {path: "success", element: <PaymentSuccess/>},
+                {path: "canceled", element: <PaymentCanceled/>},
               ]
             },
             //메세지함

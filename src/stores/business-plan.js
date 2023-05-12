@@ -8,6 +8,7 @@ const businessPlan = atom({
   default: {
     isOpen: 0,
     sessionId: '',
+    isOpenWindow: 0
   },
   effects_UNSTABLE: [ persistAtom ],
 });

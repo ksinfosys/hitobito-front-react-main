@@ -1112,7 +1112,7 @@ const CorpInfoMng = () => {
                       rsDocumentFile?.length > 0 && rsDocumentFile.map((file, index) => {
                         return (
                           <div className="attach-cont-item flex items-center space-between" key={index}>
-                            <div className="attach-cont-tit">
+                            <div className="attach-cont-file">
                               {file.name}
                             </div>
                             <button className="attach-cont-btn" onClick={() => handleFileDelete(index)}>
@@ -1660,7 +1660,7 @@ const CorpInfoMng = () => {
               className="btn btn-pending"
               onClick={() => {
                 setAuthCompleteFlag(false);
-                // window.location(reload)
+                window.location.replace("/business");
               }}
             >
               確認

@@ -622,7 +622,7 @@ function MessageSentBusiness() {
                                     }
                                     return;
                                 }}
-                            >임시저장</button>
+                            >内容保存</button>
                             <button
                                 type="button"
                                 className="btn btn-sm btn-business w-140"
