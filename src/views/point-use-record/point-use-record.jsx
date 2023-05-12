@@ -36,10 +36,10 @@ const PointUseRecord = () => {
   const [result, setResult] = useState({});
 
   // 로고 있는지 없는지
-  const [logoFlag, setLogoFlag] = useState(true);
+  const [logoFlag, setLogoFlag] = useState(false);
   const [fetchLogo, setFetchLogo] = useState()
 
-  let logoFlagCheck = 0;
+
 
   const getPointHistory = () => {
     axios
@@ -76,34 +76,6 @@ const PointUseRecord = () => {
       });
   };
 
-  useEffect(() => {
-    console.log("useEfferct logoflog : ",logoFlag)
-  }, [logoFlag])
-
-  const getLogo = () => {
-    axios
-      .get(`/api/files/logo/${userInfoV.cpUserName}_logo`, {
-        withCredentials: true,
-        headers: {
-          accessToken: getCookie("accessToken"),
-          lastLoginTime: getCookie("lastLoginTime"),
-        },
-      })
-      .then(response => {
-        console.log("response.statusText(gerLogo) : ",response.statusText)
-        response.statusText === "200"
-          ? (() => {
-            setLogoFlag(true);
-            console.log("getlogo true!")
-          })()
-          : (() => {
-            // 로고가 없어 200 상태 이외의것이 나올때
-            setLogoFlag(false);
-            console.log("getlogo false!")
-          })()
-        });
-  };
-
   const getBusinessUser = () => {
     axios
       .get("/api/join/modify", {
@@ -117,20 +89,13 @@ const PointUseRecord = () => {
         const {
           data: { result },
         } = response;
-        console.log("response.data.resultCode(getBusinessUser) : ",response.data.resultCode)
         response.data.resultCode === "200"
           ? (() => {
             // 회사 로고
-            console.log("result.logoFile(getBusinessUser) : ",result.logoFile)
             if (result.logoFile !== null) {
-              getLogo();
-              logoFlagCheck++;
-              console.log("getBusinessUser true!")
-            }else if (result.logoFile === null && logoFlagCheck === 0){
-              setLogoFlag(false);
-              console.log("getBusinessUser false!")
+              setLogoFlag(true);
             }else{
-              console.log("logoFilecheck error")
+              setLogoFlag(false);
             }
           })()
           : console.log("fetching error:::", response);
