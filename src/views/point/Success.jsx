@@ -21,7 +21,7 @@ const Success = () => {
         }
       )
       .then(() => {
-        window.location.replace("/point-detail-business");
+        window.close();
       });
   }, [])
 
