@@ -81,9 +81,6 @@ const UsePlan = () => {
   // 약관 동의 안할시 나오는 모달
   const [policyProcessFail, setPolicyProcessFail] = useState(false);
 
-  //결제 팝업
-  const [payModal, setPayModal] = useState();
-
   // ** checkout API
   const getCheckOut = (isplanCode, isPaymentMethod) => {
     // 무료 플랜으로 돌아가는 경우 req요소가 달라집니다.
@@ -155,14 +152,20 @@ const UsePlan = () => {
               localStorage.setItem("sessionId", response.data.result.sessionId);
               setIsPmntPending(true);
               if (isPaymentMethod === "20901") {
+                setBusinessPlan({
+                  isOpen: 1,
+                  sessionId: response.data.result.sessionId,
+                  isOpenWindow: 0
+                })
                 window.location.href = response.data.result.sessionUrl;
               } else {
+                setBusinessPlan({
+                  isOpen: 1,
+                  sessionId: response.data.result.sessionId,
+                  isOpenWindow: 1
+                })
                 window.open(response.data.result.sessionUrl, "_blank");
               }
-              setBusinessPlan({
-                isOpen: 1,
-                sessionId: response.data.result.sessionId
-              })
               // await openSessionURL(response.data.result.sessionUrl)
               break;
             case "608":
@@ -254,14 +257,24 @@ const UsePlan = () => {
   }, []);
 
   useEffect(() => {
-    if(businessPlan.isOpen === 2){
+    if(BusinessPlan.isOpen === 2){
       setBusinessPlan({
         isOpen: 0,
-        sessionId: ''
+        sessionId: '',
+        isOpenWindow: BusinessPlan.isOpenWindow
       })
-      window.location.reload();
-    }
-  },[businessPlan.isOpen])
+      if(BusinessPlan.isOpenWindow === 1){
+        window.close();
+      } else {
+        setBusinessPlan({
+          isOpen: 0,
+          sessionId: '',
+          isOpenWindow: 0
+        })
+        window.location.replace("/use-plan");
+      }
+    } 
+  },[BusinessPlan.isOpen])
 
   return (
     <>
@@ -866,11 +879,14 @@ const UsePlan = () => {
                 href="#"
                 className="btn btn-pending"
                 onClick={() => {
-                  getSucessResult();
                   setSucessFlag(true);
+                  setChangeConfirmModal(false);
+                  setIsPmntPending(false);
+                  setSessionId("");
+                  window.location.replace("/use-plan");
                 }}
               >
-                決済完了
+                確認
               </a>
             ) : (
               <>
@@ -879,7 +895,6 @@ const UsePlan = () => {
                   className="btn btn-pending"
                   onClick={() => {
                     // setChangeConfirmModal(false);
-                    setPayModal(true);
                     getCheckOut(isplanCode, isPaymentMethod);
                   }}
                 >
@@ -1193,32 +1208,6 @@ const UsePlan = () => {
               確認
             </a>
           </div>
-        </ModalBody>
-      </Modal>
-
-
-      {/* 결제 모달 */}
-      <Modal className="pay-big-modal"
-        show={payModal}
-        backdrop="static"
-        onHidden={() => {
-          setPayModal(false);
-        }}
-      >
-        <ModalHeader>
-          <div className="flex space-between items-center w-full">
-            <h2 className="modal-tit">
-
-            </h2>
-            <button className="" onClick={() => {
-              setPayModal(false);
-            }}>
-              <Lucide icon="X" className="w-4 h-4" />
-            </button>
-          </div>
-        </ModalHeader>
-        <ModalBody className="p-10 text-center">
-
         </ModalBody>
       </Modal>
     </>
