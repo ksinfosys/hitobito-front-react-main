@@ -170,10 +170,10 @@ function MessageBoxBusiness() {
     const msgSaveSubmit = () => {
         ServiceFetch("/msg/tmpsave", "post", {
             msgContents: editorData,
+            msgTitle: msgSendTitle
         }).then((res) => {
             res.resultCode === '200' ? (
-                setSaveMsgSuccess(true),
-                localStorage.setItem("msgSendTitle", msgSendTitle)
+                setSaveMsgSuccess(true)
             ) : res.resultCode === '302' ? (
                 setSaveMsgFail01(true)
             ) : (
@@ -195,7 +195,7 @@ function MessageBoxBusiness() {
             response.data.resultCode === '200' ? (
                 setMsgSaveModal(true),
                 setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
-                setMsgSendTitle(localStorage.getItem("msgSendTitle"))
+                setMsgSendTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
             ) : (
                 setModalFail(true)
             )
