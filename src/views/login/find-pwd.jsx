@@ -16,7 +16,6 @@ import BigLogo from "@/assets/images/big-logo.svg";
 import Blank from "@/assets/images/blank-img.png";
 import Blank2 from "@/assets/images/blank2.png";
 import LineIcon from "@/assets/images/line-icon.svg";
-import GoogleIcon from "@/assets/images/google-icon.svg";
 import KakaoIcon from "@/assets/images/kakao-icon.svg";
 
 const FindPwd = () => {

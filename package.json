@@ -8,18 +8,18 @@
     "@ckeditor/ckeditor5-build-decoupled-document": "^29.1.0",
     "@ckeditor/ckeditor5-build-inline": "^29.1.0",
     "@ckeditor/ckeditor5-word-count": "^37.0.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
     "@fullcalendar/core": "^5.5.1",
     "@fullcalendar/daygrid": "^5.5.0",
     "@fullcalendar/interaction": "^5.5.0",
     "@fullcalendar/list": "^5.5.0",
     "@fullcalendar/timegrid": "^5.5.1",
-    "@googlemaps/js-api-loader": "^1.11.4",
-    "@googlemaps/markerclustererplus": "^1.1.0",
     "@hookform/resolvers": "^2.8.8",
     "@left4code/tw-starter": "^3.1.35",
     "@line/liff": "^2.22.0",
     "@popperjs/core": "^2.7.0",
-    "@react-oauth/google": "^0.9.0",
     "and": "^0.0.3",
     "axios": "^1.3.4",
     "bootstrap": "^5.2.3",
@@ -47,7 +47,6 @@
     "react-bootstrap": "^2.7.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.0.0",
-    "react-google-login": "^5.2.2",
     "react-hook-form": "^7.29.0",
     "react-kakao-login": "^2.1.1",
     "react-liff": "^2.1.0",
@@ -106,6 +105,7 @@
     "postcss-advanced-variables": "^3.0.1",
     "postcss-import": "^14.0.2",
     "tailwindcss": "^3.0.24",
-    "vite": "^2.7.2"
+    "vite": "^2.7.2",
+      "@vitejs/plugin-react-refresh": "^1.3.4"
   }
 }
