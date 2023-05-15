@@ -366,7 +366,7 @@ const MessageSent = () => {
                             <div className="flex flex-col items-end lg:flex-row itmes-center space-between">
                                 <div className="flex items-center gap-2 w-full lg:w-auto">
                                     <select
-                                        className="form-select w-24 lg:w-32"
+                                        className="form-select w-32 lg:w-36 shrink-0"
                                         onChange={(e) => {
                                             setCurPageMob(null);
                                             setSearchCategory(e.target.value)

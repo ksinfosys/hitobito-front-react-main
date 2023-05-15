@@ -339,7 +339,7 @@ function SignUpBusiness() {
   const handleChangeLogo = async (e, index) => {
     const file = e.target.files
     if (file.length !== 1) {
-      alert('1개 이미지만 업로드 해주시기 바랍니다.')
+      alert('1つの画像だけアップロードしてください。')
       return false
     }
 
@@ -430,7 +430,7 @@ function SignUpBusiness() {
     }
 
     // 담당자 연락처 (숫자 이외의 것테스트)
-    const phonePattern = /^\d{2,3}-\d{3,4}-\d{4}$/; // 13자리 숫자와 하이픈으로 구성된 정규식
+    const phonePattern = /^\d{2,3}-\d{3,4}-\d{4}$/; // 13자리 숫자와 하이픈으로 구성된 정규식 
     if (!phonePattern.test(data.phoneNumber)) {
       setRegPhone(true);
       console.log(phoneNumberRef)
@@ -571,7 +571,7 @@ function SignUpBusiness() {
     // empCount,
     // salesAmount,
   ])
-  // 회원가
+  // 회원가입
   const handleSignUp = async () => {
     const updateData = {
       cpLoginId: cpLoginId,
@@ -594,7 +594,7 @@ function SignUpBusiness() {
     await formData.append('request', blob);
 
     rsFileImage.length > 0 ? rsFileImage.map(item => formData.append('file', item)) : formData.append('file', new File([], 'photo.jpg'))
-    rsLogoFilePhoto.length > 0 ? formData.append('logoFile', rsLogoFilePhoto) : formData.append('logoFile', new File([], 'photo.jpg'))
+    rsLogoFilePhoto.length == 0 ? formData.append('logoFile', new File([], 'photo.jpg')) : formData.append('logoFile', rsLogoFilePhoto)
     rsDocumentFile.length > 0 ? rsDocumentFile.map(item => formData.append('documentfile', item)) : formData.append('documentfile', new File([], 'document.pdf'))
 
     //서버로 보내기
@@ -646,6 +646,7 @@ function SignUpBusiness() {
     let newValue = e.target.value;
     newValue = newValue.replace(/-/g, ''); // 입력값에서 하이픈 제거
     const matchPattern = /^(\d{0,3})(\d{0,4})(\d{0,4})/; // 숫자 패턴 정규식
+
     const matches = newValue.match(matchPattern); // 입력값에서 숫자 패턴 찾기
 
     if (matches) {
@@ -662,6 +663,8 @@ function SignUpBusiness() {
     }
 
   };
+
+
 
 
   // 방 진입 시 데이터 가져오기
@@ -753,6 +756,7 @@ function SignUpBusiness() {
                   </select>
                 </div>
                 <div className="flex flex-col gap-2">
+                  <div className="form-tit">本社<span>*</span></div>
                   <select name="" id="" className="form-select" onChange={(e) => setHeadOfficeRegion(e.target.value)}>
                     {/* <option value="">本社所在地</option> */}
                     <option value="">選択してください。</option>
@@ -879,7 +883,7 @@ function SignUpBusiness() {
                         // console.log(file)
                         return (
                           <div className="attach-cont-item flex items-center space-between" key={index}>
-                            <div className="attach-cont-tit">
+                            <div className="attach-cont-file">
                               {file.name}
                             </div>
                             <button className="attach-cont-btn" onClick={() => handleFileDelete(index)}>
@@ -1041,12 +1045,12 @@ function SignUpBusiness() {
                                     </div>
                                 </div> */}
                 <div className="mt-5">
-                  <button className="btn btn-outline-primary flex items-center w-full">
-                    <a href="https://hitobito-net.com/api/files/company_sample.pdf" className="flex items-center" target='_blank'>
-                      サンプル·ダウンロード
+                  <a href="https://hitobito-net.com/api/files/company_sample.pdf" className="flex items-center" target='_blank'>
+                    <button className="btn btn-outline-primary flex items-center w-full">
                       <img src={Download} alt="" />
-                    </a>
-                  </button>
+                      サンプル·ダウンロード
+                    </button>
+                  </a>
                 </div>
               </div>
 

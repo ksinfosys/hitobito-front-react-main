@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import Loading from "./components/loading";
 import Router from "./router";
-import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import { LiffProvider } from "react-liff";
 import { delCookie } from "./utils/cookie";
 
@@ -14,7 +13,9 @@ function App() {
   const liffId = '1657832968-ZeGx3gbz'
 
   useEffect(() => {
-    //axios 호출시 인터셉트
+
+    //axios 호출시 인터셉트 abcaaa
+
     axios.interceptors.request.use(function (config) {
       if (config.url !== '/api/search/tags') { // '/api/search/tags' API 요청이 아닌 경우만 로딩 상태 변경
         setLoading(true);
@@ -23,7 +24,7 @@ function App() {
     }, function (error) {
       return Promise.reject(error);
     });
-    //axios 호출 종료시 인터셉트
+    //axios 호출 종료시 인터셉트--
     axios.interceptors.response.use(function (response) {
       if (response.config.url !== '/api/search/tags') { // '/api/search/tags' API 요청이 아닌 경우만 로딩 상태 변경
         setLoading(false);
@@ -41,16 +42,15 @@ function App() {
     });
   }, []);
 
-
   return (
     <RecoilRoot>
       <Loading loading={loading} />
       <BrowserRouter>
-        <GoogleOAuthProvider clientId={'994073566161-uheufnfp50scmu1lquhkg0mdbpr7ip56.apps.googleusercontent.com'}>
+        
           <LiffProvider liffId={liffId}>
             <Router />
           </LiffProvider>
-        </GoogleOAuthProvider>
+        
         <ScrollToTop />
       </BrowserRouter>
     </RecoilRoot>

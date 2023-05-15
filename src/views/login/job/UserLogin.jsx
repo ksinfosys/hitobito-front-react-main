@@ -1,8 +1,6 @@
 import { useRecoilState } from "recoil";
 import { userInfo } from "../../../stores/user-info";
-import GoogleIcon from "@/assets/images/google-icon.svg";
 import AppleIcon from "@/assets/images/apple_login.svg";
-import { useGoogleLogin } from "@react-oauth/google";
 import KakaoIcon from "@/assets/images/kakao-icon.svg";
 import AppleLogin from 'react-apple-login'
 import { liff } from "@line/liff";
@@ -50,10 +48,6 @@ const UserLogin = () => {
 		}
 	})
 	const [snsKey, setSnsKey] = useState({
-		google: {
-			client_id: '994073566161-uheufnfp50scmu1lquhkg0mdbpr7ip56.apps.googleusercontent.com',
-			client_secret: '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'
-		},
 		kakao: {
 			app_key: 'ef608f25820e6512a7b7a38c4d94135c'
 		},
@@ -66,7 +60,7 @@ const UserLogin = () => {
 		}, 
 		apple: {
 			client_id: 'hitobito.ksinfo.com',
-			redirect_url: `https://${window.location.hostname}`,
+			redirect_url: `https://hitobito-net.com`,
 		}
 	})
 
@@ -86,10 +80,6 @@ const UserLogin = () => {
 			}
 		})
 	}
-
-	const googleLogin = useGoogleLogin({
-		onSuccess: res => snsLogin(res, 'google'),
-	});
 
 	useEffect(() => {
 		console.log(snsBody)
@@ -172,7 +162,7 @@ const UserLogin = () => {
 	AppleID.auth.init({
 		clientId : 'hitobito.ksinfo.com',
 		scope : 'email',
-		redirectURI: 'https://hitobito.codeidea.io',
+		redirectURI: 'https://hitobito-net.com',
 		state : toString(array[0]),
 		usePopup: false
 	});
@@ -208,20 +198,6 @@ const UserLogin = () => {
 	return <div className="btn-wrap">
 
 		<CustomLineLogin setSnsBody={setSnsBody} />
-
-		<button className="mobile_none btn-google flex flex-center" onClick={googleLogin}>
-		<div className="button-wrap flex items-center gap-2">
-			<img src={GoogleIcon} alt="" />
-			Googleログイン
-		</div>
-		</button>
-
-		{/* <KakaoLogin
-		token={snsKey.kakao.app_key}
-		onSuccess={(res) => snsLogin(res.response, 'kakao')}
-		onFail={console.log}
-		render={({ onClick }) => <KakaoLoginBtn onClick={onClick} />}
-		/> */}
 		<button className="btn-kakao flex flex-center" onClick={handleKakaoLogin}>
 			<div className="button-wrap flex items-center gap-2">
 				<img src={KakaoIcon} alt="" />
@@ -235,17 +211,6 @@ const UserLogin = () => {
 				<div className="mt-1">Appleログイン</div>
 			</div>
 		</button>
-
-		{/* <AppleLogin  
-			clientId={snsKey.apple.client_id} 
-			redirectURI={snsKey.apple.redirect_url}   
-			responseType={"code"} 
-			responseMode={"query"}  
-			usePopup={false} 
-			designProp={{
-				height: 30, width: 140, color: "black", border: false, type: "sign-in", border_radius: 15, scale: 1,locale: "en_US", 
-			}}
-		/> */}
 
 		{/* OAuth Token Error  */}
 		<Modal
@@ -405,16 +370,5 @@ const UserLogin = () => {
 
 	</div>
 }
-
-/*
-const KakaoLoginBtn = ({ onClick }) => {
-  return <button className="btn-kakao flex flex-center" onClick={onClick}>
-    <div className="button-wrap flex items-center gap-2">
-      <img src={KakaoIcon} alt="" />
-      Kakaoログイン
-    </div>
-  </button>
-}
-*/
 
 export default UserLogin
