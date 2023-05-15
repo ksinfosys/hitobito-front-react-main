@@ -76,8 +76,8 @@ const FindPwd = () => {
                     会員登録をする時、登録したID及びメールアドレスを入力してください。
                 </div>
                 <div className="find-email flex flex-col gap-4">
-                    <input id="regular-form-1" type="text" className="h-48 form-control" placeholder="아이디를 입력해 주세요." onChange={(e) => setId(e.target.value)} />
-                    <input id="regular-form-1" type="text" className="h-48 form-control" placeholder="이메일 주소를 입력해 주세요." onChange={(e) => setEmail(e.target.value)} />
+                    <input id="regular-form-1" type="text" className="h-48 form-control" placeholder="IDを入力してください。" onChange={(e) => setId(e.target.value)} />
+                    <input id="regular-form-1" type="text" className="h-48 form-control" placeholder="メールアドレスを入力してください。" onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="find-btn">
                     <button className="btn btn-pending h-48" onClick={() => { searchPassword() }}>

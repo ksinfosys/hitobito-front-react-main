@@ -1046,7 +1046,7 @@ tr.table-content {
             display: block;
             width: 210px;
             padding: 5px;
-            content: 'まだ確認してない面談依頼の数';
+            content: '検索された求職者の数';
             background: #000;
             color: #fff;
             border-radius: 3px;
@@ -1444,6 +1444,15 @@ tr.table-content {
         line-height: 140%;
         color: #333333
     }
+
+    .attach-cont-file{
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 140%;
+        max-width: 200px;
+        word-break: break-all;
+        color: #333333;
+      }
 
     .attach-cont-btn {
         height: auto;
@@ -2199,10 +2208,6 @@ tr.table-content {
             height: 88px;
             overflow: auto;
             box-sizing: border-box;
-
-            &::-webkit-scrollbar {
-                appearance: none;
-            }
         }
 
     }

@@ -17,7 +17,8 @@
 .btn:focus {--tw-ring-color: none!important;}
 
 select, input{border:1px solid #E4E7EA; font-size:0.875rem!important}
-select, select option, ::placeholder{color:#A8ABAE!important; }
+select option, ::placeholder{color:#A8ABAE!important; }
+select{color:#000000!important; }
 
 /*** 테이블 ***/
 .table thead.table-light tr th{background:#F8FAFC;}

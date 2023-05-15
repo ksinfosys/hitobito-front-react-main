@@ -441,11 +441,11 @@ const DashboardBusiness = () => {
                                 検索
                             </button>
                             <button
-                                className="btn btn-lg btn-cancle-type1 w-24"
+                                className="btn btn-lg btn-cancle-type1 w-32"
                                 onClick={() => {
                                     setSelectTags([]), setSelectCode([]), setTagsFilter([]);
                                 }}>
-                                初期化
+                                条件クリア
                             </button>
                         </div>
                     </div>
