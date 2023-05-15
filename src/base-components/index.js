@@ -1,6 +1,5 @@
 import "zoom-vanilla.js/dist/zoom-vanilla.min.js";
 import Chart from "./chart/Main";
-import GoogleMapLoader from "./google-map-loader/Main";
 import Litepicker from "./litepicker/Main";
 import Tippy from "./tippy/Main";
 import TippyContent from "./tippy-content/Main";
@@ -45,7 +44,6 @@ import Lucide from "./lucide";
 
 export {
   Chart,
-  GoogleMapLoader,
   Litepicker,
   Tippy,
   TippyContent,

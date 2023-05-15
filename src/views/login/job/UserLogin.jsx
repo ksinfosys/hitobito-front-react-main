@@ -80,6 +80,7 @@ const UserLogin = () => {
 			}
 		})
 	}
+
 	useEffect(() => {
 		console.log(snsBody)
 		if (snsBody.loginType) {
@@ -197,7 +198,6 @@ const UserLogin = () => {
 	return <div className="btn-wrap">
 
 		<CustomLineLogin setSnsBody={setSnsBody} />
-
 		<button className="btn-kakao flex flex-center" onClick={handleKakaoLogin}>
 			<div className="button-wrap flex items-center gap-2">
 				<img src={KakaoIcon} alt="" />
