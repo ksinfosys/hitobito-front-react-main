@@ -1,9 +1,9 @@
 import dom from "@left4code/tw-starter/dist/js/dom";
 
 // Setup side menu
-const findActiveMenu = (subMenu, location) => {
+const findActiveMenu = (subMenu2, location) => {
   let match = false;
-  subMenu.forEach((item) => {
+  subMenu2.forEach((item) => {
     if (
       ((location.forceActiveMenu !== undefined &&
         item.pathname === location.forceActiveMenu) ||
@@ -12,8 +12,8 @@ const findActiveMenu = (subMenu, location) => {
       !item.ignore
     ) {
       match = true;
-    } else if (!match && item.subMenu) {
-      match = findActiveMenu(item.subMenu, location);
+    } else if (!match && item.subMenu2) {
+      match = findActiveMenu(item.subMenu2, location);
     }
   });
   return match;
@@ -28,14 +28,14 @@ const nestedMenu = (menu, location) => {
           item.pathname === location.forceActiveMenu) ||
           (location.forceActiveMenu === undefined &&
             item.pathname === location.pathname) ||
-          (item.subMenu && findActiveMenu(item.subMenu, location))) &&
+          (item.subMenu2 && findActiveMenu(item.subMenu2, location))) &&
         !item.ignore;
 
-      if (item.subMenu) {
-        menuItem.activeDropdown = findActiveMenu(item.subMenu, location);
+      if (item.subMenu2) {
+        
         menuItem = {
           ...item,
-          ...nestedMenu(item.subMenu, location),
+          ...nestedMenu(item.subMenu2, location),
         };
       }
     }
@@ -45,11 +45,9 @@ const nestedMenu = (menu, location) => {
 };
 
 const linkTo = (menu, navigate) => {
-  if (menu.subMenu) {
-    menu.activeDropdown = !menu.activeDropdown;
-  } else {
+  
     navigate(menu.pathname);
-  }
+  
 };
 
 const enter = (el, done) => {
