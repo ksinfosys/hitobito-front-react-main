@@ -498,7 +498,7 @@ function PointDetailBusiness() {
                     htmlFor="input-pay"
                   >
                     直接入力
-                    <span className="text-pending ml-2">(1000円 単位)</span>
+                    <span className="text-pending ml-2">(1000ポイント 単位)</span>
                   </label>
                 </div>
                 {directPayFlag && priceFlag === 5 && (
@@ -507,7 +507,7 @@ function PointDetailBusiness() {
                     type="text"
                     id="direct-pay"
                     className="form-check p-2 mt-2 w-full"
-                    placeholder="최대 300,000엔"
+                    placeholder="最大 300,000ポイント"
                     value={regexUserPoint(directPay.split(",").join(""))}
                     onKeyUp={(e) => {
                       if (e.keyCode === 189) {
@@ -790,8 +790,7 @@ function PointDetailBusiness() {
                     }
                   }}
                 >
-                  決済する
-                </button>
+                  次へ             </button>
               )}
               <button
                 type="button"
