@@ -29,7 +29,7 @@ import { getCookie } from "../../utils/cookie";
 
 const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, setRequestModal, submitCheckState, offer, currentPageIdx, selectTags, educationList, careerList, hopeIncomeList, ageList, offerState }) => {
     const { nickname, ageName, genderName, educationName, residentialAreaName, countryName, jobTypeName, careerName, hopeIncomeName, businessTypeName, hopeCareerName, skillCodeNameArr, projectProcessNameArr, projectRoleNameArr } = data;
-    
+
     // 나이 계산
     const year = moment().format('YYYY');
     const age = year - ageName;
@@ -379,6 +379,12 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 </div>
                             </div>
                         </div>
+                        <div className="skill-box flex flex-end">
+                            <button className="btn btn-sm btn-detail flex flex-end" onClick={() => { detailUser(data.jsUserId, data.requestStatus), setCheckId([data.jsUserId]) }}>
+                                更に詳細を表示
+                            </button>
+                        </div>
+                        
                     </div>
                 </div>
                 <div className="accord-line"></div>
@@ -574,7 +580,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                     <div className="skill-box">
                         <div className="charge-btm">
                             <div className="flex gap-5">
-                                <div className="charge-btm-tit">스킬</div>
+                                <div className="charge-btm-tit">スキル</div>
                                 <div className="charge-btm-cont flex gap-2">
                                     {
                                         userInfoState && userInfoState?.resumeSkillList.length > 0 ? userInfoState.resumeSkillList.map((skill, index) => {
@@ -585,7 +591,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                             )
                                         }) : (
                                             <div className="btn-lang">
-                                                스킬이 없습니다.
+                                                すきるがありません。
                                             </div>
                                         )
                                     }

@@ -7,7 +7,7 @@ import {
   ModalFooter
 } from "@/base-components";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getCookie } from "../../utils/cookie";
 import Pagination from "../../components/pagination";
@@ -17,6 +17,7 @@ import ServiceFetch from "../../../util/ServiceFetch";
 import { useRecoilState } from "recoil";
 
 function MessageReceptionBusiness() {
+  const [disable, setDisable] = React.useState(false);
   /* ******** 모달 ******** */
   const [msgModal, setMsgModal] = useState(false);
   const [messageSaveModal, setMessageSaveModal] = useState(false);
@@ -191,7 +192,8 @@ function MessageReceptionBusiness() {
       msgContents: editorData,
     }).then((res) => {
       res.resultCode === "200" ? (
-        setSaveMsgSuccess(true)
+        setSaveMsgSuccess(true),
+        localStorage.setItem("msgSendTitle", msgSendTitle)
       ) : res.resultCode === "302" ? (
         setSaveMsgFail01(true)
       ) : (
@@ -212,7 +214,8 @@ function MessageReceptionBusiness() {
     }).then((response) => {
       response.data.resultCode === "200" ? (
         setMsgSaveModal(true),
-        setEditorData(response.data.result.templateContents ? response.data.result.templateContents : "")
+        setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
+        setMsgSendTitle(localStorage.getItem("msgSendTitle"))
       ) : setModalFail(true);
     }).catch((error) => {
       console.error(error);
@@ -235,13 +238,13 @@ function MessageReceptionBusiness() {
           <div className="p-5">
             <div className="flex border-b-2 ">
               <button type="button" className="p-2 tab-btn tab-active">
-                <Link to="/message-reception-business">受信メッセージ箱</Link>
+                <Link to="/message-reception-business">受信メッセージ</Link>
               </button>
               <button type="button" className="p-2 tab-btn">
-                <Link to="/message-sent-business">送信メッセージ箱</Link>
+                <Link to="/message-sent-business">送信メッセージ</Link>
               </button>
               <button type="button" className="p-2 tab-btn">
-                <Link to="/message-box-business">保管箱</Link>
+                <Link to="/message-box-business">保管メッセージ</Link>
               </button>
             </div>
 
@@ -276,38 +279,57 @@ function MessageReceptionBusiness() {
                     </button>
                   </div>
                 </div>
-                <div>
-                  <button
-                    className="btn btn-sm btn-pending w-24 mr-2"
-                    onClick={() => {
-                      msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
-                        msgIdxes.length > 1 ? setMessageReplyFail(true) :
-                          setMessageReply(true);
-                    }}
-                  >
-                    返事
-                  </button>
-                  <button
-                    className="btn btn-sm btn-outline-pending w-24 mr-2"
-                    onClick={() => {
-                      msgIdxes.length > 0
-                        ? setMessageSaveModal(true)
-                        : setMsgCheckModal(true);
-                    }}
-                  >
-                    保管
-                  </button>
-                  <button
-                    className="btn btn-sm btn-outline-secondary w-24"
-                    onClick={() => {
-                      msgIdxes.length > 0
-                        ? setMessageDeleteModal(true)
-                        : setMsgCheckModal(true);
-                    }}
-                  >
-                    削除
-                  </button>
-                </div>
+                  {
+                    (messageList == null) || (messageList?.length == 0)
+                    ? 
+                    <div>
+                      <button
+                        className="btn btn-sm btn-pending w-24 mr-2" disabled={true}>
+                        返信
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline-pending w-24 mr-2" disabled={true}>
+                        保管
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline-secondary w-24" disabled={true}>
+                        削除
+                      </button>
+                    </div>
+                    :
+                    <div>
+                      <button
+                        className="btn btn-sm btn-pending w-24 mr-2"
+                        onClick={() => {
+                          msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
+                            msgIdxes.length > 1 ? setMessageReplyFail(true) :
+                              setMessageReply(true);
+                        }}
+                      >
+                        返信
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline-pending w-24 mr-2"
+                        onClick={() => {
+                          msgIdxes.length > 0
+                            ? setMessageSaveModal(true)
+                            : setMsgCheckModal(true);
+                        }}
+                      >
+                        保管
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline-secondary w-24"
+                        onClick={() => {
+                          msgIdxes.length > 0
+                            ? setMessageDeleteModal(true)
+                            : setMsgCheckModal(true);
+                        }}
+                      >
+                        削除
+                      </button>
+                    </div>
+                  }
               </div>
               {/* 테이블 10줄 */}
               <table className="table mt-5">
@@ -324,7 +346,7 @@ function MessageReceptionBusiness() {
                     <th className="whitespace-nowrap">送信者</th>
                     <th className="whitespace-nowrap">タイトル</th>
                     <th className="whitespace-nowrap">受信時間</th>
-                    <th className="whitespace-nowrap">返事</th>
+                    <th className="whitespace-nowrap">返信</th>
                   </tr>
                 </thead>
                 <tbody className="text-center">
@@ -352,7 +374,7 @@ function MessageReceptionBusiness() {
                     })
                   ) : (
                     <tr>
-                      <td colSpan={5}>メッセージ受信箱が空いています。</td>
+                      <td colSpan={5}>表示できるメッセージがありません。</td>
                     </tr>
                   )}
                 </tbody>
@@ -383,9 +405,9 @@ function MessageReceptionBusiness() {
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">メッセージを保管します。</div>
           <div className="modal-subtit">
-            選択したメッセージを保存します。
+            選択されたメッセージを保存しました。
             <br />
-            保存されたメッセージは「保管箱」 に移動されます
+            保存メッセージに移動されました。
           </div>
           <div className="flex flex-end gap-3">
             <a

@@ -445,7 +445,7 @@ const DashboardBusiness = () => {
                                 onClick={() => {
                                     setSelectTags([]), setSelectCode([]), setTagsFilter([]);
                                 }}>
-                                初期化
+                                条件クリア
                             </button>
                         </div>
                     </div>
