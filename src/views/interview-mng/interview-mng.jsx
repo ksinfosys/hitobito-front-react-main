@@ -343,16 +343,16 @@ const InterviewMng = () => {
                                         </th>
                                         <th className="whitespace-nowrap text-sm border-tb0">
                                             <div className="flex flex-center items-center">
-                                                依頼時間
+                                                依頼日時
                                                 <button onClick={() => { handleSelect02() }}>
                                                     <img src={TableArrow} alt="" style={rotateStyle} />
                                                 </button>
                                             </div>
                                         </th>
                                         <th className="whitespace-nowrap text-sm flex flex-center items-center border-tb0">
-                                            依頼時間
+                                            依頼期限
                                         </th>
-                                        <th className="whitespace-nowrap text-sm border-tb0">確認時間</th>
+                                        <th className="whitespace-nowrap text-sm border-tb0">確認日時</th>
                                         <th className="whitespace-nowrap text-sm border-tb0">ポイント状態</th>
                                         <th className="whitespace-nowrap text-sm th-blank border-tb0">
                                             <div className="flex gap-2 interview-mng-button-wrap">
@@ -422,8 +422,8 @@ const InterviewMng = () => {
                                                         <button
                                                             className={
                                                                 data.rqStatus === "20102"
-                                                                    ? "btn btn-sm btn-outline-business ml-2 btn-message-write"
-                                                                    : "btn btn-sm btn-outline-gray-business ml-2 btn-message-write"
+                                                                    ? "btn btn-sm btn-business ml-2 btn-message-write"
+                                                                    : "btn btn-sm btn-gray-business ml-2 btn-message-write"
                                                             }
                                                             onClick={() => {
                                                                 setMessageSendId(data.rqReceiveUserId)
@@ -434,10 +434,15 @@ const InterviewMng = () => {
                                                             メッセージ作成
                                                         </button>
                                                         <button
-                                                            className="btn btn-sm btn-cancle-type1 ml-2"
-                                                            onClick={() => {
+                                                            className={
+                                                                data.rqStatus === "20102"
+                                                                    ? "btn btn-sm btn-business ml-2"
+                                                                    : "btn btn-sm btn-gray-business ml-2"
+                                                            }                                                            
+                                                            //"btn btn-sm btn-cancle-type1 ml-2"
+                                                            onClick={() => {                                                                
+                                                                data.rqStatus === "20102" && setreportRequestModal1(true)
                                                                 reportGet()
-                                                                setreportRequestModal1(true)
                                                                 setDeclarationUser(data.nickname)
                                                                 setDeclaration({ ...declaration, reportTargetId: data.rqReceiveUserId })
                                                             }}
@@ -691,9 +696,9 @@ const InterviewMng = () => {
                 }}
             >
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">メッセージを転送しました。</div>
+                    <div className="modal-tit">メッセージを送信しました。</div>
                     <div className="modal-subtit">
-                        メッセージを転送しました。
+                        メッセージを送信しました。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
