@@ -191,7 +191,7 @@ const Login = () => {
                     HITOBITOにようこそ！
                   </div>
                   <div className="login-tab-subtit">
-                    サービスをご利用したい場合はログインしてください。
+                  手軽なSNSログイン！以下のSNSアカウントでログインしよう。
                   </div>
                   <UserLogin />
                 </div>
@@ -202,7 +202,7 @@ const Login = () => {
                     HITOBITOにようこそ！
                   </div>
                   <div className="login-tab-subtit">
-                    サービスをご利用したい場合はログインしてください。
+                  当サービスをご利用いただく場合は、ログインが必要です
                   </div>
                   <div
                     className="id-wrap flex flex-col"
@@ -271,21 +271,21 @@ const Login = () => {
                       </label> */}
                     </div>
                     <div className="find-id-wrap">
-                      <Link to="/find-id">ＩD　探し</Link>
-                      <Link to="/find-pwd">パスワード探し</Link>
+                      <Link to="/find-id">ＩDを忘れた場合</Link>
+                      <Link to="/find-pwd">パスワードを忘れた場合</Link>
                     </div>
                   </div>
                   <div className="signup-wrap flex items-center space-between">
                     <div className="signup-tit">
-                      HITOBITOのユーザでは <br />
-                      ないでしょうか？
+                    HITOBITOのユーザーでない <br />
+                    方の会員登録はこちら
                     </div>
                     <div className="signup-btn">
                       <button
                         className="btn btn-primary w-40"
                         onClick={() => navigate("/signup")}
                       >
-                        会員加入
+                        新規会員登録
                       </button>
                     </div>
                   </div>
