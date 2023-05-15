@@ -191,7 +191,7 @@ const Login = () => {
                     HITOBITOにようこそ！
                   </div>
                   <div className="login-tab-subtit">
-                  手軽なSNSログイン！以下のSNSアカウントでログインしよう。
+                  手軽な以下のSNSアカウントでログインしよう。
                   </div>
                   <UserLogin />
                 </div>

@@ -42,7 +42,7 @@ const LoginCompany = () => {
                                         HITOBITOにようこそ！
                                     </div>
                                     <div className="login-tab-subtit">
-                                    手軽なSNSログイン！以下のSNSアカウントでログインしよう。。
+                                    手軽な以下のSNSアカウントでログインしよう。
                                     </div>
                                     <div className="btn-wrap">
                                         <button className="btn-line flex flex-center">
