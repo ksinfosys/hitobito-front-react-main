@@ -42,7 +42,7 @@ const LoginCompany = () => {
                                         HITOBITOによaうこそ！
                                     </div>
                                     <div className="login-tab-subtit">
-                                        サービスをご利用したい場合はログインしてください。
+                                    手軽な以下のSNSアカウントでログインしよう。
                                     </div>
                                     <div className="btn-wrap">
                                         <button className="btn-line flex flex-center">
@@ -72,7 +72,7 @@ const LoginCompany = () => {
                                         HITOBITOにbcdようこそ！
                                     </div>
                                     <div className="login-tab-subtit">
-                                        サービスをご利用したい場合はログインしてください。
+                                    当サービスをご利用いただく場合は、ログインが必要です。
                                     </div>
                                     <div className="id-wrap flex flex-col">
                                         <input id="regular-form-1" type="text" className="id-input h-48 form-control" placeholder="아이디" />
@@ -87,18 +87,18 @@ const LoginCompany = () => {
                                             <label className="form-check-label" htmlFor="vertical-form-3">ＩD　保存</label>
                                         </div>
                                         <div className="find-id-wrap">
-                                            <Link to="/find-id">ＩD　探し</Link>
-                                            <Link to="/find-pwd">パスワード探し</Link>
+                                            <Link to="/find-id">IDを忘れた場合</Link>
+                                            <Link to="/find-pwd">パスワードを忘れた場合</Link>
                                         </div>
                                     </div>
                                     <div className="signup-wrap flex items-center space-between">
                                         <div className="signup-tit">
-                                            HITOBITOのユーザでは<br />
-                                            ないでしょうか？
+                                        HITOBITOのユーザーでない<br />
+                                        方の会員登録はこちら
                                         </div>
                                         <div className="signup-btn">
                                             <button className="btn btn-primary w-40" onClick={() => navigate('/signup')}>
-                                                会員加入
+                                                新規会員登録
                                             </button>
                                         </div>
                                     </div>
