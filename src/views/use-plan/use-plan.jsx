@@ -866,12 +866,9 @@ const UsePlan = () => {
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">プランを変更します。</div>
           <div className="modal-subtit">
-            現在利用しているプランは "{planCodeToPlanName(planList.planCode)}"
-            です。
-            <br />
-            変更すると現在使用しているプランは返金せずに取り消します。
-            <br />
-            本当に変更しますか？
+            決済が終わったら確認ボタンをクリック、
+            <br/>
+            もしくはページを切り替えてください。
           </div>
           <div className="flex flex-end gap-3">
             {sessionId?.length > 0 ? (

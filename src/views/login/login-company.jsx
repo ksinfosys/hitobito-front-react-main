@@ -39,7 +39,7 @@ const LoginCompany = () => {
                             <TabPanel className="leading-relaxed">
                                 <div className="login-tab-wrap">
                                     <div className="login-tab-tit">
-                                        HITOBITOにようこそ！
+                                        HITOBITOによaうこそ！
                                     </div>
                                     <div className="login-tab-subtit">
                                         サービスをご利用したい場合はログインしてください。
@@ -69,7 +69,7 @@ const LoginCompany = () => {
                             <TabPanel className="leading-relaxed">
                                 <div className="login-tab-wrap">
                                     <div className="login-tab-tit">
-                                        HITOBITOにようこそ！
+                                        HITOBITOにbcdようこそ！
                                     </div>
                                     <div className="login-tab-subtit">
                                         サービスをご利用したい場合はログインしてください。
