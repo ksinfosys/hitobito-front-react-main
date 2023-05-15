@@ -696,9 +696,9 @@ const InterviewMng = () => {
                 }}
             >
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">メッセージを転送しました。</div>
+                    <div className="modal-tit">メッセージを送信しました。</div>
                     <div className="modal-subtit">
-                        メッセージを転送しました。
+                        メッセージを送信しました。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a

@@ -834,7 +834,7 @@ const MessageSent = () => {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">送信成功</div>
                     <div className="modal-subtit">
-                        メッセージを転送しました。
+                        メッセージを送信しました。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
