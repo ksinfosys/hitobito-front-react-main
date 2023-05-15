@@ -134,7 +134,7 @@ function PasswordChange() {
                   id="vertical-form-1"
                   type={currentFlag ? "text" : "password"}
                   className="form-control"
-                  placeholder="パスワード入力"
+                  placeholder="英字・数字・特殊記号を組み合わせて８～16桁で入力"
                   onChange={e => setPassword(e.currentTarget.value)}
                 />
                 <button className="eye-btn" onClick={() => {
@@ -154,7 +154,7 @@ function PasswordChange() {
                     id="vertical-form-1"
                     type={changeFlag ? "text" : "password"}
                     className="form-control"
-                    placeholder="パスワード入力"
+                    placeholder="英字・数字・特殊記号を組み合わせて８～16桁で入力"
                     onChange={e => setNewPassword(e.currentTarget.value)}
                   />
                   <button className="eye-btn" onClick={() => {
@@ -175,7 +175,7 @@ function PasswordChange() {
                     id="vertical-form-2"
                     type={checkFlag ? "text" : "password"}
                     className="form-control"
-                    placeholder="パスワード再入力"
+                    placeholder="英字・数字・特殊記号を組み合わせて８～16桁で入力"
                     onChange={e => setNewPasswordCheck(e.currentTarget.value)}
                   />
                   <button className="eye-btn" onClick={() => {
@@ -209,9 +209,9 @@ function PasswordChange() {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">パスワードの形式が正しくありません。ㄴ</div>
+          <div className="modal-tit">パスワードの形式が正しくありません。</div>
           <div className="modal-subtit">
-            英文・数字・特殊記号で組み合わせ8~16字で
+            英字・数字・特殊記号を組み合わせて８～16桁で
             <br />
             入力してください。
           </div>
