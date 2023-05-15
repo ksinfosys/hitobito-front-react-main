@@ -946,7 +946,6 @@ function Main() {
         >
           <ModalBody className="p-10 text-center">
             <div className="modal-tit">hitobitoからログアウトしますか?</div>
-            {/* <div className="modal-subtit">もう一度ご確認お願いします。</div> */}
             <div className="modal-subtit"></div>
             <div className="flex flex-end gap-3">
               <a
