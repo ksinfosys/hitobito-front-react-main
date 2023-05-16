@@ -3,10 +3,12 @@
   .pagination-wrap.pc {
     display: none;
   }
+
   .mobile_block {
     display: flex;
   }
 }
+
 .w-auto {
   width: auto !important;
 }
@@ -14,6 +16,7 @@
 .mobile_login {
   display: none;
 }
+
 .mobile_block {
   display: none;
 }
@@ -28,6 +31,7 @@
   margin-top: 70px !important;
   margin-left: 345px !important;
 }
+
 /* E: pc용 페이지네이션 */
 
 .ck-file-dialog-button {
@@ -39,16 +43,19 @@
   display: none;
   margin: 0 !important;
 }
+
 .checkbox-btn span {
   display: block;
   padding: 10px 16px;
   cursor: pointer;
   border-radius: 5px;
 }
+
 .checkbox-btn span:hover {
   background: #e4e9fc;
 }
-.checkbox-btn input:checked + span {
+
+.checkbox-btn input:checked+span {
   z-index: 5;
   background: #4381ff;
   color: #fff;
@@ -56,11 +63,13 @@
   position: relative;
   text-indent: 10px;
 }
-.checkbox-btn input:checked + span::before {
+
+.checkbox-btn input:checked+span::before {
   content: "✓";
   position: absolute;
   left: 0px;
 }
+
 .form-check-input[type="checkbox"] {
   cursor: pointer;
   border-radius: 0.25rem;
@@ -81,6 +90,7 @@
   overflow: hidden;
   border: 0;
 }
+
 .upload-name {
   border: 0;
   color: #999;
@@ -89,15 +99,18 @@
 .mobile-drop-wrap .dropdown-basic-button {
   background: #fff;
 }
+
 .mobile-drop-wrap .dropdown_menu {
   margin-top: 5px;
   border: 1px solid #e4e7ea;
   box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.08);
   border-radius: 5px;
 }
+
 .mobile-drop-wrap .dropdown_item:last-child .form-check-label {
   border-bottom: none;
 }
+
 .mobile-drop-wrap .dropdown_item .form-check-label {
   display: flex;
   justify-content: space-between;
@@ -106,17 +119,17 @@
   padding: 14px 20px;
   margin-left: 0;
 }
+
 .mobile-drop-wrap .dropdown_item .form-check-label:hover {
   background-color: rgb(var(--color-slate-200) / 0.6);
 }
-.mobile-drop-wrap
-  .dropdown_item
-  input[type="radio"]:checked
-  + .form-check-label {
+
+.mobile-drop-wrap .dropdown_item input[type="radio"]:checked+.form-check-label {
   color: #1b4398;
   display: flex;
   justify-content: space-between;
 }
+
 .mobile-drop-wrap .dropdown_item .form-check-input {
   display: none;
 }
@@ -136,16 +149,19 @@
   height: 146px;
   overflow: hidden;
 }
+
 .image_item01 button {
   position: absolute;
   top: 5px;
   right: 5px;
 }
+
 .image_item01 label {
   display: flex !important;
   justify-content: center;
   height: 100%;
 }
+
 .image_item01 img {
   width: 100%;
   object-fit: cover;
@@ -173,17 +189,20 @@
   height: 146px;
   overflow: hidden;
 }
+
 .image_item button {
   position: absolute;
   top: 5px;
   right: 5px;
   height: auto !important;
 }
+
 .image_item label {
   display: flex !important;
   justify-content: center;
   height: 100%;
 }
+
 .image_item img {
   width: 100%;
   object-fit: cover;
@@ -193,6 +212,7 @@
   width: 100%;
   height: 100%;
 }
+
 .image_item_list button {
   width: 20px;
   top: 5px !important;
@@ -202,19 +222,24 @@
 .w-80 {
   width: 82px;
 }
+
 .p_20 {
   padding: 20px;
 }
+
 .w-28 {
   width: 7.5rem;
 }
+
 .textarea_style textarea {
   border: none;
   border-radius: 5px;
 }
+
 .search_button_area {
   position: relative;
 }
+
 .search_button_area ul {
   position: absolute;
   border: 1px solid #eee;
@@ -226,15 +251,30 @@
   background: #fff;
   padding: 5px;
   z-index: 9;
+  animation: blinkingBackground 1s infinite;
 }
+
+@keyframes blinkingBackground {
+  0% {
+    background-color: #FEF6EA;
+  }
+
+  100% {
+    background-color: white;
+  }
+}
+
+
 .search_button_area ul li button {
   width: 100%;
   text-align: left;
   white-space: nowrap;
 }
+
 .search_button_area ul .orange button {
   color: #ff9800;
 }
+
 .search_btn {
   width: 100% !important;
 }
@@ -261,6 +301,7 @@
 .drop_area {
   position: relative;
 }
+
 .drop_area .dropdown-menu {
   width: 340px;
   top: 40px;
@@ -271,6 +312,7 @@
   padding: 20px;
   border: 1px solid #eee;
 }
+
 .drop_area .noti-cont-wrap {
   height: 250px;
   overflow-y: scroll;
@@ -279,9 +321,11 @@
 .main.overflow-y-hidden {
   overflow-y: auto !important;
 }
+
 body.overflow-y-hidden {
   overflow-y: auto !important;
 }
+
 .main-content .find-wrap {
   margin-top: 0;
 }
@@ -289,9 +333,11 @@ body.overflow-y-hidden {
 .change_modal .mo-resume-tit {
   padding-top: 0;
 }
+
 .w_full {
   width: 100% !important;
 }
+
 .w-130 {
   width: 130px !important;
 }
@@ -299,33 +345,41 @@ body.overflow-y-hidden {
 .skil_list_wrap {
   margin-top: 7px !important;
 }
+
 .h-150 {
   height: 150px;
 }
 
 /* 2023-03-27 김태윤 추가 */
-.cp-info-modal > div {
+.cp-info-modal>div {
   background-color: red;
   width: calc(20% - 2rem / 5);
   height: 80px;
 }
-.cp-info-modal > div > img {
+
+.cp-info-modal>div>img {
   width: 100%;
   height: 100%;
 }
+
 .mobile_logo {
   display: none;
 }
+
 .arrow_none {
-  -webkit-appearance: none; /* Safari and Chrome */
-  -moz-appearance: none; /* Firefox */
-  background-image: none; /* Remove default arrow */
+  -webkit-appearance: none;
+  /* Safari and Chrome */
+  -moz-appearance: none;
+  /* Firefox */
+  background-image: none;
+  /* Remove default arrow */
 }
 
 .message_area {
   height: 220px;
   overflow-y: scroll;
 }
+
 .message_area div {
   word-break: break-all;
 }
@@ -334,66 +388,83 @@ body.overflow-y-hidden {
   transition: transform 0.1s ease-in-out;
   transform: rotate(180deg);
 }
+
 .center_position {
   left: 50%;
   transform: translateX(-50%);
 }
+
 .modal .btn.w-full {
   width: 100% !important;
 }
+
 .w-120 {
   width: 120px !important;
 }
+
 .x_icon_style {
   display: flex;
   width: 100%;
   justify-content: flex-end;
 }
+
 .side-nav .side-menu .side-menu__title {
   font-size: 0.8rem !important;
   margin-left: 0.55rem !important;
   margin-right: 0.55rem;
   letter-spacing: -0.01rem;
 }
-.side-nav > ul ul li:last-child > a {
+
+.side-nav>ul ul li:last-child>a {
   margin-bottom: 0 !important;
 }
+
 .side-nav ul ul .side-menu {
   height: auto !important;
 }
+
 .resume-regist-cont .form-flex-box .width_auto {
   width: auto !important;
 }
+
 .select-modal .sel-btn-wrap .select-all-button {
   width: auto !important;
   padding-right: 8px;
   padding-left: 8px;
 }
+
 .skill-list-wrap .blue-btn-wrap .blue-btn span:after {
   width: 0.5px !important;
 }
+
 .tdth_height th {
   height: 47px;
 }
+
 .tb_table .border-tb0 {
   border-top-width: 0 !important;
   border-bottom-width: 0 !important;
 }
+
 .tb_table .tb-1 {
   border-top-width: 1px;
   border-bottom-width: 1px;
   border-color: #e2e8f0;
 }
+
 .cont-accordion-box .skill-box .skill-tit {
   width: 65px;
   flex-shrink: 0;
 }
+
 .notification-content.orange .btn-seeall {
   border: 0 !important;
 }
+
 .pagination .page-item .page-link {
   min-width: 38px;
 }
+
 /* .point_chart>div{
   width:100%!important;
 }
@@ -416,44 +487,50 @@ width:100%!important;
 .dashboard-cont-cont .cont-btm-arrow.active {
   transform: rotate(180deg) !important;
 }
+
 .resume-regist-cont .btn-flex-box button {
   height: 48px !important;
 }
+
 .resume-regist-cont .blue-btn-wrap .blue-btn {
   display: flex !important;
 }
+
 .h48 {
   height: 48px !important;
 }
+
 .resume-regist-cont .flex-box2-tit .add-btn {
   font-size: 14px;
   border-radius: 14px;
 }
+
 .resume-regist-cont .flex-box2-tit .minus-btn {
   font-size: 14px;
   border-radius: 14px;
 }
+
 .w40 {
   width: 40px !important;
 }
+
 .mobile-resume-wrap.change .change-box-btn {
   flex-shrink: 0;
 }
+
 .dashboard .mobile-dashboard .mobile-top-btn-box button {
   width: 80px;
 }
-.dashboard
-  .mobile-dashboard
-  .mobile-top-btn-box
-  .check-btn-wrap
-  .check-all
-  label {
+
+.dashboard .mobile-dashboard .mobile-top-btn-box .check-btn-wrap .check-all label {
   min-width: 38px;
 }
+
 .em-info-modal .info-top-box.box2 .modal-subtit1 {
   flex-shrink: 0;
 }
-.btn-apple{
+
+.btn-apple {
   width: 100%;
   background: #000;
   border-radius: 5px;
@@ -465,11 +542,13 @@ width:100%!important;
   height: 48px;
   box-sizing: border-box;
 }
+
 /* 퍼블 모바일 반응형*/
 @media all and (max-width: 1024px) {
   .top_header_main {
     display: none;
   }
+
   .mobile_flex-col {
     flex-direction: column;
     justify-content: center;
@@ -480,6 +559,7 @@ width:100%!important;
     transform: translateY(-50%);
     padding: 0 16px;
   }
+
   .mobile_none {
     display: none !important;
   }
@@ -487,28 +567,35 @@ width:100%!important;
   .login-wrap .login-left {
     height: auto;
   }
+
   .login-wrap {
     margin-top: 0;
   }
+
   .login-wrap .login-right {
     width: 100%;
     margin: 0 16px;
     height: auto !important;
   }
+
   .mobile_login {
     display: block;
   }
+
   .pc_login {
     display: none;
   }
+
   .mobile_login .btn-wrap {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
+
   .mobile_logo {
     display: block;
   }
+
   .mobile-resume-wrap .add-btn {
     gap: 6px;
     height: auto;
@@ -521,6 +608,7 @@ width:100%!important;
     border: 1px solid #3686ff;
     border-radius: 12px;
   }
+
   .mobile-resume-wrap .minus-btn {
     gap: 6px;
     height: auto;
@@ -533,22 +621,28 @@ width:100%!important;
     border: 1px solid #a8abae;
     border-radius: 12px;
   }
+
   .mobile-drop-wrap:last-child {
     margin-bottom: 60px;
   }
-  .mobile-resume-wrap .lang-search-box > div {
+
+  .mobile-resume-wrap .lang-search-box>div {
     height: 300px;
     overflow-y: scroll;
   }
+
   .career-box:first-child {
     margin-top: 0;
   }
+
   .change-box:first-child {
     margin-top: 0 !important;
   }
+
   .mochek {
     width: 28px;
   }
+
   .ellipsis02 {
     overflow: hidden;
     white-space: normal;
@@ -558,9 +652,11 @@ width:100%!important;
     -webkit-box-orient: vertical;
     word-break: keep-all;
   }
-  .dashboard .mobile-dashboard .mobile{
-    padding:16px!important;
+
+  .dashboard .mobile-dashboard .mobile {
+    padding: 16px !important;
   }
+
   .mochek label {
     max-width: unset !important;
     min-width: unset !important;
@@ -569,40 +665,48 @@ width:100%!important;
     display: block;
     padding-left: 0 !important;
   }
+
   .checkBorder .mochek {
     background: #3686ff !important;
   }
-  .mochek input:checked + label:after {
+
+  .mochek input:checked+label:after {
     background: url(/public/images/checkbox-type-off.svg) !important;
   }
+
   .b_shadow {
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #eee;
     border-radius: 4px;
   }
+
   .dashboard-cont-cont .cont-btm-btn:first-child {
     padding-left: 0 !important;
   }
+
   .pb_t {
     width: 66px !important;
   }
-  
+
   .mochek label:after {
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
   }
-  .hamber-bottom-btn-item.sm li a{
-    font-size:11px!important;
-  }
-  .fs11{
-    font-size:11px;
-  }
-  .fs13{
-    font-size:13px;
-  }
-  .mobile-resume-wrap .add-career-btn{
-    font-size:11px!important;
-  }
- 
-}
 
+  .hamber-bottom-btn-item.sm li a {
+    font-size: 11px !important;
+  }
+
+  .fs11 {
+    font-size: 11px;
+  }
+
+  .fs13 {
+    font-size: 13px;
+  }
+
+  .mobile-resume-wrap .add-career-btn {
+    font-size: 11px !important;
+  }
+
+}

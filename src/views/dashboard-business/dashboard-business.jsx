@@ -390,8 +390,9 @@ const DashboardBusiness = () => {
                             <div className="search-box relative text-slate-500">
                                 <input
                                     type="text"
+                                    id="tetetete"
                                     className="form-control pr-10"
-                                    placeholder="検索ワードを入力"
+                                    placeholder="検索ワードを必ずクリック"                                    
                                     value={inputValue}
                                     onFocus={searchTags}
                                     onChange={(e) => setInputValue(e.target.value)}
@@ -412,7 +413,9 @@ const DashboardBusiness = () => {
                                         <ul>
                                             {tagsList.map((code, index) => {
                                                 return (
-                                                    <li key={index} className={tagActive === code.code ? "orange" : ""} onClick={() => setTagActive(code.code)}>
+                                                    <li key={index} 
+                                                        className={tagActive === code.code ? "orange" : ""} 
+                                                        onClick={() => {setTagActive(code.code); document.getElementById('tetetete').value = code.codeName;}}>
                                                         <button type="button" onClick={() => handleSelectTags(code)}>
                                                             {code.codeName}
                                                         </button>
