@@ -10,8 +10,8 @@ import Search from "@/assets/images/search.svg";
 import ServiceFetch from "../../../util/ServiceFetch";
 import { useRecoilState } from "recoil";
 
-
 function MessageBoxBusiness() {
+    const [disable, setDisable] = React.useState(false);
     // 모달 상태들
     const [msgModal, setMsgModal] = useState(false);
     const [messageDeleteModal, setMessageDeleteModal] = useState(false);
@@ -170,6 +170,7 @@ function MessageBoxBusiness() {
     const msgSaveSubmit = () => {
         ServiceFetch("/msg/tmpsave", "post", {
             msgContents: editorData,
+            msgTitle: msgSendTitle
         }).then((res) => {
             res.resultCode === '200' ? (
                 setSaveMsgSuccess(true)
@@ -193,7 +194,8 @@ function MessageBoxBusiness() {
         }).then((response) => {
             response.data.resultCode === '200' ? (
                 setMsgSaveModal(true),
-                setEditorData(response.data.result.templateContents ? response.data.result.templateContents : "")
+                setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
+                setMsgSendTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
             ) : (
                 setModalFail(true)
             )
@@ -213,18 +215,18 @@ function MessageBoxBusiness() {
             <div id="business" className="message-box-business">
                 <div className="box-type-default">
                     <div className="p-5 border-b border-slate-200/60 text-sm">
-                        メッセージボックス
+                        メッセージ箱
                     </div>
                     <div className="p-5">
                         <div className="flex border-b-2">
                             <button type="button" className="p-2 tab-btn">
-                                <Link to="/message-reception-business">受信メッセージ箱</Link>
+                                <Link to="/message-reception-business">受信メッセージ</Link>
                             </button>
                             <button type="button" className="p-2 tab-btn">
-                                <Link to="/message-sent-business">送信メッセージ箱</Link>
+                                <Link to="/message-sent-business">送信メッセージ</Link>
                             </button>
                             <button type="button" className="p-2 tab-btn tab-active">
-                                <Link to="/message-box-business">保管箱</Link>
+                                <Link to="/message-box-business">保管メッセージ</Link>
                             </button>
                         </div>
 
@@ -241,7 +243,7 @@ function MessageBoxBusiness() {
                                     <div className="search block">
                                         <input
                                             type="text"
-                                            className="form-input form-control cu-search w-72"
+                                            className="form-input form-control cu-search w-72 pr-12"
                                             placeholder="検索ワードを入力してください。"
                                             onChange={(e) => setSearchKeyword(e.target.value)}
                                             onKeyDown={(e) => {
@@ -259,21 +261,37 @@ function MessageBoxBusiness() {
                                         </button>
                                     </div>
                                 </div>
-                                <div>
+                                {
+                                    (messageList == null) || (messageList?.length == 0)
+                                    ? 
+                                    <div>
                                     <button
-                                        className="btn btn-sm btn-pending w-24 mr-2"
-                                        onClick={() => {
-                                            msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
-                                                msgIdxes.length > 1 ? setMessageReplyFail(true) :
-                                                    setMessageReplyModal(true);
-                                        }}>返事</button>
+                                        className="btn btn-sm btn-pending w-27 mr-2" disabled={true}>
+                                        メッセージ作成
+                                    </button>
                                     <button
-                                        className="btn btn-sm btn-outline-secondary w-24"
-                                        onClick={() => {
-                                            msgIdxes.length > 0 ? setMessageDeleteModal(true) : setMsgCheckModal(true);
-                                        }}
-                                    >削除</button>
-                                </div>
+                                        className="btn btn-sm btn-outline-secondary w-24" disabled={true}>
+                                        選択を削除
+                                    </button>
+                                    </div>
+                                    :
+                                    <div>
+                                        <button
+                                            className="btn btn-sm btn-pending w-27 mr-2"
+                                            onClick={() => {
+                                                msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
+                                                    msgIdxes.length > 1 ? setMessageReplyFail(true) :
+                                                        setMessageReplyModal(true);
+                                            }}>メッセージ作成</button>
+                                        <button
+                                            className="btn btn-sm btn-outline-secondary w-24"
+                                            onClick={() => {
+                                                msgIdxes.length > 0 ? setMessageDeleteModal(true) : setMsgCheckModal(true);
+                                            }}
+                                        >選択を削除</button>
+                                    </div>
+                                }
+                                
                             </div>
                             {/* 테이블 10줄 */}
                             <table className="table mt-5">
@@ -287,11 +305,11 @@ function MessageBoxBusiness() {
                                                 onChange={handleAllCheck}
                                             />
                                         </th>
-                                        <th className="whitespace-nowrap">削除</th>
+                                        <th className="whitespace-nowrap">全て選択</th>
                                         <th className="whitespace-nowrap">受信者/発信者</th>
                                         <th className="whitespace-nowrap">タイトル</th>
                                         <th className="whitespace-nowrap">受信時間</th>
-                                        <th className="whitespace-nowrap">返事</th>
+                                        <th className="whitespace-nowrap">返信</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
@@ -318,7 +336,7 @@ function MessageBoxBusiness() {
                                             )
                                         }) : (
                                             <tr>
-                                                <td colSpan={6}>保管箱が空です。</td>
+                                                <td colSpan={6}>表示できるメッセージがありません。</td>
                                             </tr>
                                         )
                                     }
@@ -388,7 +406,7 @@ function MessageBoxBusiness() {
                             }}
                             className="btn btn-sm btn-pending w-24"
                         >
-                            返事
+                            返信
                         </button>
                     </div>
                 </ModalBody>

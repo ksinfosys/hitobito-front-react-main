@@ -74,7 +74,7 @@ const MessageBoxList01 = ({
           />
         </td>
         <td onClick={handleLink}>{nickname}</td>
-        <td onClick={handleLink} className="message-title-max">{msgTitle}</td>
+        <td onClick={handleLink} className="text-left">{msgTitle}</td>
         <td 
           className="text-slate-500"
           onClick={handleLink}

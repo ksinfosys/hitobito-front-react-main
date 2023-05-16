@@ -57,10 +57,6 @@ function PointDetailBusiness() {
 
   const [sessionId, setSessionId] = useState("");
 
-
-  // 성공결과
-  const [sucessData, setSucessData] = useState({});
-
   // 결제 성공 플래그
   const [sucessFlag, setSucessFlag] = useState(false);
 
@@ -74,9 +70,6 @@ function PointDetailBusiness() {
 
   // 동의, 비동의 체크
   const [agreeFlag, setAgreeFlag] = useState(false);
-
-  //결제 팝업
-  const [payModal, setPayModal] = useState();
 
   const handleValueChange = e => {
     console.log(e.keyCode)
@@ -177,33 +170,33 @@ function PointDetailBusiness() {
       });
   };
 
-  // ** checkout 성공했을 때
-  const getSucessResult = () => {
-    axios
-      .post(
-        `/api/stripe/checkout/success/${sessionId}`,
-        {},
-        {
-          withCredentials: true,
-          headers: {
-            accessToken: getCookie("accessToken"),
-            lastLoginTime: getCookie("lastLoginTime"),
-          },
-        }
-      )
-      .then(response => {
-        console.log(response)
-        setSucessData(response.data);
-        setUserInfoV(prev => ({
-          ...prev,
-          historyBalance: response.data.result.historyBalance
-        }))
-        window.reload();
-      })
-      .catch(error => {
-        console.log(error)
-      });
-  };
+  // // ** checkout 성공했을 때
+  // const getSucessResult = () => {
+  //   axios
+  //     .post(
+  //       `/api/stripe/checkout/success/${sessionId}`,
+  //       {},
+  //       {
+  //         withCredentials: true,
+  //         headers: {
+  //           accessToken: getCookie("accessToken"),
+  //           lastLoginTime: getCookie("lastLoginTime"),
+  //         },
+  //       }
+  //     )
+  //     .then(response => {
+  //       console.log(response)
+  //       setSucessData(response.data);
+  //       setUserInfoV(prev => ({
+  //         ...prev,
+  //         historyBalance: response.data.result.historyBalance
+  //       }))
+  //       window.reload();
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     });
+  // };
 
 
   // 이용약관
@@ -357,8 +350,10 @@ function PointDetailBusiness() {
         <ModalBody className="p-5 plan-pay-modal business-modal">
           <div id="detail-cont">
             {isPmntPending ? (
-              <div className="font-bold text-lg w-5/5 text-center my-8">
-                決済が終わったら「決済完了」ボタンを押してください。
+              <div className="modal-subtit">
+                決済が終わったら確認ボタンをクリック、
+                <br/>
+                もしくはページを切り替えてください。
               </div>
             ) : (
               <>
@@ -494,7 +489,7 @@ function PointDetailBusiness() {
                     htmlFor="input-pay"
                   >
                     直接入力
-                    <span className="text-pending ml-2">(1000円 単位)</span>
+                    <span className="text-pending ml-2">(1000ポイント 単位)</span>
                   </label>
                 </div>
                 {directPayFlag && priceFlag === 5 && (
@@ -503,7 +498,7 @@ function PointDetailBusiness() {
                     type="text"
                     id="direct-pay"
                     className="form-check p-2 mt-2 w-full"
-                    placeholder="최대 300,000엔"
+                    placeholder="最大 300,000ポイント"
                     value={regexUserPoint(directPay.split(",").join(""))}
                     onKeyUp={(e) => {
                       if (e.keyCode === 189) {
@@ -513,15 +508,15 @@ function PointDetailBusiness() {
                     onChange={handleValueChange}
                   />
                 )}
-              </>
-            )}
-
             <ul className="flex space-between items-center p-3 bg-lo mt-2">
               <li className="font-bold text-lg text-right">
                 決済金額（税込み）
               </li>
               <li className="text-pending font-bold text-2xl">￥{taxPrice}</li>
             </ul>
+            </>     
+            )}
+
           </div>
           {
             !isPmntPending && (
@@ -752,8 +747,13 @@ function PointDetailBusiness() {
                   type="button"
                   className="btn btn-sm btn-pending w-24 mr-2"
                   onClick={() => {
-                    getSucessResult();
-                    setSucessFlag(true);
+                    // getSucessResult();
+                    setPointPaymentModal(!PointPaymentModal);
+                    setPriceFlag(0);
+                    setAgreeFlag(0);
+                    setTaxPrice("0");
+                    setDirectPay("");
+                    window.location.reload();
                   }}
                 >
                   決済完了
@@ -764,7 +764,6 @@ function PointDetailBusiness() {
                   className={`btn btn-sm w-24 mr-2 ${priceFlag !== 0 && agreeFlag ? "btn-pending" : "btn-grey-pending"}`}
                   onClick={() => {
                     //   setPointPaymentModal(!PointPaymentModal);
-                    setPayModal(true);
                     setPointLimitFail(false);
                     if (Number(taxPrice.split(",").join("")) >= 300000) {
                       setPointLimitFail(true);
@@ -782,8 +781,7 @@ function PointDetailBusiness() {
                     }
                   }}
                 >
-                  決済する
-                </button>
+                  次へ             </button>
               )}
             </div>
           </div>
@@ -922,11 +920,6 @@ function PointDetailBusiness() {
         }}
       >
         <ModalBody className="p-10 text-center">
-          {sucessData?.resultMessage ? (
-            <div className="modal-tit">{sucessData?.resultMessage}</div>
-          ) : (
-            <div className="modal-tit">決済に失敗しました。</div>
-          )}
           {/* <div className="modal-subtit">
             ポイントは1000ポイント単位で入力してください
           </div> */}
@@ -993,32 +986,6 @@ function PointDetailBusiness() {
               確認
             </a>
           </div>
-        </ModalBody>
-      </Modal>
-
-
-      {/* 결제 모달 */}
-      <Modal className="pay-big-modal"
-        show={payModal}
-        backdrop="static"
-        onHidden={() => {
-          setPayModal(false);
-        }}
-      >
-        <ModalHeader>
-          <div className="flex space-between items-center w-full">
-            <h2 className="modal-tit">
-
-            </h2>
-            <button className="" onClick={() => {
-              setPayModal(false);
-            }}>
-              <Lucide icon="X" className="w-4 h-4" />
-            </button>
-          </div>
-        </ModalHeader>
-        <ModalBody className="p-10 text-center">
-
         </ModalBody>
       </Modal>
 

@@ -112,7 +112,7 @@ const InterviewMng = () => {
             const code = response.data.resultCode;
             const result = response.data.result;
             code === "200" ? (() => {
-                console.log(result)
+                // console.log(result)
                 setUserDetailInfo(result);
                 result.detailFlag ? setinformModal2(true) : setinformModal(true);
             })() : console.log("fetching error:::", response);
@@ -132,7 +132,7 @@ const InterviewMng = () => {
             rqIdx: rqIdx,
             userId: userId,
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             res.resultCode === '200' ? (
                 setAcceptModalSuccess(true),
                 getList()
@@ -167,7 +167,7 @@ const InterviewMng = () => {
         });
     };
 
-    console.log(declaration)
+    // console.log(declaration)
 
     // 신고하기 API
     const reportSubmit = () => {
@@ -240,6 +240,7 @@ const InterviewMng = () => {
     const msgSaveSubmit = () => {
         ServiceFetch("/msg/tmpsave", "post", {
             msgContents: editorData,
+            msgTitle: messageTitle
         }).then((res) => {
             res.resultCode === '200' ? (
                 setSaveMsgSuccess(true)
@@ -261,9 +262,10 @@ const InterviewMng = () => {
             },
             withCredentials: true,
         }).then((response) => {
-            console.log(response.data);
-            setMsgSaveModal(true);
-            setEditorData(response.data.result.templateContents ? response.data.result.templateContents : "");
+            // console.log(response.data);
+            setMsgSaveModal(true),
+            setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
+            setMessageTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
         }).catch((error) => {
             console.error(error);
         });
@@ -336,23 +338,23 @@ const InterviewMng = () => {
                                         <th className="whitespace-nowrap text-sm border-tb0">
                                             {/* 드롭다운 퍼블 */}
                                             <DropdownSelect
-                                                options={['全体', '保留', '承諾', '拒否', '取消']}
+                                                options={['全体', '承認待ち', '承諾', '拒否', 'キャンセル']}
                                                 defaultOption={interview.statusFlagText}
                                                 onSelect={handleSelect01}
                                             />
                                         </th>
                                         <th className="whitespace-nowrap text-sm border-tb0">
                                             <div className="flex flex-center items-center">
-                                                依頼時間
+                                                依頼日時
                                                 <button onClick={() => { handleSelect02() }}>
                                                     <img src={TableArrow} alt="" style={rotateStyle} />
                                                 </button>
                                             </div>
                                         </th>
                                         <th className="whitespace-nowrap text-sm flex flex-center items-center border-tb0">
-                                            依頼時間
+                                            依頼期限
                                         </th>
-                                        <th className="whitespace-nowrap text-sm border-tb0">確認時間</th>
+                                        <th className="whitespace-nowrap text-sm border-tb0">確認日時</th>
                                         <th className="whitespace-nowrap text-sm border-tb0">ポイント状態</th>
                                         <th className="whitespace-nowrap text-sm th-blank border-tb0">
                                             <div className="flex gap-2 interview-mng-button-wrap">
@@ -372,7 +374,7 @@ const InterviewMng = () => {
                                 <tbody className="text-center">
                                     {listState?.length > 0 ? (
                                         listState.map((data, index) => {
-                                            console.log(listState)
+                                            // console.log(listState)
                                             return (
                                                 <tr
                                                     key={index}
@@ -409,11 +411,69 @@ const InterviewMng = () => {
                                                                         : "지급거부"} */}
                                                     </td>
                                                     <td className="pdrl-ad">
-                                                        <button
+                                                        <div>
+                                                            {
+                                                                data.pointAcceptFlag
+                                                                    ?
+                                                                    <button
+                                                                        className="btn btn-sm btn-business"
+                                                                        onClick={() => data.pointAcceptFlag && handleSubmit(data.rqIdx, data.rqReceiveUserId)}>
+                                                                        面接実施確認
+                                                                    </button>
+                                                                    :
+                                                                    <button
+                                                                        className="btn btn-sm btn-gray-business" disabled={true}>
+                                                                        面接実施確認
+                                                                    </button>
+
+                                                            }
+                                                            {
+                                                                data.rqStatus === "20102"
+                                                                    ?
+                                                                    <button
+                                                                        className="btn btn-sm btn-business ml-2 btn-message-write"
+                                                                        onClick={() => {
+                                                                            setMessageSendId(data.rqReceiveUserId)
+                                                                            setDeclarationUser(data.nickname)
+                                                                            data.rqStatus === "20102" && setMessageReply(true)
+                                                                        }}>
+                                                                        メッセージ作成
+                                                                    </button>
+                                                                    :
+                                                                    <button
+                                                                        className="btn btn-sm btn-gray-business ml-2 btn-message-write" disabled={true}>
+                                                                        メッセージ作成
+                                                                    </button>
+                                                            }                                                        
+                                                            {
+                                                                data.rqStatus === "20102"
+                                                                ?
+                                                                <button
+                                                                    className="btn btn-sm btn-business ml-2"
+                                                                    onClick={() => {                                                                
+                                                                        data.rqStatus === "20102" && setreportRequestModal1(true)
+                                                                        reportGet()
+                                                                        setDeclarationUser(data.nickname)
+                                                                        setDeclaration({ ...declaration, reportTargetId: data.rqReceiveUserId })
+                                                                    }}>
+                                                                    通報
+                                                                </button>
+                                                                :
+                                                                <button
+                                                                    className="btn btn-sm btn-gray-business ml-2" disabled={true}>
+                                                                    通報
+                                                                </button>
+                                                            }
+                                                        </div>
+
+
+
+
+                                                        {/* <button
                                                             className={
                                                                 data.pointAcceptFlag
                                                                     ? "btn btn-sm btn-business"
-                                                                    : "btn btn-sm btn-gray-business"
+                                                                    : "btn btn-sm btn-gray-business" 
                                                             }
                                                             onClick={() => data.pointAcceptFlag && handleSubmit(data.rqIdx, data.rqReceiveUserId)}
                                                         >
@@ -422,8 +482,8 @@ const InterviewMng = () => {
                                                         <button
                                                             className={
                                                                 data.rqStatus === "20102"
-                                                                    ? "btn btn-sm btn-outline-business ml-2 btn-message-write"
-                                                                    : "btn btn-sm btn-outline-gray-business ml-2 btn-message-write"
+                                                                    ? "btn btn-sm btn-business ml-2 btn-message-write"
+                                                                    : "btn btn-sm btn-gray-business ml-2 btn-message-write"
                                                             }
                                                             onClick={() => {
                                                                 setMessageSendId(data.rqReceiveUserId)
@@ -434,16 +494,24 @@ const InterviewMng = () => {
                                                             メッセージ作成
                                                         </button>
                                                         <button
-                                                            className="btn btn-sm btn-cancle-type1 ml-2"
-                                                            onClick={() => {
+                                                            className={
+                                                                data.rqStatus === "20102"
+                                                                    ? "btn btn-sm btn-business ml-2"
+                                                                    : "btn btn-sm btn-gray-business ml-2"
+                                                            }                                                            
+                                                            onClick={() => {                                                                
+                                                                data.rqStatus === "20102" && setreportRequestModal1(true)
                                                                 reportGet()
-                                                                setreportRequestModal1(true)
                                                                 setDeclarationUser(data.nickname)
                                                                 setDeclaration({ ...declaration, reportTargetId: data.rqReceiveUserId })
                                                             }}
                                                         >
                                                             通報
-                                                        </button>
+                                                        </button> */}
+
+
+
+
                                                     </td>
                                                 </tr>
                                             );
@@ -691,9 +759,9 @@ const InterviewMng = () => {
                 }}
             >
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">メッセージを転送しました。</div>
+                    <div className="modal-tit">メッセージを送信しました。</div>
                     <div className="modal-subtit">
-                        メッセージを転送しました。
+                        メッセージを送信しました。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
