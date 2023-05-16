@@ -1071,7 +1071,7 @@ tr.table-content:hover td {
   cursor: pointer;
 }
 .resume-regist-cont .attach-cont-item {
-  width: 254px;
+  width: auto;
 }
 .resume-regist-cont .attach-cont-tit {
   font-weight: 400;
@@ -1225,7 +1225,6 @@ tr.table-content:hover td {
   line-height: 140%;
   color: #808386;
   text-align: left;
-  margin-top: 16px;
   margin-bottom: 40px;
 }
 .modal .modal-subtit2 {
