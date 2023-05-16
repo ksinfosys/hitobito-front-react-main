@@ -567,7 +567,7 @@ const UsePlan = () => {
                   className="form-check-label text-sm w-full"
                   htmlFor="3m-pay"
                 >
-                  3か月決済 <span className="text-pending">(4%割引)</span>
+                  3ヶ月決済 <span className="text-pending">(4%割引)</span>
                 </label>
               </div>
               <div className="form-check p-2 border mt-2">

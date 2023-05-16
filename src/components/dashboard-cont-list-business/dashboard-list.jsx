@@ -183,9 +183,9 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                 setIsChecked(true),
                 setCheckId((prev) => [...prev,data.jsUserId])
             }else{
-                console.log("data.requestStatus error")
+                console.log("fetching error:::", response)
             }
-        }else if(!allCheck){
+        }else{
             setIsChecked(false),
             setCheckId([])
         }
@@ -275,7 +275,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         <div className="flex items-center gap-2">
                             <div className={educationActive ? "info-flex-tit flex item-center orange" : "info-flex-tit flex item-center"}>
                                 <img src={InfoImg3} alt="" className="mr-1" />
-                                最終学校名
+                                学歴
                             </div>
                             <div className={educationActive ? "info-flex-cont orange" : "info-flex-cont"}>
                                 {educationName}
@@ -379,6 +379,11 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <div className="cont-btm-btn orange">
                                     {buttonList3}
                                 </div>
+                            </div>
+                            <div className="flex flex-end">
+                                <button className="btn btn-sm btn-business btn-message-write-1" onClick={() => { detailUser(data.jsUserId, data.requestStatus), setCheckId([data.jsUserId]) }}>
+                                    更に詳細を表示
+                                </button>
                             </div>
                         </div>
                         <div className="skill-box flex flex-end">
@@ -551,7 +556,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                                         期間
                                                     </div>
                                                     <div className="modal-subtit2">
-                                                        {project.projectPeriod} 개월
+                                                        {project.projectPeriod} カ月
                                                     </div>
                                                 </div>
                                             </div>
@@ -593,7 +598,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                             )
                                         }) : (
                                             <div className="btn-lang">
-                                                すきるがありません。
+                                                スキルがありません。
                                             </div>
                                         )
                                     }
