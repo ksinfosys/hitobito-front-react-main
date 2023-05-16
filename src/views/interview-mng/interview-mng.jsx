@@ -41,7 +41,7 @@ const InterviewMng = () => {
     // Search Submit
     const searchSubmit = () => {
         setSearchStatus((prev) => !prev);
-        getList();セル
+        getList();
     };
 
     // 메세지 모달
