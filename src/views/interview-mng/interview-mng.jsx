@@ -19,7 +19,6 @@ import DropdownSelect from './select-component';
 import TableArrow from "@/assets/images/table-arrow.svg";
 
 const InterviewMng = () => {
-
     const [informModal, setinformModal] = useState(false);
     const [informModal2, setinformModal2] = useState(false);
 
@@ -400,6 +399,8 @@ const InterviewMng = () => {
                                                     </td>
                                                     <td className="table-br-tab">
                                                         {data.requestPointStatus}
+                                                        <br/>{"("}{data.point_cng_type === "20301" ? "+" : "-"}{data.point_cng_amount}{")"}
+
                                                         {/* {data.requestPointStatus === "21102"
                                                             ? "포인트 미신청"
                                                             : data.requestPointStatus === "21103"
@@ -425,7 +426,6 @@ const InterviewMng = () => {
                                                                         className="btn btn-sm btn-gray-business" disabled={true}>
                                                                         面接実施確認
                                                                     </button>
-
                                                             }
                                                             {
                                                                 data.rqStatus === "20102"
