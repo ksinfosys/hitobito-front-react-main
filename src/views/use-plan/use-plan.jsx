@@ -367,14 +367,23 @@ const UsePlan = () => {
                   <button
                     type="button"
                     className={
-                      planList.planCode === "P0001" || planList?.planEndDate === "21001231"
-                        ? "btn btn--grey-pending mt-5 w-full"
-                        : "btn btn-pending mt-5 w-full"
+                      planList.planCode === "P0000"
+                        ? "btn btn-pending mt-5 w-full"
+                        : planList.planCode === "P0001" || planList?.planEndDate === "21001231"
+                          ? "btn btn--grey-pending mt-5 w-full"
+                          : "btn btn-pending mt-5 w-full"
                     }
-                    onClick={planList?.planEndDate !== "21001231" ? () => {
-                      setIsPlanCode("P0001");
-                      setPlanPaymentModal(true);
-                    } : null}
+                    onClick={planList.planCode === "P0000"
+                    ? () => {
+                        setIsPlanCode("P0001");
+                        setPlanPaymentModal(true);
+                      }
+                    : planList?.planEndDate !== "21001231"
+                      ? () => {
+                          setIsPlanCode("P0001");
+                          setPlanPaymentModal(true);
+                        }
+                      : null}
                   >
                     変更する
                   </button>
@@ -431,14 +440,23 @@ const UsePlan = () => {
                   <button
                     type="button"
                     className={
-                      planList.planCode === "P0002" || planList?.planEndDate === "21001231"
-                        ? "btn btn--grey-pending mt-5 w-full"
-                        : "btn btn-pending mt-5 w-full"
+                      planList.planCode === "P0000"
+                        ? "btn btn-pending mt-5 w-full"
+                        : planList.planCode === "P0002" || planList?.planEndDate === "21001231"
+                          ? "btn btn--grey-pending mt-5 w-full"
+                          : "btn btn-pending mt-5 w-full"
                     }
-                    onClick={planList?.planEndDate !== "21001231" ? () => {
-                      setIsPlanCode("P0002");
-                      setPlanPaymentModal(true);
-                    } : null}
+                    onClick={planList.planCode === "P0000"
+                    ? () => {
+                        setIsPlanCode("P0002");
+                        setPlanPaymentModal(true);
+                      }
+                    : planList?.planEndDate !== "21001231"
+                      ? () => {
+                          setIsPlanCode("P0002");
+                          setPlanPaymentModal(true);
+                        }
+                      : null}
                   >
                     変更する
                   </button>

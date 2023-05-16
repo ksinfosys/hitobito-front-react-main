@@ -140,13 +140,6 @@ const Login = () => {
       document.cookie = cookie_name + "=" + cookie_value;
     }
 
-    setCookie(
-      "accessToken",
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVMDAwNTAwNCIsImlhdCI6MTY3OTU0ODcyOSwiZXhwIjoxNjc5OTA4NzI5fQ.BxolHRnJ2wTTj8JCwMIGdks_VGSba6JVzi9ROWDLo28",
-      "3"
-    );
-    setCookie("lastLoginTime", "2023-03-23 14:18:49.67932", "3");
-
     setUserInfoV((prevValue) => ({
       ...prevValue,
       userType: 1,
