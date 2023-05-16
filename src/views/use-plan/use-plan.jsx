@@ -298,7 +298,7 @@ const UsePlan = () => {
                     className={
                       isplanCode === "P0000" && isActive
                         ? "btn btn-outline-pending bg-white mt-5 w-full"
-                        : "btn btn--grey-pending mt-5 w-full"
+                        : "btn btn-gray-business mt-5 w-full"
                     }
                     onClick={() => {
                       // setIsPlanCode("P0000");
@@ -341,8 +341,10 @@ const UsePlan = () => {
                       : "使用中"}
                     {planList.invalidFlag !== "8" ? (
                       <div>
-                        {regexUserJoinDate(planList.planStartDate)} ~{" "}
-                        {regexUserJoinDate(planList.planEndDate)}
+                        {regexUserJoinDate(planList.planEndDate) == "2100/12/31" ? 
+                        "定期購読中(" + regexUserJoinDate(planList.planStartDate) + ")" 
+                        : 
+                        regexUserJoinDate(planList.planStartDate)+ " ~ " + regexUserJoinDate(planList.planEndDate)}
                       </div>
                     ) : null}
                   </button>
@@ -401,8 +403,10 @@ const UsePlan = () => {
 
                     {planList.invalidFlag !== "8" ? (
                       <div>
-                        {regexUserJoinDate(planList.planStartDate)} ~{" "}
-                        {regexUserJoinDate(planList.planEndDate)}
+                      {regexUserJoinDate(planList.planEndDate) == "2100/12/31" ? 
+                      "定期購読中(" + regexUserJoinDate(planList.planStartDate) + ")" 
+                      : 
+                      regexUserJoinDate(planList.planStartDate)+ " ~ " + regexUserJoinDate(planList.planEndDate)}
                       </div>
                     ) : null}
                   </button>
