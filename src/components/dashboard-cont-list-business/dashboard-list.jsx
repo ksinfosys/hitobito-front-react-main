@@ -360,7 +360,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                     スキル
                                 </div>
                                 {/* class명에 orange-type2 넣으면 오렌지색 배경 버튼으로 바뀜 */}
-                                <div className="cont-btm-btn orange">
+                                <div className="cont-btm-btn-1 orange">
                                     {buttonList1}
                                 </div>
                             </div>
@@ -368,7 +368,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <div className="skill-tit">
                                     担当工程
                                 </div>
-                                <div className="cont-btm-btn orange">
+                                <div className="cont-btm-btn-1 orange">
                                     {buttonList2}
                                 </div>
                             </div>
