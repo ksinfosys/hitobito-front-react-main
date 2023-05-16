@@ -215,7 +215,7 @@ function MessageBoxBusiness() {
             <div id="business" className="message-box-business">
                 <div className="box-type-default">
                     <div className="p-5 border-b border-slate-200/60 text-sm">
-                        メッセージボックス
+                        メッセージ箱
                     </div>
                     <div className="p-5">
                         <div className="flex border-b-2">

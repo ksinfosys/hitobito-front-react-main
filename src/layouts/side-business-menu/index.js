@@ -21,22 +21,43 @@ const findActiveMenu = (subMenu2, location) => {
 
 const nestedMenu = (menu, location) => {
   menu.forEach((item, key) => {
-    if (typeof item !== "string") {
-      let menuItem = menu[key];
-      menuItem.active =
-        ((location.forceActiveMenu !== undefined &&
-          item.pathname === location.forceActiveMenu) ||
-          (location.forceActiveMenu === undefined &&
-            item.pathname === location.pathname) ||
-          (item.subMenu2 && findActiveMenu(item.subMenu2, location))) &&
-        !item.ignore;
-
-      if (item.subMenu2) {
-        
-        menuItem = {
-          ...item,
-          ...nestedMenu(item.subMenu2, location),
-        };
+    if(item.subMenu2!=null){
+      if (typeof item !== "string") {
+        let menuItem = menu[key];
+        menuItem.active =
+          ((location.forceActiveMenu !== undefined &&
+            item.pathname === location.forceActiveMenu) ||
+            (location.forceActiveMenu === undefined &&
+              item.pathname === location.pathname) ||
+            (item.subMenu2 && findActiveMenu(item.subMenu2, location))) &&
+          !item.ignore;
+  
+        if (item.subMenu2) {
+          
+          menuItem = {
+            ...item,
+            ...nestedMenu(item.subMenu2, location),
+          };
+        }
+      }
+    }else{
+      if (typeof item !== "string") {
+        let menuItem = menu[key];
+        menuItem.active =
+          ((location.forceActiveMenu !== undefined &&
+            item.pathname === location.forceActiveMenu) ||
+            (location.forceActiveMenu === undefined &&
+              item.pathname === location.pathname) ||
+            (item.subMenu && findActiveMenu(item.subMenu, location))) &&
+          !item.ignore;
+  
+        if (item.subMenu) {
+          menuItem.activeDropdown = findActiveMenu(item.subMenu, location);
+          menuItem = {
+            ...item,
+            ...nestedMenu(item.subMenu, location),
+          };
+        }
       }
     }
   });
@@ -45,9 +66,11 @@ const nestedMenu = (menu, location) => {
 };
 
 const linkTo = (menu, navigate) => {
-  
+  if (menu.subMenu) {
+    menu.activeDropdown = !menu.activeDropdown;
+  } else {
     navigate(menu.pathname);
-  
+  }
 };
 
 const enter = (el, done) => {
