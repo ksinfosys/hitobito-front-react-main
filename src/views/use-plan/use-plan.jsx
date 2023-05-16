@@ -233,7 +233,7 @@ const UsePlan = () => {
   }
 
 
-  // 약관 스크롤 이벤트
+  // 약관 스크롤 이벤트 
   const termsRef = useRef(null);
   const [agreeOpen, setAgreeOpen] = useState(false);
 
