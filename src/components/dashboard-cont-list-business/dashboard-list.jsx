@@ -183,9 +183,9 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                 setIsChecked(true),
                 setCheckId((prev) => [...prev,data.jsUserId])
             }else{
-                console.log("data.requestStatus error")
+                console.log("fetching error:::", response)
             }
-        }else if(!allCheck){
+        }else{
             setIsChecked(false),
             setCheckId([])
         }
@@ -275,7 +275,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         <div className="flex items-center gap-2">
                             <div className={educationActive ? "info-flex-tit flex item-center orange" : "info-flex-tit flex item-center"}>
                                 <img src={InfoImg3} alt="" className="mr-1" />
-                                最終学校名
+                                学歴
                             </div>
                             <div className={educationActive ? "info-flex-cont orange" : "info-flex-cont"}>
                                 {educationName}
@@ -379,6 +379,11 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <div className="cont-btm-btn orange">
                                     {buttonList3}
                                 </div>
+                            </div>
+                            <div className="flex flex-end">
+                                <button className="btn btn-sm btn-business btn-message-write-1" onClick={() => { detailUser(data.jsUserId, data.requestStatus), setCheckId([data.jsUserId]) }}>
+                                    更に詳細を表示
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -545,7 +550,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                                         期間
                                                     </div>
                                                     <div className="modal-subtit2">
-                                                        {project.projectPeriod} 개월
+                                                        {project.projectPeriod} カ月
                                                     </div>
                                                 </div>
                                             </div>
@@ -576,7 +581,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                     <div className="skill-box">
                         <div className="charge-btm">
                             <div className="flex gap-5">
-                                <div className="charge-btm-tit">스킬</div>
+                                <div className="charge-btm-tit">スキル</div>
                                 <div className="charge-btm-cont flex gap-2">
                                     {
                                         userInfoState && userInfoState?.resumeSkillList.length > 0 ? userInfoState.resumeSkillList.map((skill, index) => {
@@ -587,7 +592,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                             )
                                         }) : (
                                             <div className="btn-lang">
-                                                스킬이 없습니다.
+                                                スキルがありません。
                                             </div>
                                         )
                                     }

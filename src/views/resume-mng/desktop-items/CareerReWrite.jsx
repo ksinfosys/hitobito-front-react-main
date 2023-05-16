@@ -112,7 +112,7 @@ const CareerReWrite = ({
         <div className="box-item flex flex-col">
           <div className="form-tit">期間 <span>*</span></div>
           {/* select > input 변경 */}
-          <input id="projectPeriodSelect" type="number" min={0} className="form-control" placeholder="개월 (숫자만 입력해 주세요)"
+          <input id="projectPeriodSelect" type="number" min={0} className="form-control" placeholder="カ月(数字で入力してください)"
             onChange={(e) => handleCareerChange(e, index)} value={period} />
         </div>
       </div>
