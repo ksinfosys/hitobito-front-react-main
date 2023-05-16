@@ -399,7 +399,7 @@ const InterviewMng = () => {
                                                     </td>
                                                     <td className="table-br-tab">
                                                         {data.requestPointStatus}
-                                                        <br/>{"("}{data.point_cng_type === "20301" ? "+" : "-"}{data.point_cng_amount}{")"}
+                                                        <br/>{"("}{data.pointCngType === "20301" ? "+" : "-"}{data.pointCngAmount}{")"}
 
                                                         {/* {data.requestPointStatus === "21102"
                                                             ? "포인트 미신청"
