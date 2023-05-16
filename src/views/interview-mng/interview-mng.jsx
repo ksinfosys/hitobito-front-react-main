@@ -112,7 +112,7 @@ const InterviewMng = () => {
             const code = response.data.resultCode;
             const result = response.data.result;
             code === "200" ? (() => {
-                console.log(result)
+                // console.log(result)
                 setUserDetailInfo(result);
                 result.detailFlag ? setinformModal2(true) : setinformModal(true);
             })() : console.log("fetching error:::", response);
@@ -132,7 +132,7 @@ const InterviewMng = () => {
             rqIdx: rqIdx,
             userId: userId,
         }).then((res) => {
-            console.log(res)
+            // console.log(res)
             res.resultCode === '200' ? (
                 setAcceptModalSuccess(true),
                 getList()
@@ -167,7 +167,7 @@ const InterviewMng = () => {
         });
     };
 
-    console.log(declaration)
+    // console.log(declaration)
 
     // 신고하기 API
     const reportSubmit = () => {
@@ -240,6 +240,7 @@ const InterviewMng = () => {
     const msgSaveSubmit = () => {
         ServiceFetch("/msg/tmpsave", "post", {
             msgContents: editorData,
+            msgTitle: messageTitle
         }).then((res) => {
             res.resultCode === '200' ? (
                 setSaveMsgSuccess(true)
@@ -261,9 +262,10 @@ const InterviewMng = () => {
             },
             withCredentials: true,
         }).then((response) => {
-            console.log(response.data);
-            setMsgSaveModal(true);
-            setEditorData(response.data.result.templateContents ? response.data.result.templateContents : "");
+            // console.log(response.data);
+            setMsgSaveModal(true),
+            setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
+            setMessageTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
         }).catch((error) => {
             console.error(error);
         });
@@ -336,7 +338,7 @@ const InterviewMng = () => {
                                         <th className="whitespace-nowrap text-sm border-tb0">
                                             {/* 드롭다운 퍼블 */}
                                             <DropdownSelect
-                                                options={['全体', '保留', '承諾', '拒否', '取消']}
+                                                options={['全体', '承認待ち', '承諾', '拒否', 'キャンセル']}
                                                 defaultOption={interview.statusFlagText}
                                                 onSelect={handleSelect01}
                                             />
@@ -372,7 +374,7 @@ const InterviewMng = () => {
                                 <tbody className="text-center">
                                     {listState?.length > 0 ? (
                                         listState.map((data, index) => {
-                                            console.log(listState)
+                                            // console.log(listState)
                                             return (
                                                 <tr
                                                     key={index}
