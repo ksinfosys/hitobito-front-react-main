@@ -266,29 +266,29 @@ function MessageBoxBusiness() {
                                     ? 
                                     <div>
                                     <button
-                                        className="btn btn-sm btn-pending w-24 mr-2" disabled={true}>
-                                        返信
+                                        className="btn btn-sm btn-pending w-27 mr-2" disabled={true}>
+                                        メッセージ作成
                                     </button>
                                     <button
                                         className="btn btn-sm btn-outline-secondary w-24" disabled={true}>
-                                        削除
+                                        選択を削除
                                     </button>
                                     </div>
                                     :
                                     <div>
                                         <button
-                                            className="btn btn-sm btn-pending w-24 mr-2"
+                                            className="btn btn-sm btn-pending w-27 mr-2"
                                             onClick={() => {
                                                 msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
                                                     msgIdxes.length > 1 ? setMessageReplyFail(true) :
                                                         setMessageReplyModal(true);
-                                            }}>返信</button>
+                                            }}>メッセージ作成</button>
                                         <button
                                             className="btn btn-sm btn-outline-secondary w-24"
                                             onClick={() => {
                                                 msgIdxes.length > 0 ? setMessageDeleteModal(true) : setMsgCheckModal(true);
                                             }}
-                                        >削除</button>
+                                        >選択を削除</button>
                                     </div>
                                 }
                                 
@@ -305,7 +305,7 @@ function MessageBoxBusiness() {
                                                 onChange={handleAllCheck}
                                             />
                                         </th>
-                                        <th className="whitespace-nowrap">削除</th>
+                                        <th className="whitespace-nowrap">全て選択</th>
                                         <th className="whitespace-nowrap">受信者/発信者</th>
                                         <th className="whitespace-nowrap">タイトル</th>
                                         <th className="whitespace-nowrap">受信時間</th>

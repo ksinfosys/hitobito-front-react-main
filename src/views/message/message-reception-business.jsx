@@ -284,39 +284,39 @@ function MessageReceptionBusiness() {
                     ? 
                     <div>
                       <button
-                        className="btn btn-sm btn-pending w-24 mr-2" disabled={true}>
-                        返信
+                        className="btn btn-sm btn-pending w-27 mr-2" disabled={true}>
+                        メッセージ作成
                       </button>
                       <button
-                        className="btn btn-sm btn-outline-pending w-24 mr-2" disabled={true}>
-                        保管
+                        className="btn btn-sm btn-outline-pending w-27 mr-2" disabled={true}>
+                        メッセージ保管
                       </button>
                       <button
                         className="btn btn-sm btn-outline-secondary w-24" disabled={true}>
-                        削除
+                        選択を削除
                       </button>
                     </div>
                     :
                     <div>
                       <button
-                        className="btn btn-sm btn-pending w-24 mr-2"
+                        className="btn btn-sm btn-pending w-27 mr-2"
                         onClick={() => {
                           msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
                             msgIdxes.length > 1 ? setMessageReplyFail(true) :
                               setMessageReply(true);
                         }}
                       >
-                        返信
+                        メッセージ作成
                       </button>
                       <button
-                        className="btn btn-sm btn-outline-pending w-24 mr-2"
+                        className="btn btn-sm btn-outline-pending w-27 mr-2"
                         onClick={() => {
                           msgIdxes.length > 0
                             ? setMessageSaveModal(true)
                             : setMsgCheckModal(true);
                         }}
                       >
-                        保管
+                        メッセージ保管
                       </button>
                       <button
                         className="btn btn-sm btn-outline-secondary w-24"
@@ -326,7 +326,7 @@ function MessageReceptionBusiness() {
                             : setMsgCheckModal(true);
                         }}
                       >
-                        削除
+                        選択を削除
                       </button>
                     </div>
                   }
