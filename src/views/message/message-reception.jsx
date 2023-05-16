@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Lucide, Modal, ModalBody, ModalHeader, ClassicEditor, ModalFooter} from "@/base-components";
 import { Link, useNavigate } from 'react-router-dom';
 

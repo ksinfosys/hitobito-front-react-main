@@ -322,7 +322,7 @@ const DashboardList = (props) => {
                                     ポイント支給待ち
                                 </button>
                             ) : props.item.pointStatus === '21106' ? (
-                                <button className="btn btn-long btn-outline-secondary">ポイント支給完了</button>
+                                <button className="btn btn-long btn-outline-secondary" onClick={() => {window.location.assign("/point-detail")}}>ポイント支給完了</button>
                             ) : (
                                 <button className="btn btn-sm btn-gray-type1 w-auto">
                                     支払い拒否
