@@ -124,6 +124,14 @@ const DashboardBusiness = () => {
         }).then((res) => {
             const shortenedArr = selectCode.map((str) => str.slice(0, 8));
             const filteredArr1 = res.result.searchTags.filter((item) => !shortenedArr.includes(item.code));
+            const now = new Date();
+            const year = now.getFullYear();
+            for(var i = 0; i < filteredArr1.length; i++){
+                if(filteredArr1[i].codeType === '51'){
+                    let keisanCodename = Number(year) - Number(filteredArr1[i].codeName);
+                    filteredArr1[i].codeName = keisanCodename + '歳';
+                }
+            }
             setTagsList(filteredArr1);
         }).catch((e) => {
             console.log(e);
@@ -371,19 +379,19 @@ const DashboardBusiness = () => {
                     <div className="list-top flex justify-end items-center mt-10 mb-5 px-5">
                         <div className="flex gap-2">
                             <select className="form-select w-32" onChange={(e) => setSelectValue(e.target.value)}>
-                                <option value="000">全体</option>
+                                <option value="000">全て</option>
                                 <option value="101">スキル</option>
                                 <option value="51">年齢</option>
                                 <option value="52">学歴</option>
                                 <option value="53">性別</option>
                                 <option value="54">国籍</option>
                                 <option value="55">経験年数</option>
-                                <option value="56">業種</option>
-                                <option value="57">職種</option>
+                                <option value="56">会社の業種</option>
+                                <option value="57">現在の職種</option>
                                 <option value="58">居住地</option>
                                 <option value="60">将来の目標</option>
                                 <option value="61">希望年収</option>
-                                <option value="62">役割</option>
+                                <option value="62">経験した役割</option>
                                 <option value="63">担当工程</option>
                             </select>
 
@@ -634,11 +642,11 @@ const DashboardBusiness = () => {
                     setModalState07(false);
                 }}>
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">검색태그 초과</div>
+                    <div className="modal-tit">検索タグ数を超えています</div>
                     <div className="modal-subtit">
-                        동일 カテゴリ가 이미 선택되어 있습니다.
+                        同じカテゴリを選択しています.
                         <br />
-                        해당 カテゴリ의 경우 2개까지만 선택이 가능합니다.
+                        年齢は2つまで選択できます。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a href="#" className="btn btn-pending" onClick={() => setModalState07(false)}>
