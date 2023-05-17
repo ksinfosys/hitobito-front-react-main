@@ -31,6 +31,9 @@ function Main(props) {
 
   const [plusArr, setPlusArr] = useState([])
   const [minusArr, setMinusArr] = useState([])
+  
+  const [priceChangeArr, setPriceChangeArr] = useState([])
+
   const [balanceArr, setBalanceArr] = useState([])
 
   // 2022-02 형식으로 떨어지는 monthList 문자열 가공
@@ -65,8 +68,10 @@ function Main(props) {
     setMinusArr(minusPrice.reverse())
   }
 
+
   const getDateBalance = () => {
     const initBalance = dataList.filter(data => data.pointCngType === "初期残高")[0]?.historyBalance
+
 
     // 잔고 배열 / 초기잔고값 0번인덱스에 넣기
     const finalArr = [initBalance];
@@ -77,17 +82,25 @@ function Main(props) {
     finalArr.shift();
     setBalanceArr(finalArr)
 
+    const priceCngArr = [];
+    for (let i = 0; i < Math.ceil(dataList.length / 2); i++) {
+      priceCngArr[i] = plusArr[i] - minusArr[i];
+    }
+    priceCngArr.pop();
+    setPriceChangeArr(priceCngArr)
+
   }
   // console.log(dataList)
-  // console.log('month:::', monthData)
-  // console.log("plusArr:::", plusArr)
-  // console.log("minusArr:::", minusArr)
+  //console.log('month:::', monthData)
+  //console.log("plusArr:::", plusArr)
+  ///console.log("minusArr:::", minusArr)
+  //console.log("priceChangeArr:::", priceChangeArr)
+
 
   useEffect(() => {
     getmonthData();
     getPlusData();
     getMinusData();
-
   }, [props.dataList]);
 
   useEffect(() => {
@@ -100,29 +113,17 @@ function Main(props) {
       labels: [...monthData],
       datasets: [
         {
-          label: "使用",
+          label: "変動量",
           barPercentage: 0.5,
           barThickness: 40,
           maxBarThickness: 30,
           minBarLength: 2,
-          data: [...minusArr],
+          data: [...priceChangeArr],
           backgroundColor: "#78AEFF",
           borderRadius: 5,
           order: 2,
         },
         {
-          label: "購入",
-          barPercentage: 0.5,
-          barThickness: 40,
-          maxBarThickness: 30,
-          minBarLength: 2,
-          data: [...plusArr],
-          backgroundColor: "#FF9800",
-          borderRadius: 5,
-          order: 3,
-        },
-        {
-          type: "line",
           label: "残高",
           barPercentage: 0.5,
           barThickness: 40,

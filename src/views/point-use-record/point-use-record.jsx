@@ -176,11 +176,13 @@ const PointUseRecord = () => {
                   <thead className="table-light text-center">
                     <tr>
                       <th className="whitespace-nowrap text-sm">
-                        ポイント変動時間
+                        ポイント変動日
                       </th>
-                      <th className="whitespace-nowrap text-sm">ポイント変動</th>
                       <th className="whitespace-nowrap text-sm">
-                        変動後の残額
+                        ポイント変動数
+                      </th>
+                      <th className="whitespace-nowrap text-sm">
+                        変動後残高
                       </th>
                       <th className="whitespace-nowrap text-sm">変動内訳</th>
                     </tr>
