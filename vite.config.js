@@ -19,7 +19,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://hitobito-net.com/api",
-        //target: "http://localhost:8081/api",
+        // target: "http://localhost:8081/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
         secure: false,

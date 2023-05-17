@@ -195,10 +195,10 @@ function MessageSentBusiness() {
     const msgSaveSubmit = () => {
         ServiceFetch("/msg/tmpsave", "post", {
             msgContents: editorData,
+            msgTitle: msgSendTitle
         }).then((res) => {
             res.resultCode === '200' ? (
-                setSaveMsgSuccess(true),
-                localStorage.setItem("msgSendTitle", msgSendTitle)
+                setSaveMsgSuccess(true)
             ) : res.resultCode === '302' ? (
                 setSaveMsgFail01(true)
             ) : (
@@ -220,7 +220,7 @@ function MessageSentBusiness() {
             response.data.resultCode === '200' ? (
                 setMsgSaveModal(true),
                 setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
-                setMsgSendTitle(localStorage.getItem("msgSendTitle"))
+                setMsgSendTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
             ) : (
                 setModalFail(true)
             )
@@ -240,7 +240,7 @@ function MessageSentBusiness() {
             <div id="business" className="message-sent-business">
                 <div className="box-type-default">
                     <div className="p-5 border-b border-slate-200/60 text-sm">
-                        メッセージボックス
+                        メッセージ箱
                     </div>
                     <div className="p-5">
                         <div className="flex border-b-2">
@@ -680,7 +680,7 @@ function MessageSentBusiness() {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">送信成功</div>
                     <div className="modal-subtit">
-                        メッセージを転送しました。
+                        メッセージを送信しました。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a

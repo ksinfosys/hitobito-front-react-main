@@ -178,13 +178,17 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
 
     // 전체 체크 박스 동작
     useEffect(() => {
-        allCheck ? (
-            setIsChecked(true),
-            setCheckId((prev) => [...prev, data.jsUserId])
-        ) : (
+        if(allCheck){
+            if(data.requestStatus == false){
+                setIsChecked(true),
+                setCheckId((prev) => [...prev,data.jsUserId])
+            }else{
+                console.log("fetching error:::", response)
+            }
+        }else{
             setIsChecked(false),
             setCheckId([])
-        )
+        }
     }, [allCheck])
 
     // 의뢰시 체크 박스 false
@@ -213,12 +217,12 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         <div className="form-check dash-cont1-tit gap-2">
                             <input
                                 id="vertical-form-4"
-                                className="form-check-input"
+                                className={data.requestStatus ? "form-check-input display-none" : "form-check-input"}
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={() => handleCheckboxChange(data.jsUserId)}
                             />
-                            <button className={data.requestStatus ? "btn btn-sm btn-secondary" : "btn btn-sm btn-secondary hidden"}>{data.rqSendDateTime} 依頼完了</button>
+                            <p className={data.requestStatus ? " btn-sm btn-secondary" : "btn btn-sm btn-secondary hidden"}>{data.rqSendDateTime} 依頼完了</p>
                             <div className="form-check-label business flex items-center gap-2" htmlFor="vertical-form-4" onClick={() => { detailUser(data.jsUserId, data.requestStatus), setCheckId([data.jsUserId]) }}>
                                 {
                                     data.genderName === '男性' ?
@@ -238,9 +242,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                     <div className="dash-cont-cont3 flex items-center">
                         {
                             data.requestStatus ? (
-                                <button className="btn btn-sm btn-secondary long">
-                                    依頼完了
-                                </button>
+                                <></>
                             ) : (
                                 <>
                                     <div className="color-a8">面談依頼有効期限</div>
@@ -273,7 +275,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         <div className="flex items-center gap-2">
                             <div className={educationActive ? "info-flex-tit flex item-center orange" : "info-flex-tit flex item-center"}>
                                 <img src={InfoImg3} alt="" className="mr-1" />
-                                最終学校名
+                                学歴
                             </div>
                             <div className={educationActive ? "info-flex-cont orange" : "info-flex-cont"}>
                                 {educationName}
@@ -358,7 +360,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                     スキル
                                 </div>
                                 {/* class명에 orange-type2 넣으면 오렌지색 배경 버튼으로 바뀜 */}
-                                <div className="cont-btm-btn orange">
+                                <div className="cont-btm-btn-1 orange">
                                     {buttonList1}
                                 </div>
                             </div>
@@ -366,7 +368,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <div className="skill-tit">
                                     担当工程
                                 </div>
-                                <div className="cont-btm-btn orange">
+                                <div className="cont-btm-btn-1 orange">
                                     {buttonList2}
                                 </div>
                             </div>
@@ -549,7 +551,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                                         期間
                                                     </div>
                                                     <div className="modal-subtit2">
-                                                        {project.projectPeriod} 개월
+                                                        {project.projectPeriod} カ月
                                                     </div>
                                                 </div>
                                             </div>
@@ -591,7 +593,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                             )
                                         }) : (
                                             <div className="btn-lang">
-                                                すきるがありません。
+                                                スキルがありません。
                                             </div>
                                         )
                                     }

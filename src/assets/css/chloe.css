@@ -134,6 +134,18 @@
   box-sizing: border-box;
 }
 
+.btn-outline-gray-business {
+  background: #E4E7EA;
+  border: 1px solid #E4E7EA;
+  -webkit-box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.08);
+          box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.08);
+  border-radius: 5px;
+  height: 28px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #808386;
+}
+
 .btn-gray-business {
   background: #E4E7EA;
   border: 1px solid #E4E7EA;
@@ -205,6 +217,10 @@
   width: 5.3rem;
 }
 
+.btn-message-write-1 {
+  width: 7.3rem;
+}
+
 .btn-skyblue2 {
   background: #DBEAFE;
   border: none;
@@ -218,7 +234,6 @@
 .btn-cancle-type1 {
   background: #FFFFFF;
   border: 1px solid #E4E7EA;
-  font-size: 12px;
   -webkit-box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.08);
   box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.08);
   border-radius: 5px;
@@ -1435,7 +1450,7 @@ tr.table-content:hover td {
 }
 
 .resume-regist-cont .attach-cont-item {
-  width: 254px;
+  width: 400px;
 }
 
 .resume-regist-cont .attach-cont-tit {
@@ -1443,6 +1458,7 @@ tr.table-content:hover td {
   font-size: 16px;
   line-height: 140%;
   color: #333333;
+  width: -webkit-fill-available;
 }
 
 <<<<<<< HEAD=======.attach-cont-file {
@@ -1613,8 +1629,6 @@ tr.table-content:hover td {
   line-height: 140%;
   color: #808386;
   text-align: left;
-  margin-top: 16px;
-  margin-bottom: 40px;
 }
 
 .modal .modal-subtit2 {
@@ -3032,7 +3046,7 @@ tr.table-content:hover td {
 
 .em-info-modal .main-curr .main-curr-box .charge-btm-tit {
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 140%;
   color: #333333;
   min-width: 52px;
@@ -3936,4 +3950,5 @@ tr.table-content:hover td {
 
 td.table-br-tab {
   padding: 1.25rem 2rem;
+  font-size: 0.75rem;
 }

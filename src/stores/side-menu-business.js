@@ -28,6 +28,14 @@ const sideMenu = atom({
             {
                 pathname: "/message-reception-business",
                 title: "メッセージ箱",
+                subMenu2: [
+                    {
+                        pathname: "/message-sent-business"
+                    },
+                    {
+                        pathname: "/message-box-business"
+                    },
+                ],
             },
             {
                 pathname: "/point-use-record",
@@ -38,9 +46,9 @@ const sideMenu = atom({
                 title: "パスワード変更",
             },
             {
-              pathname: "/withdraw-business",
-              title: "会員退会",
-          },
+                pathname: "/withdraw-business",
+                title: "会員退会",
+            },
             // {
             //     pathname: "",
             //     title: "ログアウト",

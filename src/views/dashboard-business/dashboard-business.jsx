@@ -24,7 +24,7 @@ const DashboardBusiness = () => {
     const skillCareerList = [
         {
             value: "",
-            text: "経歴선택"
+            text: "経歴選択"
         },
         {
             value: "65001",
@@ -618,7 +618,7 @@ const DashboardBusiness = () => {
                     setSearchFailModal(false);
                 }}>
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">검색확인</div>
+                    <div className="modal-tit">検索確認</div>
                     <div className="modal-subtit">求職者の検索条件を設定してください。</div>
                     <div className="flex flex-end gap-3">
                         <a href="#" className="btn btn-pending" onClick={() => setSearchFailModal(false)}>
