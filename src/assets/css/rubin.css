@@ -224,9 +224,17 @@
   max-height: 130px;
   overflow-y: scroll;
   background: #fff;
+  animation: blinkingBackground 1s infinite; 
   padding: 5px;
-  z-index: 9;
+  z-index: 9; 
 }
+
+@keyframes blinkingBackground {
+  0% {background-color: #FEF6EA;}
+  100% {background-color: white;}
+}
+
+
 .search_button_area ul li button {
   width: 100%;
   text-align: left;
