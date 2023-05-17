@@ -1264,13 +1264,14 @@ tr.table-content:hover td {
   margin-left: 10px;
 }
 .resume-regist-cont .attach-cont-item {
-  width: 254px;
+  width: 400px;
 }
 .resume-regist-cont .attach-cont-tit {
   font-weight: 400;
   font-size: 16px;
   line-height: 140%;
   color: #333333;
+  width: -webkit-fill-available;
 }
 .resume-regist-cont .attach-cont-btn {
   height: auto;
@@ -1418,8 +1419,6 @@ tr.table-content:hover td {
   line-height: 140%;
   color: #808386;
   text-align: left;
-  margin-top: 16px;
-  margin-bottom: 40px;
 }
 .modal .modal-subtit2 {
   font-weight: 400;
