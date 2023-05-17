@@ -82,19 +82,20 @@ function Main(props) {
     finalArr.shift();
     setBalanceArr(finalArr)
 
-    const priceCngArr = [];
-    for (let i = 0; i < Math.ceil(dataList.length / 2); i++) {
-      priceCngArr[i] = plusArr[i] - minusArr[i];
+    //변동량 배열
+    const priceCngArr = [initBalance];
+    for (let i = 1; i < Math.ceil(dataList.length / 2); i++) {
+      priceCngArr[i] = plusArr[i - 1] - minusArr[i - 1];
     }
-    priceCngArr.pop();
+    priceCngArr.shift();
     setPriceChangeArr(priceCngArr)
-
   }
   // console.log(dataList)
   //console.log('month:::', monthData)
   //console.log("plusArr:::", plusArr)
-  ///console.log("minusArr:::", minusArr)
+  //console.log("minusArr:::", minusArr)
   //console.log("priceChangeArr:::", priceChangeArr)
+  //console.log("dataList:::", dataList)
 
 
   useEffect(() => {
