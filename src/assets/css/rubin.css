@@ -410,10 +410,15 @@ width:100%!important;
 
 .dashboard-cont-cont .cont-btm-btn {
   height: 24px !important;
-  overflow: auto;
+  overflow: hidden !important;
 }
 
-.cont-btm-btn::-webkit-scrollbar{
+.cont-btm-btn-1 {
+  height: 24px !important;
+  overflow: auto !important;
+}
+
+.cont-btm-btn-1::-webkit-scrollbar{
   background: url(/public/images/icon-ellipsis-1.png);
   background-size: 100% auto;
   background-position: center top;
