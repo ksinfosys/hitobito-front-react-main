@@ -380,11 +380,6 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                     {buttonList3}
                                 </div>
                             </div>
-                            <div className="flex flex-end">
-                                <button className="btn btn-sm btn-business btn-message-write-1" onClick={() => { detailUser(data.jsUserId, data.requestStatus), setCheckId([data.jsUserId]) }}>
-                                    更に詳細を表示
-                                </button>
-                            </div>
                         </div>
                         <div className="skill-box flex flex-end">
                             <button className="btn btn-sm btn-detail flex flex-end" onClick={() => { detailUser(data.jsUserId, data.requestStatus), setCheckId([data.jsUserId]) }}>

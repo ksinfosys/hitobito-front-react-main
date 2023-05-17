@@ -321,3 +321,9 @@ td.bg-slate-100 {
     margin: 0 auto;
     margin-top: 5px;
 }
+
+/*버튼 비활성화 속성*/
+.disabled {
+    cursor: not-allowed;
+    cursor: disabled;
+}
