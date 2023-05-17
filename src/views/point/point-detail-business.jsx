@@ -343,15 +343,6 @@ function PointDetailBusiness() {
           className="absolute right-0 top-0 mt-3 mr-3"
           href="#"
         >
-          <Lucide icon="X" className="w-5 h-5 text-slate-400" onClick={() => {
-            setPointPaymentModal(!PointPaymentModal);
-            setIsPmntPending(false);
-            setAgreeOpen(false);
-            setPriceFlag(0);
-            setAgreeFlag(0);
-            setTaxPrice("0")
-            setDirectPay("")
-          }} />
         </a>
         <ModalHeader className="flex-col p-5">
           <h2 className="font-bold text-base mr-auto">ポイント決済</h2>
@@ -792,21 +783,6 @@ function PointDetailBusiness() {
                 >
                   次へ             </button>
               )}
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary w-24"
-                onClick={() => {
-                  setPointPaymentModal(!PointPaymentModal);
-                  setIsPmntPending(false);
-                  setAgreeOpen(false);
-                  setPriceFlag(0);
-                  setAgreeFlag(0);
-                  setTaxPrice("0")
-                  setDirectPay("")
-                }}
-              >
-                キャンセル
-              </button>
             </div>
           </div>
         </ModalBody>

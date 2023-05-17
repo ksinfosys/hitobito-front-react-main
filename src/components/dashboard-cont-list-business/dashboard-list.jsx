@@ -183,9 +183,9 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                 setIsChecked(true),
                 setCheckId((prev) => [...prev,data.jsUserId])
             }else{
-                console.log("data.requestStatus error")
+                console.log("fetching error:::", response)
             }
-        }else if(!allCheck){
+        }else{
             setIsChecked(false),
             setCheckId([])
         }
@@ -275,7 +275,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         <div className="flex items-center gap-2">
                             <div className={educationActive ? "info-flex-tit flex item-center orange" : "info-flex-tit flex item-center"}>
                                 <img src={InfoImg3} alt="" className="mr-1" />
-                                最終学校名
+                                学歴
                             </div>
                             <div className={educationActive ? "info-flex-cont orange" : "info-flex-cont"}>
                                 {educationName}
@@ -360,7 +360,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                     スキル
                                 </div>
                                 {/* class명에 orange-type2 넣으면 오렌지색 배경 버튼으로 바뀜 */}
-                                <div className="cont-btm-btn orange">
+                                <div className="cont-btm-btn-1 orange">
                                     {buttonList1}
                                 </div>
                             </div>
@@ -368,7 +368,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <div className="skill-tit">
                                     担当工程
                                 </div>
-                                <div className="cont-btm-btn orange">
+                                <div className="cont-btm-btn-1 orange">
                                     {buttonList2}
                                 </div>
                             </div>
@@ -551,7 +551,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                                         期間
                                                     </div>
                                                     <div className="modal-subtit2">
-                                                        {project.projectPeriod} 개월
+                                                        {project.projectPeriod} カ月
                                                     </div>
                                                 </div>
                                             </div>
@@ -593,7 +593,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                             )
                                         }) : (
                                             <div className="btn-lang">
-                                                すきるがありません。
+                                                スキルがありません。
                                             </div>
                                         )
                                     }

@@ -240,7 +240,7 @@ function MessageSentBusiness() {
             <div id="business" className="message-sent-business">
                 <div className="box-type-default">
                     <div className="p-5 border-b border-slate-200/60 text-sm">
-                        メッセージボックス
+                        メッセージ箱
                     </div>
                     <div className="p-5">
                         <div className="flex border-b-2">
@@ -291,40 +291,40 @@ function MessageSentBusiness() {
                                     ? 
                                     <div>
                                     <button
-                                        className="btn btn-sm btn-pending w-24 mr-2" disabled={true}>
-                                        返信
+                                        className="btn btn-sm btn-pending w-27 mr-2" disabled={true}>
+                                        メッセージ作成
                                     </button>
                                     <button
-                                        className="btn btn-sm btn-outline-pending w-24 mr-2" disabled={true}>
-                                        保管
+                                        className="btn btn-sm btn-outline-pending w-27 mr-2" disabled={true}>
+                                        メッセージ保管
                                     </button>
                                     <button
                                         className="btn btn-sm btn-outline-secondary w-24" disabled={true}>
-                                        削除
+                                        選択を削除
                                     </button>
                                     </div>
                                     :
                                     <div>
                                         <button
-                                            className="btn btn-sm btn-pending w-24 mr-2"
+                                            className="btn btn-sm btn-pending w-27 mr-2"
                                             onClick={() => {
                                                 msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
                                                     msgIdxes.length > 1 ? setMessageReplyFail(true) :
                                                         setMessageReplyModal(true);
                                             }}
-                                        >返信</button>
+                                        >メッセージ作成</button>
                                         <button
-                                            className="btn btn-sm btn-outline-pending w-24 mr-2"
+                                            className="btn btn-sm btn-outline-pending w-27 mr-2"
                                             onClick={() => {
                                                 msgIdxes.length > 0 ? setMessageSaveModal(true) : setMsgCheckModal(true);
                                             }}
-                                        >保管</button>
+                                        >メッセージ保管</button>
                                         <button
                                             className="btn btn-sm btn-outline-secondary w-24"
                                             onClick={() => {
                                                 msgIdxes.length > 0 ? setMessageDeleteModal(true) : setMsgCheckModal(true);
                                             }}
-                                        >削除</button>
+                                        >選択を削除</button>
                                     </div>
                                 }
                                 
