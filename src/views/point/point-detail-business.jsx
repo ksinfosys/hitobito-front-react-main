@@ -242,17 +242,17 @@ function PointDetailBusiness() {
                   )}
                   {dataResult.companyName && (
                     <li className="text-light font-bold text-lg w-59per text-right">
-                      {dataResult.companyName}様の現在使用可能なポイントは
+                      {dataResult.companyName}様の現在使用可能なポイント数は
                     </li>
                   )}
                   {userInfoV.historyBalance ? (
                     <li className="text-pending font-bold text-2xl">
                       {/* {regexUserPoint(dataResult.currentBalance)}P */}
-                      {regexUserPoint(userInfoV.historyBalance)}円
+                      {regexUserPoint(userInfoV.historyBalance)}ポイント
                     </li>
                   ) : (
                     <li className="text-pending font-bold text-2xl">
-                      0円
+                      0ポイント
                     </li>
                   )
                   }
@@ -280,7 +280,7 @@ function PointDetailBusiness() {
                         ポイント購入日
                       </th>
                       <th className="whitespace-nowrap text-sm">決済方法</th>
-                      <th className="whitespace-nowrap text-sm">購入ポイント</th>
+                      <th className="whitespace-nowrap text-sm">購入ポイント数</th>
                       <th className="whitespace-nowrap text-sm">
                         決済金額（税込み）
                       </th>
@@ -298,7 +298,7 @@ function PointDetailBusiness() {
                             {/* FIX: 신용카드 / 3399 형식에서 신용카드로만 내려옴 */}
                             <td>{point.paymentMethod}</td>
                             <td className="font-bold">
-                              {regexUserPoint(point.chargePoint)}円
+                              {regexUserPoint(point.chargePoint)}ポイント
                             </td>
                             <td className="text-light font-bold">
 
@@ -345,7 +345,7 @@ function PointDetailBusiness() {
         >
         </a>
         <ModalHeader className="flex-col p-5">
-          <h2 className="font-bold text-base mr-auto">ポイント決済</h2>
+          <h2 className="font-bold text-base mr-auto">ポイント購入</h2>
         </ModalHeader>
         <ModalBody className="p-5 plan-pay-modal business-modal">
           <div id="detail-cont">
