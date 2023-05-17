@@ -83,7 +83,7 @@ const CareerReWrite = ({
     <div className="flex-box2-cont form-flex-box">
       <div className="box-item2 flex flex-col">
         <div className="form-tit">プロジェクト名 <span>*</span></div>
-        <input id="projectNameSelect" type="text" className="form-control" placeholder="プロジェクト名入力" maxLength={100}
+        <input id="projectNameSelect" type="text" className="form-control" placeholder="プロジェクト名入力"
           onChange={(e) => handleCareerChange(e, index)} value={name} />
       </div>
       <div className="form-flex-box flex space-between items-start">

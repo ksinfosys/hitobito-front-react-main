@@ -609,7 +609,7 @@ const ResumeRegist = () => {
                   onBlur={handleCheckText}
                 />
                 <div className='form-check form-switch flex gap-2'>
-                  <div className='switch-tit shrink-0 w50'>{body.userEmailFlag === '0' ? '非公開' : '公開'}</div>
+                  <div className='switch-tit shrink-0 w40'>{body.userEmailFlag === '0' ? '非公開' : '公開'}</div>
                   <input
                     id='userEmailFlag product-status-active'
                     className='form-check-input toggle-input'
@@ -628,7 +628,7 @@ const ResumeRegist = () => {
                   onBlur={handleCheckText}
                 />
                 <div className='form-check form-switch flex gap-2'>
-                  <div className='switch-tit shrink-0 w50'>{body.phoneNumberFlag === '0' ? '非公開' : '公開'}</div>
+                  <div className='switch-tit shrink-0 w40'>{body.phoneNumberFlag === '0' ? '非公開' : '公開'}</div>
                   <input
                     id='phoneNumberFlag product-status-active'
                     className='form-check-input toggle-input'

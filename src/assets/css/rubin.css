@@ -82,12 +82,8 @@
   border: 0;
 }
 .upload-name {
-  width:auto;
   border: 0;
   color: #999;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .mobile-drop-wrap .dropdown-basic-button {
@@ -437,8 +433,8 @@ width:100%!important;
   font-size: 14px;
   border-radius: 14px;
 }
-.w50 {
-  width: 50px !important;
+.w40 {
+  width: 40px !important;
 }
 .mobile-resume-wrap.change .change-box-btn {
   flex-shrink: 0;

@@ -354,14 +354,9 @@ const DashboardList = (props) => {
                     size="modal-lg"
                 >
                     <ModalBody className="p-10 text-center">
-                    <div className="modal-subtit">
-                        <div className="half-div">
-                            <div className="modal-tit half-div-left">企業情報</div>
-                            <div><a href="#"
-                                    className="half-div-right"
-                                    onClick={() => {setcompanyInfo(false);}}> X </a></div>
-                        </div>
-                            <div className="flex items-center gap-3 border-b pb-3 half-div-next">
+                        <div className="modal-tit">企業情報</div>
+                        <div className="modal-subtit h-600">
+                            <div className="flex items-center gap-3 border-b pb-3">
                                 <div className="btn btn-secondary dashboard-logo-wrap">
                                     {console.log()}
                                     {
@@ -394,20 +389,25 @@ const DashboardList = (props) => {
                                             <td>{cpInfoData.requiredSkill}</td>
                                         </tr>
                                         <tr>
-                                        <td>可能年収入</td>
+                                            <td>가능연수입</td>
                                             <td>{cpInfoData.income}</td>
                                         </tr>
                                         <tr>
-                                            <td>ホームページ</td>
+                                            <td>홈페이지</td>
                                             <td>{cpInfoData.homepage}</td>
                                         </tr>
                                         <tr>
-                                            <td>求人広告</td>
+                                            <td>구인광고</td>
                                             <td>{cpInfoData.cpAd}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <Link to="">
+                                <button
+                                    className="btn btn-secondary w-300 mt-5"
+                                >Tomodomo 에서 기업정보 확인하기</button>
+                            </Link>
                             {/* 이미지영역 */}
                             {/* <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
                                 {
@@ -420,6 +420,26 @@ const DashboardList = (props) => {
                                     })
                                 }
                             </div> */}
+                        </div>
+                        <div className="flex flex-end gap-3">
+                            <a
+                                href="#"
+                                className="btn btn-primary"
+                                onClick={() => {
+                                    setcompanyInfo(false);
+                                }}
+                            >
+                                確認
+                            </a>
+                            <a
+                                href="#"
+                                className="btn btn-outline-secondary"
+                                onClick={() => {
+                                    setcompanyInfo(false);
+                                }}
+                            >
+                                キャンセル
+                            </a>
                         </div>
                     </ModalBody>
                 </Modal>
@@ -623,9 +643,9 @@ const DashboardList = (props) => {
                 }}
             >
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">削除成功</div>
+                    <div className="modal-tit">삭제 성공</div>
                     <div className="modal-subtit">
-                        成功的に削除されました。
+                        성공적으로 삭제되었습니다.
                     </div>
                     <div className="flex flex-end gap-3">
                         <button

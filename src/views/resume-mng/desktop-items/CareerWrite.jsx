@@ -67,7 +67,7 @@ const CareerWrite = ({
     <div className="flex-box2-cont form-flex-box">
       <div className="box-item2 flex flex-col">
         <div className="form-tit">プロジェクト名 <span>*</span></div>
-        <input id="projectName" type="text" className="form-control" placeholder="プロジェクト名入力" maxLength={100}
+        <input id="projectName" type="text" className="form-control" placeholder="プロジェクト名入力"
           onChange={(e) => handleCareerChange(e, index)} />
       </div>
       <div className="form-flex-box flex space-between items-start">

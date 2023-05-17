@@ -794,7 +794,7 @@ const ResumeChange = () => {
                            onBlur={handleCheckText} value={body.userEmailSelect}/>
                     <div className='form-check form-switch flex gap-2'>
                       <div
-                        className='switch-tit shrink-0 w50 text-center'>{body.userEmailFlag === '0' ? '非公開' : '公開'}</div>
+                        className='switch-tit shrink-0 w40 text-center'>{body.userEmailFlag === '0' ? '非公開' : '公開'}</div>
                       <input
                         id='userEmailFlag product-status-active'
                         className='form-check-input toggle-input'
@@ -816,7 +816,7 @@ const ResumeChange = () => {
                     />
                     <div className='form-check form-switch flex gap-2'>
                       <div
-                        className='switch-tit shrink-0 w50 text-center'>{body.phoneNumberFlag === '0' ? '非公開' : '公開'}</div>
+                        className='switch-tit shrink-0 w40 text-center'>{body.phoneNumberFlag === '0' ? '非公開' : '公開'}</div>
                       <input
                         id='phoneNumberFlag product-status-active'
                         className='form-check-input toggle-input'
