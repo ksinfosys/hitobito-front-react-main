@@ -1,5 +1,5 @@
 import { Lucide, Modal, ModalBody, ModalHeader, ClassicEditor, ModalFooter } from "@/base-components";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import moment from "moment";
 import Search from "@/assets/images/search.svg";
@@ -13,6 +13,7 @@ import { getCookie } from "../../utils/cookie";
 import ServiceFetch from "../../../util/ServiceFetch";
 import { userInfo } from "../../stores/user-info";
 import { interviewMng } from "../../stores/interview-mng";
+import { regexUserPoint } from "../../utils/utils"
 
 // 드롭다운 컴포넌트 추가
 import DropdownSelect from './select-component';
@@ -399,8 +400,8 @@ const InterviewMng = () => {
                                                     </td>
                                                     <td className="table-br-tab">
                                                         {data.requestPointStatus}
-                                                        <br/>{"("}{data.point_cng_type === "20301" ? "+" : "-"}{data.point_cng_amount}{")"}
-
+                                                        <br/>{"("}{data.pointCngType === "20301" ? "+" : "-"}{regexUserPoint(data.pointCngAmount)}{")"}
+                                                        {console.log(data)}
                                                         {/* {data.requestPointStatus === "21102"
                                                             ? "포인트 미신청"
                                                             : data.requestPointStatus === "21103"
