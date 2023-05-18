@@ -342,7 +342,6 @@ const ResumeRegist = () => {
     rsFileDocument.length > 0 ? rsFileDocument.map(item => formData.append('rsFileDocument', item)) : formData.append('rsFileDocument', new File([], 'photo.jpg'))
     rsFilePhoto.length > 0 ? rsFilePhoto.map(item => formData.append('rsFilePhoto', item)) : formData.append('rsFilePhoto', new File([], 'document.pdf'))
 
-
     //서버로 보내기
     axios.post('/api/resume/reg',
       formData,
@@ -593,7 +592,7 @@ const ResumeRegist = () => {
     $('.jobType').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
 
     for(let i = 0 ; i < jobTypeList2.length; i++){
-      var option = $("<option value='"+ jobTypeList2[i].jopType +"'>"+ jobTypeList2[i].jobTypeName +"</option>");
+      var option = $("<option value='"+ jobTypeList2[i].jobType +"'>"+ jobTypeList2[i].jobTypeName +"</option>");
       $('.jobType').append(option);
     }
   }
