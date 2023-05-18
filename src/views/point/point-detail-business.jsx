@@ -246,7 +246,7 @@ function PointDetailBusiness() {
                     </li>
                   )}
                   {userInfoV.historyBalance ? (
-                    <li className="text-pending font-bold text-2xl">
+                    <li className="text-pending font-bold text-2xl text-lg">
                       {/* {regexUserPoint(dataResult.currentBalance)}P */}
                       {regexUserPoint(userInfoV.historyBalance)}ポイント
                     </li>
@@ -296,9 +296,11 @@ function PointDetailBusiness() {
                               {regexUserHypenJoinDate(point.chargeDate)}
                             </td>
                             {/* FIX: 신용카드 / 3399 형식에서 신용카드로만 내려옴 */}
-                            <td>{point.paymentMethod}</td>
+                            <td>
+                              {point.paymentMethod == "短期決済カード" ? "クレジット決済" : "コンビニ決済"}
+                            </td>
                             <td className="font-bold">
-                              {regexUserPoint(point.chargePoint)}ポイント
+                              {regexUserPoint(point.chargePoint)}P
                             </td>
                             <td className="text-light font-bold">
 

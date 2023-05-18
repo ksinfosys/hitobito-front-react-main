@@ -1078,6 +1078,65 @@ tr.table-content:hover td {
   background-color: #337ff1;
 }
 
+.blue-noti-user {
+  position: relative;
+}
+
+.blue-noti-user:hover:before {
+  content: " ";
+  height: 0;
+  width: 0;
+  bottom: -15%;
+  right: 30%;
+  position: absolute;
+  border: 8px solid transparent;
+  border-top-width: 0;
+  border-bottom-color: #000;
+}
+
+.blue-noti-user:hover:after {
+  position: absolute;
+  bottom: -80%;
+  right: 5%;
+  display: block;
+  width: 210px;
+  padding: 5px;
+  content: "企業から受けた面談依頼の数";
+  background: #000;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.blue-noti-user .number-noti {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: absolute;
+  right: -11px;
+  top: 0;
+  background: #FF9800;
+  border-radius: 100%;
+  color: #fff;
+  width: 23px;
+  height: 23px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 10px;
+  color: #fff;
+  line-height: 140%;
+}
+
+.blue-noti-user .number-noti.blue {
+  background-color: #337ff1;
+}
+
 .new-alarm-icon-btn {
   position: relative;
 }
@@ -1461,7 +1520,7 @@ tr.table-content:hover td {
   width: -webkit-fill-available;
 }
 
-<<<<<<< HEAD=======.attach-cont-file {
+.attach-cont-file {
   font-weight: 400;
   font-size: 12px;
   line-height: 140%;
@@ -1470,7 +1529,7 @@ tr.table-content:hover td {
   color: #333333;
 }
 
->>>>>>>85dcab226427f64f61742e12ef9676ff9efa71ef .resume-regist-cont .attach-cont-btn {
+.resume-regist-cont .attach-cont-btn {
   height: auto;
 }
 
@@ -3951,4 +4010,45 @@ tr.table-content:hover td {
 td.table-br-tab {
   padding: 1.25rem 2rem;
   font-size: 0.75rem;
+}
+
+.half-div {
+  width: 100%;
+  clear:left;
+}
+
+.half-div-left {
+  width:80%;
+  float:left;
+}
+
+.half-div-right {
+  width:auto;
+  float:right;
+  text-align: center;
+}
+
+.half-div-next {
+  clear:left;
+  font-size: 0.75rem;
+}
+
+.half-div {
+  width: 100%;
+  clear:left;
+}
+
+.half-div-left {
+  width:80%;
+  float:left;
+}
+
+.half-div-right {
+  width:auto;
+  float:right;
+  text-align: center;
+}
+
+.half-div-next {
+  clear:left;
 }

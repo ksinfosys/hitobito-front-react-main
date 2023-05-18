@@ -1064,13 +1064,67 @@ tr.table-content {
             display: block;
             width: 210px;
             padding: 5px;
-            content: "企業から受けた面談依頼の数";
+            content: "検索された求職者の数";
             background: #000;
             color: #fff;
             border-radius: 3px;
         }
     }
 
+    .number-noti {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: -11px;
+        top: 0;
+        background: #FF9800;
+        border-radius: 100%;
+        color: #fff;
+        width: 23px;
+        height: 23px;
+        box-sizing: border-box;
+        font-weight: 400;
+        font-size: 10px;
+        color: #fff;
+        line-height: 140%;
+
+        &.blue {
+            background-color: #337ff1;
+        }
+    }
+}
+
+.blue-noti-user {
+    position: relative;
+
+    &:hover {
+        &:before {
+            content: ' ';
+            height: 0;
+            width: 0;
+            bottom: -15%;
+            right: 30%;
+            position: absolute;
+            border: 8px solid transparent;
+            border-top-width: 0;
+            border-bottom-color: #000;
+        }
+
+        &:after {
+            position: absolute;
+            bottom: -80%;
+            right: 5%;
+            display: block;
+            width: 210px;
+            padding: 5px;
+            content: '企業から受けた面談依頼の数';
+            background: #000;
+            color: #fff;
+            border-radius: 3px;
+        }
+    }
+    
     .number-noti {
         display: flex;
         justify-content: center;
