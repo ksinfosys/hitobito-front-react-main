@@ -116,7 +116,7 @@ const DashboardBusiness = () => {
             });
     };
 
-    // searchTags API
+    // 年齢
     const searchTags = () => {
         ServiceFetch("/search/tags", "post", {
             keyword: inputValue,
@@ -334,7 +334,7 @@ const DashboardBusiness = () => {
         setAllCheck(false);
     }, [currentPageIdx, offerState]);
 
-    // 해당 타겟 외 외부 클릭시 이벤트
+    // 対象以外の外部クリック時のイベント
     const target = useRef();
     useEffect(() => {
         const handleClick = (e) => {
@@ -348,7 +348,7 @@ const DashboardBusiness = () => {
         };
     }, []);
 
-    // 선택된 검색 테그 제거
+    // 選択した検索タグを削除
     useEffect(() => {
         const filteredArr1 = tagsList.filter((value) => !tagsFilter.includes(value));
         setTagsList(filteredArr1);
@@ -359,8 +359,8 @@ const DashboardBusiness = () => {
     const tagsList01 = selectTags.filter((item) => {
         return item.codeType !== "51" && item.codeType !== "52" && item.codeType !== "55" && item.codeType !== "61";
     });
-    // 연령
-    const tagsList02 = selectTags.filter((item) => item.codeType === "51").sort((a, b) => b.code - a.code);
+    // 年齢
+    const tagsList02 = selectTags.filter((item) => item.codeType === "51").sort((a, b) => a.code - b.code);
     const codeList02 = tagsList02.map((item) => item.code);
     // 学歴
     const tagsList03 = selectTags.filter((item) => item.codeType === "52").sort((a, b) => a.code - b.code);
