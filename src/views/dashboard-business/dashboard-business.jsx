@@ -75,7 +75,7 @@ const DashboardBusiness = () => {
     useEffect(() => {
         const tagsList = searchConditionList.map(({ category, codeType, codes, searchCondition }) => ({ categoryName: category, codeType: codeType, code: codes, codeName: searchCondition }));
         // Recoil로 검색 데이터 관리
-        searchConditionList && setSearchRecoil(tagsList);
+        searchConditionList && setSearchRecoil([]);
     }, [searchConditionList, searchStatus])
 
     // 검색
@@ -210,6 +210,7 @@ const DashboardBusiness = () => {
             selectCode: selectCode,
         }).then((res) => {
             res.resultCode === '200' ? (
+                console.log(res.result),
                 setListState(res.result.searchList),
                 setPgnInfo(res.result.pageItem),
                 setSearchId(res.result.searchCondition.srchId),
