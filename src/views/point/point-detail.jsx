@@ -1,6 +1,6 @@
 import { Lucide, Modal, ModalBody } from "@/base-components";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Pagination from "../../components/pagination";
@@ -11,7 +11,7 @@ import { regexUserHypenJoinDate, regexUserJoinDate, regexUserPoint, replaceToPoi
 
 function PointDetail() {
   const navigate = useNavigate();
-  const [disable, setDisable] = React.useState(false);
+  
   // S : 에러
 
   // Front
@@ -44,7 +44,7 @@ function PointDetail() {
   const [amount, setAmount] = useState(0);
   const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
 
-  console.log("result::", result)
+  // console.log("result::", result)
 
   useEffect(() => {
     getGiftPointList();
