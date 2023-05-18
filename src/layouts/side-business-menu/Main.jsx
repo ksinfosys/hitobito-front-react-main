@@ -947,7 +947,7 @@ function Main() {
           <ModalBody className="p-10 text-center">
             <div className="modal-tit">hitobitoからログアウトしますか?</div>
             <div className="modal-subtit"></div>
-            <div className="flex flex-end gap-3">
+            <div className="flex justify-end pt-5 gap-3">
               <a
                 href="#"
                 className="btn btn-business"

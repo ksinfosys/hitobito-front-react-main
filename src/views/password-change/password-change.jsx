@@ -210,12 +210,12 @@ function PasswordChange() {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">パスワードの形式が正しくありません。</div>
-          <div className="modal-subtit">
+          <div className="modal-subtit pt-2">
             英字・数字・特殊記号を組み合わせて8~16桁で
             <br />
             入力してください。
           </div>
-          <div className="flex flex-end gap-3">
+          <div className="flex flex-end pt-5 gap-3">
             <a
               href="#"
               className="btn btn-pending"
@@ -238,8 +238,8 @@ function PasswordChange() {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">パスワードを入力してください。</div>
-          <div className="modal-subtit">パスワードを確認してください。</div>
-          <div className="flex flex-end gap-3">
+          <div className="modal-subtit pt-2">パスワードを確認してください。</div>
+          <div className="flex flex-end pt-5 gap-3">
             <a
               href="#"
               className="btn btn-business"

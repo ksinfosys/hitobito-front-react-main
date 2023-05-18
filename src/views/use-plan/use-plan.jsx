@@ -718,10 +718,10 @@ const UsePlan = () => {
             </div>
           </div>
 
-          <div id="detail-modal-btn" className="flex flex-end gap-2 pt-16 plan_btn">
+          <div id="detail-modal-btn" className="flex justify-end pt-5">
             <button
               type="button"
-              className={`btn btn-sm w-24 ${isActive && agreeFlag ? "btn-pending" : "btn-secondary"}`}
+              className={`btn btn-sm w-24 mr-2 ${isActive && agreeFlag ? "btn-pending" : "btn-secondary"}`}
               onClick={() => {
                 if (isActive && agreeFlag) {
                   setPlanPaymentModal(false);
@@ -735,11 +735,11 @@ const UsePlan = () => {
                 }
               }}
             >
-              決済する
+              次へ
             </button>
             <button
               type="button"
-              className="btn btn-sm btn-outline-secondary w-24"
+              className="btn btn-sm w-24 mr-2"
               onClick={() => {
                 // 현재 플랜코드로 되돌리기
                 setIsPlanCode(planList.planCode);
@@ -1095,7 +1095,7 @@ const UsePlan = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">約款に同意をお願いします。</div>
+          <div className="modal-tit">決済規約に同意をお願いします。</div>
           <div className="flex flex-end gap-3">
             <a
               href="#"

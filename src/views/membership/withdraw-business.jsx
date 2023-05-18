@@ -47,10 +47,10 @@ function WithdrawBusiness() {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">hitobitoから退会しますか?</div>
-                    <div className="modal-subtit">
+                    <div className="modal-subtit pt-2">
                         退会した場合、保有しているポイントは消滅します。
                     </div>
-                    <div className="flex flex-end gap-3">
+                    <div className="flex flex-end pt-5 gap-3">
                         <a
                             href="#"
                             className="btn btn-pending"

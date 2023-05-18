@@ -341,12 +341,14 @@ function PointDetailBusiness() {
           onClick={() => {
             setPointPaymentModal(false);
             setIsPmntPending(false);
+            setAgreeOpen(false);
           }}
           className="absolute right-0 top-0 mt-3 mr-3"
           href="#"
         >
+          <Lucide icon="X" className="w-5 h-5 text-slate-400" />
         </a>
-        <ModalHeader className="flex-col p-5">
+        <ModalHeader className="flex-col">
           <h2 className="font-bold text-base mr-auto">ポイント購入</h2>
         </ModalHeader>
         <ModalBody className="p-5 plan-pay-modal business-modal">
@@ -851,7 +853,7 @@ function PointDetailBusiness() {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">결제 방법을 선택해주세요</div>
+          <div className="modal-tit">決済方法を選択してください。</div>
           <div className="flex flex-end gap-3">
             <a
               href="#"
@@ -874,7 +876,7 @@ function PointDetailBusiness() {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">약관을 동의해주세요</div>
+          <div className="modal-tit">決済規約に同意をお願いします。</div>
           <div className="flex flex-end gap-3">
             <a
               href="#"
