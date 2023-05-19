@@ -770,7 +770,7 @@ function PointDetailBusiness() {
               ) : (
                 <button
                   type="button"
-                  className={`btn btn-sm w-24 mr-2 ${priceFlag !== 0 && agreeFlag ? "btn-pending" : "btn-grey-pending"}`}
+                  className={`btn btn-sm w-24 mr-2 ${priceFlag !== 0 && agreeFlag ? "btn-pending" : "btn-secondary"}`}
                   onClick={() => {
                     //   setPointPaymentModal(!PointPaymentModal);
                     setPayModal(true);
@@ -794,7 +794,7 @@ function PointDetailBusiness() {
                   決済する
                 </button>
               )}
-              <button
+              {/*<button
                 type="button"
                 className="btn btn-sm btn-outline-secondary w-24"
                 onClick={() => {
@@ -808,7 +808,7 @@ function PointDetailBusiness() {
                 }}
               >
                 キャンセル
-              </button>
+              </button>*/}
             </div>
           </div>
         </ModalBody>

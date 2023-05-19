@@ -818,22 +818,22 @@ const UsePlan = () => {
             >
               決済する
             </button>
-            <button
+            {/*<button
               type="button"
               className="btn btn-sm btn-outline-secondary w-24"
               onClick={() => {
-                // 현재 플랜코드로 되돌리기
+                //現在のプランコードに戻す
                 setIsPlanCode(planList.planCode);
-                // 현재 페이먼트메소드로 되돌리기
+                //現在のペイメントメソッドに戻す
                 setIsPaymentMethod(planList.paymentMethod);
-                // 선택 취소
+                //選択解除
                 setIsActive(false);
                 setPlanPaymentModal(false);
                 setAgreeOpen(false)
               }}
             >
               キャンセル
-            </button>
+            </button>*/}
           </div>
         </ModalBody>
       </Modal>
