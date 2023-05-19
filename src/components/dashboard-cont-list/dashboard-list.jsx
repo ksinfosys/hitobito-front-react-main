@@ -60,7 +60,7 @@ const DashboardList = (props) => {
                 }
             })
     )}
-        else {
+        else if(!props.allCheckState && props.item.rqStatus == "20101") {
             setCheckState(false),
             props.setIdx([]),
             props.setRejectState({})
@@ -151,7 +151,6 @@ const DashboardList = (props) => {
         })
     };
     /* ********** 면접제의 삭제 API 끝 ********** */
-
 
     //면접의뢰 기업정보 확인 모달
     const [companyInfo, setcompanyInfo] = useState(false);
@@ -245,7 +244,7 @@ const DashboardList = (props) => {
                         <div className="form-check dash-cont1-tit">
                             <input
                                 type="checkbox"
-                                className="form-check-input"
+                                className= {props.item.rqStatus == "20101" ? "form-check-input" : "form-check-input visibility-hidden"}
                                 checked={checkState}
                                 onChange={() => handleCheckChange(props.item.rqIdx)}
                             />
