@@ -1121,7 +1121,7 @@ const InterviewMng = () => {
                     <div className="user-img-wrap flex justify-center mb-8">
                         {
                             userDetailInfo && userDetailInfo.photoFile ?
-                                <img src={`https://hitobito-net.com/api${userDetailInfo.photoFile.fileURL}`} alt={userDetailInfo.photoFile.fileName} /> :
+                                <img src={`https://hitobito-net.com/api${userDetailInfo.photoFile.fileURL}`} alt={userDetailInfo.photoFile.fileName} style={{ width: '100px', height: 'auto' }}/> :
                                 <img src={UserBlank} alt="noImage" />
                         }
                     </div>

@@ -833,7 +833,7 @@ function Main() {
                   logOut();
                 }}
               >
-                確認
+                はい
               </a>
               <a
                 href="#"
@@ -842,7 +842,7 @@ function Main() {
                   setLogoutModal(false);
                 }}
               >
-                キャンセル
+                いいえ
               </a>
             </div>
           </ModalBody>

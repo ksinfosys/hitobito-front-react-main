@@ -851,7 +851,7 @@ function PointDetailBusiness() {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">결제 방법을 선택해주세요</div>
+          <div className="modal-tit">決済方法を選択してください。</div>
           <div className="flex flex-end gap-3">
             <a
               href="#"
@@ -874,7 +874,7 @@ function PointDetailBusiness() {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">약관을 동의해주세요</div>
+          <div className="modal-tit">約款に同意してください。</div>
           <div className="flex flex-end gap-3">
             <a
               href="#"

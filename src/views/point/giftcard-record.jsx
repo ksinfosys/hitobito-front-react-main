@@ -177,7 +177,7 @@ function GiftcardRecord() {
         </ul>
         <div className="box-type-default">
           <div className="p-5 border-b border-slate-200/60 text-lg font-bold lg:text-sm lg:font-normal">
-            Amazonギフトカード交換履歴
+            Amazonギフトカード登録
           </div>
           <div className="cont-wrap p-2 lg:p-5">
             <div className="mt-5 mb-5">

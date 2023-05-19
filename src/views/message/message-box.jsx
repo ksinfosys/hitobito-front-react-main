@@ -679,7 +679,7 @@ function MessageBox() {
                             className="btn btn-primary"
                             onClick={deleteList}
                         >
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -688,7 +688,7 @@ function MessageBox() {
                                 setMessageDeleteModal(!messageDeleteModal);
                             }}
                         >
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>

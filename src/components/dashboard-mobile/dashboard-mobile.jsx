@@ -734,7 +734,7 @@ const DashboardMobile = (props) => {
                 acceptCancel();
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -743,7 +743,7 @@ const DashboardMobile = (props) => {
                 setCancelModal(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>
@@ -904,7 +904,7 @@ const DashboardMobile = (props) => {
                 remove();
               }}
             >
-              確認
+              はい
             </button>
             <button
               href="#"
@@ -913,7 +913,7 @@ const DashboardMobile = (props) => {
                 setDeleteModal(false);
               }}
             >
-              取消
+              いいえ
             </button>
           </div>
         </ModalBody>
