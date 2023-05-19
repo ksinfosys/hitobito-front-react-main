@@ -32,7 +32,7 @@ const SignupEmployeeTerm = () => {
                     求職者会員加入
                 </div>
                 <div className="term-subtit">
-                    利用規約ㄴ
+                    利用規約
                 </div>
                 <div className="term-wrap">
                     <div className="term-div">

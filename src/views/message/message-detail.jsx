@@ -69,7 +69,7 @@ const MessageDetail = () => {
                                         msgIdx: msgInfo.msgIdx
                                     }}
                                 >
-                                    <button type="button" className="btn btn-primary w-full">返事</button>
+                                    <button type="button" className="btn btn-primary w-full">返信</button>
                                 </Link>
                             </li>
                             <li className="w-full md:w-24">

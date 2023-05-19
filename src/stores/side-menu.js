@@ -47,36 +47,30 @@ const sideMenu = atom({
             },
             {
                 pathname: "/message-reception",
-                title: "メッセージボックス",
-                subMenu: [
+                title: "メッセージ箱",
+                subMenu2: [
                     {
-                        pathname: "/message-reception",
-                        title: "受信メッセージ箱",
+                        pathname: "/message-sent"
                     },
                     {
-                        pathname: "/message-sent",
-                        title: "送信メッセージ箱",
-                    },
-                    {
-                        pathname: "/message-box",
-                        title: "保管箱",
+                        pathname: "/message-box"
                     },
                 ],
             },
             {
-              pathname: "/suspension",
-              title: "利用停止/脱退",
-              subMenu: [
-                  {
-                      pathname: "/suspension",
-                      title: "利用停止",
-                  },
-                  {
-                      pathname: "/withdraw",
-                      title: "会員退会",
-                  },
-              ],
-          },
+                pathname: "/suspension",
+                title: "利用停止/脱退",
+                subMenu: [
+                    {
+                        pathname: "/suspension",
+                        title: "利用停止",
+                    },
+                    {
+                        pathname: "/withdraw",
+                        title: "会員退会",
+                    },
+                ],
+            },
             // {
             //     pathname: "",
             //     title: "ログアウト",

@@ -333,7 +333,7 @@ function Main() {
                   </DropdownContent>
                 </DropdownMenu>
               </Dropdown>
-              <button className="orange-noti-user">
+              <button className="blue-noti-user">
                 <img src={UserIcon} alt="" />
                 {
                   <div className="number-noti blue">{userCountV.interviewCount}</div>

@@ -4,6 +4,7 @@ import ServiceFetch from "../../../util/ServiceFetch";
 import CheckToken from "../../../util/CheckToken";
 import { useNavigate } from "react-router-dom";
 
+
 function WithdrawBusiness() {
     const navigate = useNavigate();
 
@@ -28,8 +29,12 @@ function WithdrawBusiness() {
                     </div>
                     <div className="cont-wrap pt-10 text-center flex flex-col items-center justify-center">
                         <p className="font-bold">退会時にポイントの残高が残っている場合でも、換金や返金などの払戻しが出来ません。 <br />
-                            すべてのポイントを使い切ってから退会することをお勧めします。</p>
-                        <button type="button" className="btn btn-pending w-80 mt-10 h-48" onClick={() => { setwidthdrawConfirm(true); }}>確認</button>
+                            すべてのポイントを使い切ってから退会することをお勧めします。</p> 
+                            <br/>
+                        <div className="flex flex-end gap-3">
+                            <button type="button" className="btn btn-pending" onClick={() => { setwidthdrawConfirm(true); }}>進む</button>
+                            <button type="button" className="btn btn-outline-secondary" onClick={() => { navigate(-1); }}>戻る</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,12 +46,11 @@ function WithdrawBusiness() {
                 }}
             >
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">会員の退会をします。</div>
-                    <div className="modal-subtit">
-                        退会した場合、保有しているポイントは消滅します。<br />
-                        会員の退会をしますか？
+                    <div className="modal-tit">hitobitoから退会しますか?</div>
+                    <div className="modal-subtit pt-2">
+                        退会した場合、保有しているポイントは消滅します。
                     </div>
-                    <div className="flex flex-end gap-3">
+                    <div className="flex flex-end pt-5 gap-3">
                         <a
                             href="#"
                             className="btn btn-pending"
@@ -55,7 +59,7 @@ function WithdrawBusiness() {
                                 handleQuitBusiness()
                             }}
                         >
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -64,7 +68,7 @@ function WithdrawBusiness() {
                                 setwidthdrawConfirm(!widthdrawConfirm);
                             }}
                         >
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>

@@ -28,6 +28,10 @@
     display: none;
 }
 
+.visibility-hidden{
+    visibility: hidden;
+  }
+
 .bg-orange {
     background: #FF9800;
 }
@@ -42,6 +46,10 @@
 
 .font-16 {
     font-size: 16px !important;
+}
+
+.font-14 {
+    font-size: 14px !important;
 }
 
 .h-48 {
@@ -103,6 +111,16 @@
     border-radius: 5px;
     height: 28px;
     box-sizing: border-box;
+}
+
+.btn-outline-gray-business {
+    background: #E4E7EA;
+    border: 1px solid #E4E7EA;
+    box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.08);
+    border-radius: 5px;
+    height: 28px;
+    box-sizing: border-box;
+    color: #808386;
 }
 
 .btn-gray-business {
@@ -167,6 +185,10 @@
 
 .btn-message-write {
     width: 5.3rem;
+}
+
+.btn-message-write-1 {
+    width: 7.3rem;
 }
 
 .btn-skyblue2 {
@@ -1046,13 +1068,67 @@ tr.table-content {
             display: block;
             width: 210px;
             padding: 5px;
-            content: '検索された求職者の数';
+            content: "検索された求職者の数";
             background: #000;
             color: #fff;
             border-radius: 3px;
         }
     }
 
+    .number-noti {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: -11px;
+        top: 0;
+        background: #FF9800;
+        border-radius: 100%;
+        color: #fff;
+        width: 23px;
+        height: 23px;
+        box-sizing: border-box;
+        font-weight: 400;
+        font-size: 10px;
+        color: #fff;
+        line-height: 140%;
+
+        &.blue {
+            background-color: #337ff1;
+        }
+    }
+}
+
+.blue-noti-user {
+    position: relative;
+
+    &:hover {
+        &:before {
+            content: ' ';
+            height: 0;
+            width: 0;
+            bottom: -15%;
+            right: 30%;
+            position: absolute;
+            border: 8px solid transparent;
+            border-top-width: 0;
+            border-bottom-color: #000;
+        }
+
+        &:after {
+            position: absolute;
+            bottom: -80%;
+            right: 5%;
+            display: block;
+            width: 210px;
+            padding: 5px;
+            content: '企業から受けた面談依頼の数';
+            background: #000;
+            color: #fff;
+            border-radius: 3px;
+        }
+    }
+    
     .number-noti {
         display: flex;
         justify-content: center;
@@ -1443,6 +1519,15 @@ tr.table-content {
         font-size: 16px;
         line-height: 140%;
         color: #333333
+    }
+
+    .attach-cont-file {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 140%;
+        max-width: 200px;
+        word-break: break-all;
+        color: #333333;
     }
 
     .attach-cont-btn {
@@ -2015,8 +2100,9 @@ tr.table-content {
                 .btn-wrap {
                     padding-bottom: 0;
                 }
-                .login-tab-subtit{
-                    padding-bottom:45px;
+
+                .login-tab-subtit {
+                    padding-bottom: 45px;
                 }
             }
         }
@@ -2199,10 +2285,6 @@ tr.table-content {
             height: 88px;
             overflow: auto;
             box-sizing: border-box;
-
-            &::-webkit-scrollbar {
-                appearance: none;
-            }
         }
 
     }
@@ -3937,4 +4019,5 @@ tr.table-content {
 
 td.table-br-tab {
     padding: 1.25rem 2rem;
+    font-size: 0.75rem;
 }

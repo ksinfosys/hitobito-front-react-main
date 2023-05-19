@@ -82,8 +82,12 @@
   border: 0;
 }
 .upload-name {
+  width:auto;
   border: 0;
   color: #999;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .mobile-drop-wrap .dropdown-basic-button {
@@ -224,9 +228,17 @@
   max-height: 130px;
   overflow-y: scroll;
   background: #fff;
+  animation: blinkingBackground 1s infinite; 
   padding: 5px;
-  z-index: 9;
+  z-index: 9; 
 }
+
+@keyframes blinkingBackground {
+  0% {background-color: #FEF6EA;}
+  100% {background-color: white;}
+}
+
+
 .search_button_area ul li button {
   width: 100%;
   text-align: left;
@@ -385,7 +397,7 @@ body.overflow-y-hidden {
   border-color: #e2e8f0;
 }
 .cont-accordion-box .skill-box .skill-tit {
-  width: 60px;
+  width: 65px;
   flex-shrink: 0;
 }
 .notification-content.orange .btn-seeall {
@@ -407,6 +419,18 @@ width:100%!important;
 .dashboard-cont-cont .cont-btm-btn {
   height: 24px !important;
   overflow: hidden !important;
+}
+
+.cont-btm-btn-1 {
+  height: 24px !important;
+  overflow: auto !important;
+}
+
+.cont-btm-btn-1::-webkit-scrollbar{
+  background: url(/public/images/icon-ellipsis-1.png);
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: no-repeat;
 }
 
 .dashboard-cont-cont .cont-btm-btn.active {
@@ -433,8 +457,8 @@ width:100%!important;
   font-size: 14px;
   border-radius: 14px;
 }
-.w40 {
-  width: 40px !important;
+.w50 {
+  width: 50px !important;
 }
 .mobile-resume-wrap.change .change-box-btn {
   flex-shrink: 0;

@@ -84,7 +84,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        roboto: ["Roboto"],
+        Meiryo: ["Meiryo"],
       },
       container: {
         center: true,

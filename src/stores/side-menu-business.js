@@ -26,20 +26,14 @@ const sideMenu = atom({
                 title: "利用プラン設定",
             },
             {
-                pathname: "/message-reception",
+                pathname: "/message-reception-business",
                 title: "メッセージ箱",
-                subMenu: [
+                subMenu2: [
                     {
-                        pathname: "/message-reception-business",
-                        title: "受信メッセージ箱",
+                        pathname: "/message-sent-business"
                     },
                     {
-                        pathname: "/message-sent-business",
-                        title: "送信メッセージ箱",
-                    },
-                    {
-                        pathname: "/message-box-business",
-                        title: "保管箱",
+                        pathname: "/message-box-business"
                     },
                 ],
             },
@@ -52,9 +46,9 @@ const sideMenu = atom({
                 title: "パスワード変更",
             },
             {
-              pathname: "/withdraw-business",
-              title: "会員退会",
-          },
+                pathname: "/withdraw-business",
+                title: "会員退会",
+            },
             // {
             //     pathname: "",
             //     title: "ログアウト",

@@ -430,7 +430,7 @@ function SignUpBusiness() {
     }
 
     // 담당자 연락처 (숫자 이외의 것테스트)
-    const phonePattern = /^\d{2,3}-\d{3,4}-\d{4}$/; // 13자리 숫자와 하이픈으로 구성된 정규식
+    const phonePattern = /^\d{2,3}-\d{4}-\d{4}$/; // 숫자와 하이픈으로 구성된 정규식 
     if (!phonePattern.test(data.phoneNumber)) {
       setRegPhone(true);
       console.log(phoneNumberRef)
@@ -506,7 +506,7 @@ function SignUpBusiness() {
   // 담당자 연락처 (숫자 이외의 것테스트)
   const checkNumber = (e) => {
     const inputValue = e.target.value;
-    const pattern = /^\d{2,3}-\d{3,4}-\d{4}$/; // 13자리 숫자와 하이픈으로 구성된 정규식
+    const pattern = /^\d{2,3}-\d{4}-\d{4}$/; // 숫자와 하이픈으로 구성된 정규식
 
     if (!pattern.test(inputValue)) {
       setRegPhone(true);
@@ -571,7 +571,7 @@ function SignUpBusiness() {
     // empCount,
     // salesAmount,
   ])
-  // 회원가
+  // 회원가입
   const handleSignUp = async () => {
     const updateData = {
       cpLoginId: cpLoginId,
@@ -645,23 +645,14 @@ function SignUpBusiness() {
   const handlePhone = (e) => {
     let newValue = e.target.value;
     newValue = newValue.replace(/-/g, ''); // 입력값에서 하이픈 제거
-    const matchPattern = /^(\d{0,3})(\d{0,4})(\d{0,4})/; // 숫자 패턴 정규식
-    const matches = newValue.match(matchPattern); // 입력값에서 숫자 패턴 찾기
 
-    if (matches) {
-      let formattedValue = `${matches[1]}-${matches[2]}-${matches[3]}` // 하이픈 삽입
-        .replace(/(^-|-$)/g, '') // 맨 앞과 뒤의 하이픈 제거
-        .slice(0, 13); // 최대 길이 제한
-
-      if (formattedValue.length > 0 && formattedValue.length < 5) { // 최소 길이 체크
-        formattedValue = formattedValue.slice(0, 3);
-      }
-
-      e.target.value = formattedValue;
-      setPhoneNumber(e.target.value)
-    }
+    e.target.value = newValue.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{4})(\d{4})$/, `$1-$2-$3`);
+    
+    setPhoneNumber(e.target.value);
 
   };
+
+
 
 
   // 방 진입 시 데이터 가져오기
@@ -694,7 +685,7 @@ function SignUpBusiness() {
                   <div className="flex gap-2">
                     <input ref={cpLoginIdRef} type="text" className="form-control" placeholder="ID入力（半角英数字大文字を許容）" onChange={(e) => setCpLoginId(e.target.value)} />
                     <div className="form-check form-switch flex gap-2">
-                      <button className="btn btn-sm btn-business w-28 font-16" onClick={handleCheckId}>重複チェック</button>
+                      <button className="btn btn-sm btn-business w-28 font-14" onClick={handleCheckId}>重複チェック</button>
                     </div>
                   </div>
                 </div>
@@ -770,7 +761,7 @@ function SignUpBusiness() {
                   <div className="flex items-center gap-2">
                     <input type="text" className="form-control" maxLength={30} placeholder="メールアドレス入力" disabled={isEmailDisabled} onChange={(e) => setCpEmail(e.target.value)} />
                     <div className="form-check form-switch flex gap-2">
-                      <button className="btn btn-sm btn-business w-28 font-16" onClick={() => {
+                      <button className="btn btn-sm btn-business w-28 font-14" onClick={() => {
                         if (isCodeComplete) {
                           setEmailCodeDone(true)
                           return
@@ -785,7 +776,7 @@ function SignUpBusiness() {
                   <div className="flex items-center gap-2">
                     <input type="text" className="form-control" maxLength={6} placeholder="認証コード確認" disabled={isCodeComplete} onChange={(e) => setAuthCode(e.target.value)} />
                     <div className="form-check form-switch flex gap-2">
-                      <button className="btn btn-sm btn-business-white w-28 font-16" onClick={() => {
+                      <button className="btn btn-sm btn-business-white w-28 font-14" onClick={() => {
                         if (authCode.length == 0) {
                           setEmailCodeNull(true)
                         } else if (isCodeComplete) {
@@ -880,7 +871,7 @@ function SignUpBusiness() {
                         // console.log(file)
                         return (
                           <div className="attach-cont-item flex items-center space-between" key={index}>
-                            <div className="attach-cont-tit">
+                            <div className="attach-cont-file">
                               {file.name}
                             </div>
                             <button className="attach-cont-btn" onClick={() => handleFileDelete(index)}>

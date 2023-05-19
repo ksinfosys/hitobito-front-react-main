@@ -388,7 +388,7 @@ const CorpInfoMng = () => {
     }
 
     // 담당자 연락처 (숫자 이외의 것테스트)
-    const phonePattern = /^\d{2,3}-\d{3,4}-\d{4}$/; // 13자리 숫자와 하이픈으로 구성된 정규식
+    const phonePattern = /^\d{2,3}-\d{4}-\d{4}$/; // 숫자와 하이픈으로 구성된 정규식
     if (!phonePattern.test(data.phoneNumber)) {
       setRegPhone(true);
       //console.log(phoneNumberRef)
@@ -611,7 +611,7 @@ const CorpInfoMng = () => {
   // 담당자 연락처 (숫자 이외의 것테스트)
   const checkNumber = (e) => {
     const inputValue = e.target.value;
-    const pattern = /^\d{2,3}-\d{3,4}-\d{4}$/; // 13자리 숫자와 하이픈으로 구성된 정규식
+    const pattern = /^\d{2,3}-\d{4}-\d{4}$/; // 숫자와 하이픈으로 구성된 정규식
 
     if (!pattern.test(inputValue)) {
       setRegPhone(true);
@@ -648,26 +648,12 @@ const CorpInfoMng = () => {
   const handlePhone = (e) => {
     let newValue = e.target.value;
     newValue = newValue.replace(/-/g, ''); // 입력값에서 하이픈 제거
-    const matchPattern = /^(\d{0,3})(\d{0,4})(\d{0,4})/; // 숫자 패턴 정규식
-    const matches = newValue.match(matchPattern); // 입력값에서 숫자 패턴 찾기
 
-    if (matches) {
-      let formattedValue = `${matches[1]}-${matches[2]}-${matches[3]}` // 하이픈 삽입
-        .replace(/(^-|-$)/g, '') // 맨 앞과 뒤의 하이픈 제거
-        .slice(0, 13); // 최대 길이 제한
-
-      if (formattedValue.length > 0 && formattedValue.length < 5) { // 최소 길이 체크
-        formattedValue = formattedValue.slice(0, 3);
-      }
-
-      e.target.value = formattedValue;
-      setUpdateData({
-        ...updateData,
-        phoneNumber: formattedValue
-      })
-    }
-
+    e.target.value = newValue.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{4})(\d{4})$/, `$1-$2-$3`);
+    
+    setUpdateData({ ...updateData, phoneNumber: e.target.value})
   };
+
 
   // E: 유효성검사
 
@@ -1126,7 +1112,7 @@ const CorpInfoMng = () => {
                       rsDocumentFile?.length > 0 && rsDocumentFile.map((file, index) => {
                         return (
                           <div className="attach-cont-item flex items-center space-between" key={index}>
-                            <div className="attach-cont-tit">
+                            <div className="attach-cont-file">
                               {file.name}
                             </div>
                             <button className="attach-cont-btn" onClick={() => handleFileDelete(index)}>
@@ -1674,7 +1660,7 @@ const CorpInfoMng = () => {
               className="btn btn-pending"
               onClick={() => {
                 setAuthCompleteFlag(false);
-                // window.location(reload)
+                window.location.replace("/business");
               }}
             >
               確認
