@@ -6,15 +6,19 @@ import {
   ClassicEditor,
 } from "@/base-components";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function UserGuideEmployee() {
+
+//navigate
+const navigate = useNavigate();
+  
   return (
     <>
-      <div id="business" className="user-guide-business employee">
+      <div id="employee" className="user-guide-employee">
         <div className="box-type-default">
           <div className="p-5 border-b border-slate-200/60 text-sm">
-            hitobitonoご利用について
+            hitobitoのご利用について
           </div>
           <div className="p-5 pt-10 pb-10">
             <div className="mb-10">
@@ -245,7 +249,8 @@ function UserGuideEmployee() {
             </div>
           </div>
           <div className="flex items-center justify-center">
-            <button type="button" className="btn btn-primary w-80 mt-10">確認</button>
+            <button type="button" className="btn btn-primary w-80 mt-10 h-48" onClick={()=>navigate('/')}>
+              確認</button>
           </div>
         </div>
       </div>

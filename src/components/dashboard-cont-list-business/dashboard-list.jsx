@@ -5,7 +5,7 @@ import {
     ModalHeader
 } from "@/base-components";
 import { useEffect, useState } from 'react';
-import $ from 'jquery'
+import $, { each } from 'jquery'
 
 import PersonIcon from "@/assets/images/person-icon.png";
 import PersonMenIcon from "@/assets/images/person-men.png";
@@ -28,68 +28,141 @@ import axios from "axios";
 import { getCookie } from "../../utils/cookie";
 
 const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, setRequestModal, submitCheckState, offer, currentPageIdx, selectTags, educationList, careerList, hopeIncomeList, ageList, offerState }) => {
-    const { nickname, ageName, genderName, educationName, residentialAreaName, countryName, jobTypeName, careerName, hopeIncomeName, businessTypeName, hopeCareerName, skillCodeNameArr, projectProcessNameArr, projectRoleNameArr } = data;
+    const { nickname, ageName, genderName, educationName, residentialAreaName, countryName, jobTypeName, careerName, hopeIncomeName, businessTypeName, hopeCareerName, skillCodeNameArr, projectProcessNameArr, projectRoleNameArr, representFlag } = data;
 
     // 나이 계산
     const year = moment().format('YYYY');
     const age = year - ageName;
 
+    let eachAgeName = false;
+    let eachEducationName = false;
+    let eachResidentialAreaName = false;
+    let eachCountryName = false;
+    let eachJobTypeName = false;
+    let eachCareerName = false;
+    let eachHopeIncomeName = false;
+    let eachBusinessTypeName = false;
+    let eachHopeCareerName = false;
+    let skillCodeNameArray = [];
+    let projectProcessNameArray = [];
+    let projectRoleNameArray = [];
+    let eachGenderName = false;
+
+    $.each(representFlag, function(index, value){
+        if(value == "ageName"){
+            eachAgeName = true;
+        }
+        if(value == "educationName"){
+            eachEducationName = true;
+        }
+        if(value == "residentialAreaName"){
+            eachResidentialAreaName = true;
+        }
+        if(value == "countryName"){
+            eachCountryName = true;
+        }
+        if(value == "jobTypeName"){
+            eachJobTypeName = true;
+        }
+        if(value == "careerName"){
+            eachCareerName = true;
+        }
+        if(value == "hopeIncomeName"){
+            eachHopeIncomeName = true;
+        }
+        if(value == "businessTypeName"){
+            eachBusinessTypeName = true;
+        }
+        if(value == "hopeCareerName"){
+            eachHopeCareerName = true;
+        }
+        if(value.includes("skillCodeNameArr")){
+            let idx = value.split("skillCodeNameArr");
+            skillCodeNameArray.push(skillCodeNameArr[Number(idx[1])]);
+        } 
+        if(value.includes("projectProcessNameArr")){
+            let idx = value.split("projectProcessNameArr");
+            projectProcessNameArray.push(projectProcessNameArr[Number(idx[1])]);
+        }
+        if(value.includes("projectRoleNameArr")){
+            let idx = value.split("projectRoleNameArr");
+            projectRoleNameArray.push(projectRoleNameArr[Number(idx[1])]);
+        }
+        if(value == "genderName"){
+            eachGenderName = true;
+        }
+    })
     /* ********************* 검색 필터링 시작 ********************* */
     // 연령 조건
-    const ageTagFilter = selectTags.filter((tag) => tag.codeType === '51').map(tag => tag.code).sort((a, b) => a.code - b.code);
-    const ageTag = ageList.find(obj => obj.codeName === ageName);
-    const ageCodeStart = parseInt(Math.min(...ageTagFilter));
-    const ageCodeEnd = parseInt(Math.max(...ageTagFilter));
-    const ageCode = parseInt(ageTag?.code);
-    const ageActive = ageCodeStart <= ageCode && ageCode <= ageCodeEnd;
+    // const ageTagFilter = selectTags.filter((tag) => tag.codeType === '51').map(tag => tag.code).sort((a, b) => a.code - b.code);
+    // const ageTag = ageList.find(obj => obj.codeName === ageName);
+    // const ageCodeStart = parseInt(Math.min(...ageTagFilter));
+    // const ageCodeEnd = parseInt(Math.max(...ageTagFilter));
+    // const ageCode = parseInt(ageTag?.code);
+    // const ageActive = ageCodeStart <= ageCode && ageCode <= ageCodeEnd;
+    const ageActive = eachAgeName;
     // 学歴 조건
-    const educationTagFilter = selectTags.filter((tag) => tag.codeType === '52').map(tag => tag.code).sort((a, b) => a.code - b.code);
-    const education = educationList.find(obj => obj.codeName === educationName);
-    const educationCodeStart = parseInt(Math.min(...educationTagFilter));
-    const educationCodeEnd = parseInt(Math.max(...educationTagFilter));
-    const educationCode = parseInt(education?.code);
-    const educationActive = educationCodeStart <= educationCode && educationCode <= educationCodeEnd;
+    // const educationTagFilter = selectTags.filter((tag) => tag.codeType === '52').map(tag => tag.code).sort((a, b) => a.code - b.code);
+    // const education = educationList.find(obj => obj.codeName === educationName);
+    // const educationCodeStart = parseInt(Math.min(...educationTagFilter));
+    // const educationCodeEnd = parseInt(Math.max(...educationTagFilter));
+    // const educationCode = parseInt(education?.code);
+    // const educationActive = educationCodeStart <= educationCode && educationCode <= educationCodeEnd;
+    const educationActive = eachEducationName;
     // 居住地 조건
-    const residentialAreaNameTagFilter = selectTags.filter((tag) => tag.codeType === '58').map(tag => tag.codeName);
-    const residentialAreaNameMatched = residentialAreaNameTagFilter.some((item) => residentialAreaName.includes(item));
+    // const residentialAreaNameTagFilter = selectTags.filter((tag) => tag.codeType === '58').map(tag => tag.codeName);
+    // const residentialAreaNameMatched = residentialAreaNameTagFilter.some((item) => residentialAreaName.includes(item));
+    const residentialAreaNameMatched = eachResidentialAreaName;
     // 国籍 조건
-    const countryNameTagFilter = selectTags.filter((tag) => tag.codeType === '54').map(tag => tag.codeName);
-    const countryNameMatched = countryNameTagFilter.some((item) => countryName.includes(item));
+    // const countryNameTagFilter = selectTags.filter((tag) => tag.codeType === '54').map(tag => tag.codeName);
+    // const countryNameMatched = countryNameTagFilter.some((item) => countryName.includes(item));
+    const countryNameMatched = eachCountryName;
     // 직종 조건
-    const jobTypeNameTagFilter = selectTags.filter((tag) => tag.codeType === '57').map(tag => tag.codeName);
-    const jobTypeNameMatched = jobTypeNameTagFilter.some((item) => jobTypeName.includes(item));
+    // const jobTypeNameTagFilter = selectTags.filter((tag) => tag.codeType === '57').map(tag => tag.codeName);
+    // const jobTypeNameMatched = jobTypeNameTagFilter.some((item) => jobTypeName.includes(item));
+    const jobTypeNameMatched = eachJobTypeName;
     // 経歴연수 조건
-    const careerNameTagFilter = selectTags.filter((tag) => tag.codeType === '55').map(tag => tag.code).sort((a, b) => a.code - b.code);
-    const career = careerList.find(obj => obj.codeName === careerName);
-    const careerCodeStart = parseInt(Math.min(...careerNameTagFilter));
-    const careerCodeEnd = parseInt(Math.max(...careerNameTagFilter));
-    const careerCode = parseInt(career?.code);
-    const careerNameMatched = careerCodeStart <= careerCode && careerCode <= careerCodeEnd;
+    // const careerNameTagFilter = selectTags.filter((tag) => tag.codeType === '55').map(tag => tag.code).sort((a, b) => a.code - b.code);
+    // const career = careerList.find(obj => obj.codeName === careerName);
+    // const careerCodeStart = parseInt(Math.min(...careerNameTagFilter));
+    // const careerCodeEnd = parseInt(Math.max(...careerNameTagFilter));
+    // const careerCode = parseInt(career?.code);
+    // const careerNameMatched = careerCodeStart <= careerCode && careerCode <= careerCodeEnd;
+    const careerNameMatched = eachCareerName;
     // 希望年収 조건 hopeIncomeList
-    const hopeIncomeNameTagFilter = selectTags.filter((tag) => tag.codeType === '61').map(tag => tag.code).sort((a, b) => a.code - b.code);
-    const hopeIncome = hopeIncomeList.find(obj => obj.codeName === hopeIncomeName);
-    const hopeIncomeCodeStart = parseInt(Math.min(...hopeIncomeNameTagFilter));
-    const hopeIncomeCodeEnd = parseInt(Math.max(...hopeIncomeNameTagFilter));
-    const hopeIncomeCode = parseInt(hopeIncome?.code);
-    const hopeIncomeActive = hopeIncomeCodeStart <= hopeIncomeCode && hopeIncomeCode <= hopeIncomeCodeEnd;
+    // const hopeIncomeNameTagFilter = selectTags.filter((tag) => tag.codeType === '61').map(tag => tag.code).sort((a, b) => a.code - b.code);
+    // const hopeIncome = hopeIncomeList.find(obj => obj.codeName === hopeIncomeName);
+    // const hopeIncomeCodeStart = parseInt(Math.min(...hopeIncomeNameTagFilter));
+    // const hopeIncomeCodeEnd = parseInt(Math.max(...hopeIncomeNameTagFilter));
+    // const hopeIncomeCode = parseInt(hopeIncome?.code);
+    // const hopeIncomeActive = hopeIncomeCodeStart <= hopeIncomeCode && hopeIncomeCode <= hopeIncomeCodeEnd;
+    const hopeIncomeActive = eachHopeIncomeName;
     // 재직회사 업종 조건
-    const businessTypeNameTagFilter = selectTags.filter((tag) => tag.codeType === '56').map(tag => tag.codeName);
-    const businessTypeNameMatched = businessTypeNameTagFilter.some((item) => businessTypeName.includes(item));
+    // const businessTypeNameTagFilter = selectTags.filter((tag) => tag.codeType === '56').map(tag => tag.codeName);
+    // const businessTypeNameMatched = businessTypeNameTagFilter.some((item) => businessTypeName.includes(item));
+    const businessTypeNameMatched = eachBusinessTypeName;
     // 将来の目標
-    const hopeCareerNameTagFilter = selectTags.filter((tag) => tag.codeType === '60').map(tag => tag.codeName);
-    const hopeCareerNameMatched = hopeCareerNameTagFilter.some((item) => hopeCareerName.includes(item));
+    // const hopeCareerNameTagFilter = selectTags.filter((tag) => tag.codeType === '60').map(tag => tag.codeName);
+    // const hopeCareerNameMatched = hopeCareerNameTagFilter.some((item) => hopeCareerName.includes(item));
+    const hopeCareerNameMatched = eachHopeCareerName;
     // 스킬 조건
-    const skillTagFilter = selectTags.filter((tag) => tag.codeType === '01' || tag.codeType === '02' || tag.codeType === '03' || tag.codeType === '04').map(tag => tag.codeName && tag.codeName.includes(":") ? tag.codeName.split(":")[0].trim() : tag.codeName);
-    const skillTag = skillCodeNameArr?.length > 0 && skillCodeNameArr.filter((item) => skillTagFilter.includes(item));
+    // const skillTagFilter = selectTags.filter((tag) => tag.codeType === '01' || tag.codeType === '02' || tag.codeType === '03' || tag.codeType === '04').map(tag => tag.codeName && tag.codeName.includes(":") ? tag.codeName.split(":")[0].trim() : tag.codeName);
+    // const skillTag = skillCodeNameArr?.length > 0 && skillCodeNameArr.filter((item) => skillTagFilter.includes(item));
+    
+    
+    const skillTag = skillCodeNameArray;
     // 担当工程 조건
-    const projectProcessTagFilter = selectTags.filter((tag) => tag.codeType === "63").map(tag => tag.codeName);
-    const projectProcessTag = projectProcessNameArr?.length > 0 && projectProcessNameArr.filter((item) => projectProcessTagFilter.includes(item));
+    // const projectProcessTagFilter = selectTags.filter((tag) => tag.codeType === "63").map(tag => tag.codeName);
+    // const projectProcessTag = projectProcessNameArr?.length > 0 && projectProcessNameArr.filter((item) => projectProcessTagFilter.includes(item));
+    const projectProcessTag = projectProcessNameArray;
     // 役割 조건
-    const projectRoleNameTagFilter = selectTags.filter((tag) => tag.codeType === "62").map(tag => tag.codeName);
-    const projectRoleNameTag = projectRoleNameArr?.length > 0 && projectRoleNameArr.filter((item) => projectRoleNameTagFilter.includes(item));
-    //const projectRoleNameTag = projectRoleNameArr?.length > 0 && projectRoleNameArr.filter((item) => projectRoleNameTagFilter.includes(item));
+    // const projectRoleNameTagFilter = selectTags.filter((tag) => tag.codeType === "62").map(tag => tag.codeName);
+    // const projectRoleNameTag = projectRoleNameArr?.length > 0 && projectRoleNameArr.filter((item) => projectRoleNameTagFilter.includes(item));
+    // const projectRoleNameTag = projectRoleNameArr?.length > 0 && projectRoleNameArr.filter((item) => projectRoleNameTagFilter.includes(item));
+    const projectRoleNameTag = projectRoleNameArray;
     // 성별 조건
-    const genderTagFilter = selectTags.filter((tag) => tag.codeType === "53").map(tag => tag.codeName);
+    // const genderTagFilter = selectTags.filter((tag) => tag.codeType === "53").map(tag => tag.codeName);
+    const genderNameMatched = eachGenderName;
 
     /* ********************* 검색 필터링 끝 ********************* */
 
@@ -234,7 +307,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <div>{nickname}</div>
                                 <div>
                                     (<span className={ageActive ? "orange" : ""}>{age}歳</span>
-                                    <span className={genderTagFilter.includes(genderName) ? "search-bg ml-2" : "ml-2"}>{genderName}</span>)
+                                    <span className={genderNameMatched ? "search-bg ml-2" : "ml-2"}>{genderName}</span>)
                                 </div>
                             </div>
                         </div>

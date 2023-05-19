@@ -192,11 +192,11 @@ export function regexUserPoint(price) {
 export function planCodeToPlanName(planCode) {
   switch (planCode) {
     case "P0000":
-      return "프리플랜";
+      return "フリープラン";
     case "P0001":
-      return "플랜A";
+      return "プランA";
     case "P0002":
-      return "플랜B";
+      return "プランB";
   }
 }
 

@@ -99,7 +99,7 @@ const AppleAuthCallback = () => {
 				console.log(res)
 				if (res.data.resultCode === '200') {
 					if (res.data.result.firstLoginFlag) {
-						navigate('/user-guide-employee')
+						navigate('/signup-em-term')
 					}
 					await setCookie("accessToken", res.headers.accesstoken, 1);
 					await setCookie("lastLoginTime", res.headers.lastlogintime, 1);

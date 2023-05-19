@@ -43,7 +43,7 @@ const SignupEmployeeTerm = () => {
         <>
             <div className="find-wrap flex flex-col items-center">
                 <div className="term-tit">
-                    企業 会員加入
+                    企業会員加入
                 </div>
                 <div className="term-subtit">
                     利用規約
