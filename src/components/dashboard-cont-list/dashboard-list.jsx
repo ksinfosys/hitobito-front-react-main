@@ -152,7 +152,6 @@ const DashboardList = (props) => {
     };
     /* ********** 면접제의 삭제 API 끝 ********** */
 
-
     //면접의뢰 기업정보 확인 모달
     const [companyInfo, setcompanyInfo] = useState(false);
     // 면접의뢰 기업정보 확인 모달의 정보
@@ -245,7 +244,7 @@ const DashboardList = (props) => {
                         <div className="form-check dash-cont1-tit">
                             <input
                                 type="checkbox"
-                                className="form-check-input"
+                                className= {props.item.rqStatus == "20102" ? "form-check-input visibility-hidden" : "form-check-input"}
                                 checked={checkState}
                                 onChange={() => handleCheckChange(props.item.rqIdx)}
                             />

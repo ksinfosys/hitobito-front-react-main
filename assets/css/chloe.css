@@ -37,6 +37,10 @@
   display: none;
 }
 
+.visibility-hidden{
+  visibility: hidden;
+}
+
 .bg-orange {
   background: #FF9800;
 }
