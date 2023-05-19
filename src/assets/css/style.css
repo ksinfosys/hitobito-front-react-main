@@ -327,3 +327,7 @@ td.bg-slate-100 {
     cursor: not-allowed;
     cursor: disabled;
 }
+
+.hidbtn {
+    visibility: hidden;
+}

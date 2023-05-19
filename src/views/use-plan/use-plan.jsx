@@ -313,9 +313,9 @@ const UsePlan = () => {
                     type="button"
                     // 변경하기 눌렀을시 결제모달이 안나와서 선택됨을 알리는 색 변경
                     className={
-                      isplanCode === "P0000" && isActive
+                      planList.planCode === "P0000" && isActive
                         ? "btn btn-outline-pending bg-white mt-5 w-full"
-                        : "btn btn--grey-pending mt-5 w-full disabled"
+                        : "btn btn--grey-pending mt-5 w-full hidbtn"
                     }
                     onClick={() => {
                       // setIsPlanCode("P0000");
