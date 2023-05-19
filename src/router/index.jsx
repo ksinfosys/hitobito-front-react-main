@@ -173,18 +173,8 @@ function Router() {
           },
         ],
       },
-      //구직자 회원가입
-      {
-        path: "/signup-em-term",
-        element: <TopMenu/>,
-        children: [
-          {
-            path: "/signup-em-term",
-            element: <SignupEmployeeTerm/>,
-          },
-        ],
-      },
-      //구직자 회원가입
+
+      //회사 이용규약
       {
         path: "/signup-em-term-business",
         element: <TopMenu/>,
@@ -350,6 +340,17 @@ function Router() {
             },       
           ],
         },
+        //구직자 이용규약
+        {
+          path: "/signup-em-term",
+          element: <TopMenu/>,
+          children: [
+            {
+              path: "/signup-em-term",
+              element: <SignupEmployeeTerm/>,
+            },
+          ],
+        },
         // 이용가이드
         {
           path: "/user-guide-employee",
@@ -361,110 +362,9 @@ function Router() {
             },
           ],
         },
-
-        // {
-        //   path: "/login-company",
-        //   element: <TopMenu />,
-        //   children: [
-        //     {
-        //       path: "/login-company",
-        //       element: <LoginCompany />,
-        //     },
-        //   ],
-        // },
-        // //아이디찾기
-        // {
-        //   path: "/find-id",
-        //   element: <TopMenu />,
-        //   children: [
-        //     {
-        //       path: "/find-id",
-        //       element: <FindId />,
-        //     },
-        //   ],
-        // },
-        // //아이디찾기결과
-        // {
-        //   path: "/find-result",
-        //   element: <TopMenu />,
-        //   children: [
-        //     {
-        //       path: "/find-result",
-        //       element: <FindIdResult />,
-        //     },
-        //   ],
-        // },
-        // //비밀번호 찾기
-        // {
-        //   path: "/find-pwd",
-        //   element: <TopMenu />,
-        //   children: [
-        //     {
-        //       path: "/find-pwd",
-        //       element: <FindPwd />,
-        //     },
-        //   ],
-        // },
-
-        // //비밀번호 변경하기
-        // {
-        //   path: "/pwd-change",
-        //   element: <TopMenu />,
-        //   children: [
-        //     {
-        //       path: "/pwd-change",
-        //       element: <PwdChange />,
-        //     },
-        //   ],
-        // },
-        // //임시 비밀번호 발급
-        // {
-        //   path: "/temp-pwd",
-        //   element: <TopMenu />,
-        //   children: [
-        //     {
-        //       path: "/temp-pwd",
-        //       element: <TempPwd />,
-        //     },
-        //   ],
-        // },
-        // //회원가입
-        // {
-        //   path: "/signup",
-        //   element: <TopMenu />,
-        //   children: [
-        //     {
-        //       path: "/signup",
-        //       element: <Signup />,
-        //     },
-        //   ],
-        // },
-        // //구직자 회원가입 선택
-        // {
-        //   path: "/signup-em",
-        //   element: <TopMenu />,
-        //   children: [
-        //     {
-        //       path: "/signup-em",
-        //       element: <SignupEmployee />,
-        //     },
-        //   ],
-        // },
-        // //구직자 회원가입
-        // {
-        //   path: "/signup-em-term",
-        //   element: <TopMenu />,
-        //   children: [
-        //     {
-        //       path: "/signup-em-term",
-        //       element: <SignupEmployeeTerm />,
-        //     },
-        //   ],
-        // },
       ]
       : [
-        //기업
-
+        //기업 화면
         {
           path: "/",
           element: <SideBusinessMenu/>,
@@ -566,9 +466,7 @@ function Router() {
           ]
         },
 
-
       ];
-
 
   return useRoutes(routes);
 }
