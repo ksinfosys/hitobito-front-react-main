@@ -167,6 +167,20 @@ const DashboardList = (props) => {
                 <button className="btn btn-lang" key={index}>{infoValue}</button>
             );
         }
+        if(name.includes('projectProcessNameArr')){
+            const infoKey = name.substring(21);
+            const infoValue = props.info.projectProcessNameArr[infoKey];
+            return (
+                <button className="btn btn-lang" key={index}>{infoValue}</button>
+            );
+        }
+        if(name.includes('projectRoleNameArr')){
+            const infoKey = name.substring(18);
+            const infoValue = props.info.projectRoleNameArr[infoKey];
+            return (
+                <button className="btn btn-lang" key={index}>{infoValue}</button>
+            );
+        }
         return props.info ? <button className="btn btn-lang" key={index}>{props.info[name]}</button> : null
     })
 
@@ -468,12 +482,12 @@ const DashboardList = (props) => {
                         <a
                             className="btn btn-primary"
                             onClick={() => { acceptCancel() }}
-                        >確認</a>
+                        >はい</a>
                         <a
                             href="#"
                             className="btn btn-outline-secondary"
                             onClick={() => { setCancelModal(false) }}
-                        >キャンセル</a>
+                        >いいえ</a>
                     </div>
                 </ModalBody>
             </Modal>
@@ -579,7 +593,7 @@ const DashboardList = (props) => {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">ポイント支給の要請を失敗</div>
                     <div className="modal-subtit">
-                        지급요청 대상이 존재하지 않습니다.
+                        ポイント支給要請の対象が存在しません。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
@@ -609,12 +623,12 @@ const DashboardList = (props) => {
                             href="#"
                             className="btn btn-primary"
                             onClick={() => { remove() }}
-                        >確認</button>
+                        >はい</button>
                         <button
                             href="#"
                             className="btn btn-secondary"
                             onClick={() => { setDeleteModal(false); }}
-                        >キャンセル</button>
+                        >いいえ</button>
                     </div>
                 </ModalBody>
             </Modal>

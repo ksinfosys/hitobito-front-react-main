@@ -677,7 +677,7 @@ const DashboardBusiness = () => {
                     </div>
                     <div className="flex flex-end gap-3">
                         <a href="#" className="btn btn-pending" onClick={offer}>
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -687,7 +687,7 @@ const DashboardBusiness = () => {
                                 setSubmitCheckState(!submitCheckState);
                                 setCheckId([]);
                             }}>
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>

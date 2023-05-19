@@ -948,7 +948,7 @@ const UsePlan = () => {
                 setWaitPayFail(false);
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -957,7 +957,7 @@ const UsePlan = () => {
                 setWaitPayFail(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>
@@ -985,7 +985,7 @@ const UsePlan = () => {
                 cancleRegularPayment();
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -994,7 +994,7 @@ const UsePlan = () => {
                 setcancelPayment(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>
@@ -1022,7 +1022,7 @@ const UsePlan = () => {
                 setnonRefundable(false);
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -1031,7 +1031,7 @@ const UsePlan = () => {
                 setnonRefundable(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>
