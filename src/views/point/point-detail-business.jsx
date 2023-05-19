@@ -663,7 +663,7 @@ function PointDetailBusiness() {
               ) : (
                 <button
                   type="button"
-                  className={`btn btn-sm w-24 mr-2 ${priceFlag !== 0 && agreeFlag ? "btn-pending" : "btn-grey-pending"}`}
+                  className={`btn btn-sm w-24 mr-2 ${priceFlag !== 0 && agreeFlag ? "btn-pending" : "btn-secondary"}`}
                   onClick={() => {
                     //   setPointPaymentModal(!PointPaymentModal);
                     setPointLimitFail(false);
@@ -683,7 +683,7 @@ function PointDetailBusiness() {
                     }
                   }}
                 >
-                  次へ             </button>
+                  次へ</button>
               )}
             </div>
           </div>
