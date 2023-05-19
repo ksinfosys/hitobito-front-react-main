@@ -46,24 +46,27 @@ const DashboardList = (props) => {
             props.setRejectState(updatedRejectState);
         }
     }
+
     useEffect(() => {
-        props.allCheckState ? (
+        if(props.allCheckState && props.item.rqStatus == "20101"){
             setCheckState(true),
             props.setIdx((prev) => [...prev, props.item.rqIdx]),
-            props.setRejectState({
+            props.setRejectState((prevState) => ({
+                ...prevState,
                 ...props.rejectState, [requestText]: {
                     rqIdx: props.item.rqIdx,
                     cpUserId: props.item.cpUserId,
                     cpPointIdx: props.item.cpPointIdx,
                 }
             })
-        ) : (
+    )}
+        else {
             setCheckState(false),
             props.setIdx([]),
             props.setRejectState({})
-        )
+        }
     }, [props.allCheckState])
-
+    
     // 거절 Evnet
     const handleReject = () => {
         const requestText = 'requestMap' + props.index;
