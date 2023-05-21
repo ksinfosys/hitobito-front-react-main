@@ -431,7 +431,7 @@ function MessageBoxBusiness() {
                             className="btn btn-pending"
                             onClick={deleteList}
                         >
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -440,7 +440,7 @@ function MessageBoxBusiness() {
                                 setMessageDeleteModal(!messageDeleteModal);
                             }}
                         >
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>

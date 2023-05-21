@@ -85,10 +85,10 @@ const MessageDetail = () => {
                 show={messageSaveModal}
                 onHidden={() => { setMessageSave(false); }}>
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">メッセージを保管します。</div>
+                    <div className="modal-tit">メッセージを保管しますか？</div>
                     <div className="modal-subtit">
-                        選択したメッセージを保存します。<br />
-                        保存されたメッセージは「保管箱」 に移動されます
+                        選択されたメッセージを保管します。<br />
+                        メッセージは「保管メッセージ」に移動されます。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
@@ -99,7 +99,7 @@ const MessageDetail = () => {
                                 setMessageSave(false);
                             }}
                         >
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -108,7 +108,7 @@ const MessageDetail = () => {
                                 setMessageSave(!messageSaveModal);
                             }}
                         >
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                     {/* END: Toggle Modal Toggle */}
