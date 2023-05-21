@@ -46,9 +46,12 @@ const Suspension = () => {
                 <p className="font-bold">利用を停止する期間中、企業からの面接提案や<br className="hidden sm:block" />メッセージの受信が不可能になります。</p> :
                 <p className="font-bold"><span className="text-primary">{resignState?.lockStartDatetime}</span> から利用停止中です。</p>
             }
+            <div className="flex flex-end gap-3">
             <button type="button" className="btn btn-primary w-80 mt-10" onClick={() => { resignState?.resignStatus === '0' ? suspensionRequest(true) : handleResignUser() }}>
-              {resignState?.resignStatus === '0' ? '利用停止' : '利用再開'}
+              {resignState?.resignStatus === '0' ? '進む' : '利用再開'}
             </button>
+            <button type="button" className="btn btn-outline-secondary w-80 mt-10" onClick={() => { navigate(-1); }}>戻る</button>
+            </div>
           </div>
         </div>
       </div>
@@ -76,7 +79,7 @@ const Suspension = () => {
                 handleResignUser()
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -85,7 +88,7 @@ const Suspension = () => {
                 suspensionRequest(!suspensionRequestModal);
               }}
             >
-              キャンセル
+              いいえ
             </a>
           </div>
         </ModalBody>

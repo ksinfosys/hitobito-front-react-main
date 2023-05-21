@@ -305,7 +305,7 @@ function MessageBoxBusiness() {
                                                 onChange={handleAllCheck}
                                             />
                                         </th>
-                                        <th className="whitespace-nowrap">全て選択</th>
+                                        <th className="whitespace-nowrap">区分</th>
                                         <th className="whitespace-nowrap">受信者/発信者</th>
                                         <th className="whitespace-nowrap">タイトル</th>
                                         <th className="whitespace-nowrap">受信時間</th>
@@ -431,7 +431,7 @@ function MessageBoxBusiness() {
                             className="btn btn-pending"
                             onClick={deleteList}
                         >
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -440,7 +440,7 @@ function MessageBoxBusiness() {
                                 setMessageDeleteModal(!messageDeleteModal);
                             }}
                         >
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>

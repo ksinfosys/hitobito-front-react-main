@@ -403,11 +403,10 @@ function MessageReceptionBusiness() {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">メッセージを保管します。</div>
+          <div className="modal-tit">メッセージを保管しますか？</div>
           <div className="modal-subtit">
-            選択されたメッセージを保存しました。
-            <br />
-            保存メッセージに移動されました。
+              選択されたメッセージを保管します。<br />
+              メッセージは「保管メッセージ」に移動されます。
           </div>
           <div className="flex flex-end gap-3">
             <a
@@ -415,7 +414,7 @@ function MessageReceptionBusiness() {
               className="btn btn-pending"
               onClick={() => msgSavePut()}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -425,7 +424,7 @@ function MessageReceptionBusiness() {
                 setAllCheckbox(false);
               }}
             >
-              キャンセル
+              いいえ
             </a>
           </div>
         </ModalBody>

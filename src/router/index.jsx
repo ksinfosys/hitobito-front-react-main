@@ -347,14 +347,21 @@ function Router() {
             {
               path: "message-reply",
               element: <MessageReply/>,
-            },
-            // 이용가이드
+            },       
+          ],
+        },
+        // 이용가이드
+        {
+          path: "/user-guide-employee",
+          element: <TopMenu/>,
+          children: [
             {
               path: "/user-guide-employee",
               element: <UserGuideEmployee/>,
             },
           ],
         },
+
         // {
         //   path: "/login-company",
         //   element: <TopMenu />,

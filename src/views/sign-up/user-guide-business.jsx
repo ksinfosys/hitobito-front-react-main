@@ -17,7 +17,7 @@ function UserGuideBusiness() {
       <div id="business" className="user-guide-business">
         <div className="box-type-default">
           <div className="p-5 border-b border-slate-200/60 text-sm">
-            hitobitonoご利用について
+            hitobitoのご利用について
           </div>
           <div className="p-5 pt-10 pb-10">
             <div className="mb-10">
