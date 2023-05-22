@@ -463,11 +463,10 @@ function MessageSentBusiness() {
                 }}
             >
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">メッセージを保管します。</div>
+                    <div className="modal-tit">メッセージを保管しますか？</div>
                     <div className="modal-subtit">
-                        選択されたメッセージを保存しました。
-                        <br />
-                        保存メッセージに移動されました。
+                        選択されたメッセージを保管します。<br />
+                        メッセージは「保管メッセージ」に移動されます。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
@@ -475,7 +474,7 @@ function MessageSentBusiness() {
                             className="btn btn-pending"
                             onClick={msgSavePut}
                         >
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -484,7 +483,7 @@ function MessageSentBusiness() {
                                 setMessageSaveModal(!messageSaveModal);
                             }}
                         >
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                     {/* END: Toggle Modal Toggle */}
@@ -535,7 +534,7 @@ function MessageSentBusiness() {
                             className="btn btn-pending"
                             onClick={handleMsgDelete}
                         >
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -544,7 +543,7 @@ function MessageSentBusiness() {
                                 setMessageDeleteModal(!messageDeleteModal);
                             }}
                         >
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>

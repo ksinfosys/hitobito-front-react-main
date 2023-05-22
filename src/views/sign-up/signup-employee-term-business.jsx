@@ -19,7 +19,7 @@ import GoogleIcon from "@/assets/images/google-icon.svg";
 import KakaoIcon from "@/assets/images/kakao-icon.svg";
 
 
-const SignupEmployeeTerm = () => {
+const SignupEmployeeTermBusiness = () => {
 
     const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const SignupEmployeeTerm = () => {
         <>
             <div className="find-wrap flex flex-col items-center">
                 <div className="term-tit">
-                    企業 会員加入
+                    企業会員加入
                 </div>
                 <div className="term-subtit">
                     利用規約
@@ -422,4 +422,4 @@ const SignupEmployeeTerm = () => {
     );
 };
 
-export default SignupEmployeeTerm;
+export default SignupEmployeeTermBusiness;

@@ -60,7 +60,7 @@ const DashboardList = (props) => {
                 }
             })
     )}
-        else {
+        else if(!props.allCheckState && props.item.rqStatus == "20101") {
             setCheckState(false),
             props.setIdx([]),
             props.setRejectState({})
@@ -152,7 +152,6 @@ const DashboardList = (props) => {
     };
     /* ********** 면접제의 삭제 API 끝 ********** */
 
-
     //면접의뢰 기업정보 확인 모달
     const [companyInfo, setcompanyInfo] = useState(false);
     // 면접의뢰 기업정보 확인 모달의 정보
@@ -164,6 +163,20 @@ const DashboardList = (props) => {
         if (name.includes('skillCodeNameArr')) {
             const infoKey = name.substring(16);
             const infoValue = props.info.skillCodeNameArr[infoKey];
+            return (
+                <button className="btn btn-lang" key={index}>{infoValue}</button>
+            );
+        }
+        if(name.includes('projectProcessNameArr')){
+            const infoKey = name.substring(21);
+            const infoValue = props.info.projectProcessNameArr[infoKey];
+            return (
+                <button className="btn btn-lang" key={index}>{infoValue}</button>
+            );
+        }
+        if(name.includes('projectRoleNameArr')){
+            const infoKey = name.substring(18);
+            const infoValue = props.info.projectRoleNameArr[infoKey];
             return (
                 <button className="btn btn-lang" key={index}>{infoValue}</button>
             );
@@ -245,7 +258,7 @@ const DashboardList = (props) => {
                         <div className="form-check dash-cont1-tit">
                             <input
                                 type="checkbox"
-                                className="form-check-input"
+                                className= {props.item.rqStatus == "20101" ? "form-check-input" : "form-check-input visibility-hidden"}
                                 checked={checkState}
                                 onChange={() => handleCheckChange(props.item.rqIdx)}
                             />
@@ -362,7 +375,7 @@ const DashboardList = (props) => {
                             <div className="modal-tit half-div-left">企業情報</div>
                             <div><a href="#"
                                     className="half-div-right"
-                                    onClick={() => {setcompanyInfo(false);}}> X </a></div>
+                                    onClick={() => {setcompanyInfo(false);}}><img src={Xicon} alt="" /></a></div>
                         </div>
                             <div className="flex items-center gap-3 border-b pb-3 half-div-next">
                                 <div className="btn btn-secondary dashboard-logo-wrap">
@@ -381,7 +394,7 @@ const DashboardList = (props) => {
                                 <table className="table">
                                     <tbody>
                                         <tr>
-                                            <td>勤務地</td>
+                                            <td>所在地</td>
                                             <td>{cpInfoData.headOfficeRegion}</td>
                                         </tr>
                                         <tr>
@@ -389,15 +402,15 @@ const DashboardList = (props) => {
                                             <td>{cpInfoData.businessType}</td>
                                         </tr>
                                         <tr>
-                                            <td>必要な経験年数</td>
+                                            <td>必要経験年数</td>
                                             <td>{cpInfoData.requiredCareer}</td>
                                         </tr>
                                         <tr>
-                                            <td>必要なスキル</td>
+                                            <td>必要スキル</td>
                                             <td>{cpInfoData.requiredSkill}</td>
                                         </tr>
                                         <tr>
-                                            <td>提示年収</td>
+                                            <td>予想年収</td>
                                             <td>{cpInfoData.income}</td>
                                         </tr>
                                         <tr>
@@ -405,7 +418,7 @@ const DashboardList = (props) => {
                                             <td>{cpInfoData.homepage}</td>
                                         </tr>
                                         <tr>
-                                            <td>求人広告</td>
+                                            <td>求人情報</td>
                                             <td>{cpInfoData.cpAd}</td>
                                         </tr>
                                     </tbody>
@@ -469,12 +482,12 @@ const DashboardList = (props) => {
                         <a
                             className="btn btn-primary"
                             onClick={() => { acceptCancel() }}
-                        >確認</a>
+                        >はい</a>
                         <a
                             href="#"
                             className="btn btn-outline-secondary"
                             onClick={() => { setCancelModal(false) }}
-                        >キャンセル</a>
+                        >いいえ</a>
                     </div>
                 </ModalBody>
             </Modal>
@@ -580,7 +593,7 @@ const DashboardList = (props) => {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">ポイント支給の要請を失敗</div>
                     <div className="modal-subtit">
-                        지급요청 대상이 존재하지 않습니다.
+                        ポイント支給要請の対象が存在しません。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
@@ -610,12 +623,12 @@ const DashboardList = (props) => {
                             href="#"
                             className="btn btn-primary"
                             onClick={() => { remove() }}
-                        >確認</button>
+                        >はい</button>
                         <button
                             href="#"
                             className="btn btn-secondary"
                             onClick={() => { setDeleteModal(false); }}
-                        >キャンセル</button>
+                        >いいえ</button>
                     </div>
                 </ModalBody>
             </Modal>

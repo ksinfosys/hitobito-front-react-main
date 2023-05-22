@@ -313,9 +313,9 @@ const UsePlan = () => {
                     type="button"
                     // 변경하기 눌렀을시 결제모달이 안나와서 선택됨을 알리는 색 변경
                     className={
-                      isplanCode === "P0000" && isActive
+                      planList.planCode === "P0000" && isActive
                         ? "btn btn-outline-pending bg-white mt-5 w-full"
-                        : "btn btn--grey-pending mt-5 w-full disabled"
+                        : "btn btn--grey-pending mt-5 w-full hidbtn"
                     }
                     onClick={() => {
                       // setIsPlanCode("P0000");
@@ -737,22 +737,22 @@ const UsePlan = () => {
             >
               次へ
             </button>
-            <button
+            {/*<button
               type="button"
               className="btn btn-sm w-24 mr-2"
               onClick={() => {
-                // 현재 플랜코드로 되돌리기
+                //現在のプランコードに戻す
                 setIsPlanCode(planList.planCode);
-                // 현재 페이먼트메소드로 되돌리기
+                //現在のペイメントメソッドに戻す
                 setIsPaymentMethod(planList.paymentMethod);
-                // 선택 취소
+                //選択解除
                 setIsActive(false);
                 setPlanPaymentModal(false);
                 setAgreeOpen(false)
               }}
             >
               キャンセル
-            </button>
+            </button>*/}
           </div>
         </ModalBody>
       </Modal>
@@ -948,7 +948,7 @@ const UsePlan = () => {
                 setWaitPayFail(false);
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -957,7 +957,7 @@ const UsePlan = () => {
                 setWaitPayFail(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>
@@ -985,7 +985,7 @@ const UsePlan = () => {
                 cancleRegularPayment();
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -994,7 +994,7 @@ const UsePlan = () => {
                 setcancelPayment(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>
@@ -1022,7 +1022,7 @@ const UsePlan = () => {
                 setnonRefundable(false);
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -1031,7 +1031,7 @@ const UsePlan = () => {
                 setnonRefundable(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>

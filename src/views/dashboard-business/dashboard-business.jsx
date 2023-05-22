@@ -10,12 +10,9 @@ import PlusGrayBtn from "@/assets/images/plus-gray-btn.svg";
 
 import ServiceFetch from "../../../util/ServiceFetch";
 import { useRecoilState } from "recoil";
-import { userInfo } from "../../stores/user-info";
 import { searchBusiness } from "../../stores/search-business";
 
 const DashboardBusiness = () => {
-    // userInfo
-    const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
     // Search 상태 관리
     const [searchRecoil, setSearchRecoil] = useRecoilState(searchBusiness);
     const [searchStatus, setSearchStatus] = useState(false);
@@ -261,8 +258,8 @@ const DashboardBusiness = () => {
     };
 
     // Tag 선택하기
-    const [careerActive, setCareerActive] = useState(false);
-    const [skillTag, setSkillTag] = useState({});
+    //const [careerActive, setCareerActive] = useState(false);
+    const [skillTagActive, setSkillTagActive] = useState({});
     const [tagActive, setTagActive] = useState("");
     const handleSelectTags = (tag) => {
         const count01 = selectTags.filter((item) => item.codeType === "51").length;
@@ -271,7 +268,7 @@ const DashboardBusiness = () => {
         const count04 = selectTags.filter((item) => item.codeType === "61").length;
         if (tag.code.length === 8) {
             setCareerActive(true);
-            setSkillTag(tag);
+            setSkillTagActive(tag);
         } else if (tag.codeType === "51") {
             count01 < 2 ? (setTagsFilter([...tagsFilter, tag]), setSelectTags([...selectTags, tag]), setSelectCode([...selectCode, tag.code])) : setModalState07(true);
         } else if (tag.codeType === "52") {
@@ -285,25 +282,29 @@ const DashboardBusiness = () => {
             setSelectTags([...selectTags, tag]);
             setSelectCode([...selectCode, tag.code]);
         }
+        document.getElementById('texttest').value = ""; 
+        setInputValue(""); 
+        setTagActive("");
     };
     const handleSkillSelect = (value) => {
         if (value) {
             const career = skillCareerList.filter((career) => career.value === value);
-            const skillTagCustom = { ...skillTag, career };
-            setTagsFilter([...tagsFilter, skillTag]);
+            const skillTagCustom = { ...skillTagActive, career };
+            setTagsFilter([...tagsFilter, skillTagActive]);
             setSelectTags([...selectTags, skillTagCustom]);
-            setSelectCode([...selectCode, skillTag.code + value]);
+            setSelectCode([...selectCode, skillTagActive.code + value]);
         } else {
-            setTagsFilter([...tagsFilter, skillTag]);
-            setSelectTags([...selectTags, skillTag]);
-            setSelectCode([...selectCode, skillTag.code]);
+            setTagsFilter([...tagsFilter, skillTagActive]);
+            setSelectTags([...selectTags, skillTagActive]);
+            setSelectCode([...selectCode, skillTagActive.code]);
         }
-        setCareerActive(false);
+        //setCareerActive(false);
+        document.getElementById('texttest').value = ""; 
+        setInputValue(""); 
+        document.getElementById('skillBox').value = "";
+        skillBox.disabled = true;
+        setSkillTagActive({});
     }
-    useEffect(() => {
-        setCareerActive(false)
-        setTagActive("")
-    }, [inputValue])
 
     // Tag 지우기
     const deleteTags = (code) => {
@@ -422,36 +423,46 @@ const DashboardBusiness = () => {
                                             {tagsList.map((code, index) => {
                                                 return (
                                                     <li key={index} 
-                                                        className={tagActive === code.code ? "orange" : ""} 
-                                                        onClick={() => {setTagActive(code.code); document.getElementById('texttest').value = code.codeName;}}>
-                                                            
-                                                        <button type="button" onClick={() => handleSelectTags(code)}>
-                                                            {code.codeName}
-                                                        </button>
-                                                    </li>
+                                                    className={tagActive === code ? "orange" : ""}>
+                                                    <button type="button" onClick={() => {
+                                                        if (code.code.length == 5) {
+                                                            setTagActive(code);
+                                                        } else {
+                                                            setSkillTagActive(code);
+                                                            let skillBox = document.getElementById('skillBox');
+                                                            skillBox.disabled = false;
+                                                        }                                                           
+                                                        document.getElementById('texttest').value = code.codeName; 
+                                                        setInputValue(code.codeName); 
+                                                        }}>
+                                                        {code.codeName}
+                                                    </button>
+                                                    <div className={tagActive === code ? "task-tooltip" : "display-none"}>確定したならもう１回クリック</div>    
+                                                </li>
                                                 );
                                             })}
                                         </ul>
                                     )}
                                 </div>
                             </div>
-
-                            {/* 経歴 셀렉트박스 추가 */}
-                            {
-                                careerActive && (
-                                    <select className="form-select w-32 mr-2" onChange={(e) => handleSkillSelect(e.target.value)}>
-                                        {skillCareerList.map((career, index) => {
-                                            return (
-                                                <option value={career.value} key={index}>
-                                                    {career.text}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                )
-                            }
-                            <button className="btn-lg btn btn-pending w-20" onClick={() => {setCurrentPageIdx(1), searchFind()}}>
-                                検索
+                            <select id="skillBox" className="form-select w-32 mr-2" disabled>
+                                {skillCareerList.map((career, index) => {
+                                    return (
+                                        <option value={career.value} key={index}>
+                                            {career.text}
+                                        </option>
+                                    );
+                                })}
+                            </select>
+                            <button className="btn-lg btn btn-pending w-20" onClick={() => {                                 
+                                if (tagActive != "") {
+                                    handleSelectTags(tagActive);
+                                } else {
+                                    let targetValue = document.getElementById('skillBox').value;
+                                    handleSkillSelect(targetValue);
+                                }                               
+                            }}>
+                                追加
                             </button>
                             <button
                                 className="btn btn-lg btn-cancle-type1 w-32"
@@ -462,10 +473,11 @@ const DashboardBusiness = () => {
                             </button>
                         </div>
                     </div>
+                    <div><button className="btn-lg btn btn-pending w-32" style={{height: 60 + 'px', float : 'right', marginRight : 20 + 'px'}} onClick={() => {setCurrentPageIdx(1), searchFind()}}><img src={Search} alt="" />　検&nbsp;索</button></div>
                     {selectTags?.length > 0 && (
                         <div className="skill-list-wrap business2">
                             <div className="skill-list-cont">
-                                <div className="blue-btn-wrap flex gap-2 items-center justify-end flex-wrap">
+                                <div className="blue-btn-wrap flex gap-2 items-center justify-end flex-wrap" style={{paddingRight : 10 + 'px'}}>
                                     {tagsList01.map((tag, index) => {
                                         const codeName = tag.codeName;
                                         const slicedStr01 = codeName && codeName.includes(":") && codeName.split(":")[0].trim();
@@ -558,8 +570,7 @@ const DashboardBusiness = () => {
                             </div>
                         </div>
                     )}
-
-                    <div className="flex justify-end p_20">
+                    <div className="flex justify-end p_20" style={{marginTop : 10 + 'px'}}>
                         <div className="dash-cont-cont3 flex items-center">
                             <div className="color-a8">※全体を確認するためには「Space」を押下してください。</div>
                             <div className="color-a8">面談依頼有効期限</div>
@@ -676,7 +687,7 @@ const DashboardBusiness = () => {
                     </div>
                     <div className="flex flex-end gap-3">
                         <a href="#" className="btn btn-pending" onClick={offer}>
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -686,7 +697,7 @@ const DashboardBusiness = () => {
                                 setSubmitCheckState(!submitCheckState);
                                 setCheckId([]);
                             }}>
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>

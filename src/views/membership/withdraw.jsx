@@ -38,10 +38,13 @@ function Withdraw() {
           </div>
           <div className="cont-wrap py-10 px-5 text-center flex flex-col items-center justify-center">
             <p className="font-bold">会員の退会をした場合、HITOBITOサービスが<br className="hidden sm:block" />利用できなくなります。</p>
+            <div className="flex flex-end gap-3">
             <button type="button" className="btn btn-primary w-80 mt-10" onClick={() => {
               withdrawConfirm(true);
-            }}>確認
+            }}>進む
             </button>
+            <button type="button" className="btn btn-outline-secondary w-80 mt-10" onClick={() => { navigate(-1); }}>戻る</button>
+            </div>
           </div>
         </div>
       </div>
@@ -53,7 +56,7 @@ function Withdraw() {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">会員の退会をします。</div>
+          <div className="modal-tit">会員の退会をしますか？</div>
           <div className="modal-subtit">
             退会した場合、保有しているポイントは消滅します。<br />
             会員の退会をしますか？
@@ -67,7 +70,7 @@ function Withdraw() {
                 handleQuitUser();
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -76,7 +79,7 @@ function Withdraw() {
                 withdrawConfirm(!withdrawConfirmModal);
               }}
             >
-              キャンセル
+              いいえ
             </a>
           </div>
         </ModalBody>
