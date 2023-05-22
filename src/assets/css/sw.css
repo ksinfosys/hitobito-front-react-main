@@ -122,8 +122,23 @@ select{color:#000000!important; }
 
 
 /* 기업 ------------------------------------------------ */
-.bg-lo{background: #FFFBF5; border: 1px solid #FFE4BC; box-shadow: 1px 1px 3px 0px rgba(15, 23, 42, 0.08); border-radius:10px;}
+.bg-lo {
+  background: #FFFBF5;
+  border: 1px solid #FFE4BC;
+  box-shadow: 1px 1px 3px #0f172a14;
+  border-radius: 10px;
+}
+.bg-lo2{
+  background: #FF9800; 
+  box-shadow: 1px 1px 3px 0px rgba(15, 23, 42, 0.08); 
+  border-radius:10px;
+  color: #fff !important;
+  width: 190px;
+}
 span.import{color: #E11D48;}
+.pointText{
+  font-size: 20px !important;
+}
 
 #business .table .link:hover{background:rgba(255,152,0,.1);}
 #business .pagination-wrap .left-btn button {width: 100px;height: 38px;background: #FFFFFF;border: 1px solid #E2E8F0;-webkit-box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.04);box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.04);border-radius: 4px;-webkit-box-sizing: border-box;box-sizing: border-box;color: #FFEACC;}

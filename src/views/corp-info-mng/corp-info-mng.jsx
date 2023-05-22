@@ -765,7 +765,7 @@ const CorpInfoMng = () => {
       <div className="resume-mng">
         <div className="box-type-default">
           <div className="p-5 border-b border-slate-200/60 text-sm">
-            企業情報修正
+            企業情報管理
           </div>
           <div className="resume-regist-cont">
             <div className="form-flex-box flex space-between items-start">
@@ -1080,7 +1080,7 @@ const CorpInfoMng = () => {
               <div className="box-item w-full">
                 <div className="flex flex-col">
                   <div className="form-tit">
-                    求人情報
+                    求人情報(面談依頼時に、求職者に開示されます)
                   </div>
                   <textarea
                     className="form-control mt-2 w-full resize-none"
