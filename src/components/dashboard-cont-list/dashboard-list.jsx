@@ -162,24 +162,24 @@ const DashboardList = (props) => {
             const infoKey = name.substring(16);
             const infoValue = props.info.skillCodeNameArr[infoKey];
             return (
-                <button className="btn btn-lang" key={index}>{infoValue}</button>
+                <span className="btn-lang" key={index}>{infoValue}</span>
             );
         }
         if(name.includes('projectProcessNameArr')){
             const infoKey = name.substring(21);
             const infoValue = props.info.projectProcessNameArr[infoKey];
             return (
-                <button className="btn btn-lang" key={index}>{infoValue}</button>
+                <span className="btn-lang" key={index}>{infoValue}</span>
             );
         }
         if(name.includes('projectRoleNameArr')){
             const infoKey = name.substring(18);
             const infoValue = props.info.projectRoleNameArr[infoKey];
             return (
-                <button className="btn btn-lang" key={index}>{infoValue}</button>
+                <span className="btn-lang" key={index}>{infoValue}</span>
             );
         }
-        return props.info ? <button className="btn btn-lang" key={index}>{props.info[name]}</button> : null
+        return props.info ? <span className="btn-lang" key={index}>{props.info[name]}</span> : null
     })
 
     const getCpInfo = (rqIdx) => {
@@ -294,10 +294,10 @@ const DashboardList = (props) => {
                                 {
                                     props.item.checkTodayOrNotForDeadLine ? (
                                         // 오늘이라는 flag가 내려오는 경우
-                                        todayReplaceSlashToHypen(props.item.rqLimitDatetimeToString)
+                                        todayReplaceSlashToHypen(props.item.rqLimitDatetimeToString)+"まで"
                                     ) : (
                                         // 오늘이 아닌경우
-                                        replaceSlashToHypen(props.item.rqLimitDatetimeToString)
+                                        replaceSlashToHypen(props.item.rqLimitDatetimeToString)+"まで"
                                     )
                                 }
                             </div>
@@ -314,9 +314,7 @@ const DashboardList = (props) => {
                         <div className="dash-cont-cont2 flex flex-col items-end">
                             <div className="progress-bar-tit">期限超過</div>
                             <div className="progress">
-                                {/*<div className={props.progress} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>*/}
-                                <progress className={`progress-bar bg-red`} value={parseInt(props.item.progressBarValue)} max={100} />
-                                {/* 'progress-bar bg-red' */}
+                                <progress className={`progress-bar bg-red`} value='100' max={100} />
                             </div>
                         </div>)
                         :
@@ -333,7 +331,7 @@ const DashboardList = (props) => {
                                         <button className="btn btn-sm btn-primary btn-auto" onClick={() => {
                                             setpointRequestModal(true);
                                         }}>ポイント支給要請</button>
-                                        <button className="btn btn-sm btn-gray-type1" onClick={() => {
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={() => {
                                             setRqLimitDatetime(props.item.rqLimitDatetimeToString);
                                             setCancelModal(true)
                                             }}>承諾取消
@@ -349,6 +347,7 @@ const DashboardList = (props) => {
                                         <button
                                             className="btn btn-sm btn-primary"
                                             onClick={() => {
+                                                props.setDeclarationUser(props.item.cpUserName)
                                                 props.setIdx([props.item.rqIdx]);
                                                 props.setAcceptCheck(true);
                                             }}
@@ -363,7 +362,7 @@ const DashboardList = (props) => {
                                     ポイント返却完了
                                 </button>
                             ) : props.item.pointStatus === '21105' ? (
-                                <button className="btn btn-sm btn-gray-type1 w-auto">
+                                <button className="btn btn-sm btn-gray-type1 w-auto disabled">
                                     ポイント支給待ち
                                 </button>
                             ) : props.item.pointStatus === '21106' ? (
@@ -521,7 +520,7 @@ const DashboardList = (props) => {
                         <a
                             className="btn btn-primary"
                             onClick={() => { acceptCancel() }}
-                        >はい</a>
+                        >承諾取消</a>
                         <a
                             href="#"
                             className="btn btn-outline-secondary"
@@ -590,7 +589,7 @@ const DashboardList = (props) => {
                             href="#"
                             className="btn btn-primary"
                             onClick={pointRequest}
-                        >確認</a>
+                        >要請</a>
                         <a
                             href="#"
                             className="btn btn-outline-secondary"

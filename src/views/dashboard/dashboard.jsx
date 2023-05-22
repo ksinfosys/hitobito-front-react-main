@@ -435,9 +435,9 @@ const Dashboard = () => {
               )
             }
             <div className="all-btn-wrap flex">
-              <button className="btn btn-sm btn-primary" onClick={() => setAcceptCheck(true)}>すべて承諾</button>
+              <button className="btn btn-sm btn-primary" onClick={() => setAcceptCheck(true)}>依頼を承諾</button>
               <button className="btn btn-sm btn-outline-secondary" onClick={() => setRejectModal(true)}>
-                すべて拒否
+                依頼を拒否
               </button>
             </div>
           </div>
@@ -446,9 +446,9 @@ const Dashboard = () => {
           <div className="mobile-top-btn-box flex items-center space-between">
             <div className="flex gap-2">
               <button className="btn btn-sm btn-primary" onClick={() => setAcceptCheck(true)}>
-                すべて承諾
+                依頼を承諾
               </button>
-              <button className="btn btn-sm btn-skyblue">すべて拒否</button>
+              <button className="btn btn-sm btn-skyblue">依頼を拒否</button>
               <button className="btn btn-sm btn-outline-secondary">削除</button>
             </div>
             <div className="check-btn-wrap">
@@ -700,15 +700,17 @@ const Dashboard = () => {
         show={acceptCheck}
         onHidden={() => { setIdx([]); setAcceptCheck(false); }}>
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">面談可否</div>
+          <div className="modal-tit">面談承諾</div>
           <div className="modal-subtit">
-            面談を承認しますか？
+            選択した企業 <strong>'{declarationUser}'</strong> 社の
+            <br/>
+            面談依頼を承諾しますか？
           </div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-primary"
               onClick={accept}
-            >はい</a>
+            >面談承諾</a>
             <a
               className="btn btn-outline-secondary"
               onClick={() => { setIdx([]); setAllCheckState(false); setAcceptCheck(false); }}

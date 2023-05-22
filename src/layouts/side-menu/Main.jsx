@@ -234,7 +234,7 @@ function Main() {
                           className="btn btn-sm btn-blue-type1"
                           onClick={notiReadAll}
                         >
-                          すべて既読
+                          一括既読処理
                         </button>
                         <button
                           className="btn btn-sm btn-blue-type2"
@@ -275,7 +275,7 @@ function Main() {
                                 </button>
                               </div>
                               <div className="noti-cont-btn">
-                                <button
+                                <button className="btn"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     axios
@@ -298,7 +298,7 @@ function Main() {
                                       });
                                   }}
                                 >
-                                  <Lucide icon="X" />
+                                  削除
                                 </button>
                               </div>
                             </div>
@@ -327,7 +327,7 @@ function Main() {
                           setNotiShowAllFlag(!notiShowAllFlag);
                         }}
                       >
-                        {!notiShowAllFlag ? "すべて確認" : "최근 5건 보기"}
+                        {!notiShowAllFlag ? "すべて表示" : "최근 5건 보기"}
                       </button>
                     </div>
                   </DropdownContent>
@@ -381,7 +381,7 @@ function Main() {
                           className="btn btn-sm btn-blue-type1"
                           onClick={notiReadAll}
                         >
-                          すべて既読
+                          一括既読処理
                         </button>
                         <button
                           className="btn btn-sm btn-blue-type2"
@@ -422,7 +422,7 @@ function Main() {
                                 </button>
                               </div>
                               <div className="noti-cont-btn">
-                                <button
+                                <button className="btn"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     axios
@@ -445,7 +445,7 @@ function Main() {
                                       });
                                   }}
                                 >
-                                  <Lucide icon="X" />
+                                  削除
                                 </button>
                               </div>
                             </div>
@@ -474,7 +474,7 @@ function Main() {
                           setNotiShowAllFlag(!notiShowAllFlag);
                         }}
                       >
-                        {!notiShowAllFlag ? "すべて確認" : "최근 5건 보기"}
+                        {!notiShowAllFlag ? "すべて表示" : "최근 5건 보기"}
                       </button>
                     </div>
                   </div>
@@ -524,7 +524,7 @@ function Main() {
                   setButtonSlideOverPreview(false);
                 }}
               >
-                面接提案確認
+                面談依頼確認
               </Link>
             </li>
             <li>
