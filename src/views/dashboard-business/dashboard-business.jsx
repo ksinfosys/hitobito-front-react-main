@@ -13,8 +13,6 @@ import { useRecoilState } from "recoil";
 import { searchBusiness } from "../../stores/search-business";
 
 const DashboardBusiness = () => {
-    // userInfo
-    const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
     // Search 상태 관리
     const [searchRecoil, setSearchRecoil] = useRecoilState(searchBusiness);
     const [searchStatus, setSearchStatus] = useState(false);
