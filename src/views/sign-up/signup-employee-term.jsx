@@ -26,18 +26,20 @@ const SignupEmployeeTerm = () => {
     const [signupModal, setsignupModal] = useState(false);
 
     // Modal State
-    const [modalState01, setModalState01] = useState(false);
-    const [modalState02, setModalState02] = useState(false);
+    // const [modalState01, setModalState01] = useState(false);
+    // const [modalState02, setModalState02] = useState(false);
 
     // 체크버튼 State
-    const [agreeState01, setAgreeState01] = useState(false);
-    const [agreeState02, setAgreeState02] = useState(false);
+    // const [agreeState01, setAgreeState01] = useState(false);
+    // const [agreeState02, setAgreeState02] = useState(false);
 
     // 약관 동의후 회원가입 페이지 진입
-    const agreeSubmit = () => {
-        !agreeState01 ? setModalState01(true) :
-            !agreeState02 ? setModalState02(true) : navigate('/user-guide-employee');
-    };
+    // const agreeSubmit = () => {
+    //     !agreeState01 ? setModalState01(true) :
+    //         !agreeState02 ? setModalState02(true) : navigate('/user-guide-employee');
+    // };
+
+
 
     return (
         <>
@@ -360,14 +362,15 @@ const SignupEmployeeTerm = () => {
                     <label className="form-check-label" htmlFor="vertical-form-4">上記のプライバシーポリシーに同意します。</label>
                 </div>
                 <div className="find-btn flex flex-col gap-2">
-                    <button className="btn btn-primary h-48" onClick={agreeSubmit}>
+                    <button className={!(agreeState01&&agreeState02)? "btn btn-primary h-48 disabled" : "btn btn-primary h-48"}                            
+                            onClick={navigate('/user-guide-employee')}>
                         登録
                     </button>
                 </div>
             </div>
 
             {/* 약관동의 팝업*/}
-            <Modal
+            {/* <Modal
                 show={modalState01}
                 onHidden={() => {
                     setModalState01(false);
@@ -414,7 +417,7 @@ const SignupEmployeeTerm = () => {
                         </a>
                     </div>
                 </ModalBody>
-            </Modal>
+            </Modal> */}
         </>
     );
 };
