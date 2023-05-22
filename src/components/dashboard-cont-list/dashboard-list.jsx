@@ -46,7 +46,7 @@ const DashboardList = (props) => {
             props.setRejectState(updatedRejectState);
         }
     }
-
+    
     useEffect(() => {
         if(props.allCheckState && props.item.rqStatus == "20101"){
             setCheckState(true),
@@ -101,9 +101,7 @@ const DashboardList = (props) => {
             console.log(e);
         })
     };
-    const handleAcceptCancel = () => {
-        setCancelModal(true);
-    };
+
     /* ********** 면접제의 승낙취소 API 끝 ********** */
 
     /* ********** 포인트지급요청 API 시작 ********** */
@@ -223,12 +221,13 @@ const DashboardList = (props) => {
                     })();
             });
     };
-
+    console.log()
     // 프로그레스바 색 정하기
     const handleProgressClassName = () => {
-        if (props.item.checkTodayOrNotForDeadLine) {
-            // 오늘이거나 값이 1600이상일때
+        if (props.item.progressBarValue > 90.00) {
             return 'bg-red'
+        } else if (props.item.progressBarValue > 60.00) {
+            return 'bg-orange'
         } else {
             return 'bg-green'
         }
@@ -240,6 +239,19 @@ const DashboardList = (props) => {
         setBtnActive(!btnActive);
     };
 
+    const [rqLimitDatetime, setRqLimitDatetime] = useState("");
+    // 현재날짜,시간
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
+    const year = currentDateTime.getFullYear();
+    const month = currentDateTime.getMonth() + 1;
+    const date = currentDateTime.getDate();
+    const hours = currentDateTime.getHours();
+    const minutes = currentDateTime.getMinutes();
+    const meridiem = hours < 12 ? '午前' : '午後';
+    
+    const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date} ${hours}:${minutes} ${meridiem}`;
+
+    console.log("props:::",props)
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
@@ -271,12 +283,13 @@ const DashboardList = (props) => {
                             </label>
                         </div>
                         <div className="dash-cont1-tit">
-                            <button type="button">
-                                面接提案
-                            </button>
+                            <span>
+                                {props.item.rqSendDatetime.substring(0,10)}
+                            </span>
                         </div>
                     </div>
                     <div>
+                    {props.item.rqStatus === '20101' ? (
                         <div className="dash-cont-cont2 flex flex-col items-end">
                             <div className="progress-bar-tit">
                                 {
@@ -296,6 +309,21 @@ const DashboardList = (props) => {
 
                             </div>
                         </div>
+                    ):
+                        (props.item.rqLimitDatetimeToString < formattedDate && props.item.pointStatus === '21102' ? 
+                        (
+                        <div className="dash-cont-cont2 flex flex-col items-end">
+                            <div className="progress-bar-tit">期限超過</div>
+                            <div className="progress">
+                                {/*<div className={props.progress} role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>*/}
+                                <progress className={`progress-bar bg-red`} value={parseInt(props.item.progressBarValue)} max={100} />
+                                {/* 'progress-bar bg-red' */}
+                            </div>
+                        </div>)
+                        :
+                        <></>
+                        )
+                    }
                     </div>
 
                     <div className="dash-cont-cont3 flex">
@@ -306,8 +334,10 @@ const DashboardList = (props) => {
                                         <button className="btn btn-sm btn-primary btn-auto" onClick={() => {
                                             setpointRequestModal(true);
                                         }}>ポイント支給要請</button>
-                                        <button className="btn btn-sm btn-gray-type1" onClick={handleAcceptCancel}>
-                                            承諾取消
+                                        <button className="btn btn-sm btn-gray-type1" onClick={() => {
+                                            setRqLimitDatetime(props.item.rqLimitDatetimeToString);
+                                            setCancelModal(true)
+                                            }}>承諾取消
                                         </button>
                                         <button className="btn btn-sm btn-outline-secondary" onClick={() => {
                                             props.setreportRequestModal1(true);
@@ -466,7 +496,7 @@ const DashboardList = (props) => {
                     </div>
                 </ModalBody>
             </Modal>
-
+            
             {/* 면접제의 승낙취소 모달 */}
             <Modal
                 className="point-request-modal"
@@ -475,9 +505,19 @@ const DashboardList = (props) => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">面談承認取消</div>
-                    <div className="modal-subtit">
-                        面談の承諾を取り消しますか？
-                    </div>
+                    {rqLimitDatetime > formattedDate ? (
+                        <div className="modal-subtit">
+                            面談の承諾を取り消しますか？
+                        </div>
+                    ) : (
+                        <div className="modal-subtit">
+                            依頼期間が過ぎた依頼を承諾取消する場合、
+                            <br />
+                            再度承諾やポイント支給が不可能になります。
+                            <br />
+                            面談の承諾を取り消しますか？
+                        </div>
+                     ) }
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-primary"
