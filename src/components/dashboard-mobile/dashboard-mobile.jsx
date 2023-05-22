@@ -592,11 +592,11 @@ const DashboardMobile = (props) => {
               <table className="table">
                 <tbody>
                   <tr>
-                    <td>勤務地</td>
+                    <td>所在地</td>
                     <td>{cpInfoDataMob.headOfficeRegion}</td>
                   </tr>
                   <tr>
-                    <td>업종</td>
+                    <td>業種</td>
                     <td>{cpInfoDataMob.businessType}</td>
                   </tr>
                   <tr>
@@ -734,7 +734,7 @@ const DashboardMobile = (props) => {
                 acceptCancel();
               }}
             >
-              はい
+              承諾取消
             </a>
             <a
               href="#"
