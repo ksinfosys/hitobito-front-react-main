@@ -284,6 +284,180 @@ const UsePlan = () => {
           <div className="p-5 border-b border-slate-200/60 text-sm">
             プラン設定
           </div>
+          {
+            planList?.planCode === "P0000"
+            ?
+            <div className="pt-10 pb-10 p-5 cont-wrap flex flex-col items-center justify-center">
+            <ul className="use-plan-box text-center flex gap-5 w-full mb-10">
+              <li className={planList?.planCode === "P0000" ? "active" : null}>
+                <ul className="flex flex-col gap-5">
+                  <li className="font-bold text-lg">フリープラン</li>
+                  <li>
+                    <p className="bg-lo text-pending font-bold text-lg p-2">
+                      無料/月
+                    </p>
+                    <p className="text-white text-sm mt-2">(税金別途)</p>
+                  </li>
+                  <li className="">
+                    面接依頼1件につき 20,000Pで
+                    <br />
+                    毎月のご利用料金なし
+                  </li>
+                </ul>
+                {planList.planCode === "P0000" ? (
+                  <button
+                    type="button"
+                    className="btn btn-outline-pending bg-white mt-5 w-full disabled"
+                  >
+                    使用中
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    // 변경하기 눌렀을시 결제모달이 안나와서 선택됨을 알리는 색 변경
+                    className={
+                      planList.planCode === "P0000" && isActive
+                        ? "btn btn-outline-pending bg-white mt-5 w-full"
+                        : "btn btn--grey-pending mt-5 w-full hidbtn"
+                    }
+                    onClick={() => {
+                      // setIsPlanCode("P0000");
+                      // 프리플랜으로의 변경은 결제모달 필요없음
+                      // setIsActive((prev) => !prev);
+                      // setPlanPaymentModal(true);
+                    }}
+                  >
+                    変更する
+                  </button>
+                )}
+              </li>
+              <li className={planList?.planCode === "P0001" ? "active" : null}>
+                <ul className="flex flex-col gap-5">
+                  <li className="font-bold text-lg">プランA</li>
+                  <li>
+                    <p className="bg-lo text-pending font-bold text-lg p-2">
+                      15,000円/月
+                    </p>
+                    <p className="text-warning text-sm mt-2">(税金別途)</p>
+                  </li>
+                  <li className="">
+                    面接依頼1件につき 5,000円で
+                    <br />
+                    毎月のご利用料金 15,000円
+                  </li>
+                </ul>
+                {planList.planCode === "P0001" ? (
+                  <button
+                    type="button"
+                    className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
+                    onClick={() => {
+                      if (planList.invalidFlag === "8") {
+                        setWaitPayFail(true);
+                      }
+                    }}
+                  >
+                    {planList.invalidFlag === "8"
+                      ? "コンビニ決済待ち"
+                      : "使用中"}
+                    {planList.invalidFlag !== "8" ? (
+                      <div>
+                        {regexUserJoinDate(planList.planEndDate) == "2100/12/31" ? 
+                        "定期購読中(" + regexUserJoinDate(planList.planStartDate) + ")" 
+                        : 
+                        regexUserJoinDate(planList.planStartDate)+ " ~ " + regexUserJoinDate(planList.planEndDate)}
+                      </div>
+                    ) : null}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className={"btn btn-pending mt-5 w-full"}
+                    onClick={() => {
+                      setIsPlanCode("P0001");
+                      setPlanPaymentModal(true);
+                    }}
+                  >
+                    変更する
+                  </button>
+                )}
+                {
+                  (cancleRegularPayFlag(planList.planEndDate) && planList.planCode === "P0001" && planList?.paymentMethod === "20906") && (
+                    <button
+                      className="btn btn-danger mt-2 w-full"
+                      onClick={() => setnonRefundable(true)}
+                    >
+                      取消
+                    </button>
+                  )
+                }
+              </li>
+              <li className={planList?.planCode === "P0002" ? "active" : null}>
+                <ul className="flex flex-col gap-5">
+                  <li className="font-bold text-lg">プランB</li>
+                  <li>
+                    <p className="bg-lo text-pending font-bold text-lg p-2">
+                      30,000円/月
+                    </p>
+                    <p className="text-warning text-sm mt-2">(税金別途)</p>
+                  </li>
+                  <li className="">
+                    面接依頼1件につき 3,000Pで
+                    <br />
+                    毎月のご利用料金 30,000円
+                  </li>
+                </ul>
+                {planList.planCode === "P0002" ? (
+                  <button
+                    type="button"
+                    className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
+                    onClick={() => {
+                      if (planList.invalidFlag === "8") {
+                        setWaitPayFail(true);
+                      }
+                    }}
+                  >
+                    {planList.invalidFlag === "8"
+                      ? "コンビニ決済待ち"
+                      : "使用中"}
+                    <br />
+
+                    {planList.invalidFlag !== "8" ? (
+                      <div>
+                      {regexUserJoinDate(planList.planEndDate) == "2100/12/31" ? 
+                      "定期購読中(" + regexUserJoinDate(planList.planStartDate) + ")" 
+                      : 
+                      regexUserJoinDate(planList.planStartDate)+ " ~ " + regexUserJoinDate(planList.planEndDate)}
+                      </div>
+                    ) : null}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className={ "btn btn-pending mt-5 w-full"}
+                    onClick={() => {
+                      setIsPlanCode("P0002");
+                      setPlanPaymentModal(true);
+                    }}
+                  >
+                    変更する
+                  </button>
+                )}
+
+                {
+                  (cancleRegularPayFlag(planList.planEndDate) && planList.planCode === "P0002" && planList?.paymentMethod === "20906") && (
+                    <button
+                      className="btn btn-danger mt-2 w-full"
+                      onClick={() => setnonRefundable(true)}
+                    >
+                      取消
+                    </button>
+                  )
+                }
+              </li>
+            </ul>
+
+          </div>
+          :
           <div className="pt-10 pb-10 p-5 cont-wrap flex flex-col items-center justify-center">
             <ul className="use-plan-box text-center flex gap-5 w-full mb-10">
               <li className={planList?.planCode === "P0000" ? "active" : null}>
@@ -462,6 +636,185 @@ const UsePlan = () => {
             </ul>
 
           </div>
+          }
+          {/* <div className="pt-10 pb-10 p-5 cont-wrap flex flex-col items-center justify-center">
+            <ul className="use-plan-box text-center flex gap-5 w-full mb-10">
+              <li className={planList?.planCode === "P0000" ? "active" : null}>
+                <ul className="flex flex-col gap-5">
+                  <li className="font-bold text-lg">フリープラン</li>
+                  <li>
+                    <p className="bg-lo text-pending font-bold text-lg p-2">
+                      無料/月
+                    </p>
+                    <p className="text-white text-sm mt-2">(税金別途)</p>
+                  </li>
+                  <li className="">
+                    面接依頼1件につき 20,000Pで
+                    <br />
+                    毎月のご利用料金なし
+                  </li>
+                </ul>
+                {planList.planCode === "P0000" ? (
+                  <button
+                    type="button"
+                    className="btn btn-outline-pending bg-white mt-5 w-full disabled"
+                  >
+                    使用中
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    // 변경하기 눌렀을시 결제모달이 안나와서 선택됨을 알리는 색 변경
+                    className={
+                      planList.planCode === "P0000" && isActive
+                        ? "btn btn-outline-pending bg-white mt-5 w-full"
+                        : "btn btn--grey-pending mt-5 w-full hidbtn"
+                    }
+                    onClick={() => {
+                      // setIsPlanCode("P0000");
+                      // 프리플랜으로의 변경은 결제모달 필요없음
+                      // setIsActive((prev) => !prev);
+                      // setPlanPaymentModal(true);
+                    }}
+                  >
+                    変更する
+                  </button>
+                )}
+              </li>
+              <li className={planList?.planCode === "P0001" ? "active" : null}>
+                <ul className="flex flex-col gap-5">
+                  <li className="font-bold text-lg">プランA</li>
+                  <li>
+                    <p className="bg-lo text-pending font-bold text-lg p-2">
+                      15,000円/月
+                    </p>
+                    <p className="text-warning text-sm mt-2">(税金別途)</p>
+                  </li>
+                  <li className="">
+                    面接依頼1件につき 5,000円で
+                    <br />
+                    毎月のご利用料金 15,000円
+                  </li>
+                </ul>
+                {planList.planCode === "P0001" ? (
+                  <button
+                    type="button"
+                    className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
+                    onClick={() => {
+                      if (planList.invalidFlag === "8") {
+                        setWaitPayFail(true);
+                      }
+                    }}
+                  >
+                    {planList.invalidFlag === "8"
+                      ? "コンビニ決済待ち"
+                      : "使用中"}
+                    {planList.invalidFlag !== "8" ? (
+                      <div>
+                        {regexUserJoinDate(planList.planEndDate) == "2100/12/31" ? 
+                        "定期購読中(" + regexUserJoinDate(planList.planStartDate) + ")" 
+                        : 
+                        regexUserJoinDate(planList.planStartDate)+ " ~ " + regexUserJoinDate(planList.planEndDate)}
+                      </div>
+                    ) : null}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className={
+                      planList.planCode === "P0001" || planList?.planEndDate === "21001231"
+                        ? "btn btn--grey-pending mt-5 w-full disabled"
+                        : "btn btn-pending mt-5 w-full"
+                    }
+                    onClick={planList?.planEndDate !== "21001231" ? () => {
+                      setIsPlanCode("P0001");
+                      setPlanPaymentModal(true);
+                    } : null}
+                  >
+                    変更する
+                  </button>
+                )}
+                {
+                  (cancleRegularPayFlag(planList.planEndDate) && planList.planCode === "P0001" && planList?.paymentMethod === "20906") && (
+                    <button
+                      className="btn btn-danger mt-2 w-full"
+                      onClick={() => setnonRefundable(true)}
+                    >
+                      取消
+                    </button>
+                  )
+                }
+              </li>
+              <li className={planList?.planCode === "P0002" ? "active" : null}>
+                <ul className="flex flex-col gap-5">
+                  <li className="font-bold text-lg">プランB</li>
+                  <li>
+                    <p className="bg-lo text-pending font-bold text-lg p-2">
+                      30,000円/月
+                    </p>
+                    <p className="text-warning text-sm mt-2">(税金別途)</p>
+                  </li>
+                  <li className="">
+                    面接依頼1件につき 3,000Pで
+                    <br />
+                    毎月のご利用料金 30,000円
+                  </li>
+                </ul>
+                {planList.planCode === "P0002" ? (
+                  <button
+                    type="button"
+                    className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
+                    onClick={() => {
+                      if (planList.invalidFlag === "8") {
+                        setWaitPayFail(true);
+                      }
+                    }}
+                  >
+                    {planList.invalidFlag === "8"
+                      ? "コンビニ決済待ち"
+                      : "使用中"}
+                    <br />
+
+                    {planList.invalidFlag !== "8" ? (
+                      <div>
+                      {regexUserJoinDate(planList.planEndDate) == "2100/12/31" ? 
+                      "定期購読中(" + regexUserJoinDate(planList.planStartDate) + ")" 
+                      : 
+                      regexUserJoinDate(planList.planStartDate)+ " ~ " + regexUserJoinDate(planList.planEndDate)}
+                      </div>
+                    ) : null}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className={
+                      planList.planCode === "P0002" || planList?.planEndDate === "21001231"
+                        ? "btn btn--grey-pending mt-5 w-full disabled"
+                        : "btn btn-pending mt-5 w-full"
+                    }
+                    onClick={planList?.planEndDate !== "21001231" ? () => {
+                      setIsPlanCode("P0002");
+                      setPlanPaymentModal(true);
+                    } : null}
+                  >
+                    変更する
+                  </button>
+                )}
+
+                {
+                  (cancleRegularPayFlag(planList.planEndDate) && planList.planCode === "P0002" && planList?.paymentMethod === "20906") && (
+                    <button
+                      className="btn btn-danger mt-2 w-full"
+                      onClick={() => setnonRefundable(true)}
+                    >
+                      取消
+                    </button>
+                  )
+                }
+              </li>
+            </ul>
+
+          </div> */}
         </div>
       </div>
 
