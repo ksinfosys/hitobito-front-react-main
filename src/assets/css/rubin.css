@@ -89,6 +89,11 @@
   white-space: nowrap;
   overflow: hidden;
 }
+.upload-name-2 {
+  width: fit-content;
+  border: 0;
+  color: #999;
+}
 
 .mobile-drop-wrap .dropdown-basic-button {
   background: #fff;

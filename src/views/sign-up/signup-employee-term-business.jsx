@@ -19,7 +19,7 @@ import GoogleIcon from "@/assets/images/google-icon.svg";
 import KakaoIcon from "@/assets/images/kakao-icon.svg";
 
 
-const SignupEmployeeTerm = () => {
+const SignupEmployeeTermBusiness = () => {
 
     const navigate = useNavigate();
 
@@ -422,4 +422,4 @@ const SignupEmployeeTerm = () => {
     );
 };
 
-export default SignupEmployeeTerm;
+export default SignupEmployeeTermBusiness;
