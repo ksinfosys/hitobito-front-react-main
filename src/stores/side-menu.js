@@ -37,7 +37,7 @@ const sideMenu = atom({
                     // },
                     {
                         pathname: "/giftcard-record",
-                        title: "Amazonギフトカード登録",
+                        title: "ポイント交換履歴",
                     },
                 ],
             },
