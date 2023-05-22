@@ -2,6 +2,8 @@ import { useRecoilState } from "recoil";
 import { userInfo } from "../../../stores/user-info";
 import AppleIcon from "@/assets/images/apple_login.svg";
 import KakaoIcon from "@/assets/images/kakao-icon.svg";
+import GoogleIcon from "@/assets/images/google-icon.svg";
+import { useGoogleLogin } from "@react-oauth/google";
 import AppleLogin from 'react-apple-login'
 import { liff } from "@line/liff";
 import {
@@ -48,6 +50,10 @@ const UserLogin = () => {
 		}
 	})
 	const [snsKey, setSnsKey] = useState({
+		google: {
+			client_id: '994073566161-uheufnfp50scmu1lquhkg0mdbpr7ip56.apps.googleusercontent.com',
+			client_secret: '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'
+		},
 		kakao: {
 			app_key: 'ef608f25820e6512a7b7a38c4d94135c'
 		},
@@ -80,6 +86,10 @@ const UserLogin = () => {
 			}
 		})
 	}
+
+	const googleLogin = useGoogleLogin({
+		onSuccess: res => snsLogin(res, 'google'),
+	});
 
 	useEffect(() => {
 		console.log(snsBody)
@@ -198,6 +208,14 @@ const UserLogin = () => {
 	return <div className="btn-wrap">
 
 		<CustomLineLogin setSnsBody={setSnsBody} />
+
+		<button className="mobile_none btn-google flex flex-center" onClick={googleLogin}>
+		<div className="button-wrap flex items-center gap-2">
+			<img src={GoogleIcon} alt="" />
+			Googleログイン
+		</div>
+		</button>
+
 		<button className="btn-kakao flex flex-center" onClick={handleKakaoLogin}>
 			<div className="button-wrap flex items-center gap-2">
 				<img src={KakaoIcon} alt="" />
