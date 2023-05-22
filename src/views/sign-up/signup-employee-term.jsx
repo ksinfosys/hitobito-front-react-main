@@ -367,7 +367,7 @@ const SignupEmployeeTerm = () => {
                             </button>
                             :
                             <button
-                                className="disabled" disabled={disabled}>
+                                className="disabled" disabled>
                                 登録
                             </button>
                     }
