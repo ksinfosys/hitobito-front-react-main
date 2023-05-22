@@ -251,7 +251,6 @@ const DashboardList = (props) => {
     
     const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date} ${hours}:${minutes} ${meridiem}`;
 
-    console.log("props:::",props)
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
