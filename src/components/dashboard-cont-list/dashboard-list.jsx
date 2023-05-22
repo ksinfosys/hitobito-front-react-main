@@ -391,7 +391,7 @@ const DashboardList = (props) => {
                                 <div>{cpInfoData.companyName}</div>
                             </div>
                             <div className="mt-3">
-                                <table className="table">
+                                <table className="table" style={{tableLayout:"fixed"}}>
                                     <tbody>
                                         <tr>
                                             <td>所在地</td>
@@ -419,7 +419,7 @@ const DashboardList = (props) => {
                                         </tr>
                                         <tr>
                                             <td>求人情報</td>
-                                            <td>{cpInfoData.cpAd}</td>
+                                            <td style={{wordWrap:"break-word"}}>{cpInfoData.cpAd}</td>
                                         </tr>
                                     </tbody>
                                 </table>
