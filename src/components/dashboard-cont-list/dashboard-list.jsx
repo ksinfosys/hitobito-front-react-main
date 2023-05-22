@@ -375,7 +375,7 @@ const DashboardList = (props) => {
                             <div className="modal-tit half-div-left">企業情報</div>
                             <div><a href="#"
                                     className="half-div-right"
-                                    onClick={() => {setcompanyInfo(false);}}> X </a></div>
+                                    onClick={() => {setcompanyInfo(false);}}><img src={Xicon} alt="" /></a></div>
                         </div>
                             <div className="flex items-center gap-3 border-b pb-3 half-div-next">
                                 <div className="btn btn-secondary dashboard-logo-wrap">
@@ -394,7 +394,7 @@ const DashboardList = (props) => {
                                 <table className="table">
                                     <tbody>
                                         <tr>
-                                            <td>勤務地</td>
+                                            <td>所在地</td>
                                             <td>{cpInfoData.headOfficeRegion}</td>
                                         </tr>
                                         <tr>
@@ -402,15 +402,15 @@ const DashboardList = (props) => {
                                             <td>{cpInfoData.businessType}</td>
                                         </tr>
                                         <tr>
-                                            <td>必要な経験年数</td>
+                                            <td>必要経験年数</td>
                                             <td>{cpInfoData.requiredCareer}</td>
                                         </tr>
                                         <tr>
-                                            <td>必要なスキル</td>
+                                            <td>必要スキル</td>
                                             <td>{cpInfoData.requiredSkill}</td>
                                         </tr>
                                         <tr>
-                                            <td>提示年収</td>
+                                            <td>予想年収</td>
                                             <td>{cpInfoData.income}</td>
                                         </tr>
                                         <tr>
@@ -418,7 +418,7 @@ const DashboardList = (props) => {
                                             <td>{cpInfoData.homepage}</td>
                                         </tr>
                                         <tr>
-                                            <td>求人広告</td>
+                                            <td>求人情報</td>
                                             <td>{cpInfoData.cpAd}</td>
                                         </tr>
                                     </tbody>

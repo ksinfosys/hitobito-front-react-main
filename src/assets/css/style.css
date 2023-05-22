@@ -8,6 +8,10 @@ html body {
     font-family: "Noto Sans JP", sans-serif !important;
 }
 
+table {
+    table-layout: fixed;
+}
+
 /* 헤더 */
 .cu-search {
     background-color: #fff !important;
@@ -178,6 +182,7 @@ body {
     padding-right: 0.9rem;
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
+    word-wrap: break-word;
 }
 
 /* 콘텐츠 스크롤 */
