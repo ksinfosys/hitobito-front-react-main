@@ -358,9 +358,19 @@ const SignupEmployeeTerm = () => {
                     <label className="form-check-label" htmlFor="vertical-form-4">上記のプライバシーポリシーに同意します。</label>
                 </div>
                 <div className="find-btn flex flex-col gap-2">
-                    <button className={(agreeState01&&agreeState02)?"btn btn-primary h-48" :"disabled"} onClick={agreeSubmit}>
-                        登録
-                    </button>
+                    {
+                        agreeState01&&agreeState02
+                            ?
+                            <button 
+                                className="btn btn-primary h-48" onClick={agreeSubmit}>
+                                登録
+                            </button>
+                            :
+                            <button
+                                className="disabled" disabled={true}>
+                                登録
+                            </button>
+                    }
                 </div>
             </div>
 
