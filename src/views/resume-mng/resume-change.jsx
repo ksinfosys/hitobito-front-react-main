@@ -19,7 +19,7 @@ import {mobileStatus} from "../../stores/mobile-status";
 import {Lucide, Modal, ModalBody, ModalFooter, ModalHeader} from "@/base-components";
 import {useNavigate} from "react-router-dom";
 import MobileSelectBox from "./mobile-items/MobileSelectBox";
-
+import $ from "jquery";
 
 const ResumeChange = () => {
 
@@ -394,7 +394,7 @@ const ResumeChange = () => {
       }).then((res) => {
       if (res.data.resultCode === '200') {
         alert(res.data.resultMessage)
-        window.location.reload()
+        window.location.href = '/';
       }
       console.log(res)
     })
@@ -422,6 +422,68 @@ const ResumeChange = () => {
         lastLoginTime: getCookie('lastLoginTime'),
       }
     }).then((res) => {
+      let hopeCareerDepthFirst = "";
+      let hopeCareerDepthSeconds = "";
+      let jobTypeDepthFirst = "";
+      let jobTypeDepthSeconds = "";
+      let businessTypeDepthFirst = "";
+      let businessTypeDepthSeconds = "";
+
+      for(let i = 0; i < res.data.result.hopeCareerList.length; i++){
+        if((res.data.result.hopeCareerList[i].hopeCareer).substr(0,4) == (res.data.result.regiInfoDto.hopeCareerSelect).substr(0,4)){
+          hopeCareerDepthFirst = res.data.result.hopeCareerList[i].hopeCareerName;
+          break;
+        }
+      }
+      for(let i = 0; i < res.data.result.hopeCareerList.length; i++){
+        if(res.data.result.hopeCareerList[i].hopeCareer == res.data.result.regiInfoDto.hopeCareerSelect){
+          hopeCareerDepthSeconds = res.data.result.hopeCareerList[i].hopeCareerName;
+        }
+      }
+
+      for(let i = 0; i < res.data.result.jobTypeList.length; i++){
+        if((res.data.result.jobTypeList[i].jobType).substr(0,4) == (res.data.result.regiInfoDto.jobTypeSelect).substr(0,4)){
+          jobTypeDepthFirst = res.data.result.jobTypeList[i].jobTypeName;
+          break;
+        }
+      }
+      for(let i = 0; i < res.data.result.jobTypeList.length; i++){
+        if(res.data.result.jobTypeList[i].jobType == res.data.result.regiInfoDto.jobTypeSelect){
+          jobTypeDepthSeconds = res.data.result.jobTypeList[i].jobTypeName;
+        }
+      }
+
+      for(let i = 0; i < res.data.result.businessTypeList.length; i++){
+        if((res.data.result.businessTypeList[i].businessType).substr(0,4) == (res.data.result.regiInfoDto.businessTypeSelect).substr(0,4)){
+          businessTypeDepthFirst = res.data.result.businessTypeList[i].businessTypeName;
+          break;
+        }
+      }
+      for(let i = 0; i < res.data.result.businessTypeList.length; i++){  
+        if(res.data.result.businessTypeList[i].businessType == res.data.result.regiInfoDto.businessTypeSelect){
+          businessTypeDepthSeconds = res.data.result.businessTypeList[i].businessTypeName;
+        }
+      }
+      
+      setDepthMenu({
+        hopeCareer: {
+          depth: 0,
+          depth_first: hopeCareerDepthFirst,
+          depth_seconds: hopeCareerDepthSeconds,
+        },
+        jobType: {
+          depth: 0,
+          depth_first: jobTypeDepthFirst,
+          depth_seconds: jobTypeDepthSeconds,
+        },
+        businessType: {
+          depth: 0,
+          depth_first: businessTypeDepthFirst,
+          depth_seconds: businessTypeDepthSeconds,
+        },
+        
+      })
+
       if (res.data.result.regiInfoDto) {
         // console.log(res.data.result.regiInfoDto)
         setData(res.data.result)
@@ -481,7 +543,7 @@ const ResumeChange = () => {
             businessDepthMenu: businessDepthMenu,
             jobDepthMenu: jobDepthMenu,
             hopeCareerDepthMenu: hopeCareerDepthMenu
-          })
+          })       
         }
       } else {
         alert('등록된 이력서가 없습니다. 이력서를 먼저 등록해주세요.')
@@ -691,6 +753,36 @@ const ResumeChange = () => {
     console.log(body)
 
   }
+  const [ grab, setGrab ] = useState(null)
+
+  const _onDragOver = e => {
+    e.preventDefault();
+  }
+
+  const _onDragStart = e => {
+    setGrab(e.target);
+    e.target.classList.add("grabbing");
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", e.target);
+  }
+
+  const _onDragEnd = e => {
+    e.target.classList.remove("grabbing");
+    e.dataTransfer.dropEffect = "move";
+  }
+
+  const _onDrop = e => {
+    let grabPosition = Number(grab.dataset.position);
+    let targetPosition = Number(e.target.dataset.position);
+
+    let newImages = [ ...image ];
+    let tempForm = [...rsFilePhoto];
+    newImages[grabPosition] = newImages.splice(targetPosition, 1, newImages[grabPosition])[0];
+    tempForm[grabPosition] = tempForm.splice(targetPosition, 1, tempForm[grabPosition])[0];
+
+    setImage(newImages);
+    setRsFilePhoto([...tempForm]);
+  }
 
   return <>
     {
@@ -701,32 +793,44 @@ const ResumeChange = () => {
               履歴書変更
             </div>
             <div className='resume-regist-cont'>
-              <div className='flex gap-3'>
+              <ul className='flex gap-3'>
                 {
                   image.length === 0 ? previewItem : image.map((item, index) => (
-                    <div className='image_item bg-slate-50' key={index}>
+                    <li className={`image_item bg-slate-50 text-center profileImg_${index}`}
+                      key={index}
+                      data-position={index}
+                      onDragOver={_onDragOver}
+                      onDragStart={_onDragStart}
+                      onDragEnd={_onDragEnd}
+                      onDrop={_onDrop}
+                      draggable
+                    >
                       <input
                         id={`profileImg${index}`}
                         type={'file'}
                         onChange={(e) => handleChangeImage(e, index)}
                       />
-                      <label className={'custom-input-label'} htmlFor={`profileImg${index}`}>
-                        <img src={item} alt=''/>
+                      <label className={`custom-input-label`} htmlFor={`profileImg${index}`}>
+                        <img src={item} className={`${data.photofile[index].rsFileUrl}`}  alt='' />
                       </label>
                       {image[index] && (
                         <button onClick={() => handleDeleteImage(index)}>
                           <img src={Xbutton} alt='삭제'/>
                         </button>
                       )}
-                    </div>
+                      <span className='dragText'>ドラッグ</span>
+                    </li>
                   ))
                 }
-              </div>
+              </ul>
 
-              <div className='camera-subtit'>
+              <div className='camera-subtit3'>
                 * 最大5枚 JPG、PNG、GIF形式で登録可能です。
+                
               </div>
-
+              <div className='camera-subtit4'>
+                * 最初のイメージが代表のイメージとなります。
+              </div>
 
               <div className='form-flex-box flex space-between items-start'>
                 <div className='box-item flex flex-col'>
@@ -839,7 +943,10 @@ const ResumeChange = () => {
                             setModalFlag({...modalFlag, main: true, goal: true})
                             //console.log(modalFlag)
                           }}
-                  >{isLoading ? data.hopeCareerList.filter(item => item.hopeCareer === (body.hopeCareer ? body.hopeCareer : body.hopeCareerSelect))[0].hopeCareerName : ''}</button>
+                  >
+                    {/* {isLoading ? data.hopeCareerList.filter(item => item.hopeCareer === (body.hopeCareer ? body.hopeCareer : body.hopeCareerSelect))[0].hopeCareerName : ''} */}
+                    {depthMenu.hopeCareer.depth_first} &gt; {depthMenu.hopeCareer.depth_seconds}
+                  </button>
                 </div>
               </div>
 
@@ -855,7 +962,9 @@ const ResumeChange = () => {
                           onClick={() => {
                             setModalFlag({...modalFlag, main: true, occupation: true})
                           }}
-                  >   {isLoading ? data.jobTypeList.filter(item => item.jobType === (body.jobType ? body.jobType : body.jobTypeSelect))[0].jobTypeName : ''}
+                  >   
+                    {/* {isLoading ? data.jobTypeList.filter(item => item.jobType === (body.jobType ? body.jobType : body.jobTypeSelect))[0].jobTypeName : ''} */}
+                    {depthMenu.jobType.depth_first} &gt; {depthMenu.jobType.depth_seconds}
                   </button>
                 </div>
                 <div className="box-item flex flex-col">
@@ -864,8 +973,10 @@ const ResumeChange = () => {
                           onClick={() => {
                             setModalFlag({...modalFlag, main: true, business: true})
                           }}
-                  >{depthMenu.businessType.depth_seconds}
-                    {isLoading ? data.businessTypeList.filter(item => item.businessType === (body.businessType ? body.businessType : body.businessTypeSelect))[0].businessTypeName : ''}
+                  >
+                    {/* {depthMenu.businessType.depth_seconds}
+                    {isLoading ? data.businessTypeList.filter(item => item.businessType === (body.businessType ? body.businessType : body.businessTypeSelect))[0].businessTypeName : ''} */}
+                    {depthMenu.businessType.depth_first} &gt; {depthMenu.businessType.depth_seconds}
                   </button>
                 </div>
               </div>

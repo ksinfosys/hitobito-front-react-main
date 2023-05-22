@@ -1199,6 +1199,21 @@ tr.table-content:hover td {
   margin-bottom: 10px;
 }
 
+.resume-regist-cont .camera-subtit3 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+  color: #A8ABAE;
+  margin-top: 10px;
+}
+.resume-regist-cont .camera-subtit4 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+  color: #A8ABAE;
+  margin-bottom: 50px;
+}
+
 .resume-regist-cont .camera-subtit2+img {
   display: block;
   width: 120px;
