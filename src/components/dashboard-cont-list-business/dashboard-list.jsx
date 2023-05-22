@@ -52,43 +52,43 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
         if(value == "ageName"){
             eachAgeName = true;
         }
-        if(value == "educationName"){
+        else if(value == "educationName"){
             eachEducationName = true;
         }
-        if(value == "residentialAreaName"){
+        else if(value == "residentialAreaName"){
             eachResidentialAreaName = true;
         }
-        if(value == "countryName"){
+        else if(value == "countryName"){
             eachCountryName = true;
         }
-        if(value == "jobTypeName"){
+        else if(value == "jobTypeName"){
             eachJobTypeName = true;
         }
-        if(value == "careerName"){
+        else if(value == "careerName"){
             eachCareerName = true;
         }
-        if(value == "hopeIncomeName"){
+        else if(value == "hopeIncomeName"){
             eachHopeIncomeName = true;
         }
-        if(value == "businessTypeName"){
+        else if(value == "businessTypeName"){
             eachBusinessTypeName = true;
         }
-        if(value == "hopeCareerName"){
+        else if(value == "hopeCareerName"){
             eachHopeCareerName = true;
         }
-        if(value.includes("skillCodeNameArr")){
+        else if(value.includes("skillCodeNameArr")){
             let idx = value.split("skillCodeNameArr");
             skillCodeNameArray.push(skillCodeNameArr[Number(idx[1])]);
         } 
-        if(value.includes("projectProcessNameArr")){
+        else if(value.includes("projectProcessNameArr")){
             let idx = value.split("projectProcessNameArr");
             projectProcessNameArray.push(projectProcessNameArr[Number(idx[1])]);
         }
-        if(value.includes("projectRoleNameArr")){
+        else if(value.includes("projectRoleNameArr")){
             let idx = value.split("projectRoleNameArr");
             projectRoleNameArray.push(projectRoleNameArr[Number(idx[1])]);
         }
-        if(value == "genderName"){
+        else if(value == "genderName"){
             eachGenderName = true;
         }
     })

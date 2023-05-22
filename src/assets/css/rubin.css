@@ -174,8 +174,24 @@
 .image_item {
   position: relative;
   width: 200px;
-  height: 146px;
+  height: 186px;
   overflow: hidden;
+  padding-bottom: 40px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #3686ff;
+  color: white;
+}
+.custom-input-label>img{
+  object-fit: cover;
+}
+.profileImg_0{
+  border: 10px solid #3686ff;
+  border-radius: 10px;
+}
+.dragText{
+  display: inline-block;
+  margin-top: 10px;
 }
 .image_item button {
   position: absolute;

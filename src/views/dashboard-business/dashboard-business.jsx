@@ -210,7 +210,6 @@ const DashboardBusiness = () => {
             selectCode: selectCode,
         }).then((res) => {
             res.resultCode === '200' ? (
-                console.log(res.result),
                 setListState(res.result.searchList),
                 setPgnInfo(res.result.pageItem),
                 setSearchId(res.result.searchCondition.srchId),
