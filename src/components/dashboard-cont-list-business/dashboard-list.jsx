@@ -282,6 +282,21 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
     // 구직자 간단정보 모달
     const [informModal, setinformModal] = useState(false);
 
+    const setCount = () => {
+        let count = document.querySelectorAll("input[name='chkInput']:checked");
+        document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
+    }
+
+    const setAllCount = (allCheck) => {
+        console.log(allCheck);
+        if(allCheck == false){
+            let count = document.querySelectorAll("input[name='chkInput']");
+            document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
+        }else if(allCheck == true){    
+            document.querySelector('.chkCount').innerText = '(選択者数：0)';
+        }
+    }
+
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
@@ -294,7 +309,8 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={() => handleCheckboxChange(data.jsUserId)}
-                                name="chkInput"
+                                onClick={() => setCount()}
+                                name={data.requestStatus ? "" : "chkInput"}
                             />
                             <p className={data.requestStatus ? " btn-sm btn-secondary" : "btn btn-sm btn-secondary hidden"}>{data.rqSendDateTime} 依頼完了</p>
                             <div className="form-check-label business flex items-center gap-2" htmlFor="vertical-form-4" onClick={() => { detailUser(data.jsUserId, data.requestStatus), setCheckId([data.jsUserId]) }}>

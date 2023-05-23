@@ -3,6 +3,11 @@ import { MutatingDots } from "react-loader-spinner";
 
 const Loading = (props) => {
   const check = props.loading == null ? false : props.loading;
+  
+  if(document.querySelector('.chkCount')){
+    document.querySelector('.chkCount').innerText = '(選択者数：0)';
+  }
+  
   return check ? (
     <div className="flex items-center justify-center fixed w-full h-full inset-x-0 z-50 bg-black bg-opacity-10">
       <MutatingDots
