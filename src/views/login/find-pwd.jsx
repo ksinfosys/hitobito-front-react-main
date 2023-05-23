@@ -123,9 +123,9 @@ const FindPwd = () => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">メールアドレスの形式で入力してください。</div>
-                    <div className="modal-subtit">
+                    {/* <div className="modal-subtit">
                         メールアドレスの形式で入力してください。
-                    </div>
+                    </div> */}
                     <div className="flex flex-end gap-3">
                         <a
                             href="#"
@@ -149,9 +149,9 @@ const FindPwd = () => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">該当情報が見つかりません。</div>
-                    <div className="modal-subtit">
+                    {/* <div className="modal-subtit">
                         該当情報が見つかりません。
-                    </div>
+                    </div> */}
                     <div className="flex flex-end gap-3">
                         <a
                             href="#"
