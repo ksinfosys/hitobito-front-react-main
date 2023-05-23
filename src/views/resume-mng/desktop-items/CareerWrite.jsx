@@ -90,7 +90,7 @@ const CareerWrite = ({
             data={projectRoleList} />
         </div>
         <div className="box-item flex flex-col">
-          <div className="form-tit">期間（月数） <span>*</span></div>
+          <div className="form-tit">期間(月数) <span>*</span></div>
           {/* select > input 변경 */}
           <input id="projectPeriod" type="number" min={0} className="form-control" placeholder="カ月(数字で入力してください)"
             onChange={(e) => handleCareerChange(e, index)} />
