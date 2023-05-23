@@ -177,8 +177,6 @@ const CorpInfoMng = () => {
             setResult(result);
             setUpdateData(result.joinList);
 
-            console.log('getBusinessUser', result)
-
             // 배열에 맞는 값 찾기 (업종)
             const typeResult = result.businessTypeList.find(obj => {
               const codeSuffix = obj.code.slice(-3);
@@ -398,14 +396,15 @@ const CorpInfoMng = () => {
 
     // // 사원수,매출 유효성 검사
     const numberPattern = /^[\d,\s]*$/;
-
+    const salesAmountPattern = /^[0-9]+(.)?[0-9]{1,2}$/;
+    let checkSalesAmountPattern = data.salesAmount.replaceAll(",", "");
     if (!numberPattern.test(data.empCount)) {
       setRegPrice(true);
       empCountRef.current.focus()
       return;
     }
 
-    if (!numberPattern.test(data.salesAmount)) {
+    if (!salesAmountPattern.test(checkSalesAmountPattern)) {
       setRegPrice(true);
       salesAmountRef.current.focus()
       return;
@@ -440,7 +439,7 @@ const CorpInfoMng = () => {
   // 파일첨부
   const handleFileChange = async (e, index) => {
     const file = e.target.files
-    //console.log(file)
+    
     if (rsDocumentFile.length + file.length > 2) {
       setDocumentFileFail(true)
       return false
@@ -634,9 +633,10 @@ const CorpInfoMng = () => {
   // 매출 유효성 검사
   const checkPrice = (e) => {
     const inputValue = e.target.value;
-    const pattern = /^[\d,\s]*$/;
-
-    if (!pattern.test(inputValue)) {
+    const pattern = /^[0-9]+(.)?[0-9]{1,2}$/;
+    let checkValue = inputValue.replaceAll(",", "");
+    
+    if (!pattern.test(checkValue)) {
       setRegPrice(true);
       salesAmountRef.current.focus()
     }
@@ -676,7 +676,7 @@ const CorpInfoMng = () => {
         reader.readAsDataURL(file)
         reader.onload = (loadResponse) => {
           const imageData = loadResponse.currentTarget.result
-          // console.log(imageData)
+          
           setImage(prevState => {
             const uniqueImage = new Set(prevState)
             if (!uniqueImage.has(imageData)) {
@@ -707,7 +707,7 @@ const CorpInfoMng = () => {
         reader.readAsDataURL(file)
         reader.onload = (loadResponse) => {
           const imageData = loadResponse.currentTarget.result
-          // console.log(imageData)
+          
           setLogoImage(imageData)
         }
         setRsLogoFilePhoto(res.data)
@@ -758,7 +758,6 @@ const CorpInfoMng = () => {
     }
   }, [updateData])
 
-  //console.log(updateData)ㄴ
 
   return (
     <>
@@ -781,7 +780,6 @@ const CorpInfoMng = () => {
                   maxLength={50}
                   defaultValue={userInfoV.cpUserName}
                   onChange={e => {
-                    // console.log(e.currentTarget.value.length);
                     if (e.currentTarget.value.length > 200) {
                       alert("入力内容が多すぎます。");
                     } else if (e.currentTarget.value === '') {
@@ -845,7 +843,6 @@ const CorpInfoMng = () => {
                       <button
                         className="btn btn-sm btn-business w-28 font-16"
                         onClick={() => {
-                          // console.log(authCompleteFlag)
                           if (!authCompleteFlag) {
                             setemailPop(true);
                           }
@@ -1005,7 +1002,7 @@ const CorpInfoMng = () => {
                   <div className="box-item flex flex-col">
                     {/* 사원수 */}
                     <div className="form-tit">
-                      社員数
+                      社員数（名）
                       {/* 사원수 <span>*</span> */}
                     </div>
                     <input
@@ -1013,11 +1010,10 @@ const CorpInfoMng = () => {
                       id="regular-form-1"
                       type="text"
                       className="form-control"
-                      placeholder="社員数入力"
+                      placeholder="数字入力"
                       maxLength={10}
                       defaultValue={result?.joinList?.empCount}
                       onChange={e => {
-                        //console.log(e.currentTarget.value)
                         if (e.currentTarget.value.length > 10) {
                           alert("入力内容が多すぎます。");
                         } else if (e.currentTarget.value === '') {
@@ -1039,7 +1035,7 @@ const CorpInfoMng = () => {
                   <div className="box-item flex flex-col">
                     {/* 매출 */}
                     <div className="form-tit">
-                      売上高
+                      売上高（億円）
                       {/* 매출 <span>*</span> */}
                     </div>
                     <input
@@ -1047,7 +1043,7 @@ const CorpInfoMng = () => {
                       id="regular-form-1"
                       type="text"
                       className="form-control"
-                      placeholder="売上高"
+                      placeholder="数字、少数入力"
                       maxLength={20}
                       defaultValue={result?.joinList?.salesAmount && regexUserPoint(result?.joinList?.salesAmount)}
                       onChange={e => {
@@ -1782,7 +1778,7 @@ const CorpInfoMng = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">数字以外の文字が入力されています。</div>
+          <div className="modal-tit">入力形式を守ってください。（定数13文字、少数2文字）<br/>例）1,234.56</div>
           <div className="modal-subtit">
 
           </div>
