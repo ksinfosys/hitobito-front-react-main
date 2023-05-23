@@ -383,23 +383,26 @@ const DashboardBusiness = () => {
     const tagsList05 = selectTags.filter((item) => item.codeType === "61").sort((a, b) => a.code - b.code);
     const codeList05 = tagsList05.map((item) => item.code);
 
+    const setCount = (e) => {
+        // console.log(e.target.checked);
+        if(e.target.checked == true){
+            document.querySelector('.chkCount').innerText = '(選択者数：10)'
+        }
+        else{
+            document.querySelector('.chkCount').innerText = '(選択者数：0)'
+        }
+         
+    }
+
     useEffect(() => {
         window.onload = function(){
             let chkInput = document.querySelectorAll('.chkInput');
             
             chkInput.forEach(function(el, i){
                 el.addEventListener("change", function(){
-                    let chkInputLen = chkInput.length;
-                    let count = 0;
-                    
-                    for(let i = 0; i < chkInputLen; i++){
-                        console.log(el);
-                        if(el.checked == true){
-                            count += 1;
-                        }
-                    }
-    
-                    document.querySelector('.chkCount').innerText = '(選択者数：'+count+')';
+                    let count = document.querySelectorAll("input[name='chkInput']:checked");
+                    // console.log(count);
+                    document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
                 }, false );
             })
         };
@@ -641,7 +644,8 @@ const DashboardBusiness = () => {
                             <div className="form-check w-24">
                                 <input id="vertical-form-3" className="form-check-input chkAllInput" 
                                     type="checkbox" checked={allCheck} 
-                                    onChange={() => setAllCheck(!allCheck)} 
+                                    onChange={() => setAllCheck(!allCheck)}
+                                    onClick={(e) => setCount(e)}
                                 />
                                 <label className="form-check-label" htmlFor="vertical-form-3">
                                     一括選択
