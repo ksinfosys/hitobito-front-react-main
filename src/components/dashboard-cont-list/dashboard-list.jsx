@@ -43,12 +43,12 @@ const DashboardList = (props) => {
                     cpPointIdx: props.item.cpPointIdx,
                 }
             })
-            props.setDeclarationUser((prevDeclarationUsers) => [...prevDeclarationUsers, cpUserName]);    
+            props.setDeclarationUserRj((prevDeclarationUsers) => [...prevDeclarationUsers, cpUserName]);    
         } else if (!updatedCheckState && props.rejectState[requestText]) {
             const updatedRejectState = { ...props.rejectState };
             delete updatedRejectState[requestText];
             props.setRejectState(updatedRejectState);
-            props.setDeclarationUser((prevDeclarationUsers) =>
+            props.setDeclarationUserRj((prevDeclarationUsers) =>
             prevDeclarationUsers.filter((value) => value !== cpUserName));
         }
     }
@@ -57,6 +57,7 @@ const DashboardList = (props) => {
         if(props.allCheckState && props.item.rqStatus == "20101"){
             setCheckState(true),
             props.setDeclarationUser((prevDeclarationUsers) => [...prevDeclarationUsers, props.item.cpUserName]),
+            props.setDeclarationUserRj((prevDeclarationUsers) => [...prevDeclarationUsers, props.item.cpUserName]),
             props.setIdx((prev) => [...prev, props.item.rqIdx]),
             props.setRejectState((prevState) => ({
                 ...prevState,
@@ -71,7 +72,8 @@ const DashboardList = (props) => {
             setCheckState(false),
             props.setIdx([]),
             props.setRejectState({}),
-            props.setDeclarationUser([])
+            props.setDeclarationUser([]),
+            props.setDeclarationUserRj([])
         }
     }, [props.allCheckState])
     
@@ -353,7 +355,7 @@ const DashboardList = (props) => {
                                                 props.setAcceptCheck(true);
                                             }}
                                         >承諾</button>
-                                        <button className="btn btn-sm btn-outline-secondary" onClick={handleReject}>
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={() => {handleReject();  props.setDeclarationUserRj([props.item.cpUserName])}}>
                                             拒否
                                         </button>
                                     </>
@@ -394,7 +396,6 @@ const DashboardList = (props) => {
             </div>
 
             {/* 면접의뢰 기업정보 확인  PC */}
-            {console.log(cpInfoData)}
             {
                 cpInfoData && <Modal className="point-request-modal"
                     show={companyInfo}

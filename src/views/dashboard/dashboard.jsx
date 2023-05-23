@@ -116,6 +116,7 @@ const Dashboard = () => {
   const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
   // 신고 대상자
   const [declarationUser, setDeclarationUser] = useState([]);
+  const [declarationUserRj, setDeclarationUserRj] = useState([]);
   
   const reportGet = () => {
       axios.get('/api/report/list', {
@@ -384,14 +385,28 @@ const Dashboard = () => {
 
   const acceptCloseModal = () => {
     setAcceptCheck(false);
+    setDeclarationUser([]);
   };
 
   const acceptNoCloseModal = () => {
     setIdx([]); 
     setAllCheckState(false); 
     setAcceptCheck(false); 
+    setDeclarationUser([]);
   };
-  
+
+  const rejectCloseModal = () => {
+    setRejectModal(false);
+    setDeclarationUserRj([]);
+  };
+
+  const rejectNoCloseModal = () => {
+    setRejectState({})
+    setAllCheckState(false); 
+    setRejectModal(false);
+    setDeclarationUserRj([]);
+  };
+
   return (
     <>
       <div className="dashboard">
@@ -437,6 +452,7 @@ const Dashboard = () => {
                     declaration={declaration}
                     setDeclaration={setDeclaration}
                     setDeclarationUser={setDeclarationUser}
+                    setDeclarationUserRj={setDeclarationUserRj}
                     setreportRequestModal1={setreportRequestModal1}
                   />
                 )
@@ -817,10 +833,10 @@ const Dashboard = () => {
       {/* ****************** 면접제의 거부 Reject API 모달 시작 ****************** */}
       <Modal
         show={rejectModal}
-        onHidden={() => { setRejectModal(false);}}>
+        onHidden={rejectCloseModal}>
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">面談可否</div>
-          {declarationUser.length === 0 ?
+          {declarationUserRj.length === 0 ?
           <div className="modal-subtit">
             1つ以上の面談を選択してください。
           </div>
@@ -829,9 +845,9 @@ const Dashboard = () => {
             面談を拒否しますか？
           </div>          
           }
-          {declarationUser.length === 0 ?
+          {declarationUserRj.length === 0 ?
           <div className="flex flex-end gap-3">
-          <a className="btn btn-primary" onClick={() => { setRejectModal(false); }}>確認</a>
+          <a className="btn btn-primary" onClick={rejectNoCloseModal}>確認</a>
           </div>
           :
           <div className="flex flex-end gap-3">
@@ -841,7 +857,7 @@ const Dashboard = () => {
             >はい</a>
             <a
               className="btn btn-outline-secondary"
-              onClick={() => { setRejectModal(false); setRejectState({}); }}
+              onClick={rejectNoCloseModal}
             >いいえ</a>
           </div>
           }
