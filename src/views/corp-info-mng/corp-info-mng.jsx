@@ -1080,6 +1080,7 @@ const CorpInfoMng = () => {
                   </div>
                   <textarea
                     className="form-control mt-2 w-full resize-none"
+                    style={{ width: "665px" }}
                     rows="1"
                     placeholder="求人公告入力"
                     maxLength={3000}
