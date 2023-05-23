@@ -780,6 +780,8 @@ const ResumeChange = () => {
     newImages[grabPosition] = newImages.splice(targetPosition, 1, newImages[grabPosition])[0];
     tempForm[grabPosition] = tempForm.splice(targetPosition, 1, tempForm[grabPosition])[0];
 
+    document.querySelector(".profileImg_0 > .dragText").innerText = '代表のイメージ'; 
+
     setImage(newImages);
     setRsFilePhoto([...tempForm]);
   }
@@ -793,10 +795,10 @@ const ResumeChange = () => {
               履歴書変更
             </div>
             <div className='resume-regist-cont'>
-              <ul className='flex gap-3'>
+              <ul className='flex gap-3 items-center'>
                 {
                   image.length === 0 ? previewItem : image.map((item, index) => (
-                    <li className={`image_item bg-slate-50 text-center profileImg_${index}`}
+                    <li className={`image_item resume_image_item bg-slate-50 text-center profileImg_${index}`}
                       key={index}
                       data-position={index}
                       onDragOver={_onDragOver}
@@ -810,15 +812,15 @@ const ResumeChange = () => {
                         type={'file'}
                         onChange={(e) => handleChangeImage(e, index)}
                       />
-                      <label className={`custom-input-label`} htmlFor={`profileImg${index}`}>
-                        <img src={item} alt='' />
+                      <label className={`custom-input-label resume_image`} htmlFor={`profileImg${index}`}>
+                        <img src={item} alt='' className='resume_image' />
                       </label>
                       {image[index] && (
                         <button onClick={() => handleDeleteImage(index)}>
-                          <img src={Xbutton} alt='삭제'/>
+                          <img src={Xbutton} alt='삭제' className='resume_image' />
                         </button>
                       )}
-                      <span className='dragText'>ドラッグ</span>
+                      <span className='dragText'>{index == 0 ? '代表のイメージ' : 'ドラッグ'}</span>
                     </li>
                   ))
                 }
