@@ -53,6 +53,8 @@ const DashboardBusiness = () => {
     const [modalState05, setModalState05] = useState(false);
     const [modalState06, setModalState06] = useState(false);
     const [modalState07, setModalState07] = useState(false);
+    const [inputModal, setInputModal] = useState(false);
+    const [optionModal, setOptionModal] = useState(false);
     // ListState
     const [listState, setListState] = useState();
     const [pgnInfo, setPgnInfo] = useState({});
@@ -379,7 +381,14 @@ const DashboardBusiness = () => {
                     <div className="dashboard-top p-5 border-b border-slate-200/60 text-sm">求職者検索一覧</div>
                     <div className="list-top flex justify-end items-center mt-10 mb-5 px-5">
                         <div className="flex gap-2">
-                            <select className="form-select w-32" onChange={(e) => setSelectValue(e.target.value)}>
+                            <select id="selectBox" className="form-select w-32" onChange={(e) => setSelectValue(e.target.value)} 
+                            onClick={()=>{
+                                let skillBox = document.getElementById('skillBox');
+                                setInputValue("");
+                                setTagActive("");
+                                skillBox.disabled = true;
+                                skillBox.value = "";
+                            }}> 
                                 <option value="000">全て</option>
                                 <option value="101">スキル</option>
                                 <option value="51">年齢</option>
@@ -400,11 +409,13 @@ const DashboardBusiness = () => {
                                 <input
                                     type="text"
                                     id="texttest"
-                                    className="form-control pr-10"
-                                    placeholder="検索ワードを必ずクリック"                                    
+                                    className="form-control pr-5"
+                                    style={{width: 300 + 'px'}}
+                                    placeholder="全体を確認するためには「Space」を押す"                                    
                                     value={inputValue}
                                     onFocus={searchTags}
-                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onChange={(e) => setInputValue(e.target.value)
+                                    }
                                     onKeyDown={(e) => {
                                         if (e.code === "Enter") {
                                             setCurrentPageIdx(1)
@@ -413,9 +424,6 @@ const DashboardBusiness = () => {
                                         return;
                                     }}
                                 />
-                                <button className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" onClick={() => {setCurrentPageIdx(1), searchFind()}}>
-                                    <img src={Search} alt="" />
-                                </button>
 
                                 <div className="search_button_area" ref={target}>
                                     {tagsList?.length > 0 && (
@@ -425,19 +433,21 @@ const DashboardBusiness = () => {
                                                     <li key={index} 
                                                     className={tagActive === code ? "orange" : ""}>
                                                     <button type="button" onClick={() => {
-                                                        if (code.code.length == 5) {
-                                                            setTagActive(code);
+                                                         let selectBox = document.getElementById('selectBox');
+                                                         let skillBox = document.getElementById('skillBox');
+                                                        if (selectBox.value !== "101" ||code.code.length === 5) {
+                                                             setTagActive(code);
+                                                             skillBox.disabled = true;
+                                                             skillBox.value = "";
                                                         } else {
-                                                            setSkillTagActive(code);
-                                                            let skillBox = document.getElementById('skillBox');
-                                                            skillBox.disabled = false;
-                                                        }                                                           
+                                                             setSkillTagActive(code);
+                                                             skillBox.disabled = false;
+                                                        }     
                                                         document.getElementById('texttest').value = code.codeName; 
                                                         setInputValue(code.codeName); 
                                                         }}>
                                                         {code.codeName}
                                                     </button>
-                                                    <div className={tagActive === code ? "task-tooltip" : "display-none"}>確定したならもう１回クリック</div>    
                                                 </li>
                                                 );
                                             })}
@@ -454,11 +464,28 @@ const DashboardBusiness = () => {
                                     );
                                 })}
                             </select>
-                            <button className="btn-lg btn btn-pending w-20" onClick={() => {                                 
+                            <button className="btn-lg btn btn-pending w-20" onClick={() => {   
+                                if(inputValue.length === 0){
+                                    setInputModal(true);
+                                    return false;
+                                }
+                                let selectBox = document.getElementById('selectBox');      
+                                if(selectBox.value === "101") {
+                                    let skillBox = document.getElementById('skillBox');
+                                    if(skillBox.value === ""){
+                                        setOptionModal(true);
+                                        setTagActive("");
+                                        return false;
+                                    }
+                                }
                                 if (tagActive != "") {
                                     handleSelectTags(tagActive);
                                 } else {
                                     let targetValue = document.getElementById('skillBox').value;
+                                    if(targetValue === ""){
+                                        setOptionModal(true);
+                                        return false;
+                                    }
                                     handleSkillSelect(targetValue);
                                 }                               
                             }}>
@@ -473,6 +500,7 @@ const DashboardBusiness = () => {
                             </button>
                         </div>
                     </div>
+                    <div className="flex gap-3 flex-row-reverse">
                     <div><button className="btn-lg btn btn-pending w-32" style={{height: 60 + 'px', float : 'right', marginRight : 20 + 'px'}} onClick={() => {setCurrentPageIdx(1), searchFind()}}><img src={Search} alt="" />　検&nbsp;索</button></div>
                     {selectTags?.length > 0 && (
                         <div className="skill-list-wrap business2">
@@ -570,9 +598,9 @@ const DashboardBusiness = () => {
                             </div>
                         </div>
                     )}
+                    </div>
                     <div className="flex justify-end p_20" style={{marginTop : 10 + 'px'}}>
                         <div className="dash-cont-cont3 flex items-center">
-                            <div className="color-a8">※全体を確認するためには「Space」を押下してください。</div>
                             <div className="color-a8">面談依頼有効期限</div>
                             <div className="minus-plus-wrap flex items-center">
                                 <button className="minus-gray-btn" onClick={handleClickMinus}>
@@ -766,6 +794,41 @@ const DashboardBusiness = () => {
                     </div>
                 </ModalBody>
             </Modal>
+
+             {/* 검색창 공백상태 */}
+             <Modal
+                show={inputModal}
+                onHidden={() => {
+                    setInputModal(false);
+                }}>
+                <ModalBody className="p-10 text-center">
+                    <div className="modal-tit">追加失敗</div>
+                    <div className="modal-subtit">検索ワードを選択してください。</div>
+                    <div className="flex flex-end gap-3">
+                        <a href="#" className="btn btn-pending" onClick={() => setInputModal(false)}>
+                            確認
+                        </a>
+                    </div>
+                </ModalBody>
+            </Modal>
+
+            {/* 경력 옵션 미 선택 */}
+            <Modal
+                show={optionModal}
+                onHidden={() => {
+                    setOptionModal(false);
+                }}>
+                <ModalBody className="p-10 text-center">
+                    <div className="modal-tit">追加失敗</div>
+                    <div className="modal-subtit">経歴を選択してください。</div>
+                    <div className="flex flex-end gap-3">
+                        <a href="#" className="btn btn-pending" onClick={() =>  setOptionModal(false)}>
+                            確認
+                        </a>
+                    </div>
+                </ModalBody>
+            </Modal>
+
         </>
     );
 };
