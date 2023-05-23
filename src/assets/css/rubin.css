@@ -182,6 +182,39 @@
   height: 146px;
   overflow: hidden;
 }
+.resume_image_item {
+  position: relative;
+  width: 200px;
+  height: 186px;
+  overflow: hidden;
+  padding-bottom: 40px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #EDF5FF;
+  color: #3686FF;
+}
+.custom-input-label>img{
+  object-fit: cover;
+}
+.profileImg_0{
+  border: 10px solid #3686ff;
+  border-radius: 10px;
+  width: 220px;
+  height: 206px;
+}
+.resume_image{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.dragText{
+  display: inline-block;
+  margin-top: 10px;
+}
 .image_item button {
   position: absolute;
   top: 5px;

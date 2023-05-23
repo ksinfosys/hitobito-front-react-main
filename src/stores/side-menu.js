@@ -7,7 +7,7 @@ const sideMenu = atom({
         menu: [
             {
                 pathname: "/",
-                title: "面接提案確認",
+                title: "面談依頼確認",
             },
             {
                 pathname: "/resume-regist",

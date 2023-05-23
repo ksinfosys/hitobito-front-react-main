@@ -32,12 +32,10 @@ const SignupEmployeeTerm = () => {
     // 체크버튼 State
     const [agreeState01, setAgreeState01] = useState(false);
     const [agreeState02, setAgreeState02] = useState(false);
+    
 
     // 약관 동의후 회원가입 페이지 진입
-    const agreeSubmit = () => {
-        !agreeState01 ? setModalState01(true) :
-            !agreeState02 ? setModalState02(true) : navigate('/user-guide-employee');
-    };
+    const agreeSubmit = () => { navigate('/user-guide-employee');};
 
     return (
         <>
@@ -360,9 +358,19 @@ const SignupEmployeeTerm = () => {
                     <label className="form-check-label" htmlFor="vertical-form-4">上記のプライバシーポリシーに同意します。</label>
                 </div>
                 <div className="find-btn flex flex-col gap-2">
-                    <button className="btn btn-primary h-48" onClick={agreeSubmit}>
-                        登録
-                    </button>
+                    {
+                        agreeState01&&agreeState02
+                            ?
+                            <button 
+                                className="btn btn-primary h-48" onClick={agreeSubmit}>
+                                登録
+                            </button>
+                            :
+                            <button
+                                className="btn disabled" disabled={true}>
+                                登録
+                            </button>
+                    }
                 </div>
             </div>
 

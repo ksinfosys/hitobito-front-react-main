@@ -166,10 +166,13 @@ function PointDetail() {
           ポイント確認/交換
           </div>
           <div className="cont-wrap p-5">
+          <div className="font-bold font-xl">
+          {result?.nickname}様
+          </div>
             <div className="mt-5">
               <div className="">
                 <div className="flex flex-end flex-col lg:flex-row gap-5 mb-5 mt-5">
-                  <p>交換するポイントを、500ポイント単位で指定してください。</p>
+                  <p>交換するポイント数を、500ポイント単位で指定してください。</p>
                   <div className="flex gap-5 space-between">
                     <div className="point-input border-b-2">
                       <input
@@ -218,7 +221,7 @@ function PointDetail() {
                   </li>
                   <li className="w-full">
                     <div className="flex lg:justify-end justify-center  items-center">
-                      <div className="text-dark font-bold lg:text-lg lg:w-3/5 text-left lg:text-right mr-12">{result?.nickname}様の現在使用できるポイントは</div>
+                      <div className="text-dark font-bold lg:text-lg lg:w-3/5 text-left lg:text-right mr-12">現在使用可能なポイント数</div>
                       <div className="text-primary font-bold lg:text-2xl">{result.currentPoint && regexUserPoint(result.currentPoint)}P</div>
                     </div>
                   </li>
@@ -231,7 +234,7 @@ function PointDetail() {
                   <li  className="w-full">
                     <div className="flex lg:justify-end justify-center  items-center">
                       <div className="text-dark font-bold lg:text-lg lg:w-3/5 text-left lg:text-right mr-12">
-                        {result?.nickname}様の {result.expectedDate && replaceToPointFormat(result.expectedDate)} 積立予定ポイントは
+                        {result.expectedDate && replaceToPointFormat(result.expectedDate)} 積立予定のポイント数
                       </div>
                       <div className="text-primary font-bold lg:text-2xl">
                         {result.expectedPoint && regexUserPoint(result.expectedPoint)}P

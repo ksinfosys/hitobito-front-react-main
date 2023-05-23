@@ -343,7 +343,7 @@ function Router() {
         //구직자 이용규약
         {
           path: "/signup-em-term",
-          element: <IntroTopMenu/>,
+          element: <TopMenu/>,
           children: [
             {
               path: "/signup-em-term",
@@ -354,7 +354,7 @@ function Router() {
         // 이용가이드
         {
           path: "/user-guide-employee",
-          element: <IntroTopMenu/>,
+          element: <TopMenu/>,
           children: [
             {
               path: "/user-guide-employee",

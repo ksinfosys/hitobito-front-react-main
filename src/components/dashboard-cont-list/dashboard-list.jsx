@@ -24,13 +24,16 @@ const DashboardList = (props) => {
     /* ********* 체크 박스 상태 시작 ********* */
     const requestText = 'requestMap' + props.index;
     const [checkState, setCheckState] = useState(false);
-    const handleCheckChange = (id) => {
+    const handleCheckChange = (id,cpUserName) => {
         const updatedCheckState = !checkState;
         setCheckState(updatedCheckState);
         if (updatedCheckState && !props.idx.includes(id)) {
             props.setIdx([...props.idx, id]);
+            props.setDeclarationUser((prevDeclarationUsers) => [...prevDeclarationUsers, cpUserName]);
         } else if (!updatedCheckState && props.idx.includes(id)) {
             props.setIdx(props.idx.filter((value) => value !== id));
+            props.setDeclarationUser((prevDeclarationUsers) =>
+            prevDeclarationUsers.filter((value) => value !== cpUserName));
         }
         if (updatedCheckState && !props.rejectState[requestText]) {
             props.setRejectState({
@@ -40,16 +43,21 @@ const DashboardList = (props) => {
                     cpPointIdx: props.item.cpPointIdx,
                 }
             })
+            props.setDeclarationUserRj((prevDeclarationUsers) => [...prevDeclarationUsers, cpUserName]);    
         } else if (!updatedCheckState && props.rejectState[requestText]) {
             const updatedRejectState = { ...props.rejectState };
             delete updatedRejectState[requestText];
             props.setRejectState(updatedRejectState);
+            props.setDeclarationUserRj((prevDeclarationUsers) =>
+            prevDeclarationUsers.filter((value) => value !== cpUserName));
         }
     }
-
+    
     useEffect(() => {
         if(props.allCheckState && props.item.rqStatus == "20101"){
             setCheckState(true),
+            props.setDeclarationUser((prevDeclarationUsers) => [...prevDeclarationUsers, props.item.cpUserName]),
+            props.setDeclarationUserRj((prevDeclarationUsers) => [...prevDeclarationUsers, props.item.cpUserName]),
             props.setIdx((prev) => [...prev, props.item.rqIdx]),
             props.setRejectState((prevState) => ({
                 ...prevState,
@@ -63,7 +71,9 @@ const DashboardList = (props) => {
         else if(!props.allCheckState && props.item.rqStatus == "20101") {
             setCheckState(false),
             props.setIdx([]),
-            props.setRejectState({})
+            props.setRejectState({}),
+            props.setDeclarationUser([]),
+            props.setDeclarationUserRj([])
         }
     }, [props.allCheckState])
     
@@ -101,9 +111,7 @@ const DashboardList = (props) => {
             console.log(e);
         })
     };
-    const handleAcceptCancel = () => {
-        setCancelModal(true);
-    };
+
     /* ********** 면접제의 승낙취소 API 끝 ********** */
 
     /* ********** 포인트지급요청 API 시작 ********** */
@@ -164,24 +172,24 @@ const DashboardList = (props) => {
             const infoKey = name.substring(16);
             const infoValue = props.info.skillCodeNameArr[infoKey];
             return (
-                <button className="btn btn-lang" key={index}>{infoValue}</button>
+                <span className="btn-lang" key={index}>{infoValue}</span>
             );
         }
         if(name.includes('projectProcessNameArr')){
             const infoKey = name.substring(21);
             const infoValue = props.info.projectProcessNameArr[infoKey];
             return (
-                <button className="btn btn-lang" key={index}>{infoValue}</button>
+                <span className="btn-lang" key={index}>{infoValue}</span>
             );
         }
         if(name.includes('projectRoleNameArr')){
             const infoKey = name.substring(18);
             const infoValue = props.info.projectRoleNameArr[infoKey];
             return (
-                <button className="btn btn-lang" key={index}>{infoValue}</button>
+                <span className="btn-lang" key={index}>{infoValue}</span>
             );
         }
-        return props.info ? <button className="btn btn-lang" key={index}>{props.info[name]}</button> : null
+        return props.info ? <span className="btn-lang" key={index}>{props.info[name]}</span> : null
     })
 
     const getCpInfo = (rqIdx) => {
@@ -223,12 +231,13 @@ const DashboardList = (props) => {
                     })();
             });
     };
-
+    console.log()
     // 프로그레스바 색 정하기
     const handleProgressClassName = () => {
-        if (props.item.checkTodayOrNotForDeadLine) {
-            // 오늘이거나 값이 1600이상일때
+        if (props.item.progressBarValue > 90.00) {
             return 'bg-red'
+        } else if (props.item.progressBarValue > 60.00) {
+            return 'bg-orange'
         } else {
             return 'bg-green'
         }
@@ -240,6 +249,10 @@ const DashboardList = (props) => {
         setBtnActive(!btnActive);
     };
 
+    const [rqLimitDatetime, setRqLimitDatetime] = useState("");
+    // 현재날짜,시간
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
+      
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
@@ -260,7 +273,7 @@ const DashboardList = (props) => {
                                 type="checkbox"
                                 className= {props.item.rqStatus == "20101" ? "form-check-input" : "form-check-input visibility-hidden"}
                                 checked={checkState}
-                                onChange={() => handleCheckChange(props.item.rqIdx)}
+                                onChange={() => handleCheckChange(props.item.rqIdx,props.item.cpUserName)}
                             />
                             <label className="form-check-label" htmlFor="vertical-form-4">
                                 <span
@@ -271,21 +284,22 @@ const DashboardList = (props) => {
                             </label>
                         </div>
                         <div className="dash-cont1-tit">
-                            <button type="button">
-                                面接提案
-                            </button>
+                            <span>
+                                {props.item.rqSendDatetime.substring(0,10)}
+                            </span>
                         </div>
                     </div>
                     <div>
+                    {props.item.rqStatus === '20101' ? (
                         <div className="dash-cont-cont2 flex flex-col items-end">
                             <div className="progress-bar-tit">
                                 {
                                     props.item.checkTodayOrNotForDeadLine ? (
                                         // 오늘이라는 flag가 내려오는 경우
-                                        todayReplaceSlashToHypen(props.item.rqLimitDatetimeToString)
+                                        todayReplaceSlashToHypen(props.item.rqLimitDatetimeToString)+"まで"
                                     ) : (
                                         // 오늘이 아닌경우
-                                        replaceSlashToHypen(props.item.rqLimitDatetimeToString)
+                                        replaceSlashToHypen(props.item.rqLimitDatetimeToString)+"まで"
                                     )
                                 }
                             </div>
@@ -296,6 +310,20 @@ const DashboardList = (props) => {
 
                             </div>
                         </div>
+                    ):
+                        (props.item.rqLimitDatetime < currentDateTime.toISOString()
+                        && props.item.pointStatus === '21102' ? 
+                        (
+                        <div className="dash-cont-cont2 flex flex-col items-end">
+                            <div className="progress-bar-tit">期限超過</div>
+                            <div className="progress">
+                                <progress className={`progress-bar bg-red`} value='100' max={100} />
+                            </div>
+                        </div>)
+                        :
+                        <></>
+                        )
+                    }
                     </div>
 
                     <div className="dash-cont-cont3 flex">
@@ -306,13 +334,15 @@ const DashboardList = (props) => {
                                         <button className="btn btn-sm btn-primary btn-auto" onClick={() => {
                                             setpointRequestModal(true);
                                         }}>ポイント支給要請</button>
-                                        <button className="btn btn-sm btn-gray-type1" onClick={handleAcceptCancel}>
-                                            承諾取消
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={() => {
+                                            setRqLimitDatetime(props.item.rqLimitDatetime);
+                                            setCancelModal(true)
+                                            }}>承諾取消
                                         </button>
                                         <button className="btn btn-sm btn-outline-secondary" onClick={() => {
                                             props.setreportRequestModal1(true);
                                             props.setDeclaration({...props.declaration, reportTargetId: props.item.cpUserId})
-                                            props.setDeclarationUser(props.item.cpUserName)
+                                            props.setDeclarationUser([props.item.cpUserName])
                                         }}>通報</button>
                                     </>
                                 ) : (
@@ -320,27 +350,33 @@ const DashboardList = (props) => {
                                         <button
                                             className="btn btn-sm btn-primary"
                                             onClick={() => {
+                                                props.setDeclarationUser([props.item.cpUserName])
                                                 props.setIdx([props.item.rqIdx]);
                                                 props.setAcceptCheck(true);
                                             }}
                                         >承諾</button>
-                                        <button className="btn btn-sm btn-outline-secondary" onClick={handleReject}>
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={() => {handleReject();  props.setDeclarationUserRj([props.item.cpUserName])}}>
                                             拒否
                                         </button>
                                     </>
                                 )
                             ) : props.item.pointStatus === '21103' ? (
-                                <button className="btn btn-sm btn-gray-type1 w-auto">
+                                <button className="btn btn-sm btn-gray-type1"
+                                        style={{width: 140 +'px'}}>
                                     ポイント返却完了
                                 </button>
                             ) : props.item.pointStatus === '21105' ? (
-                                <button className="btn btn-sm btn-gray-type1 w-auto">
+                                <button className="btn btn-sm btn-gray-type1 disabled"
+                                        style={{width: 140 +'px'}}>
                                     ポイント支給待ち
                                 </button>
                             ) : props.item.pointStatus === '21106' ? (
-                                <button className="btn btn-long btn-outline-secondary" onClick={() => {window.location.assign("/point-detail")}}>ポイント支給完了</button>
+                                <button className="btn btn-long btn-outline-secondary" 
+                                        style={{width: 140 +'px'}}
+                                        onClick={() => {window.location.assign("/point-detail")}}>ポイント支給完了</button>
                             ) : (
-                                <button className="btn btn-sm btn-gray-type1 w-auto">
+                                <button className="btn btn-sm btn-gray-type1"
+                                        style={{width: 140 +'px'}}>
                                     支払い拒否
                                 </button>
                             )
@@ -360,7 +396,6 @@ const DashboardList = (props) => {
             </div>
 
             {/* 면접의뢰 기업정보 확인  PC */}
-            {console.log(cpInfoData)}
             {
                 cpInfoData && <Modal className="point-request-modal"
                     show={companyInfo}
@@ -388,7 +423,7 @@ const DashboardList = (props) => {
                                         )
                                     }
                                 </div>
-                                <div>{cpInfoData.companyName}</div>
+                                <div><strong>{cpInfoData.companyName}</strong></div>
                             </div>
                             <div className="mt-3">
                                 <table className="table" style={{tableLayout:"fixed"}}>
@@ -423,6 +458,7 @@ const DashboardList = (props) => {
                                         </tr>
                                     </tbody>
                                 </table>
+                                        <span style={{wordWrap:"break-word", whiteSpace: "pre-wrap" }}>{cpInfoData.cpAd}</span>
                             </div>
                             {/* 이미지영역 */}
                             {/* <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
@@ -466,7 +502,7 @@ const DashboardList = (props) => {
                     </div>
                 </ModalBody>
             </Modal>
-
+            
             {/* 면접제의 승낙취소 모달 */}
             <Modal
                 className="point-request-modal"
@@ -475,14 +511,24 @@ const DashboardList = (props) => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">面談承認取消</div>
-                    <div className="modal-subtit">
-                        面談の承諾を取り消しますか？
-                    </div>
+                    {rqLimitDatetime > currentDateTime.toISOString() ? (
+                        <div className="modal-subtit">
+                            面談の承諾を取り消しますか？
+                        </div>
+                    ) : (
+                        <div className="modal-subtit">
+                            依頼期間が過ぎた依頼を承諾取消する場合、
+                            <br />
+                            再度承諾やポイント支給が不可能になります。
+                            <br />
+                            面談の承諾を取り消しますか？
+                        </div>
+                     ) }
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-primary"
                             onClick={() => { acceptCancel() }}
-                        >はい</a>
+                        >承諾取消</a>
                         <a
                             href="#"
                             className="btn btn-outline-secondary"
@@ -551,7 +597,7 @@ const DashboardList = (props) => {
                             href="#"
                             className="btn btn-primary"
                             onClick={pointRequest}
-                        >確認</a>
+                        >要請</a>
                         <a
                             href="#"
                             className="btn btn-outline-secondary"

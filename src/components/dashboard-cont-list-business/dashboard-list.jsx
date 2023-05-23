@@ -52,43 +52,43 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
         if(value == "ageName"){
             eachAgeName = true;
         }
-        if(value == "educationName"){
+        else if(value == "educationName"){
             eachEducationName = true;
         }
-        if(value == "residentialAreaName"){
+        else if(value == "residentialAreaName"){
             eachResidentialAreaName = true;
         }
-        if(value == "countryName"){
+        else if(value == "countryName"){
             eachCountryName = true;
         }
-        if(value == "jobTypeName"){
+        else if(value == "jobTypeName"){
             eachJobTypeName = true;
         }
-        if(value == "careerName"){
+        else if(value == "careerName"){
             eachCareerName = true;
         }
-        if(value == "hopeIncomeName"){
+        else if(value == "hopeIncomeName"){
             eachHopeIncomeName = true;
         }
-        if(value == "businessTypeName"){
+        else if(value == "businessTypeName"){
             eachBusinessTypeName = true;
         }
-        if(value == "hopeCareerName"){
+        else if(value == "hopeCareerName"){
             eachHopeCareerName = true;
         }
-        if(value.includes("skillCodeNameArr")){
+        else if(value.includes("skillCodeNameArr")){
             let idx = value.split("skillCodeNameArr");
             skillCodeNameArray.push(skillCodeNameArr[Number(idx[1])]);
         } 
-        if(value.includes("projectProcessNameArr")){
+        else if(value.includes("projectProcessNameArr")){
             let idx = value.split("projectProcessNameArr");
             projectProcessNameArray.push(projectProcessNameArr[Number(idx[1])]);
         }
-        if(value.includes("projectRoleNameArr")){
+        else if(value.includes("projectRoleNameArr")){
             let idx = value.split("projectRoleNameArr");
             projectRoleNameArray.push(projectRoleNameArr[Number(idx[1])]);
         }
-        if(value == "genderName"){
+        else if(value == "genderName"){
             eachGenderName = true;
         }
     })
@@ -282,6 +282,21 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
     // 구직자 간단정보 모달
     const [informModal, setinformModal] = useState(false);
 
+    const setCount = () => {
+        let count = document.querySelectorAll("input[name='chkInput']:checked");
+        document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
+    }
+
+    const setAllCount = (allCheck) => {
+        console.log(allCheck);
+        if(allCheck == false){
+            let count = document.querySelectorAll("input[name='chkInput']");
+            document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
+        }else if(allCheck == true){    
+            document.querySelector('.chkCount').innerText = '(選択者数：0)';
+        }
+    }
+
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
@@ -290,10 +305,12 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         <div className="form-check dash-cont1-tit gap-2">
                             <input
                                 id="vertical-form-4"
-                                className={data.requestStatus ? "form-check-input visibility-hidden" : "form-check-input"}
+                                className={data.requestStatus ? "form-check-input visibility-hidden chkInput" : "form-check-input chkInput"}
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={() => handleCheckboxChange(data.jsUserId)}
+                                onClick={() => setCount()}
+                                name={data.requestStatus ? "" : "chkInput"}
                             />
                             <p className={data.requestStatus ? " btn-sm btn-secondary" : "btn btn-sm btn-secondary hidden"}>{data.rqSendDateTime} 依頼完了</p>
                             <div className="form-check-label business flex items-center gap-2" htmlFor="vertical-form-4" onClick={() => { detailUser(data.jsUserId, data.requestStatus), setCheckId([data.jsUserId]) }}>
