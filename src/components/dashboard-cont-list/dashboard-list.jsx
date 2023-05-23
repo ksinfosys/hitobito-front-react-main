@@ -453,7 +453,8 @@ const DashboardList = (props) => {
                                             <td>{cpInfoData.homepage}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>求人情報</strong></td>
+                                            <td>求人情報</td>
+                                            <td style={{wordWrap:"break-word"}}>{cpInfoData.cpAd}</td>
                                         </tr>
                                     </tbody>
                                 </table>
