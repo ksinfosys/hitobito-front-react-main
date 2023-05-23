@@ -1042,7 +1042,7 @@ const ResumeChange = () => {
                     return <div className='attach-cont-item flex items-center space-between' key={index}>
                       <input className='upload-name mr-2 attach-cont-tit' value={file} placeholder='' readOnly/>
                       <button className='attach-cont-btn' onClick={() => handleDeleteFile(index)}>
-                        ×削除
+                        ✕削除
                       </button>
                     </div>
                   })}
