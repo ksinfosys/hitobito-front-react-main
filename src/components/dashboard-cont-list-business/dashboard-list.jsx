@@ -290,10 +290,11 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         <div className="form-check dash-cont1-tit gap-2">
                             <input
                                 id="vertical-form-4"
-                                className={data.requestStatus ? "form-check-input visibility-hidden" : "form-check-input"}
+                                className={data.requestStatus ? "form-check-input visibility-hidden chkInput" : "form-check-input chkInput"}
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={() => handleCheckboxChange(data.jsUserId)}
+                                name="chkInput"
                             />
                             <p className={data.requestStatus ? " btn-sm btn-secondary" : "btn btn-sm btn-secondary hidden"}>{data.rqSendDateTime} 依頼完了</p>
                             <div className="form-check-label business flex items-center gap-2" htmlFor="vertical-form-4" onClick={() => { detailUser(data.jsUserId, data.requestStatus), setCheckId([data.jsUserId]) }}>

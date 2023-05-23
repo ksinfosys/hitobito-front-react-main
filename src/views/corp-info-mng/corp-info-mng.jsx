@@ -1256,14 +1256,14 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="email-modal-pop">
-            <div className="email-modal-tit">変更予定担当者のメールアドレス</div>
+            <div className="email-modal-tit">新しい担当者のメールアドレス</div>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <input
                   id="regular-form-1"
                   type="text"
                   className="form-control h-48"
-                  placeholder="イーメール入力"
+                  placeholder="新しいメールアドレス"
                   maxLength={30}
                   disabled={isDisabled ? true : false}
                   onChange={e => {
@@ -1275,8 +1275,8 @@ const CorpInfoMng = () => {
                   <button
                     className={
                       isActive
-                        ? "btn btn-sm btn-secondary w-28 font-16"
-                        : "btn btn-sm btn-business w-28 font-16"
+                        ? "btn btn-sm btn-secondary w-28 font-14"
+                        : "btn btn-sm btn-business w-28 font-14"
                     }
                     onClick={() => {
                       if (authEmail === "") {
@@ -1292,7 +1292,7 @@ const CorpInfoMng = () => {
                     }}
                     disabled={isDisabled}
                   >
-                    인증코드 발급
+                    認証コード送
                   </button>
                 </div>
               </div>
@@ -1301,14 +1301,14 @@ const CorpInfoMng = () => {
                   id="regular-form-1"
                   type="text"
                   className="form-control h-48"
-                  placeholder="認証コード確認"
+                  placeholder="認証コード入力"
                   maxLength="6"
                   onChange={e => {
                     setAuthCode(e.currentTarget.value);
                   }}
                 />
                 <div className="form-check form-switch flex gap-2">
-                  <button
+                  {/* <button
                     className="btn btn-sm btn-business-white w-28 font-16"
                     onClick={() => {
                       // handleClick2();
@@ -1318,8 +1318,24 @@ const CorpInfoMng = () => {
                         getEmailCheck();
                       }
                     }}
+                  > */}
+                  <button
+                    className={authCode === 0 
+                      ?
+                      "btn btn-sm btn-business-white w-28 font-14 disabled"
+                      :
+                      "btn btn-sm btn-business-white w-28 font-14"
+                    }
+                    onClick={() => {
+                      // handleClick2();
+                      if (authCode === 0) {
+                        setNullCode(true);
+                      } else {
+                        getEmailCheck();
+                      }
+                    }}
                   >
-                    確認
+                    変更
                   </button>
                 </div>
               </div>
@@ -1358,7 +1374,6 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">メール形式で入力してください。</div>
-          <div className="modal-subtit">メール形式で入力してください。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1379,8 +1394,7 @@ const CorpInfoMng = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">メールを入力してください。</div>
-          <div className="modal-subtit">メールを入力してください。</div>
+          <div className="modal-tit">新しいメールアドレスを入力してください。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1426,7 +1440,6 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">ネットワーク障害が発生しました。</div>
-          <div className="modal-subtit">ネットワーク障害が発生しました。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1452,7 +1465,6 @@ const CorpInfoMng = () => {
             このメールアドレスは既に登録されています。
           </div>
           <div className="modal-subtit">
-            このメールアドレスは既に登録されています。
           </div>
           <div className="flex flex-end gap-3">
             <a
@@ -1476,7 +1488,6 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">認証コードを入力してください。</div>
-          <div className="modal-subtit">認証コードを入力してください。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1499,7 +1510,6 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">認証に失敗しました。</div>
-          <div className="modal-subtit">認証に失敗しました。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1647,7 +1657,7 @@ const CorpInfoMng = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">修正が完了しました。</div>
+          <div className="modal-tit">登録が完了しました。</div>
           <div className="modal-subtit">
 
           </div>

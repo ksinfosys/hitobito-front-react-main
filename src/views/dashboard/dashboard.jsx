@@ -115,7 +115,8 @@ const Dashboard = () => {
   // userInfo
   const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
   // 신고 대상자
-  const [declarationUser, setDeclarationUser] = useState("");
+  const [declarationUser, setDeclarationUser] = useState([]);
+  
   const reportGet = () => {
       axios.get('/api/report/list', {
           headers: {
@@ -148,6 +149,7 @@ const Dashboard = () => {
               console.log(e);
           })
   };
+
   /* ********** 신고리스트 API 끝 ********** */
 
 
@@ -380,6 +382,16 @@ const Dashboard = () => {
   }, [handleScroll]);
   /* ********** 스크롤 구현 끝 ********** */
 
+  const acceptCloseModal = () => {
+    setAcceptCheck(false);
+  };
+
+  const acceptNoCloseModal = () => {
+    setIdx([]); 
+    setAllCheckState(false); 
+    setAcceptCheck(false); 
+  };
+  
   return (
     <>
       <div className="dashboard">
@@ -435,7 +447,9 @@ const Dashboard = () => {
               )
             }
             <div className="all-btn-wrap flex">
-              <button className="btn btn-sm btn-primary" onClick={() => setAcceptCheck(true)}>依頼を承諾</button>
+              <button className="btn btn-sm btn-primary" onClick={() => {
+                setAcceptCheck(true);
+                }}>依頼を承諾</button>
               <button className="btn btn-sm btn-outline-secondary" onClick={() => setRejectModal(true)}>
                 依頼を拒否
               </button>
@@ -591,9 +605,9 @@ const Dashboard = () => {
       >
           <ModalBody className="p-10 text-center">
               <div className="modal-tit">通報の理由を選択してください。</div>
-              <div className="modal-subtit">
+              {/* <div className="modal-subtit">
                   通報の理由を選択してください。
-              </div>
+              </div> */}
               <div className="flex flex-end gap-3">
                   <a
                       className="btn btn-primary"
@@ -615,9 +629,9 @@ const Dashboard = () => {
       >
           <ModalBody className="p-10 text-center">
               <div className="modal-tit">通報の送信が完了しました。</div>
-              <div className="modal-subtit">
+              {/* <div className="modal-subtit">
                   通報の送信が完了しました。
-              </div>
+              </div> */}
               <div className="flex flex-end gap-3">
                   <a
                       href="#"
@@ -698,14 +712,26 @@ const Dashboard = () => {
       {/* ****************** 면담제의확인 Accept API 모달 시작 ****************** */}
       <Modal
         show={acceptCheck}
-        onHidden={() => { setIdx([]); setAcceptCheck(false); }}>
+        onHidden={acceptCloseModal}>
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">面談承諾</div>
+          {declarationUser.length === 1 ?
           <div className="modal-subtit">
-            選択した企業 <strong>'{declarationUser}'</strong> 社の
+            選択した企業 
+            <strong>'{declarationUser}'</strong>社の
             <br/>
             面談依頼を承諾しますか？
           </div>
+          : declarationUser.length === 0 ?
+          <div className="modal-subtit">
+            1つ以上の面談を選択してください。
+          </div>     
+          :
+          <div className="modal-subtit">
+            選択した<strong>複数の企業</strong>面談依頼を承諾しますか？
+          </div>     
+          } 
+          {declarationUser.length === 1  ?
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-primary"
@@ -713,9 +739,25 @@ const Dashboard = () => {
             >面談承諾</a>
             <a
               className="btn btn-outline-secondary"
-              onClick={() => { setIdx([]); setAllCheckState(false); setAcceptCheck(false); }}
+              onClick={acceptNoCloseModal}
             >いいえ</a>
           </div>
+          : declarationUser.length === 0 ?
+          <div className="flex flex-end gap-3">
+          <a className="btn btn-primary" onClick={acceptNoCloseModal}>確認</a>
+          </div>
+          :
+          <div className="flex flex-end gap-3">
+          <a
+            className="btn btn-primary"
+            onClick={accept}
+          >面談承諾</a>
+          <a
+            className="btn btn-outline-secondary"
+            onClick={acceptNoCloseModal}
+          >いいえ</a>
+          </div>
+          }
         </ModalBody>
       </Modal>
       <Modal
@@ -775,22 +817,34 @@ const Dashboard = () => {
       {/* ****************** 면접제의 거부 Reject API 모달 시작 ****************** */}
       <Modal
         show={rejectModal}
-        onHidden={() => { setRejectModal(false); }}>
+        onHidden={() => { setRejectModal(false);}}>
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">面談可否</div>
+          {declarationUser.length === 0 ?
+          <div className="modal-subtit">
+            1つ以上の面談を選択してください。
+          </div>
+          :
           <div className="modal-subtit">
             面談を拒否しますか？
+          </div>          
+          }
+          {declarationUser.length === 0 ?
+          <div className="flex flex-end gap-3">
+          <a className="btn btn-primary" onClick={() => { setRejectModal(false); }}>確認</a>
           </div>
+          :
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-primary"
-              onClick={() => { reject(); setRejectModal(false);}}
+              onClick={() => { reject(); setRejectModal(false); }}
             >はい</a>
             <a
               className="btn btn-outline-secondary"
               onClick={() => { setRejectModal(false); setRejectState({}); }}
             >いいえ</a>
           </div>
+          }
         </ModalBody>
       </Modal>
       <Modal
