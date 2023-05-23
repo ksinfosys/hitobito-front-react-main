@@ -423,7 +423,7 @@ const DashboardList = (props) => {
                                         )
                                     }
                                 </div>
-                                <div>{cpInfoData.companyName}</div>
+                                <div><strong>{cpInfoData.companyName}</strong></div>
                             </div>
                             <div className="mt-3">
                                 <table className="table" style={{tableLayout:"fixed"}}>
@@ -453,11 +453,11 @@ const DashboardList = (props) => {
                                             <td>{cpInfoData.homepage}</td>
                                         </tr>
                                         <tr>
-                                            <td>求人情報</td>
-                                            <td style={{wordWrap:"break-word"}}>{cpInfoData.cpAd}</td>
+                                            <td><strong>求人情報</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                        <span style={{wordWrap:"break-word", whiteSpace: "pre-wrap" }}>{cpInfoData.cpAd}</span>
                             </div>
                             {/* 이미지영역 */}
                             {/* <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
