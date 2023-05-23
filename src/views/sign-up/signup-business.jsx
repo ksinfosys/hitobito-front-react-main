@@ -1709,7 +1709,7 @@ function SignUpBusiness() {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">すべての情報を入力してください。</div>
-          <div className="modal-subtit">すべての情報を入力してください。</div>
+          {/* <div className="modal-subtit">すべての情報を入力してください。</div> */}
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1732,7 +1732,7 @@ function SignUpBusiness() {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">もう一度ご確認お願いします。</div>
-          <div className="modal-subtit">もう一度ご確認お願いします。</div>
+          {/* <div className="modal-subtit">もう一度ご確認お願いします。</div> */}
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"

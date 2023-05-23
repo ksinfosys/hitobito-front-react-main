@@ -619,9 +619,9 @@ const InterviewMng = () => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">通報の理由を選択してください。</div>
-                    <div className="modal-subtit">
+                    {/* <div className="modal-subtit">
                         通報の理由を選択してください。
-                    </div>
+                    </div> */}
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-business"
@@ -643,9 +643,9 @@ const InterviewMng = () => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">通報の送信が完了しました。</div>
-                    <div className="modal-subtit">
+                    {/* <div className="modal-subtit">
                         通報の送信が完了しました。
-                    </div>
+                    </div> */}
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-business"
@@ -761,9 +761,9 @@ const InterviewMng = () => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">メッセージを送信しました。</div>
-                    <div className="modal-subtit">
+                    {/* <div className="modal-subtit">
                         メッセージを送信しました。
-                    </div>
+                    </div> */}
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-business"
