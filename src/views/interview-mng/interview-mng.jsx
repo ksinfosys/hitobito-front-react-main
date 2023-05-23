@@ -355,7 +355,7 @@ const InterviewMng = () => {
                                             依頼期限
                                         </th>
                                         <th className="whitespace-nowrap text-sm border-tb0">確認日時</th>
-                                        <th className="whitespace-nowrap text-sm border-tb0">ポイント状態</th>
+                                        <th className="whitespace-nowrap text-sm border-tb0" style={{width: 135 + 'px'}}>ポイント状態</th>
                                         <th className="whitespace-nowrap text-sm th-blank border-tb0">
                                             <div className="flex gap-2 interview-mng-button-wrap">
                                                 <div>
