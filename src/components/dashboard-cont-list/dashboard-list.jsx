@@ -358,17 +358,22 @@ const DashboardList = (props) => {
                                     </>
                                 )
                             ) : props.item.pointStatus === '21103' ? (
-                                <button className="btn btn-sm btn-gray-type1 w-auto">
+                                <button className="btn btn-sm btn-gray-type1"
+                                        style={{width: 140 +'px'}}>
                                     ポイント返却完了
                                 </button>
                             ) : props.item.pointStatus === '21105' ? (
-                                <button className="btn btn-sm btn-gray-type1 w-auto disabled">
+                                <button className="btn btn-sm btn-gray-type1 disabled"
+                                        style={{width: 140 +'px'}}>
                                     ポイント支給待ち
                                 </button>
                             ) : props.item.pointStatus === '21106' ? (
-                                <button className="btn btn-long btn-outline-secondary" onClick={() => {window.location.assign("/point-detail")}}>ポイント支給完了</button>
+                                <button className="btn btn-long btn-outline-secondary" 
+                                        style={{width: 140 +'px'}}
+                                        onClick={() => {window.location.assign("/point-detail")}}>ポイント支給完了</button>
                             ) : (
-                                <button className="btn btn-sm btn-gray-type1 w-auto">
+                                <button className="btn btn-sm btn-gray-type1"
+                                        style={{width: 140 +'px'}}>
                                     支払い拒否
                                 </button>
                             )
