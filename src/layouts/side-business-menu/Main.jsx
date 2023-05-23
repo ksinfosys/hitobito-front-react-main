@@ -294,7 +294,7 @@ function Main() {
                                   </div>
                                 </button>
                               </div>
-                              <div className="noti-cont-btn">
+                              <div className="noti-cont-btn flex-shrink-0">
                                 <button className="btn"
                                   onClick={e => {
                                     e.stopPropagation();
