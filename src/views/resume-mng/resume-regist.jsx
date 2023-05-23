@@ -693,7 +693,7 @@ const ResumeRegist = () => {
                     onChange={(e) => handleChangeImage(e, index)}
                   />
                   <label className={`custom-input-label`} htmlFor={`profileImg${index}`}>
-                    <img src={item} className={`${data.photofile[index].rsFileUrl}`}  alt='' />
+                    <img src={item} alt='' />
                   </label>
                   {image[index] && (
                     <button onClick={() => handleDeleteImage(index)}>
