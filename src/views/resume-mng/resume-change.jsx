@@ -698,7 +698,7 @@ const ResumeChange = () => {
         <div className='resume-mng '>
           <div className='box-type-default hidden lg:block'>
             <div className='p-5 border-b border-slate-200/60 text-sm'>
-              履歴書変更
+              履歴書管理
             </div>
             <div className='resume-regist-cont'>
               <div className='flex gap-3'>
@@ -786,7 +786,7 @@ const ResumeChange = () => {
               </div>
               <div className='form-flex-box flex space-between items-start'>
                 <div className='box-item flex flex-col'>
-                  <div className='form-tit'>イーメール <span>*</span></div>
+                  <div className='form-tit'>メールアドレス <span>*</span></div>
                   <div className='flex items-center gap-2'>
                     <input id='userEmailSelect regular-form-1' type='text' className='form-control'
                            placeholder='イーメール入力'
@@ -927,7 +927,7 @@ const ResumeChange = () => {
                     </div>
                   </div>
                   <div className='box-item flex flex-col'>
-                    <div className='form-tit'>経歴期間</div>
+                    <div className='form-tit'>経験期間</div>
                     <div className='flex items-center gap-2'>
                       <SelectBox className={'refTarget_select'} id={'careerCodeSelect'}
                                  data={data && data.skillCareerList}
@@ -936,6 +936,12 @@ const ResumeChange = () => {
                     </div>
                   </div>
                 </div>
+                <div>
+            検索ボックスに、言語名、フレームワーク名、DB名などの頭文字を入力し、
+            </div>
+            <div>
+            表示されたリストから選択してください。
+            </div>
                 <div className="flex items-center space-between mb-4">
                   <button onClick={() => {
                     setskillPlusModal(true);
@@ -961,7 +967,7 @@ const ResumeChange = () => {
                 </div>
               </div>
               <div className='blue-tit'>
-                登録されたスキルリスト
+                既に登録されているスキルリスト
               </div>
               <div className='blue-btn-wrap flex gap-2 items-center'>
                 {
@@ -1036,7 +1042,7 @@ const ResumeChange = () => {
                     return <div className='attach-cont-item flex items-center space-between' key={index}>
                       <input className='upload-name mr-2 attach-cont-tit' value={file} placeholder='' readOnly/>
                       <button className='attach-cont-btn' onClick={() => handleDeleteFile(index)}>
-                        <img src={blacksmallX} alt=''/>
+                        ×削除
                       </button>
                     </div>
                   })}
@@ -1077,7 +1083,7 @@ const ResumeChange = () => {
                   <img src={Download} alt=''/>
                 </button>
                 <button className='btn btn-primary flex items-center h48' onClick={handleSubmit}>
-                  修正
+                  この内容で履歴書を登録する
                 </button>
               </div>
               <div className='blue-tit'>
@@ -1190,7 +1196,7 @@ const ResumeChange = () => {
     {/* 이력서 변경에는 모바일 버튼 없음 */}
     {/* <MobileBottom/> */}
 
-    {/* 簡単な自己紹介 200자이상 실패 */}
+    {/* 簡単な 200자이상 실패 */}
     <Modal
       show={infoLimitFail}
       onHidden={() => {

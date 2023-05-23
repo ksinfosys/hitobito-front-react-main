@@ -53,15 +53,7 @@ const CareerWrite = ({
     <div className="flex-box2-tit flex space-between">
       <div className="box2-tit">主要経歴</div>
 
-      {
-        addState ? <button className="add-btn flex items-center" onClick={(e) => handleAddBtn(e, index)}>
-          <img src={AddBtn} alt="" />
-          主要経歴追加
-        </button> : <button className="minus-btn flex items-center" onClick={(e) => handleAddBtn(e, index)}>
-          <img src={MinusBtn} alt="" />
-          主要経歴抜き
-        </button>
-      }
+     
     </div>
 
     <div className="flex-box2-cont form-flex-box">
@@ -98,12 +90,13 @@ const CareerWrite = ({
             data={projectRoleList} />
         </div>
         <div className="box-item flex flex-col">
-          <div className="form-tit">期間 <span>*</span></div>
+          <div className="form-tit">期間（月数） <span>*</span></div>
           {/* select > input 변경 */}
           <input id="projectPeriod" type="number" min={0} className="form-control" placeholder="カ月(数字で入力してください)"
             onChange={(e) => handleCareerChange(e, index)} />
         </div>
       </div>
+      
     </div>
     <div className="btn-flex-box flex items-start">
       <button className="btn btn-primary resume-charge-btn shrink-0 h48" onClick={() => {
@@ -127,6 +120,17 @@ const CareerWrite = ({
           })
         }
       </div>
+    </div>
+    <div>
+    {
+        addState ? <button className="add-btn flex items-center" onClick={(e) => handleAddBtn(e, index)}>
+          <img src={AddBtn} alt="" />
+          主要経歴追加
+        </button> : <button className="minus-btn flex items-center" onClick={(e) => handleAddBtn(e, index)}>
+          <img src={MinusBtn} alt="" />
+          この経歴を削除
+        </button>
+      }
     </div>
 
     {/* 担当工程選択 */}
@@ -194,6 +198,7 @@ const CareerWrite = ({
       </ModalFooter>
     </Modal>
   </>
+  
 }
 
 
