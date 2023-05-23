@@ -106,7 +106,6 @@ const DashboardBusiness = () => {
             curPage: currentPageIdx,
         })
             .then((res) => {
-                console.log(res.result);
                 setListState(res.result.searchList);
                 setPgnInfo(res.result.pageItem);
                 setSearchId(res.result.searchCondition.srchId);
@@ -147,7 +146,6 @@ const DashboardBusiness = () => {
         let keisanCodename = Number(year) - Number(searchYear);
         return keisanCodename + '歳';
     }
-
     // 学歴 리스트 저장
     const [ageList, setAgeList] = useState([]);
     const getAge = () => {
@@ -399,7 +397,6 @@ const DashboardBusiness = () => {
             document.querySelector('.chkCount').innerText = '(選択者数：0)';
         }
     }
-
     return (
         <>
             <div className="dashboard orange">
@@ -634,9 +631,10 @@ const DashboardBusiness = () => {
                             </div>
                         </div>
                     )}
+                    </div>
                     <div className="flex space-between p_20" style={{marginTop : 10 + 'px'}}>
                         <div className="flex items-center">対象者：{searchCount}人</div>
-                        <div className="dash-cont-cont3 flex items-center">    
+                        <div className="dash-cont-cont3 flex items-center">
                             <div className="color-a8">面談依頼有効期限</div>
                             <div className="minus-plus-wrap flex items-center">
                                 <button className="minus-gray-btn" onClick={handleClickMinus}>
