@@ -338,7 +338,7 @@ const InterviewMng = () => {
                                         <th className="whitespace-nowrap text-sm border-tb0">
                                             {/* 드롭다운 퍼블 */}
                                             <DropdownSelect
-                                                options={['全体', '承認待ち', '承諾', '拒否', 'キャンセル']}
+                                                options={['全体', '依頼中', '承諾', '拒否', '返却']}
                                                 defaultOption={interview.statusFlagText}
                                                 onSelect={handleSelect01}
                                             />
@@ -384,9 +384,9 @@ const InterviewMng = () => {
                                                     <td><button type="button" onClick={() => { getDetail(data.rqIdx, data.rqReceiveUserId) }}>{data.nickname}</button> </td>
                                                     <td className="shrink-0 w-24">
                                                         {
-                                                            data.rqStatus === "20101" ? "承認待ち" :
-                                                                data.rqStatus === "20102" ? "承認" :
-                                                                    data.rqStatus === "20103" ? "拒否" : "キャンセル"
+                                                            data.rqStatus === "20101" ? "依頼中" :
+                                                                data.rqStatus === "20102" ? "承諾" :
+                                                                    data.rqStatus === "20103" ? "拒否" : "返却"
                                                         }
                                                     </td>
                                                     <td>
@@ -399,18 +399,9 @@ const InterviewMng = () => {
                                                         {moment(data.rqConfirmDatetime).format("YY.MM.DD HH:mm")}
                                                     </td>
                                                     <td className="table-br-tab">
+                                                        {data.pointCngType === "20301" ? "+" : "-"}{regexUserPoint(data.pointCngAmount)}<br/>
                                                         {data.requestPointStatus}
-                                                        <br/>{"("}{data.pointCngType === "20301" ? "+" : "-"}{regexUserPoint(data.pointCngAmount)}{")"}
                                                         {console.log(data)}
-                                                        {/* {data.requestPointStatus === "21102"
-                                                            ? "포인트 미신청"
-                                                            : data.requestPointStatus === "21103"
-                                                                ? "환불완료"
-                                                                : data.requestPointStatus === "21105"
-                                                                    ? "지급대기"
-                                                                    : data.requestPointStatus === "21106"
-                                                                        ? "지급완료"
-                                                                        : "지급거부"} */}
                                                     </td>
                                                     <td className="pdrl-ad">
                                                         <div>
