@@ -16,6 +16,7 @@ const DashboardBusiness = () => {
     // Search 상태 관리
     const [searchRecoil, setSearchRecoil] = useRecoilState(searchBusiness);
     const [searchStatus, setSearchStatus] = useState(false);
+    const [searchCount, setSearchCount] = useState(0);
 
     // 스킬 조건으로 검색 시 추가
     const skillCareerList = [
@@ -103,10 +104,12 @@ const DashboardBusiness = () => {
             curPage: currentPageIdx,
         })
             .then((res) => {
+                console.log(res.result);
                 setListState(res.result.searchList);
                 setPgnInfo(res.result.pageItem);
                 setSearchId(res.result.searchCondition.srchId);
                 setSearchConditionList(res.result.searchCondition.searchConditionList);
+                setSearchCount(res.result.searchCount);
             })
             .catch((e) => {
                 console.log(e);
@@ -134,6 +137,14 @@ const DashboardBusiness = () => {
             console.log(e);
         });
     };
+
+    const keisanAge = (searchYear) => {
+        const now = new Date();
+        const year = now.getFullYear();
+        
+        let keisanCodename = Number(year) - Number(searchYear);
+        return keisanCodename + '歳';
+    }
 
     // 学歴 리스트 저장
     const [ageList, setAgeList] = useState([]);
@@ -372,6 +383,28 @@ const DashboardBusiness = () => {
     const tagsList05 = selectTags.filter((item) => item.codeType === "61").sort((a, b) => a.code - b.code);
     const codeList05 = tagsList05.map((item) => item.code);
 
+    useEffect(() => {
+        window.onload = function(){
+            let chkInput = document.querySelectorAll('.chkInput');
+            
+            chkInput.forEach(function(el, i){
+                el.addEventListener("change", function(){
+                    let chkInputLen = chkInput.length;
+                    let count = 0;
+                    
+                    for(let i = 0; i < chkInputLen; i++){
+                        console.log(el);
+                        if(el.checked == true){
+                            count += 1;
+                        }
+                    }
+    
+                    document.querySelector('.chkCount').innerText = '(選択者数：'+count+')';
+                }, false );
+            })
+        };
+    }, []);
+
     return (
         <>
             <div className="dashboard orange">
@@ -501,11 +534,21 @@ const DashboardBusiness = () => {
                                     {tagsList02?.length > 0 && (
                                         <div className="blue-btn gray-change">
                                             <span>{tagsList02[0].categoryName}</span>
-                                            <span>
-                                                {tagsList02[0].codeName}
-                                                {tagsList02[1] && " ~ "}
-                                                {tagsList02[1]?.codeName}
-                                            </span>
+                                            {
+                                                (tagsList02[0].codeName).indexOf('歳') == 2
+                                                ?
+                                                <span>
+                                                    {tagsList02[0].codeName}
+                                                    {tagsList02[1] ? tagsList02[1].codeName && " ~ " : ""}
+                                                    {tagsList02[1] ? tagsList02[1]?.codeName : ""}
+                                                </span>
+                                                :
+                                                <span>
+                                                    {keisanAge(tagsList02[0].codeName)}
+                                                    {tagsList02[1] ? keisanAge(tagsList02[1].codeName) && " ~ " : ""}
+                                                    {tagsList02[1] ? keisanAge(tagsList02[1]?.codeName) : ""}
+                                                </span>
+                                            }
                                             <button
                                                 className="blue-x-btn"
                                                 onClick={() => {
@@ -570,8 +613,9 @@ const DashboardBusiness = () => {
                             </div>
                         </div>
                     )}
-                    <div className="flex justify-end p_20" style={{marginTop : 10 + 'px'}}>
-                        <div className="dash-cont-cont3 flex items-center">
+                    <div className="flex space-between p_20" style={{marginTop : 10 + 'px'}}>
+                        <div className="flex items-center">対象者：{searchCount}人</div>
+                        <div className="dash-cont-cont3 flex items-center">    
                             <div className="color-a8">※全体を確認するためには「Space」を押下してください。</div>
                             <div className="color-a8">面談依頼有効期限</div>
                             <div className="minus-plus-wrap flex items-center">
@@ -595,10 +639,16 @@ const DashboardBusiness = () => {
                     <div className="dashboard-cont pb-12">
                         <div className="flex items-center dashboard-cont-tit">
                             <div className="form-check w-24">
-                                <input id="vertical-form-3" className="form-check-input" type="checkbox" checked={allCheck} onChange={() => setAllCheck(!allCheck)} />
+                                <input id="vertical-form-3" className="form-check-input chkAllInput" 
+                                    type="checkbox" checked={allCheck} 
+                                    onChange={() => setAllCheck(!allCheck)} 
+                                />
                                 <label className="form-check-label" htmlFor="vertical-form-3">
                                     一括選択
                                 </label>
+                            </div>
+                            <div className="chkCount" style={{width: 120 + 'px'}}>
+                                (選択者数：0)
                             </div>
                             <div className="dashboard-tit-list ml-auto flex flex-center w-full">LIST</div>
                         </div>

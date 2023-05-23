@@ -290,7 +290,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         <div className="form-check dash-cont1-tit gap-2">
                             <input
                                 id="vertical-form-4"
-                                className={data.requestStatus ? "form-check-input visibility-hidden" : "form-check-input"}
+                                className={data.requestStatus ? "form-check-input visibility-hidden chkInput" : "form-check-input chkInput"}
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={() => handleCheckboxChange(data.jsUserId)}
