@@ -24,13 +24,16 @@ const DashboardList = (props) => {
     /* ********* 체크 박스 상태 시작 ********* */
     const requestText = 'requestMap' + props.index;
     const [checkState, setCheckState] = useState(false);
-    const handleCheckChange = (id) => {
+    const handleCheckChange = (id,cpUserName) => {
         const updatedCheckState = !checkState;
         setCheckState(updatedCheckState);
         if (updatedCheckState && !props.idx.includes(id)) {
             props.setIdx([...props.idx, id]);
+            props.setDeclarationUser((prevDeclarationUsers) => [...prevDeclarationUsers, cpUserName]);
         } else if (!updatedCheckState && props.idx.includes(id)) {
             props.setIdx(props.idx.filter((value) => value !== id));
+            props.setDeclarationUser((prevDeclarationUsers) =>
+            prevDeclarationUsers.filter((value) => value !== cpUserName));
         }
         if (updatedCheckState && !props.rejectState[requestText]) {
             props.setRejectState({
@@ -40,16 +43,20 @@ const DashboardList = (props) => {
                     cpPointIdx: props.item.cpPointIdx,
                 }
             })
+            props.setDeclarationUser((prevDeclarationUsers) => [...prevDeclarationUsers, cpUserName]);    
         } else if (!updatedCheckState && props.rejectState[requestText]) {
             const updatedRejectState = { ...props.rejectState };
             delete updatedRejectState[requestText];
             props.setRejectState(updatedRejectState);
+            props.setDeclarationUser((prevDeclarationUsers) =>
+            prevDeclarationUsers.filter((value) => value !== cpUserName));
         }
     }
     
     useEffect(() => {
         if(props.allCheckState && props.item.rqStatus == "20101"){
             setCheckState(true),
+            props.setDeclarationUser((prevDeclarationUsers) => [...prevDeclarationUsers, props.item.cpUserName]),
             props.setIdx((prev) => [...prev, props.item.rqIdx]),
             props.setRejectState((prevState) => ({
                 ...prevState,
@@ -63,7 +70,8 @@ const DashboardList = (props) => {
         else if(!props.allCheckState && props.item.rqStatus == "20101") {
             setCheckState(false),
             props.setIdx([]),
-            props.setRejectState({})
+            props.setRejectState({}),
+            props.setDeclarationUser([])
         }
     }, [props.allCheckState])
     
@@ -242,15 +250,7 @@ const DashboardList = (props) => {
     const [rqLimitDatetime, setRqLimitDatetime] = useState("");
     // 현재날짜,시간
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
-    const year = currentDateTime.getFullYear();
-    const month = currentDateTime.getMonth() + 1;
-    const date = currentDateTime.getDate();
-    const hours = currentDateTime.getHours();
-    const minutes = currentDateTime.getMinutes();
-    const meridiem = hours < 12 ? '午前' : '午後';
-    
-    const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date} ${hours}:${minutes} ${meridiem}`;
-
+      
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
@@ -271,7 +271,7 @@ const DashboardList = (props) => {
                                 type="checkbox"
                                 className= {props.item.rqStatus == "20101" ? "form-check-input" : "form-check-input visibility-hidden"}
                                 checked={checkState}
-                                onChange={() => handleCheckChange(props.item.rqIdx)}
+                                onChange={() => handleCheckChange(props.item.rqIdx,props.item.cpUserName)}
                             />
                             <label className="form-check-label" htmlFor="vertical-form-4">
                                 <span
@@ -309,7 +309,8 @@ const DashboardList = (props) => {
                             </div>
                         </div>
                     ):
-                        (props.item.rqLimitDatetimeToString < formattedDate && props.item.pointStatus === '21102' ? 
+                        (props.item.rqLimitDatetime < currentDateTime.toISOString()
+                        && props.item.pointStatus === '21102' ? 
                         (
                         <div className="dash-cont-cont2 flex flex-col items-end">
                             <div className="progress-bar-tit">期限超過</div>
@@ -332,14 +333,14 @@ const DashboardList = (props) => {
                                             setpointRequestModal(true);
                                         }}>ポイント支給要請</button>
                                         <button className="btn btn-sm btn-outline-secondary" onClick={() => {
-                                            setRqLimitDatetime(props.item.rqLimitDatetimeToString);
+                                            setRqLimitDatetime(props.item.rqLimitDatetime);
                                             setCancelModal(true)
                                             }}>承諾取消
                                         </button>
                                         <button className="btn btn-sm btn-outline-secondary" onClick={() => {
                                             props.setreportRequestModal1(true);
                                             props.setDeclaration({...props.declaration, reportTargetId: props.item.cpUserId})
-                                            props.setDeclarationUser(props.item.cpUserName)
+                                            props.setDeclarationUser([props.item.cpUserName])
                                         }}>通報</button>
                                     </>
                                 ) : (
@@ -347,7 +348,7 @@ const DashboardList = (props) => {
                                         <button
                                             className="btn btn-sm btn-primary"
                                             onClick={() => {
-                                                props.setDeclarationUser(props.item.cpUserName)
+                                                props.setDeclarationUser([props.item.cpUserName])
                                                 props.setIdx([props.item.rqIdx]);
                                                 props.setAcceptCheck(true);
                                             }}
@@ -503,7 +504,7 @@ const DashboardList = (props) => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">面談承認取消</div>
-                    {rqLimitDatetime > formattedDate ? (
+                    {rqLimitDatetime > currentDateTime.toISOString() ? (
                         <div className="modal-subtit">
                             面談の承諾を取り消しますか？
                         </div>
