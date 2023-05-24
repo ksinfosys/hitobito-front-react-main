@@ -452,12 +452,10 @@ const DashboardList = (props) => {
                                             <td>ホームページ</td>
                                             <td>{cpInfoData.homepage}</td>
                                         </tr>
-                                        <tr>
-                                            <td>求人情報</td>
-                                            <td style={{wordWrap:"break-word"}}>{cpInfoData.cpAd}</td>
-                                        </tr>
                                     </tbody>
                                 </table>
+                                        <td><strong>求人情報</strong></td>
+                                        <hr></hr>
                                         <span style={{wordWrap:"break-word", whiteSpace: "pre-wrap" }}>{cpInfoData.cpAd}</span>
                             </div>
                             {/* 이미지영역 */}
