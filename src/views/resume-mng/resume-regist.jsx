@@ -166,13 +166,10 @@ const ResumeRegist = () => {
   //이미지 업로드
   const handleChangeImage = async (e, index) => {
     const file = e.target.files
-    if (file.length > 5) {
+    if (rsFilePhoto.length >= 5 || file.length + rsFilePhoto.length > 5) {
       alert('5個まで登録できます。')
       return false
     }
-
-    setImage([])
-    setRsFilePhoto([])
 
     for (let i = 0; i < file.length; i++) {
       const reader = new FileReader()
@@ -692,6 +689,7 @@ const ResumeRegist = () => {
                   <input
                     id={`profileImg${index}`}
                     type={'file'}
+                    multiple
                     onChange={(e) => handleChangeImage(e, index)}
                   />
                   <label className={`custom-input-label resume_image`} htmlFor={`profileImg${index}`}>
