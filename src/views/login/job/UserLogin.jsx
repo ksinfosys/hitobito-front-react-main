@@ -159,7 +159,9 @@ const UserLogin = () => {
 				code: kakao_code
 			}
 		}).then(res => {
+			console.log("getKakaoToken.res")
 			console.log(res);
+			console.log(res.data)
 			snsLogin(res.data, 'kakao')
 		}).catch(err => {
 			console.log(err);
