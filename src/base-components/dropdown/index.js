@@ -132,7 +132,7 @@ function DropdownMenu(props) {
 
   useEffect(() => {
     dom(dropdownMenuRef.current).appendTo(dropdownRef.current);
-    document.querySelector(".orange-noti-user").click();
+    document.querySelector(".noti-user").click();
   }, [dropdownRef]);
 
   return createPortal(
