@@ -11,6 +11,7 @@ import PlusGrayBtn from "@/assets/images/plus-gray-btn.svg";
 import ServiceFetch from "../../../util/ServiceFetch";
 import { useRecoilState } from "recoil";
 import { searchBusiness } from "../../stores/search-business";
+import { userCount } from "../../stores/search-count";
 
 const DashboardBusiness = () => {
     // Search 상태 관리
@@ -99,6 +100,8 @@ const DashboardBusiness = () => {
     const [checkId, setCheckId] = useState([]);
     // 전송 시 체크 상태 변경
     const [submitCheckState, setSubmitCheckState] = useState(false);
+
+    const [userCountV, setUserCountV] = useRecoilState(userCount);
 
     // getList API
     const getList = () => {
@@ -217,6 +220,8 @@ const DashboardBusiness = () => {
             curPage: currentPageIdx,
             selectCode: selectCode,
         }).then((res) => {
+            console.log(res.result.searchCount);
+            setUserCountV({searchCount : res.result.searchCount});
             res.resultCode === '200' ? (
                 setListState(res.result.searchList),
                 setPgnInfo(res.result.pageItem),
