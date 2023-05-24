@@ -327,7 +327,7 @@ function Main() {
                           setNotiShowAllFlag(!notiShowAllFlag);
                         }}
                       >
-                        {!notiShowAllFlag ? "すべて表示" : "최근 5건 보기"}
+                        {!notiShowAllFlag ? "すべて表示" : "最近の5件を見る"}
                       </button>
                     </div>
                   </DropdownContent>
@@ -474,7 +474,7 @@ function Main() {
                           setNotiShowAllFlag(!notiShowAllFlag);
                         }}
                       >
-                        {!notiShowAllFlag ? "すべて表示" : "최근 5건 보기"}
+                        {!notiShowAllFlag ? "すべて表示" : "最近の5件を見る"}
                       </button>
                     </div>
                   </div>

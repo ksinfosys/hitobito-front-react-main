@@ -702,7 +702,7 @@ const ResumeRegist = () => {
                       <img src={Xbutton} alt='삭제' className='resume_image' />
                     </button>
                   )}
-                  <span className='dragText'>{index == 0 ? '代表のイメージ' : 'ドラッグ'}</span>
+                  <span className='dragText'>{index == 0 ? '代表のイメージ' : '◀ ドラッグ'}</span>
                 </li>
               ))
             }
