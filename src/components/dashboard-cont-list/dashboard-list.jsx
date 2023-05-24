@@ -11,6 +11,7 @@ import { getCookie } from "../../utils/cookie";
 import { replaceSlashToHypen, todayReplaceSlashToHypen } from "../../utils/utils";
 import ServiceFetch from "../../../util/ServiceFetch";
 import Xicon from "@/assets/images/x_ic.svg"
+import FileDown from "@/assets/images/file-down.svg";
 
 
 const DashboardList = (props) => {
@@ -213,10 +214,18 @@ const DashboardList = (props) => {
                         // 문자열로 내려오는 파일을 가공후 배열로 변환
                         const fileString = companyInfo.cpFileUrl;
                         const fileArray = fileString.split(",");
+                        const cpFileIdxList  = response.data.result.companyAttachFile.cpFileIdx ? response.data.result.companyAttachFile.cpFileIdx.split(",") : [];
+                        const cpFileIdxNameList  = response.data.result.companyAttachFile.cpFileIdxName ? response.data.result.companyAttachFile.cpFileIdxName.split(",") : [];  
+                        const cpFileIdxUrlList = response.data.result.companyAttachFile.cpFileIdxUrl ? response.data.result.companyAttachFile.cpFileIdxUrl.split(",") : [];
                         setCpInfoData(() => ({
                             ...companyInfo,
                             cpFileUrl: fileArray,
-                            cpLogo: response.data.result.cpLogoUrl
+                            cpLogo: response.data.result.cpLogoUrl,
+                            cpFileIdxList: cpFileIdxList.map((file, index) => ({
+                                cpFileIdx: file,
+                                cpFileIdxName: cpFileIdxNameList[index],
+                                cpFileIdxUrl: cpFileIdxUrlList[index]
+                              }))
                         }))
                         setcompanyInfo(true)
                     })()
@@ -231,7 +240,6 @@ const DashboardList = (props) => {
                     })();
             });
     };
-    console.log()
     // 프로그레스바 색 정하기
     const handleProgressClassName = () => {
         if (props.item.progressBarValue > 90.00) {
@@ -455,21 +463,62 @@ const DashboardList = (props) => {
                                     </tbody>
                                 </table>
                                         <td><strong>求人情報</strong></td>
-                                        <hr></hr>
+                                        <hr/>
                                         <span style={{wordWrap:"break-word", whiteSpace: "pre-wrap" }}>{cpInfoData.cpAd}</span>
                             </div>
-                            {/* 이미지영역 */}
-                            {/* <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
+                            <hr/>
+                            {/* 企業イメージ */}
+                            { <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
                                 {
                                     cpInfoData?.cpFileUrl?.map((v, i) => {
                                         return (
                                             <div key={i}>
-                                                <img src={`https://hitobito-net.com/api${v}`} alt="company image" />
+                                                <img
+                                                    style={{ cursor: "pointer" }} 
+                                                    src={`https://hitobito-net.com/api${v}`} 
+                                                    alt="company image" 
+                                                    onClick={() => {
+                                                        window.open(`https://hitobito-net.com/api${v}`, "_blank");
+                                                    }}
+                                                />
                                             </div>
                                         )
                                     })
                                 }
-                            </div> */}
+                            </div> }
+                            
+                            {/* 添付ファイル */}
+                            <div className="flex flex-col attach-cont-wrap my-4">
+                            <div className="attach-tit-wrap flex items-center gap-2 flex-shrink-0">
+                                <div className="attach-tit">
+                                    <strong>添付ファイル</strong>
+                                </div>
+                            </div>
+                            <hr/>
+                            {
+                                cpInfoData && cpInfoData.cpFileIdxList?.length > 0 ? cpInfoData.cpFileIdxList.map((file, index) => {
+                                    return (
+                                        <div className="attach-cont-item flex items-center space-between gap-2" key={index}>
+                                            <div className="upload-name-2 attach-cont-tit upload-name">
+                                                {file.cpFileIdxName}
+                                            </div>
+                                            <button onClick={() => window.open(`https://hitobito-net.com/api${file.cpFileIdxUrl}`)} className="attach-cont-btn flex-shrink-0">
+                                                <img src={FileDown} alt="" />
+                                            </button>
+                                        </div>
+                                    )
+                                }) : (
+                                    <div className="attach-cont-item flex items-center space-between">
+                                        <div className="attach-cont-tit">
+                                           登録されたファイルがありません。
+                                        </div>
+                                        <button className="attach-cont-btn">
+                                            <img src={FileDown} alt="" />
+                                        </button>
+                                    </div>
+                                )
+                            }
+                        </div>
                         </div>
                     </ModalBody>
                 </Modal>

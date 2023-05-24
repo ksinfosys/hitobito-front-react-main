@@ -1346,18 +1346,18 @@ const InterviewMng = () => {
                             )
                         }
                     </div>
-                    <div className="attach-wrap flex gap-2">
+                    <div className="flex flex-col attach-cont-wrap my-4">
                         <div className="attach-tit-wrap flex items-center gap-2 flex-shrink-0">
                             <div className="attach-tit">
-                                ファイル添付
+                                <strong>添付ファイル</strong>
                             </div>
                         </div>
-                        <div className="flex flex-col attach-cont-wrap">
+                        <hr/>
                             {
                                 userDetailInfo && userDetailInfo.attachedfilelist?.length > 0 ? userDetailInfo.attachedfilelist.map((file, index) => {
                                     return (
                                         <div className="attach-cont-item flex items-center space-between gap-2" key={index}>
-                                            <div className="upload-name-2 attach-cont-tit">
+                                            <div className="upload-name-2 attach-cont-tit upload-name">
                                                 {file.fileName}
                                             </div>
                                             <button onClick={() => window.open(`https://hitobito-net.com/api${file.fileURL}`)} className="attach-cont-btn flex-shrink-0">
@@ -1375,8 +1375,7 @@ const InterviewMng = () => {
                                         </button>
                                     </div>
                                 )
-                            }
-                        </div>
+                            }                       
                     </div>
                 </ModalBody>
             </Modal>
