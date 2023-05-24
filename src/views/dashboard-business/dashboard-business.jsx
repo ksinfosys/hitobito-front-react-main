@@ -103,7 +103,6 @@ const DashboardBusiness = () => {
 
     const [userCountV, setUserCountV] = useRecoilState(userCount);
 
-
     // getList API
     const getList = () => {
         ServiceFetch("/search/main", "post", {
@@ -216,12 +215,12 @@ const DashboardBusiness = () => {
 
     // searchFind API
     const searchFind = () => {
-        setUserCountV({searchCount: searchCount});
-        //console.log('selectcode', selectCode)
         ServiceFetch("/search/find", "post", {
             curPage: currentPageIdx,
             selectCode: selectCode,
         }).then((res) => {
+            console.log(res.result.searchCount);
+            setUserCountV({searchCount : res.result.searchCount});
             res.resultCode === '200' ? (
                 setListState(res.result.searchList),
                 setPgnInfo(res.result.pageItem),

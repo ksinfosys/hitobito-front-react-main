@@ -73,10 +73,10 @@ const KakaoAuthCallback = () => {
 		})
 	}
    
-	useEffect(() => {
-		if (!location.search) return;
-		getKakaoToken();
-	}, []);
+	// useEffect(() => {
+	// 	if (!location.search) return;
+	// 	getKakaoToken();
+	// }, []);
 
 	useEffect(() => {
     console.log(snsBody)

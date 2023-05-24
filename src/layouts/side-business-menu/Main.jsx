@@ -353,7 +353,7 @@ function Main() {
                   </DropdownContent>
                 </DropdownMenu>
               </Dropdown>
-              <button className="orange-noti-user">
+              <button className="orange-noti-user noti-user">
                 <img src={UserIcon} alt="" />
                 {
                   <div className="number-noti blue">{userCountV.searchCount}</div>
