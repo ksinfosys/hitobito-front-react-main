@@ -215,7 +215,6 @@ const DashboardBusiness = () => {
 
     // searchFind API
     const searchFind = () => {
-        //console.log('selectcode', selectCode)
         ServiceFetch("/search/find", "post", {
             curPage: currentPageIdx,
             selectCode: selectCode,
