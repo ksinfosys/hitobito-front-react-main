@@ -29,6 +29,7 @@ const Success = () => {
           sessionId: '',
           isOpenWindow: BusinessPlan.isOpenWindow
         })
+        localStorage.removeItem("sessionId");
         window.location.replace("/use-plan");
       });
   }, [])
