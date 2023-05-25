@@ -3,7 +3,7 @@ import serviceFetch from "../../../util/ServiceFetch";
 import ResumeChange from "./resume-change";
 import ResumeRegist from "./resume-regist";
 import {useRecoilState, useResetRecoilState} from "recoil";
-import {mobileStatus} from "../../stores/mobile-status";
+//import {mobileStatus} from "../../stores/mobile-status";//mobileStatus
 import DepthSplit from "../../../util/DepthSplit";
 import axios from "axios";
 import Main from "../../layouts/side-menu/Main";
@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 
 const Resume = () => {
 
-  const [mobile, setMobileStatus] = useRecoilState(mobileStatus);
+  //const [mobile, setMobileStatus] = useRecoilState(mobileStatus);//mobileStatus
   const [isLoading, setLoading] = useState(false)
   const [isResume, setResume] = useState(false)
   const resetInfoV = useResetRecoilState(userInfo);
@@ -45,10 +45,10 @@ const Resume = () => {
             })
         }
       })
-    setMobileStatus({
-      ...mobile,
-      progress: 1,
-    })
+    // setMobileStatus({
+    //   ...mobile,
+    //   progress: 1,
+    // })//mobileStatus
   },[])
 
 

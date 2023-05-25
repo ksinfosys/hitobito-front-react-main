@@ -14,7 +14,7 @@ import axios from "axios";
 import { getCookie } from "../../utils/cookie";
 import CareerWrite from "./desktop-items/CareerWrite";
 import { useRecoilState } from "recoil";
-import { mobileStatus } from "../../stores/mobile-status";
+//import { mobileStatus } from "../../stores/mobile-status";//mobileStatus
 import { Lucide, Modal, ModalBody, ModalFooter, ModalHeader } from "@/base-components";
 import DepthSplit from "../../../util/DepthSplit";
 import ModalEvent from "./ModalEvent";
@@ -22,7 +22,7 @@ import $ from "jquery";
 
 const ResumeRegist = () => {
   // const [selectPop, setselectPop] = useState(false);
-  const [mobile, setMobileStatus] = useRecoilState(mobileStatus);
+  //const [mobile, setMobileStatus] = useRecoilState(mobileStatus);//mobileStatus
   const categoryRef = useRef(null);
   const skillNameRef = useRef(null)
 
@@ -386,13 +386,13 @@ const ResumeRegist = () => {
         origin: res.data.result.skillList
       })
       // console.log(Array.from(new Set(res.data.result.skillList.map(item => item.skillCategory))))
-      setMobileStatus({
-        ...mobile,
-        api: res.data.result,
-        businessDepthMenu: DepthSplit(mobile, 'businessDepthMenu', res.data.result.businessTypeList, 'businessType'),
-        jobDepthMenu: DepthSplit(mobile, 'jobDepthMenu', res.data.result.jobTypeList, 'jobType'),
-        hopeCareerDepthMenu: DepthSplit(mobile, 'hopeCareerDepthMenu', res.data.result.hopeCareerList, 'hopeCareer'),
-      })
+      // setMobileStatus({
+      //   ...mobile,
+      //   api: res.data.result,
+      //   businessDepthMenu: DepthSplit(mobile, 'businessDepthMenu', res.data.result.businessTypeList, 'businessType'),
+      //   jobDepthMenu: DepthSplit(mobile, 'jobDepthMenu', res.data.result.jobTypeList, 'jobType'),
+      //   hopeCareerDepthMenu: DepthSplit(mobile, 'hopeCareerDepthMenu', res.data.result.hopeCareerList, 'hopeCareer'),
+      // })//mobileStatus
     })
   }, [])
 
