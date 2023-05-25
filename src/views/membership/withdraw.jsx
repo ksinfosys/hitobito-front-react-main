@@ -43,7 +43,7 @@ function Withdraw() {
               withdrawConfirm(true);
             }}>進む
             </button>
-            <button type="button" className="btn btn-outline-secondary w-80 mt-10" onClick={() => { navigate(-1); }}>戻る</button>
+            <button type="button" className="btn btn-outline-secondary w-80 mt-10" onClick={() => {window.location.replace("/");}}>戻る</button>
             </div>
           </div>
         </div>
