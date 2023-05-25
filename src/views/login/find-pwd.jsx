@@ -33,6 +33,9 @@ const FindPwd = () => {
     const [emailError1, setEmailError1] = useState(false);
     // email 실패시 팝업(401)
     const [emailError2, setEmailError2] = useState(false);
+    //입력 오류(id)
+    const [inputError, setInputError] = useState(false);
+
 
     // Password 찾기 API
     const searchPassword = () => {
@@ -55,11 +58,12 @@ const FindPwd = () => {
                     } else if (code === "401") {
                         setEmailError2(true);
                     } else if (code === "003") {
-                        alert('입력정보에 문제가 있습니다.')
+                        setInputError(true);
+                        //alert('入力情報に問題があります。')
                     } else if (code === "102") {
                         alert('処理中に問題が発生しました。')
                     } else if (code === "102") {
-                        alert('메일 송신에 실패했습니다. 다시 확인해주세요.')
+                        alert('メールの送信に失敗しました。 もう一度確認をお願いします。')
                     }
                 })()
             });
@@ -166,6 +170,32 @@ const FindPwd = () => {
                 </ModalBody>
             </Modal>
 
+            {/* 입력 정보 문제*/}
+            <Modal
+                show={inputError}
+                onHidden={() => {
+                    setInputError(false);
+                }}
+            >
+                <ModalBody className="p-10 text-center">
+                    <div className="modal-tit">入力情報を確認してください。</div>
+                    {/* <div className="modal-subtit">
+                        入力した情報に問題があります。
+                        <br />メールを確認してください。
+                    </div> */}
+                    <div className="flex flex-end gap-3">
+                        <a
+                            href="#"
+                            className="btn btn-pending"
+                            onClick={() => {
+                                setInputError(false);
+                            }}
+                        >
+                            確認
+                        </a>
+                    </div>
+                </ModalBody>
+            </Modal>
 
         </>
     );

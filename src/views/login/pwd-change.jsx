@@ -41,6 +41,11 @@ const PwdChange = () => {
   // 현재 패스워드, 새로운 패스워드 일치 검사
   const [pwError2, setPwError2] = useState(false);
 
+  // 비밀번호 눈 
+  const [pwFlag, setPwFlag] = useState(false)
+  // 비밀번호 확인 눈
+  const [checkFlag, setCheckFlag] = useState(false)
+
   // back
   // 비밀번호 변경 통과
   const [passChange, setPassChange] = useState(false);
@@ -128,28 +133,55 @@ const PwdChange = () => {
           臨時パスワードでログインしました。 <br />
           新しいパスワードを設定してください。
         </div>
-        <div className="pwd-change-wrap" onKeyDown={handleKeyDown}>
+        {/* <div className="pwd-change-wrap" onKeyDown={handleKeyDown}> * */}
+        <div className="cont-wrap p-10" onKeyDown={handleKeyDown}>
           {/* <input id="regular-form-1" type="text" className="h-48 form-control" placeholder="아이디" />
                     <div className="input-det">
                         입력  5~20자의 영문 대소문자,숫자 포함
                     </div> */}
-          <input
-            id="regular-form-1"
-            type="password"
-            className="h-48 form-control"
-            placeholder="パスワード_英文・数字・特殊記号で組み合わせ8~16字で入力してください。"
-            onChange={e => setNewPassword(e.currentTarget.value)}
-          />
-          <div className="input-det">
-            英文・数字・特殊記号で組み合わせ8~16字で入力してください。
+          <label htmlFor="vertical-form-1" className="form-label mb-2">
+                パスワード<span className="import ml-1">*</span>
+              </label>
+          <div className="pwd-eye-wrap">
+            <input
+              id="regular-form-1"
+              type={pwFlag ? "text" : "password"}
+              style={{width: 400 +'px'}}
+              className="h-48 form-control"
+              placeholder="英文・数字・特殊記号で組み合わせ8~16字で入力"
+              onChange={e => setNewPassword(e.currentTarget.value)}
+            />
+            <button className="eye-btn" onClick={() => {
+              setPwFlag(prev => !prev)
+            }}>
+              {
+                pwFlag === true ? <img src="/images/eye-open.svg" alt="" /> : <img src="/images/eye-close.svg" alt="" />
+              }
+            </button>
           </div>
-          <input
-            id="regular-form-1"
-            type="password"
-            className="h-48 form-control"
-            placeholder="パスワード確認"
-            onChange={e => setNewPasswordCheck(e.currentTarget.value)}
-          />
+          {/* <div className="input-det">
+            英文・数字・特殊記号で組み合わせ8~16字で入力してください。
+          </div> */}
+          <label htmlFor="vertical-form-1" className="form-label mb-2">
+              パスワード確認<span className="import ml-1">*</span>
+          </label>
+          <div className="pwd-eye-wrap">
+            <input
+              id="regular-form-1"
+              type={checkFlag ? "text" : "password"}
+              style={{width: 400 +'px'}}
+              className="h-48 form-control"
+              placeholder="英文・数字・特殊記号で組み合わせ8~16字で入力"
+              onChange={e => setNewPasswordCheck(e.currentTarget.value)}
+            />
+            <button className="eye-btn" onClick={() => {
+              setCheckFlag(prev => !prev)
+            }}>
+              {
+                checkFlag === true ? <img src="/images/eye-open.svg" alt="" /> : <img src="/images/eye-close.svg" alt="" />
+              }
+            </button>
+          </div>
         </div>
         <div className="find-btn">
           <button
