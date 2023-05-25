@@ -38,6 +38,7 @@ import ServiceFetch from "../../../util/ServiceFetch";
 import CheckToken from "../../../util/CheckToken";
 import { regexUserPoint } from "../../utils/utils";
 import { userCount } from "../../stores/search-count";
+import {businessPlan} from "../../stores/business-plan";
 
 function Main() {
   const navigate = useNavigate();
@@ -73,6 +74,8 @@ function Main() {
   const [logoutError, setLogoutError] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
 
+  const [BusinessPlan, setBusinessPlan] = useRecoilState(businessPlan);
+
 
   const resetInfoV = useResetRecoilState(userInfo);
 
@@ -91,6 +94,12 @@ function Main() {
       CheckToken(res, navigate);
       delCookie("accessToken");
       delCookie("lastLoginTime");
+      setBusinessPlan({
+        isOpen: 0,
+        sessionId: '',
+        isOpenWindow: 0
+      });
+      localStorage.removeItem("sessionId");
     });
     /*axios
       .post(

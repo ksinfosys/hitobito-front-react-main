@@ -21,6 +21,7 @@ const Success = () => {
         }
       )
       .then(() => {
+        localStorage.removeItem("sessionId");
         window.close();
       });
   }, [])

@@ -181,12 +181,15 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
         )
     })
     const buttonList2 = projectProcessNameArr?.length > 0 && projectProcessNameArr.map((name, index) => {
-        return projectProcessTag.includes(name) ? (
-            <button className="btn btn-lang orange" key={index}>{name} </button>
-        ) : (
-            <button className="btn btn-lang gray" key={index}>{name} </button>
-        )
-    })
+        if (name !== "") {
+            return projectProcessTag.includes(name) ? (
+                <button className="btn btn-lang orange" key={index}>{name} </button>
+            ) : (
+                <button className="btn btn-lang gray" key={index}>{name} </button>
+            );
+        }
+        return null;
+    });
     const buttonList3 = projectRoleNameArr?.length > 0 && projectRoleNameArr.map((name, index) => {
         return projectRoleNameTag.includes(name) ? (
             <button className="btn btn-lang orange" key={index}>{name} </button>
@@ -444,7 +447,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                             </div>
                         </div>
                         <div className="skill-box-wrap">
-
+                            
                             <div className="skill-box flex items-center">
                                 <div className="skill-tit">
                                     スキル
