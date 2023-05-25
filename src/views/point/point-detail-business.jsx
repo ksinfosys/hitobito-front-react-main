@@ -747,7 +747,7 @@ function PointDetailBusiness() {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">購入するポイントを入力してください</div>
-          <div className="modal-subtit">購入するポイントを入力してください</div>
+          {/* <div className="modal-subtit">購入するポイントを入力してください</div> */}
           <div className="flex flex-end gap-3">
             <a
               href="#"
@@ -876,7 +876,9 @@ function PointDetailBusiness() {
         }}
       >
         <ModalBody className="p-10 text-center">
+
           <div className="modal-tit">決済規約に同意をお願いします。</div>
+
           <div className="flex flex-end gap-3">
             <a
               href="#"

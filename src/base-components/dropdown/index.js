@@ -132,6 +132,7 @@ function DropdownMenu(props) {
 
   useEffect(() => {
     dom(dropdownMenuRef.current).appendTo(dropdownRef.current);
+    document.querySelector(".noti-user").click();
   }, [dropdownRef]);
 
   return createPortal(

@@ -432,7 +432,7 @@ tr.table-content:hover td {
 }
 
 .notification-content .noti-tit-cont button {
-  width: 90px;
+  width: 105px;
   height: 28px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -666,7 +666,7 @@ tr.table-content:hover td {
 }
 
 .dashboard-cont-cont .dash-cont-cont3 button.btn-long {
-  width: 169px;
+  width: 136px;
   background: #F9F9F9;
   -webkit-box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.08);
   box-shadow: 0px 1px 2px rgba(15, 23, 42, 0.08);
@@ -1199,6 +1199,21 @@ tr.table-content:hover td {
   margin-bottom: 10px;
 }
 
+.resume-regist-cont .camera-subtit3 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+  color: #A8ABAE;
+  margin-top: 10px;
+}
+.resume-regist-cont .camera-subtit4 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+  color: #A8ABAE;
+  margin-bottom: 50px;
+}
+
 .resume-regist-cont .camera-subtit2+img {
   display: block;
   width: 120px;
@@ -1680,7 +1695,7 @@ tr.table-content:hover td {
 .modal .modal-tit {
   font-weight: 700;
   font-size: 16px;
-  line-height: 140%;
+  line-height: 220%;
   color: #333333;
   text-align: left;
   word-break: break-all;
@@ -1689,7 +1704,7 @@ tr.table-content:hover td {
 .modal .modal-subtit {
   font-weight: 400;
   font-size: 14px;
-  line-height: 140%;
+  line-height: 240%;
   color: #808386;
   text-align: left;
 }

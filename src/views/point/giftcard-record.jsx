@@ -177,7 +177,7 @@ function GiftcardRecord() {
         </ul>
         <div className="box-type-default">
           <div className="p-5 border-b border-slate-200/60 text-lg font-bold lg:text-sm lg:font-normal">
-            Amazonギフトカード交換履歴
+            ポイント交換履歴
           </div>
           <div className="cont-wrap p-2 lg:p-5">
             <div className="mt-5 mb-5">
@@ -188,6 +188,7 @@ function GiftcardRecord() {
                 <button
                   type="button"
                   className="btn btn-primary w-72 mt-2 sm:mt-0"
+                  onClick={() => window.open('https://www.amazon.co.jp/')}
                 >
                   Amazonに登録
                 </button>

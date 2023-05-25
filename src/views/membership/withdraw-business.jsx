@@ -33,7 +33,7 @@ function WithdrawBusiness() {
                             <br/>
                         <div className="flex flex-end gap-3">
                             <button type="button" className="btn btn-pending" onClick={() => { setwidthdrawConfirm(true); }}>進む</button>
-                            <button type="button" className="btn btn-outline-secondary" onClick={() => { navigate(-1); }}>戻る</button>
+                            <button type="button" className="btn btn-outline-secondary" onClick={() => {window.location.replace("/business");}}>戻る</button>
                         </div>
                     </div>
                 </div>

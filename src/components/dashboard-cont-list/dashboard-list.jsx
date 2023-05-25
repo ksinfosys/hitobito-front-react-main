@@ -11,6 +11,7 @@ import { getCookie } from "../../utils/cookie";
 import { replaceSlashToHypen, todayReplaceSlashToHypen } from "../../utils/utils";
 import ServiceFetch from "../../../util/ServiceFetch";
 import Xicon from "@/assets/images/x_ic.svg"
+import FileDown from "@/assets/images/file-down.svg";
 
 
 const DashboardList = (props) => {
@@ -24,13 +25,16 @@ const DashboardList = (props) => {
     /* ********* 체크 박스 상태 시작 ********* */
     const requestText = 'requestMap' + props.index;
     const [checkState, setCheckState] = useState(false);
-    const handleCheckChange = (id) => {
+    const handleCheckChange = (id,cpUserName) => {
         const updatedCheckState = !checkState;
         setCheckState(updatedCheckState);
         if (updatedCheckState && !props.idx.includes(id)) {
             props.setIdx([...props.idx, id]);
+            props.setDeclarationUser((prevDeclarationUsers) => [...prevDeclarationUsers, cpUserName]);
         } else if (!updatedCheckState && props.idx.includes(id)) {
             props.setIdx(props.idx.filter((value) => value !== id));
+            props.setDeclarationUser((prevDeclarationUsers) =>
+            prevDeclarationUsers.filter((value) => value !== cpUserName));
         }
         if (updatedCheckState && !props.rejectState[requestText]) {
             props.setRejectState({
@@ -40,16 +44,21 @@ const DashboardList = (props) => {
                     cpPointIdx: props.item.cpPointIdx,
                 }
             })
+            props.setDeclarationUserRj((prevDeclarationUsers) => [...prevDeclarationUsers, cpUserName]);    
         } else if (!updatedCheckState && props.rejectState[requestText]) {
             const updatedRejectState = { ...props.rejectState };
             delete updatedRejectState[requestText];
             props.setRejectState(updatedRejectState);
+            props.setDeclarationUserRj((prevDeclarationUsers) =>
+            prevDeclarationUsers.filter((value) => value !== cpUserName));
         }
     }
-
+    
     useEffect(() => {
         if(props.allCheckState && props.item.rqStatus == "20101"){
             setCheckState(true),
+            props.setDeclarationUser((prevDeclarationUsers) => [...prevDeclarationUsers, props.item.cpUserName]),
+            props.setDeclarationUserRj((prevDeclarationUsers) => [...prevDeclarationUsers, props.item.cpUserName]),
             props.setIdx((prev) => [...prev, props.item.rqIdx]),
             props.setRejectState((prevState) => ({
                 ...prevState,
@@ -63,7 +72,9 @@ const DashboardList = (props) => {
         else if(!props.allCheckState && props.item.rqStatus == "20101") {
             setCheckState(false),
             props.setIdx([]),
-            props.setRejectState({})
+            props.setRejectState({}),
+            props.setDeclarationUser([]),
+            props.setDeclarationUserRj([])
         }
     }, [props.allCheckState])
     
@@ -101,9 +112,7 @@ const DashboardList = (props) => {
             console.log(e);
         })
     };
-    const handleAcceptCancel = () => {
-        setCancelModal(true);
-    };
+
     /* ********** 면접제의 승낙취소 API 끝 ********** */
 
     /* ********** 포인트지급요청 API 시작 ********** */
@@ -164,10 +173,24 @@ const DashboardList = (props) => {
             const infoKey = name.substring(16);
             const infoValue = props.info.skillCodeNameArr[infoKey];
             return (
-                <button className="btn btn-lang" key={index}>{infoValue}</button>
+                <span className="btn-lang" key={index}>{infoValue}</span>
             );
         }
-        return props.info ? <button className="btn btn-lang" key={index}>{props.info[name]}</button> : null
+        if(name.includes('projectProcessNameArr')){
+            const infoKey = name.substring(21);
+            const infoValue = props.info.projectProcessNameArr[infoKey];
+            return (
+                <span className="btn-lang" key={index}>{infoValue}</span>
+            );
+        }
+        if(name.includes('projectRoleNameArr')){
+            const infoKey = name.substring(18);
+            const infoValue = props.info.projectRoleNameArr[infoKey];
+            return (
+                <span className="btn-lang" key={index}>{infoValue}</span>
+            );
+        }
+        return props.info ? <span className="btn-lang" key={index}>{props.info[name]}</span> : null
     })
 
     const getCpInfo = (rqIdx) => {
@@ -191,10 +214,18 @@ const DashboardList = (props) => {
                         // 문자열로 내려오는 파일을 가공후 배열로 변환
                         const fileString = companyInfo.cpFileUrl;
                         const fileArray = fileString.split(",");
+                        const cpFileIdxList  = response.data.result.companyAttachFile.cpFileIdx ? response.data.result.companyAttachFile.cpFileIdx.split(",") : [];
+                        const cpFileIdxNameList  = response.data.result.companyAttachFile.cpFileIdxName ? response.data.result.companyAttachFile.cpFileIdxName.split(",") : [];  
+                        const cpFileIdxUrlList = response.data.result.companyAttachFile.cpFileIdxUrl ? response.data.result.companyAttachFile.cpFileIdxUrl.split(",") : [];
                         setCpInfoData(() => ({
                             ...companyInfo,
                             cpFileUrl: fileArray,
-                            cpLogo: response.data.result.cpLogoUrl
+                            cpLogo: response.data.result.cpLogoUrl,
+                            cpFileIdxList: cpFileIdxList.map((file, index) => ({
+                                cpFileIdx: file,
+                                cpFileIdxName: cpFileIdxNameList[index],
+                                cpFileIdxUrl: cpFileIdxUrlList[index]
+                              }))
                         }))
                         setcompanyInfo(true)
                     })()
@@ -209,12 +240,12 @@ const DashboardList = (props) => {
                     })();
             });
     };
-
     // 프로그레스바 색 정하기
     const handleProgressClassName = () => {
-        if (props.item.checkTodayOrNotForDeadLine) {
-            // 오늘이거나 값이 1600이상일때
+        if (props.item.progressBarValue > 90.00) {
             return 'bg-red'
+        } else if (props.item.progressBarValue > 60.00) {
+            return 'bg-orange'
         } else {
             return 'bg-green'
         }
@@ -226,6 +257,10 @@ const DashboardList = (props) => {
         setBtnActive(!btnActive);
     };
 
+    const [rqLimitDatetime, setRqLimitDatetime] = useState("");
+    // 현재날짜,시간
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
+      
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
@@ -246,7 +281,7 @@ const DashboardList = (props) => {
                                 type="checkbox"
                                 className= {props.item.rqStatus == "20101" ? "form-check-input" : "form-check-input visibility-hidden"}
                                 checked={checkState}
-                                onChange={() => handleCheckChange(props.item.rqIdx)}
+                                onChange={() => handleCheckChange(props.item.rqIdx,props.item.cpUserName)}
                             />
                             <label className="form-check-label" htmlFor="vertical-form-4">
                                 <span
@@ -257,21 +292,22 @@ const DashboardList = (props) => {
                             </label>
                         </div>
                         <div className="dash-cont1-tit">
-                            <button type="button">
-                                面接提案
-                            </button>
+                            <span>
+                                {props.item.rqSendDatetime.substring(0,10)}
+                            </span>
                         </div>
                     </div>
                     <div>
+                    {props.item.rqStatus === '20101' ? (
                         <div className="dash-cont-cont2 flex flex-col items-end">
                             <div className="progress-bar-tit">
                                 {
                                     props.item.checkTodayOrNotForDeadLine ? (
                                         // 오늘이라는 flag가 내려오는 경우
-                                        todayReplaceSlashToHypen(props.item.rqLimitDatetimeToString)
+                                        todayReplaceSlashToHypen(props.item.rqLimitDatetimeToString)+"まで"
                                     ) : (
                                         // 오늘이 아닌경우
-                                        replaceSlashToHypen(props.item.rqLimitDatetimeToString)
+                                        replaceSlashToHypen(props.item.rqLimitDatetimeToString)+"まで"
                                     )
                                 }
                             </div>
@@ -282,6 +318,20 @@ const DashboardList = (props) => {
 
                             </div>
                         </div>
+                    ):
+                        (props.item.rqLimitDatetime < currentDateTime.toISOString()
+                        && props.item.pointStatus === '21102' ? 
+                        (
+                        <div className="dash-cont-cont2 flex flex-col items-end">
+                            <div className="progress-bar-tit">期限超過</div>
+                            <div className="progress">
+                                <progress className={`progress-bar bg-red`} value='100' max={100} />
+                            </div>
+                        </div>)
+                        :
+                        <></>
+                        )
+                    }
                     </div>
 
                     <div className="dash-cont-cont3 flex">
@@ -292,13 +342,15 @@ const DashboardList = (props) => {
                                         <button className="btn btn-sm btn-primary btn-auto" onClick={() => {
                                             setpointRequestModal(true);
                                         }}>ポイント支給要請</button>
-                                        <button className="btn btn-sm btn-gray-type1" onClick={handleAcceptCancel}>
-                                            承諾取消
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={() => {
+                                            setRqLimitDatetime(props.item.rqLimitDatetime);
+                                            setCancelModal(true)
+                                            }}>承諾取消
                                         </button>
                                         <button className="btn btn-sm btn-outline-secondary" onClick={() => {
                                             props.setreportRequestModal1(true);
                                             props.setDeclaration({...props.declaration, reportTargetId: props.item.cpUserId})
-                                            props.setDeclarationUser(props.item.cpUserName)
+                                            props.setDeclarationUser([props.item.cpUserName])
                                         }}>通報</button>
                                     </>
                                 ) : (
@@ -306,27 +358,33 @@ const DashboardList = (props) => {
                                         <button
                                             className="btn btn-sm btn-primary"
                                             onClick={() => {
+                                                props.setDeclarationUser([props.item.cpUserName])
                                                 props.setIdx([props.item.rqIdx]);
                                                 props.setAcceptCheck(true);
                                             }}
                                         >承諾</button>
-                                        <button className="btn btn-sm btn-outline-secondary" onClick={handleReject}>
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={() => {handleReject();  props.setDeclarationUserRj([props.item.cpUserName])}}>
                                             拒否
                                         </button>
                                     </>
                                 )
                             ) : props.item.pointStatus === '21103' ? (
-                                <button className="btn btn-sm btn-gray-type1 w-auto">
+                                <button className="btn btn-sm btn-gray-type1"
+                                        style={{width: 140 +'px'}}>
                                     ポイント返却完了
                                 </button>
                             ) : props.item.pointStatus === '21105' ? (
-                                <button className="btn btn-sm btn-gray-type1 w-auto">
+                                <button className="btn btn-sm btn-gray-type1 disabled"
+                                        style={{width: 140 +'px'}}>
                                     ポイント支給待ち
                                 </button>
                             ) : props.item.pointStatus === '21106' ? (
-                                <button className="btn btn-long btn-outline-secondary" onClick={() => {window.location.assign("/point-detail")}}>ポイント支給完了</button>
+                                <button className="btn btn-long btn-outline-secondary" 
+                                        style={{width: 140 +'px'}}
+                                        onClick={() => {window.location.assign("/point-detail")}}>ポイント支給完了</button>
                             ) : (
-                                <button className="btn btn-sm btn-gray-type1 w-auto">
+                                <button className="btn btn-sm btn-gray-type1"
+                                        style={{width: 140 +'px'}}>
                                     支払い拒否
                                 </button>
                             )
@@ -346,7 +404,6 @@ const DashboardList = (props) => {
             </div>
 
             {/* 면접의뢰 기업정보 확인  PC */}
-            {console.log(cpInfoData)}
             {
                 cpInfoData && <Modal className="point-request-modal"
                     show={companyInfo}
@@ -361,7 +418,7 @@ const DashboardList = (props) => {
                             <div className="modal-tit half-div-left">企業情報</div>
                             <div><a href="#"
                                     className="half-div-right"
-                                    onClick={() => {setcompanyInfo(false);}}> X </a></div>
+                                    onClick={() => {setcompanyInfo(false);}}><img src={Xicon} alt="" /></a></div>
                         </div>
                             <div className="flex items-center gap-3 border-b pb-3 half-div-next">
                                 <div className="btn btn-secondary dashboard-logo-wrap">
@@ -374,13 +431,13 @@ const DashboardList = (props) => {
                                         )
                                     }
                                 </div>
-                                <div>{cpInfoData.companyName}</div>
+                                <div><strong>{cpInfoData.companyName}</strong></div>
                             </div>
                             <div className="mt-3">
-                                <table className="table">
+                                <table className="table" style={{tableLayout:"fixed"}}>
                                     <tbody>
                                         <tr>
-                                            <td>勤務地</td>
+                                            <td>所在地</td>
                                             <td>{cpInfoData.headOfficeRegion}</td>
                                         </tr>
                                         <tr>
@@ -388,40 +445,80 @@ const DashboardList = (props) => {
                                             <td>{cpInfoData.businessType}</td>
                                         </tr>
                                         <tr>
-                                            <td>必要な経験年数</td>
+                                            <td>必要経験年数</td>
                                             <td>{cpInfoData.requiredCareer}</td>
                                         </tr>
                                         <tr>
-                                            <td>必要なスキル</td>
+                                            <td>必要スキル</td>
                                             <td>{cpInfoData.requiredSkill}</td>
                                         </tr>
                                         <tr>
-                                            <td>提示年収</td>
+                                            <td>予想年収</td>
                                             <td>{cpInfoData.income}</td>
                                         </tr>
                                         <tr>
                                             <td>ホームページ</td>
                                             <td>{cpInfoData.homepage}</td>
                                         </tr>
-                                        <tr>
-                                            <td>求人広告</td>
-                                            <td>{cpInfoData.cpAd}</td>
-                                        </tr>
                                     </tbody>
                                 </table>
+                                        <td><strong>求人情報</strong></td>
+                                        <hr/>
+                                        <span style={{wordWrap:"break-word", whiteSpace: "pre-wrap" }}>{cpInfoData.cpAd}</span>
                             </div>
-                            {/* 이미지영역 */}
-                            {/* <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
+                            <hr/>
+                            {/* 企業イメージ */}
+                            { <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
                                 {
                                     cpInfoData?.cpFileUrl?.map((v, i) => {
                                         return (
                                             <div key={i}>
-                                                <img src={`https://hitobito-net.com/api${v}`} alt="company image" />
+                                                <img
+                                                    style={{ cursor: "pointer" }} 
+                                                    src={`https://hitobito-net.com/api${v}`} 
+                                                    alt="company image" 
+                                                    onClick={() => {
+                                                        window.open(`https://hitobito-net.com/api${v}`, "_blank");
+                                                    }}
+                                                />
                                             </div>
                                         )
                                     })
                                 }
-                            </div> */}
+                            </div> }
+                            
+                            {/* 添付ファイル */}
+                            <div className="flex flex-col attach-cont-wrap my-4">
+                            <div className="attach-tit-wrap flex items-center gap-2 flex-shrink-0">
+                                <div className="attach-tit">
+                                    <strong>添付ファイル</strong>
+                                </div>
+                            </div>
+                            <hr/>
+                            {
+                                cpInfoData && cpInfoData.cpFileIdxList?.length > 0 ? cpInfoData.cpFileIdxList.map((file, index) => {
+                                    return (
+                                        <div className="attach-cont-item flex items-center space-between gap-2" key={index}>
+                                            <div className="upload-name-2 attach-cont-tit upload-name">
+                                                {file.cpFileIdxName}
+                                            </div>
+                                            <button onClick={() => window.open(`https://hitobito-net.com/api${file.cpFileIdxUrl}`)} className="attach-cont-btn flex-shrink-0">
+                                                <img src={FileDown} alt="" />
+                                            </button>
+                                        </div>
+                                    )
+                                }) : (
+                                    <div className="attach-cont-item flex items-center space-between">
+                                        <div className="attach-cont-tit">
+                                           登録されたファイルがありません。
+                                        </div>
+                                        <button className="attach-cont-btn">
+                                            <img src={FileDown} alt="" />
+                                        </button>
+                                    </div>
+                                )
+                            }
+                        </div>
                         </div>
                     </ModalBody>
                 </Modal>
@@ -452,7 +549,7 @@ const DashboardList = (props) => {
                     </div>
                 </ModalBody>
             </Modal>
-
+            
             {/* 면접제의 승낙취소 모달 */}
             <Modal
                 className="point-request-modal"
@@ -461,19 +558,29 @@ const DashboardList = (props) => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">面談承認取消</div>
-                    <div className="modal-subtit">
-                        面談の承諾を取り消しますか？
-                    </div>
+                    {rqLimitDatetime > currentDateTime.toISOString() ? (
+                        <div className="modal-subtit">
+                            面談の承諾を取り消しますか？
+                        </div>
+                    ) : (
+                        <div className="modal-subtit">
+                            依頼期間が過ぎた依頼を承諾取消する場合、
+                            <br />
+                            再度承諾やポイント支給が不可能になります。
+                            <br />
+                            面談の承諾を取り消しますか？
+                        </div>
+                     ) }
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-primary"
                             onClick={() => { acceptCancel() }}
-                        >確認</a>
+                        >承諾取消</a>
                         <a
                             href="#"
                             className="btn btn-outline-secondary"
                             onClick={() => { setCancelModal(false) }}
-                        >キャンセル</a>
+                        >いいえ</a>
                     </div>
                 </ModalBody>
             </Modal>
@@ -537,7 +644,7 @@ const DashboardList = (props) => {
                             href="#"
                             className="btn btn-primary"
                             onClick={pointRequest}
-                        >確認</a>
+                        >要請</a>
                         <a
                             href="#"
                             className="btn btn-outline-secondary"
@@ -579,7 +686,7 @@ const DashboardList = (props) => {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">ポイント支給の要請を失敗</div>
                     <div className="modal-subtit">
-                        지급요청 대상이 존재하지 않습니다.
+                        ポイント支給要請の対象が存在しません。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
@@ -609,12 +716,12 @@ const DashboardList = (props) => {
                             href="#"
                             className="btn btn-primary"
                             onClick={() => { remove() }}
-                        >確認</button>
+                        >はい</button>
                         <button
                             href="#"
                             className="btn btn-secondary"
                             onClick={() => { setDeleteModal(false); }}
-                        >キャンセル</button>
+                        >いいえ</button>
                     </div>
                 </ModalBody>
             </Modal>

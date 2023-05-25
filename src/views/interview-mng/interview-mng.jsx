@@ -338,7 +338,7 @@ const InterviewMng = () => {
                                         <th className="whitespace-nowrap text-sm border-tb0">
                                             {/* 드롭다운 퍼블 */}
                                             <DropdownSelect
-                                                options={['全体', '承認待ち', '承諾', '拒否', 'キャンセル']}
+                                                options={['全体', '依頼中', '承諾', '拒否', '返却']}
                                                 defaultOption={interview.statusFlagText}
                                                 onSelect={handleSelect01}
                                             />
@@ -355,7 +355,7 @@ const InterviewMng = () => {
                                             依頼期限
                                         </th>
                                         <th className="whitespace-nowrap text-sm border-tb0">確認日時</th>
-                                        <th className="whitespace-nowrap text-sm border-tb0">ポイント状態</th>
+                                        <th className="whitespace-nowrap text-sm border-tb0" style={{width: 135 + 'px'}}>ポイント状態</th>
                                         <th className="whitespace-nowrap text-sm th-blank border-tb0">
                                             <div className="flex gap-2 interview-mng-button-wrap">
                                                 <div>
@@ -384,9 +384,9 @@ const InterviewMng = () => {
                                                     <td><button type="button" onClick={() => { getDetail(data.rqIdx, data.rqReceiveUserId) }}>{data.nickname}</button> </td>
                                                     <td className="shrink-0 w-24">
                                                         {
-                                                            data.rqStatus === "20101" ? "承認待ち" :
-                                                                data.rqStatus === "20102" ? "承認" :
-                                                                    data.rqStatus === "20103" ? "拒否" : "キャンセル"
+                                                            data.rqStatus === "20101" ? "依頼中" :
+                                                                data.rqStatus === "20102" ? "承諾" :
+                                                                    data.rqStatus === "20103" ? "拒否" : "返却"
                                                         }
                                                     </td>
                                                     <td>
@@ -399,18 +399,9 @@ const InterviewMng = () => {
                                                         {moment(data.rqConfirmDatetime).format("YY.MM.DD HH:mm")}
                                                     </td>
                                                     <td className="table-br-tab">
+                                                        {data.pointCngType === "20301" ? "+" : "-"}{regexUserPoint(data.pointCngAmount)}<br/>
                                                         {data.requestPointStatus}
-                                                        <br/>{"("}{data.pointCngType === "20301" ? "+" : "-"}{regexUserPoint(data.pointCngAmount)}{")"}
                                                         {console.log(data)}
-                                                        {/* {data.requestPointStatus === "21102"
-                                                            ? "포인트 미신청"
-                                                            : data.requestPointStatus === "21103"
-                                                                ? "환불완료"
-                                                                : data.requestPointStatus === "21105"
-                                                                    ? "지급대기"
-                                                                    : data.requestPointStatus === "21106"
-                                                                        ? "지급완료"
-                                                                        : "지급거부"} */}
                                                     </td>
                                                     <td className="pdrl-ad">
                                                         <div>
@@ -619,9 +610,9 @@ const InterviewMng = () => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">通報の理由を選択してください。</div>
-                    <div className="modal-subtit">
+                    {/* <div className="modal-subtit">
                         通報の理由を選択してください。
-                    </div>
+                    </div> */}
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-business"
@@ -643,9 +634,9 @@ const InterviewMng = () => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">通報の送信が完了しました。</div>
-                    <div className="modal-subtit">
+                    {/* <div className="modal-subtit">
                         通報の送信が完了しました。
-                    </div>
+                    </div> */}
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-business"
@@ -761,9 +752,9 @@ const InterviewMng = () => {
             >
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">メッセージを送信しました。</div>
-                    <div className="modal-subtit">
+                    {/* <div className="modal-subtit">
                         メッセージを送信しました。
-                    </div>
+                    </div> */}
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-business"
@@ -1122,7 +1113,7 @@ const InterviewMng = () => {
                     <div className="user-img-wrap flex justify-center mb-8">
                         {
                             userDetailInfo && userDetailInfo.photoFile ?
-                                <img src={`https://hitobito-net.com/api${userDetailInfo.photoFile.fileURL}`} alt={userDetailInfo.photoFile.fileName} /> :
+                                <img src={`https://hitobito-net.com/api${userDetailInfo.photoFile.fileURL}`} alt={userDetailInfo.photoFile.fileName} style={{ width: '100px', height: 'auto' }}/> :
                                 <img src={UserBlank} alt="noImage" />
                         }
                     </div>
@@ -1355,23 +1346,23 @@ const InterviewMng = () => {
                             )
                         }
                     </div>
-                    <div className="attach-wrap flex">
-                        <div className="attach-tit-wrap flex items-center gap-2">
+                    <div className="flex flex-col attach-cont-wrap my-4">
+                        <div className="attach-tit-wrap flex items-center gap-2 flex-shrink-0">
                             <div className="attach-tit">
-                                ファイル添付
+                                <strong>添付ファイル</strong>
                             </div>
                         </div>
-                        <div className="flex flex-col attach-cont-wrap">
+                        <hr/>
                             {
                                 userDetailInfo && userDetailInfo.attachedfilelist?.length > 0 ? userDetailInfo.attachedfilelist.map((file, index) => {
                                     return (
-                                        <div className="attach-cont-item flex items-center space-between" key={index}>
-                                            <div className="attach-cont-tit">
+                                        <div className="attach-cont-item flex items-center space-between gap-2" key={index}>
+                                            <div className="upload-name-2 attach-cont-tit upload-name">
                                                 {file.fileName}
                                             </div>
-                                            <a href={`https://hitobito-net.com/api${file.fileURL}`} download className="attach-cont-btn">
+                                            <button onClick={() => window.open(`https://hitobito-net.com/api${file.fileURL}`)} className="attach-cont-btn flex-shrink-0">
                                                 <img src={FileDown} alt="" />
-                                            </a>
+                                            </button>
                                         </div>
                                     )
                                 }) : (
@@ -1384,8 +1375,7 @@ const InterviewMng = () => {
                                         </button>
                                     </div>
                                 )
-                            }
-                        </div>
+                            }                       
                     </div>
                 </ModalBody>
             </Modal>

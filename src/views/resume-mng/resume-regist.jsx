@@ -166,13 +166,10 @@ const ResumeRegist = () => {
   //이미지 업로드
   const handleChangeImage = async (e, index) => {
     const file = e.target.files
-    if (file.length > 5) {
+    if (rsFilePhoto.length >= 5 || file.length + rsFilePhoto.length > 5) {
       alert('5個まで登録できます。')
       return false
     }
-
-    setImage([])
-    setRsFilePhoto([])
 
     for (let i = 0; i < file.length; i++) {
       const reader = new FileReader()
@@ -637,6 +634,39 @@ const ResumeRegist = () => {
     }
   }
 
+  const [ grab, setGrab ] = useState(null)
+
+  const _onDragOver = e => {
+    e.preventDefault();
+  }
+
+  const _onDragStart = e => {
+    setGrab(e.target);
+    e.target.classList.add("grabbing");
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", e.target);
+  }
+
+  const _onDragEnd = e => {
+    e.target.classList.remove("grabbing");
+    e.dataTransfer.dropEffect = "move";
+  }
+
+  const _onDrop = e => {
+    let grabPosition = Number(grab.dataset.position);
+    let targetPosition = Number(e.target.dataset.position);
+
+    let newImages = [ ...image ];
+    let tempForm = [...rsFilePhoto];
+    newImages[grabPosition] = newImages.splice(targetPosition, 1, newImages[grabPosition])[0];
+    tempForm[grabPosition] = tempForm.splice(targetPosition, 1, tempForm[grabPosition])[0];
+
+    document.querySelector(".profileImg_0 > .dragText").innerText = '代表のイメージ'; 
+
+    setImage(newImages);
+    setRsFilePhoto([...tempForm]);
+  }
+
   return <>
     <div className='resume-mng '>
       <div className='box-type-default hidden lg:block'>
@@ -644,31 +674,43 @@ const ResumeRegist = () => {
           履歴書登録
         </div>
         <div className='resume-regist-cont'>
-          <div className='flex gap-3'>
+          <ul className='flex gap-3 items-center'>
             {
-              image.length === 0 ? previewItem : image.map((_, index) => (
-                <div className='image_item bg-slate-50' key={index}>
+              image.length === 0 ? previewItem : image.map((item, index) => (
+                <li className={`image_item resume_image_item bg-slate-50 text-center profileImg_${index}`}
+                  key={index}
+                  data-position={index}
+                  onDragOver={_onDragOver}
+                  onDragStart={_onDragStart}
+                  onDragEnd={_onDragEnd}
+                  onDrop={_onDrop}
+                  draggable
+                >
                   <input
                     id={`profileImg${index}`}
                     type={'file'}
                     multiple
                     onChange={(e) => handleChangeImage(e, index)}
                   />
-                  <label className={'custom-input-label'} htmlFor={`profileImg${index}`}>
-                    <img src={image[index]} alt='' />
+                  <label className={`custom-input-label resume_image`} htmlFor={`profileImg${index}`}>
+                    <img src={item} alt='' className='resume_image' />
                   </label>
                   {image[index] && (
                     <button onClick={() => handleDeleteImage(index)}>
-                      <img src={Xbutton} alt='삭제' />
+                      <img src={Xbutton} alt='삭제' className='resume_image' />
                     </button>
                   )}
-                </div>
+                  <span className='dragText'>{index == 0 ? '代表のイメージ' : '◀ ドラッグ'}</span>
+                </li>
               ))
             }
-          </div>
+          </ul>
 
-          <div className='camera-subtit'>
-            最大5枚　JPG、PNG、GIF形式で登録可能です。
+          <div className='camera-subtit3'>
+            * 最大5枚 JPG、PNG、GIF形式で登録可能です。
+          </div>
+          <div className='camera-subtit4'>
+            * 最初のイメージが代表のイメージとなります。
           </div>
 
           <div className='form-flex-box flex space-between items-start'>

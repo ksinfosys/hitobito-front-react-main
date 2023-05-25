@@ -447,7 +447,7 @@ const Login = () => {
         {/* mobile */}
         <div className="login-right mobile_login">
           <div className="login-tab-wrap ">
-            <UserLogin />
+            {/* <UserLogin /> */}
           </div>
         </div>
       </div>

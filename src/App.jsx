@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import Loading from "./components/loading";
 import Router from "./router";
+import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import { LiffProvider } from "react-liff";
 import { delCookie } from "./utils/cookie";
 
@@ -46,11 +47,11 @@ function App() {
     <RecoilRoot>
       <Loading loading={loading} />
       <BrowserRouter>
-        
+        <GoogleOAuthProvider clientId={'994073566161-uheufnfp50scmu1lquhkg0mdbpr7ip56.apps.googleusercontent.com'}>
           <LiffProvider liffId={liffId}>
             <Router />
           </LiffProvider>
-        
+        </GoogleOAuthProvider>
         <ScrollToTop />
       </BrowserRouter>
     </RecoilRoot>

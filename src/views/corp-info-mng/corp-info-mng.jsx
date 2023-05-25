@@ -177,8 +177,6 @@ const CorpInfoMng = () => {
             setResult(result);
             setUpdateData(result.joinList);
 
-            console.log('getBusinessUser', result)
-
             // 배열에 맞는 값 찾기 (업종)
             const typeResult = result.businessTypeList.find(obj => {
               const codeSuffix = obj.code.slice(-3);
@@ -398,14 +396,21 @@ const CorpInfoMng = () => {
 
     // // 사원수,매출 유효성 검사
     const numberPattern = /^[\d,\s]*$/;
+    const salesAmountPattern = /^[0-9]+(.)?[0-9]{1,2}$/;
+    let checkSalesAmountPattern = data.salesAmount.replaceAll(",", "");
 
     if (!numberPattern.test(data.empCount)) {
       setRegPrice(true);
       empCountRef.current.focus()
       return;
     }
+    //매출 부분을 클릭 하고 입력 후 지웠을 때 필수값이 아님을 허용 
+    if(checkSalesAmountPattern ===""){
+      checkSalesAmountPattern = "";
+      return true;
+    }
 
-    if (!numberPattern.test(data.salesAmount)) {
+    if (!salesAmountPattern.test(checkSalesAmountPattern)) {
       setRegPrice(true);
       salesAmountRef.current.focus()
       return;
@@ -440,7 +445,7 @@ const CorpInfoMng = () => {
   // 파일첨부
   const handleFileChange = async (e, index) => {
     const file = e.target.files
-    //console.log(file)
+    
     if (rsDocumentFile.length + file.length > 2) {
       setDocumentFileFail(true)
       return false
@@ -634,9 +639,16 @@ const CorpInfoMng = () => {
   // 매출 유효성 검사
   const checkPrice = (e) => {
     const inputValue = e.target.value;
-    const pattern = /^[\d,\s]*$/;
+    const pattern = /^[0-9]+(.)?[0-9]{1,2}$/;
+    let checkValue = inputValue.replaceAll(",", "");
+    
+    //매출 부분을 클릭 하고 입력 후 지웠을 때 필수값이 아님을 허용 
+    if(checkValue === ""){
+      checkValue = "";
+      return true;
+    }
 
-    if (!pattern.test(inputValue)) {
+    if (!pattern.test(checkValue)) {
       setRegPrice(true);
       salesAmountRef.current.focus()
     }
@@ -676,7 +688,7 @@ const CorpInfoMng = () => {
         reader.readAsDataURL(file)
         reader.onload = (loadResponse) => {
           const imageData = loadResponse.currentTarget.result
-          // console.log(imageData)
+          
           setImage(prevState => {
             const uniqueImage = new Set(prevState)
             if (!uniqueImage.has(imageData)) {
@@ -707,7 +719,7 @@ const CorpInfoMng = () => {
         reader.readAsDataURL(file)
         reader.onload = (loadResponse) => {
           const imageData = loadResponse.currentTarget.result
-          // console.log(imageData)
+          
           setLogoImage(imageData)
         }
         setRsLogoFilePhoto(res.data)
@@ -758,14 +770,13 @@ const CorpInfoMng = () => {
     }
   }, [updateData])
 
-  //console.log(updateData)ㄴ
 
   return (
     <>
       <div className="resume-mng">
         <div className="box-type-default">
           <div className="p-5 border-b border-slate-200/60 text-sm">
-            企業情報修正
+            企業情報管理
           </div>
           <div className="resume-regist-cont">
             <div className="form-flex-box flex space-between items-start">
@@ -781,7 +792,6 @@ const CorpInfoMng = () => {
                   maxLength={50}
                   defaultValue={userInfoV.cpUserName}
                   onChange={e => {
-                    // console.log(e.currentTarget.value.length);
                     if (e.currentTarget.value.length > 200) {
                       alert("入力内容が多すぎます。");
                     } else if (e.currentTarget.value === '') {
@@ -845,7 +855,6 @@ const CorpInfoMng = () => {
                       <button
                         className="btn btn-sm btn-business w-28 font-16"
                         onClick={() => {
-                          // console.log(authCompleteFlag)
                           if (!authCompleteFlag) {
                             setemailPop(true);
                           }
@@ -1005,7 +1014,7 @@ const CorpInfoMng = () => {
                   <div className="box-item flex flex-col">
                     {/* 사원수 */}
                     <div className="form-tit">
-                      社員数
+                      社員数（名）
                       {/* 사원수 <span>*</span> */}
                     </div>
                     <input
@@ -1013,11 +1022,10 @@ const CorpInfoMng = () => {
                       id="regular-form-1"
                       type="text"
                       className="form-control"
-                      placeholder="社員数入力"
+                      placeholder="数字入力"
                       maxLength={10}
                       defaultValue={result?.joinList?.empCount}
                       onChange={e => {
-                        //console.log(e.currentTarget.value)
                         if (e.currentTarget.value.length > 10) {
                           alert("入力内容が多すぎます。");
                         } else if (e.currentTarget.value === '') {
@@ -1039,7 +1047,7 @@ const CorpInfoMng = () => {
                   <div className="box-item flex flex-col">
                     {/* 매출 */}
                     <div className="form-tit">
-                      売上高
+                      売上高（億円）
                       {/* 매출 <span>*</span> */}
                     </div>
                     <input
@@ -1047,7 +1055,7 @@ const CorpInfoMng = () => {
                       id="regular-form-1"
                       type="text"
                       className="form-control"
-                      placeholder="売上高"
+                      placeholder="数字、少数入力"
                       maxLength={20}
                       defaultValue={result?.joinList?.salesAmount && regexUserPoint(result?.joinList?.salesAmount)}
                       onChange={e => {
@@ -1080,10 +1088,11 @@ const CorpInfoMng = () => {
               <div className="box-item w-full">
                 <div className="flex flex-col">
                   <div className="form-tit">
-                    求人情報
+                    求人情報(面談依頼時に、求職者に開示されます)
                   </div>
                   <textarea
                     className="form-control mt-2 w-full resize-none"
+                    style={{ width: "665px" , wordWrap:"break-word", whiteSpace: "pre-wrap" }}
                     rows="1"
                     placeholder="求人公告入力"
                     maxLength={3000}
@@ -1260,14 +1269,14 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="email-modal-pop">
-            <div className="email-modal-tit">変更予定担当者のメールアドレス</div>
+            <div className="email-modal-tit">新しい担当者のメールアドレス</div>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <input
                   id="regular-form-1"
                   type="text"
                   className="form-control h-48"
-                  placeholder="イーメール入力"
+                  placeholder="新しいメールアドレス"
                   maxLength={30}
                   disabled={isDisabled ? true : false}
                   onChange={e => {
@@ -1279,8 +1288,8 @@ const CorpInfoMng = () => {
                   <button
                     className={
                       isActive
-                        ? "btn btn-sm btn-secondary w-28 font-16"
-                        : "btn btn-sm btn-business w-28 font-16"
+                        ? "btn btn-sm btn-secondary w-28 font-14"
+                        : "btn btn-sm btn-business w-28 font-14"
                     }
                     onClick={() => {
                       if (authEmail === "") {
@@ -1296,7 +1305,7 @@ const CorpInfoMng = () => {
                     }}
                     disabled={isDisabled}
                   >
-                    인증코드 발급
+                    認証コード送信
                   </button>
                 </div>
               </div>
@@ -1305,14 +1314,14 @@ const CorpInfoMng = () => {
                   id="regular-form-1"
                   type="text"
                   className="form-control h-48"
-                  placeholder="認証コード確認"
+                  placeholder="認証コード入力"
                   maxLength="6"
                   onChange={e => {
                     setAuthCode(e.currentTarget.value);
                   }}
                 />
                 <div className="form-check form-switch flex gap-2">
-                  <button
+                  {/* <button
                     className="btn btn-sm btn-business-white w-28 font-16"
                     onClick={() => {
                       // handleClick2();
@@ -1322,8 +1331,24 @@ const CorpInfoMng = () => {
                         getEmailCheck();
                       }
                     }}
+                  > */}
+                  <button
+                    className={authCode === 0 
+                      ?
+                      "btn btn-sm btn-business-white w-28 font-14 disabled"
+                      :
+                      "btn btn-sm btn-business-white w-28 font-14"
+                    }
+                    onClick={() => {
+                      // handleClick2();
+                      if (authCode === 0) {
+                        setNullCode(true);
+                      } else {
+                        getEmailCheck();
+                      }
+                    }}
                   >
-                    確認
+                    変更
                   </button>
                 </div>
               </div>
@@ -1362,7 +1387,6 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">メール形式で入力してください。</div>
-          <div className="modal-subtit">メール形式で入力してください。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1383,8 +1407,7 @@ const CorpInfoMng = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">メールを入力してください。</div>
-          <div className="modal-subtit">メールを入力してください。</div>
+          <div className="modal-tit">新しいメールアドレスを入力してください。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1430,7 +1453,6 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">ネットワーク障害が発生しました。</div>
-          <div className="modal-subtit">ネットワーク障害が発生しました。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1456,7 +1478,6 @@ const CorpInfoMng = () => {
             このメールアドレスは既に登録されています。
           </div>
           <div className="modal-subtit">
-            このメールアドレスは既に登録されています。
           </div>
           <div className="flex flex-end gap-3">
             <a
@@ -1480,7 +1501,6 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">認証コードを入力してください。</div>
-          <div className="modal-subtit">認証コードを入力してください。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1503,7 +1523,6 @@ const CorpInfoMng = () => {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">認証に失敗しました。</div>
-          <div className="modal-subtit">認証に失敗しました。</div>
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-pending"
@@ -1651,7 +1670,7 @@ const CorpInfoMng = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">修正が完了しました。</div>
+          <div className="modal-tit">登録が完了しました。</div>
           <div className="modal-subtit">
 
           </div>
@@ -1782,7 +1801,7 @@ const CorpInfoMng = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">数字以外の文字が入力されています。</div>
+          <div className="modal-tit">入力形式を守ってください。（定数13文字、少数2文字）<br/>例）1,234.56</div>
           <div className="modal-subtit">
 
           </div>

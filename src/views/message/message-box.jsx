@@ -679,7 +679,7 @@ function MessageBox() {
                             className="btn btn-primary"
                             onClick={deleteList}
                         >
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -688,7 +688,7 @@ function MessageBox() {
                                 setMessageDeleteModal(!messageDeleteModal);
                             }}
                         >
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>
@@ -936,7 +936,7 @@ function MessageBox() {
                     <div className="modal-tit">要請失敗</div>
                     <div className="modal-subtit">
                         処理中に問題が発生しました。 <br />
-                        다시 확인해주세요.
+                        もう一度確認してください。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a

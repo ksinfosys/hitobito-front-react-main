@@ -234,7 +234,7 @@ function Main() {
                           className="btn btn-sm btn-blue-type1"
                           onClick={notiReadAll}
                         >
-                          すべて既読
+                          一括既読処理
                         </button>
                         <button
                           className="btn btn-sm btn-blue-type2"
@@ -274,8 +274,8 @@ function Main() {
                                   </div>
                                 </button>
                               </div>
-                              <div className="noti-cont-btn">
-                                <button
+                              <div className="noti-cont-btn flex-shrink-0">
+                                <button className="btn"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     axios
@@ -298,7 +298,7 @@ function Main() {
                                       });
                                   }}
                                 >
-                                  <Lucide icon="X" />
+                                  削除
                                 </button>
                               </div>
                             </div>
@@ -327,13 +327,13 @@ function Main() {
                           setNotiShowAllFlag(!notiShowAllFlag);
                         }}
                       >
-                        {!notiShowAllFlag ? "すべて確認" : "최근 5건 보기"}
+                        {!notiShowAllFlag ? "すべて表示" : "最近の5件を見る"}
                       </button>
                     </div>
                   </DropdownContent>
                 </DropdownMenu>
               </Dropdown>
-              <button className="blue-noti-user">
+              <button className="blue-noti-user noti-user">
                 <img src={UserIcon} alt="" />
                 {
                   <div className="number-noti blue">{userCountV.interviewCount}</div>
@@ -381,7 +381,7 @@ function Main() {
                           className="btn btn-sm btn-blue-type1"
                           onClick={notiReadAll}
                         >
-                          すべて既読
+                          一括既読処理
                         </button>
                         <button
                           className="btn btn-sm btn-blue-type2"
@@ -421,8 +421,8 @@ function Main() {
                                   </div>
                                 </button>
                               </div>
-                              <div className="noti-cont-btn">
-                                <button
+                              <div className="noti-cont-btn flex-shrink-0">
+                                <button className="btn"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     axios
@@ -445,7 +445,7 @@ function Main() {
                                       });
                                   }}
                                 >
-                                  <Lucide icon="X" />
+                                  削除
                                 </button>
                               </div>
                             </div>
@@ -474,7 +474,7 @@ function Main() {
                           setNotiShowAllFlag(!notiShowAllFlag);
                         }}
                       >
-                        {!notiShowAllFlag ? "すべて確認" : "최근 5건 보기"}
+                        {!notiShowAllFlag ? "すべて表示" : "最近の5件を見る"}
                       </button>
                     </div>
                   </div>
@@ -524,7 +524,7 @@ function Main() {
                   setButtonSlideOverPreview(false);
                 }}
               >
-                面接提案確認
+                面談依頼確認
               </Link>
             </li>
             <li>
@@ -833,7 +833,7 @@ function Main() {
                   logOut();
                 }}
               >
-                確認
+                はい
               </a>
               <a
                 href="#"
@@ -842,7 +842,7 @@ function Main() {
                   setLogoutModal(false);
                 }}
               >
-                キャンセル
+                いいえ
               </a>
             </div>
           </ModalBody>

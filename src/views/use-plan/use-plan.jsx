@@ -282,15 +282,306 @@ const UsePlan = () => {
       <div id="business" className="use-plan">
         <div className="box-type-default">
           <div className="p-5 border-b border-slate-200/60 text-sm">
-            プラン設定
+            利用プラン設定
           </div>
+          {
+            planList?.planCode === "P0000"
+            ?
+            <div className="pt-10 pb-10 p-5 cont-wrap flex flex-col items-center justify-center">
+            <ul className="use-plan-box text-center flex gap-5 w-full mb-10">
+              <li className={"active"}>
+                <ul className="flex flex-col gap-5">
+                <li className="font-bold text-lg">フリープラン</li>
+                  <li>
+                    <li className="">
+                      面接依頼1回
+                      <br />
+                      <p className="font-bold mb-4 mt-2 pointText">20,000ポイント</p>
+                    </li>
+                    <p className="bg-lo2 text-pending font-bold text-lg p-2">
+                      無料/月
+                    </p>
+                  </li>
+                  <li className="">
+                    &nbsp;
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  className="btn btn-outline-pending bg-white mt-5 w-full disabled"
+                >
+                  利用中
+                </button>
+              </li>
+              <li className="">
+                <ul className="flex flex-col gap-5">
+                <li className="font-bold text-lg">プランA</li>
+                  <li>
+                    <li className="">
+                      面接依頼1回
+                      <br />
+                      <p className="font-bold mb-4 mt-2  pointText">5,000ポイント</p>
+                    </li>
+                    <p className="bg-lo2 text-pending font-bold text-lg p-2">
+                      15,000円/月
+                    </p>
+                  </li>
+                  <li className="">
+                    税込み：16,500円/月
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  className={"btn btn-pending mt-5 w-full"}
+                  onClick={() => {
+                    setIsPlanCode("P0001");
+                    document.getElementById('planPaymentModalTitle').textContent = 'プランＡ';
+                    document.getElementById('payTwoMonth').textContent = '2%割引：(税込)33,000円⇒(税込)32,340円';
+                    document.getElementById('payThreeMonth').textContent = '4%割引：(税込)49,500円⇒(税込)47,520円';
+                    document.getElementById('paySixMonth').textContent = '10%割引：(税込)99,000円⇒(税込)89,100円';
+                    console.log("abdfwe");
+                    setPlanPaymentModal(true);
+
+                    
+                  }}
+                >
+                  変更する
+                </button>
+              </li>
+              <li className="">
+                <ul className="flex flex-col gap-5">
+                <li className="font-bold text-lg">プランB</li>
+                  <li>
+                    <li className="">
+                      面接依頼1回
+                      <br />
+                      <p className="font-bold mb-4 mt-2  pointText">3,000ポイント</p>
+                    </li>
+                    <p className="bg-lo2 text-pending font-bold text-lg p-2">
+                      30,000円/月
+                    </p>
+                  </li>
+                  <li className="">
+                    税込み：33,000円/月
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  className={ "btn btn-pending mt-5 w-full"}
+                  onClick={() => {
+                    setIsPlanCode("P0002");
+                    document.getElementById('planPaymentModalTitle').textContent = 'プランＢ';
+                    document.getElementById('payTwoMonth').textContent = '2%割引：(税込)66,000円⇒(税込)64,680円';
+                    document.getElementById('payThreeMonth').textContent = '4%割引：(税込)99,000円⇒(税込)95,040円';
+                    document.getElementById('paySixMonth').textContent = '10%割引：(税込)198,000円⇒(税込)178,200円';
+                    setPlanPaymentModal(true);
+                    
+                  }}
+                >
+                  変更する
+                </button>
+              </li>
+            </ul>
+
+          </div>
+          :
           <div className="pt-10 pb-10 p-5 cont-wrap flex flex-col items-center justify-center">
+            <ul className="use-plan-box text-center flex gap-5 w-full mb-10">
+              <li className="">
+                <ul className="flex flex-col gap-5">
+                  <li className="font-bold text-lg">フリープラン</li>
+                  <li>
+                    <li className="">
+                      面接依頼1回
+                      <br />
+                      <p className="font-bold mb-4 mt-2  pointText">20,000ポイント</p>
+                    </li>
+                    <p className="bg-lo2 text-pending font-bold text-lg p-2">
+                      無料/月
+                    </p>
+                  </li>
+                  <li className="">
+                    &nbsp;
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  // 변경하기 눌렀을시 결제모달이 안나와서 선택됨을 알리는 색 변경
+                  className={"btn btn--grey-pending mt-5 w-full hidbtn"}
+                  onClick={() => {
+                    // setIsPlanCode("P0000");
+                    // 프리플랜으로의 변경은 결제모달 필요없음
+                    // setIsActive((prev) => !prev);
+                    // setPlanPaymentModal(true);
+                  }}
+                >
+                  変更する
+                </button>
+              </li>
+              <li className={planList?.planCode === "P0001" ? "active" : null}>
+                <ul className="flex flex-col gap-5">
+                  <li className="font-bold text-lg">プランA</li>
+                  <li>
+                    <li className="">
+                      面接依頼1回
+                      <br />
+                      <p className="font-bold mb-4 mt-2  pointText">5,000ポイント</p>
+                    </li>
+                    <p className="bg-lo2 text-pending font-bold text-lg p-2">
+                      15,000円/月
+                    </p>
+                  </li>
+                  <li className="">
+                    税込み：16,500円/月
+                  </li>
+                </ul>
+                {planList.planCode === "P0001" ? (
+                  <button
+                    type="button"
+                    className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
+                    onClick={() => {
+                      document.getElementById('planPaymentModalTitle').textContent = 'プランＡ';
+                      document.getElementById('payTwoMonth').textContent = '2%割引：(税込)33,000円⇒(税込)32,340円';
+                      document.getElementById('payThreeMonth').textContent = '4%割引：(税込)49,500円⇒(税込)47,520円';
+                      document.getElementById('paySixMonth').textContent = '10%割引：(税込)99,000円⇒(税込)89,100円';
+                      if (planList.invalidFlag === "8") {
+                        setWaitPayFail(true);
+                      }
+                    }}
+                  >
+                    {planList.invalidFlag === "8"
+                      ? "コンビニ決済待ち"
+                      : "利用中"}
+                    {planList.invalidFlag !== "8" ? (
+                      <div>
+                        {regexUserJoinDate(planList.planEndDate) == "2100/12/31" ? 
+                        "定期購読中(" + regexUserJoinDate(planList.planStartDate) + ")" 
+                        : 
+                        regexUserJoinDate(planList.planStartDate)+ " ~ " + regexUserJoinDate(planList.planEndDate)}
+                      </div>
+                    ) : null}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className={
+                      planList.planCode === "P0001" || planList?.planEndDate === "21001231"
+                        ? "btn btn--grey-pending mt-5 w-full disabled"
+                        : "btn btn-pending mt-5 w-full"
+                    }
+                    onClick={planList?.planEndDate !== "21001231" ? () => {
+                      setIsPlanCode("P0001");
+                      document.getElementById('planPaymentModalTitle').textContent = 'プランＡ';
+                      document.getElementById('payTwoMonth').textContent = '2%割引：(税込)33,000円⇒(税込)32,340円';
+                      document.getElementById('payThreeMonth').textContent = '4%割引：(税込)49,500円⇒(税込)47,520円';
+                      document.getElementById('paySixMonth').textContent = '10%割引：(税込)99,000円⇒(税込)89,100円';
+                      setPlanPaymentModal(true);
+                    } : null}
+                  >
+                    変更する
+                  </button>
+                )}
+                {
+                  (cancleRegularPayFlag(planList.planEndDate) && planList.planCode === "P0001" && planList?.paymentMethod === "20906") && (
+                    <button
+                      className="btn btn-danger mt-2 w-full"
+                      onClick={() => setnonRefundable(true)}
+                    >
+                      取消
+                    </button>
+                  )
+                }
+              </li>
+              <li className={planList?.planCode === "P0002" ? "active" : null}>
+                <ul className="flex flex-col gap-5">
+                  <li className="font-bold text-lg">プランB</li>
+                  <li>
+                    <li className="">
+                      面接依頼1回
+                      <br />
+                      <p className="font-bold mb-4 mt-2  pointText">3,000ポイント</p>
+                    </li>
+                    <p className="bg-lo2 text-pending font-bold text-lg p-2">
+                      30,000円/月
+                    </p>
+                  </li>
+                  <li className="">
+                    税込み：33,000円/月
+                  </li>
+                </ul>
+                {planList.planCode === "P0002" ? (
+                  
+                  <button
+                    type="button"
+                    className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
+                    onClick={() => {
+                      document.getElementById('planPaymentModalTitle').textContent = 'プランＢ';
+                      document.getElementById('payTwoMonth').textContent = '2%割引：(税込)66,000円⇒(税込)64,680円';
+                      document.getElementById('payThreeMonth').textContent = '4%割引：(税込)99,000円⇒(税込)95,040円';
+                      document.getElementById('paySixMonth').textContent = '10%割引：(税込)198,000円⇒(税込)178,200円';
+                      if (planList.invalidFlag === "8") {
+                        setWaitPayFail(true);
+                      }
+                    }}
+                  >
+                    {planList.invalidFlag === "8"
+                      ? "コンビニ決済待ち"
+                      : "利用中"}
+                    <br />
+
+                    {planList.invalidFlag !== "8" ? (
+                      <div>
+                      {regexUserJoinDate(planList.planEndDate) == "2100/12/31" ? 
+                      "定期購読中(" + regexUserJoinDate(planList.planStartDate) + ")" 
+                      : 
+                      regexUserJoinDate(planList.planStartDate)+ " ~ " + regexUserJoinDate(planList.planEndDate)}
+                      </div>
+                    ) : null}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className={
+                      planList.planCode === "P0002" || planList?.planEndDate === "21001231"
+                        ? "btn btn--grey-pending mt-5 w-full disabled"
+                        : "btn btn-pending mt-5 w-full"
+                    }
+                    onClick={planList?.planEndDate !== "21001231" ? () => {
+                      setIsPlanCode("P0002");
+                      document.getElementById('planPaymentModalTitle').textContent = 'プランＢ';
+                      document.getElementById('payTwoMonth').textContent = '2%割引：(税込)66,000円⇒(税込)64,680円';
+                      document.getElementById('payThreeMonth').textContent = '4%割引：(税込)99,000円⇒(税込)95,040円';
+                      document.getElementById('paySixMonth').textContent = '10%割引：(税込)198,000円⇒(税込)178,200円';
+                      setPlanPaymentModal(true);
+                    } : null}
+                  >
+                    変更する
+                  </button>
+                )}
+
+                {
+                  (cancleRegularPayFlag(planList.planEndDate) && planList.planCode === "P0002" && planList?.paymentMethod === "20906") && (
+                    <button
+                      className="btn btn-danger mt-2 w-full"
+                      onClick={() => setnonRefundable(true)}
+                    >
+                      取消
+                    </button>
+                  )
+                }
+              </li>
+            </ul>
+
+          </div>
+          }
+          {/* 기존코드 */}
+          {/* <div className="pt-10 pb-10 p-5 cont-wrap flex flex-col items-center justify-center">
             <ul className="use-plan-box text-center flex gap-5 w-full mb-10">
               <li className={planList?.planCode === "P0000" ? "active" : null}>
                 <ul className="flex flex-col gap-5">
                   <li className="font-bold text-lg">フリープラン</li>
                   <li>
-                    <p className="bg-lo text-pending font-bold text-lg p-2">
+                    <p className="bg-lo2 text-pending font-bold text-lg p-2">
                       無料/月
                     </p>
                     <p className="text-white text-sm mt-2">(税金別途)</p>
@@ -306,16 +597,16 @@ const UsePlan = () => {
                     type="button"
                     className="btn btn-outline-pending bg-white mt-5 w-full disabled"
                   >
-                    使用中
+                    利用中
                   </button>
                 ) : (
                   <button
                     type="button"
                     // 변경하기 눌렀을시 결제모달이 안나와서 선택됨을 알리는 색 변경
                     className={
-                      isplanCode === "P0000" && isActive
+                      planList.planCode === "P0000" && isActive
                         ? "btn btn-outline-pending bg-white mt-5 w-full"
-                        : "btn btn--grey-pending mt-5 w-full disabled"
+                        : "btn btn--grey-pending mt-5 w-full hidbtn"
                     }
                     onClick={() => {
                       // setIsPlanCode("P0000");
@@ -332,7 +623,7 @@ const UsePlan = () => {
                 <ul className="flex flex-col gap-5">
                   <li className="font-bold text-lg">プランA</li>
                   <li>
-                    <p className="bg-lo text-pending font-bold text-lg p-2">
+                    <p className="bg-lo2 text-pending font-bold text-lg p-2">
                       15,000円/月
                     </p>
                     <p className="text-warning text-sm mt-2">(税金別途)</p>
@@ -355,7 +646,7 @@ const UsePlan = () => {
                   >
                     {planList.invalidFlag === "8"
                       ? "コンビニ決済待ち"
-                      : "使用中"}
+                      : "利用中"}
                     {planList.invalidFlag !== "8" ? (
                       <div>
                         {regexUserJoinDate(planList.planEndDate) == "2100/12/31" ? 
@@ -396,7 +687,7 @@ const UsePlan = () => {
                 <ul className="flex flex-col gap-5">
                   <li className="font-bold text-lg">プランB</li>
                   <li>
-                    <p className="bg-lo text-pending font-bold text-lg p-2">
+                    <p className="bg-lo2 text-pending font-bold text-lg p-2">
                       30,000円/月
                     </p>
                     <p className="text-warning text-sm mt-2">(税金別途)</p>
@@ -419,7 +710,7 @@ const UsePlan = () => {
                   >
                     {planList.invalidFlag === "8"
                       ? "コンビニ決済待ち"
-                      : "使用中"}
+                      : "利用中"}
                     <br />
 
                     {planList.invalidFlag !== "8" ? (
@@ -461,7 +752,7 @@ const UsePlan = () => {
               </li>
             </ul>
 
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -491,9 +782,7 @@ const UsePlan = () => {
           <Lucide icon="X" className="w-5 h-5 text-slate-400" />
         </a>
         <ModalHeader className="flex-col">
-          <h2 className="font-bold text-base mr-auto ">
-            プラン決済
-          </h2>
+          <h2 className="font-bold text-base mr-auto " id="planPaymentModalTitle"></h2>
         </ModalHeader>
         <ModalBody className="p-5 plan-pay-modal business-modal">
           <div id="detail-cont" className="border-b pb-5">
@@ -547,7 +836,7 @@ const UsePlan = () => {
                   className="form-check-label text-sm w-full"
                   htmlFor="2m-pay"
                 >
-                  2ヶ月決済 <span className="text-pending">(2%割引)</span>
+                  2ヶ月決済 <span className="text-pending" id="payTwoMonth"></span>
                 </label>
               </div>
               <div className="form-check p-2 border mt-2">
@@ -571,7 +860,7 @@ const UsePlan = () => {
                   className="form-check-label text-sm w-full"
                   htmlFor="3m-pay"
                 >
-                  3ヶ月決済 <span className="text-pending">(4%割引)</span>
+                  3ヶ月決済 <span className="text-pending" id="payThreeMonth"></span>
                 </label>
               </div>
               <div className="form-check p-2 border mt-2">
@@ -596,7 +885,7 @@ const UsePlan = () => {
                   className="form-check-label text-sm w-full"
                   htmlFor="6m-pay"
                 >
-                  6ヶ月決済 <span className="text-pending">(10%割引)</span>
+                  6ヶ月決済 <span className="text-pending" id="paySixMonth"></span>
                 </label>
               </div>
             </div>
@@ -948,7 +1237,7 @@ const UsePlan = () => {
                 setWaitPayFail(false);
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -957,7 +1246,7 @@ const UsePlan = () => {
                 setWaitPayFail(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>
@@ -985,7 +1274,7 @@ const UsePlan = () => {
                 cancleRegularPayment();
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -994,7 +1283,7 @@ const UsePlan = () => {
                 setcancelPayment(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>
@@ -1022,7 +1311,7 @@ const UsePlan = () => {
                 setnonRefundable(false);
               }}
             >
-              確認
+              はい
             </a>
             <a
               href="#"
@@ -1031,7 +1320,7 @@ const UsePlan = () => {
                 setnonRefundable(false);
               }}
             >
-              取消
+              いいえ
             </a>
           </div>
         </ModalBody>

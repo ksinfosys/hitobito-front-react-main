@@ -10,15 +10,14 @@ import PlusGrayBtn from "@/assets/images/plus-gray-btn.svg";
 
 import ServiceFetch from "../../../util/ServiceFetch";
 import { useRecoilState } from "recoil";
-import { userInfo } from "../../stores/user-info";
 import { searchBusiness } from "../../stores/search-business";
+import { userCount } from "../../stores/search-count";
 
 const DashboardBusiness = () => {
-    // userInfo
-    const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
     // Search 상태 관리
     const [searchRecoil, setSearchRecoil] = useRecoilState(searchBusiness);
     const [searchStatus, setSearchStatus] = useState(false);
+    const [searchCount, setSearchCount] = useState(0);
 
     // 스킬 조건으로 검색 시 추가
     const skillCareerList = [
@@ -56,6 +55,8 @@ const DashboardBusiness = () => {
     const [modalState05, setModalState05] = useState(false);
     const [modalState06, setModalState06] = useState(false);
     const [modalState07, setModalState07] = useState(false);
+    const [inputModal, setInputModal] = useState(false);
+    const [optionModal, setOptionModal] = useState(false);
     // ListState
     const [listState, setListState] = useState();
     const [pgnInfo, setPgnInfo] = useState({});
@@ -100,6 +101,8 @@ const DashboardBusiness = () => {
     // 전송 시 체크 상태 변경
     const [submitCheckState, setSubmitCheckState] = useState(false);
 
+    const [userCountV, setUserCountV] = useRecoilState(userCount);
+
     // getList API
     const getList = () => {
         ServiceFetch("/search/main", "post", {
@@ -110,6 +113,7 @@ const DashboardBusiness = () => {
                 setPgnInfo(res.result.pageItem);
                 setSearchId(res.result.searchCondition.srchId);
                 setSearchConditionList(res.result.searchCondition.searchConditionList);
+                setSearchCount(res.result.searchCount);
             })
             .catch((e) => {
                 console.log(e);
@@ -138,6 +142,13 @@ const DashboardBusiness = () => {
         });
     };
 
+    const keisanAge = (searchYear) => {
+        const now = new Date();
+        const year = now.getFullYear();
+        
+        let keisanCodename = Number(year) - Number(searchYear);
+        return keisanCodename + '歳';
+    }
     // 学歴 리스트 저장
     const [ageList, setAgeList] = useState([]);
     const getAge = () => {
@@ -204,13 +215,13 @@ const DashboardBusiness = () => {
 
     // searchFind API
     const searchFind = () => {
-        //console.log('selectcode', selectCode)
         ServiceFetch("/search/find", "post", {
             curPage: currentPageIdx,
             selectCode: selectCode,
         }).then((res) => {
+            console.log(res.result.searchCount);
+            setUserCountV({searchCount : res.result.searchCount});
             res.resultCode === '200' ? (
-                console.log(res.result),
                 setListState(res.result.searchList),
                 setPgnInfo(res.result.pageItem),
                 setSearchId(res.result.searchCondition.srchId),
@@ -262,8 +273,8 @@ const DashboardBusiness = () => {
     };
 
     // Tag 선택하기
-    const [careerActive, setCareerActive] = useState(false);
-    const [skillTag, setSkillTag] = useState({});
+    //const [careerActive, setCareerActive] = useState(false);
+    const [skillTagActive, setSkillTagActive] = useState({});
     const [tagActive, setTagActive] = useState("");
     const handleSelectTags = (tag) => {
         const count01 = selectTags.filter((item) => item.codeType === "51").length;
@@ -272,7 +283,7 @@ const DashboardBusiness = () => {
         const count04 = selectTags.filter((item) => item.codeType === "61").length;
         if (tag.code.length === 8) {
             setCareerActive(true);
-            setSkillTag(tag);
+            setSkillTagActive(tag);
         } else if (tag.codeType === "51") {
             count01 < 2 ? (setTagsFilter([...tagsFilter, tag]), setSelectTags([...selectTags, tag]), setSelectCode([...selectCode, tag.code])) : setModalState07(true);
         } else if (tag.codeType === "52") {
@@ -286,25 +297,29 @@ const DashboardBusiness = () => {
             setSelectTags([...selectTags, tag]);
             setSelectCode([...selectCode, tag.code]);
         }
+        document.getElementById('texttest').value = ""; 
+        setInputValue(""); 
+        setTagActive("");
     };
     const handleSkillSelect = (value) => {
         if (value) {
             const career = skillCareerList.filter((career) => career.value === value);
-            const skillTagCustom = { ...skillTag, career };
-            setTagsFilter([...tagsFilter, skillTag]);
+            const skillTagCustom = { ...skillTagActive, career };
+            setTagsFilter([...tagsFilter, skillTagActive]);
             setSelectTags([...selectTags, skillTagCustom]);
-            setSelectCode([...selectCode, skillTag.code + value]);
+            setSelectCode([...selectCode, skillTagActive.code + value]);
         } else {
-            setTagsFilter([...tagsFilter, skillTag]);
-            setSelectTags([...selectTags, skillTag]);
-            setSelectCode([...selectCode, skillTag.code]);
+            setTagsFilter([...tagsFilter, skillTagActive]);
+            setSelectTags([...selectTags, skillTagActive]);
+            setSelectCode([...selectCode, skillTagActive.code]);
         }
-        setCareerActive(false);
+        //setCareerActive(false);
+        document.getElementById('texttest').value = ""; 
+        setInputValue(""); 
+        document.getElementById('skillBox').value = "";
+        skillBox.disabled = true;
+        setSkillTagActive({});
     }
-    useEffect(() => {
-        setCareerActive(false)
-        setTagActive("")
-    }, [inputValue])
 
     // Tag 지우기
     const deleteTags = (code) => {
@@ -372,6 +387,20 @@ const DashboardBusiness = () => {
     const tagsList05 = selectTags.filter((item) => item.codeType === "61").sort((a, b) => a.code - b.code);
     const codeList05 = tagsList05.map((item) => item.code);
 
+    const setCount = () => {
+        let count = document.querySelectorAll("input[name='chkInput']:checked");
+        document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
+    }
+
+    const setAllCount = (allCheck) => {
+        console.log(allCheck);
+        if(allCheck == false){
+            let count = document.querySelectorAll("input[name='chkInput']");
+            document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
+        }else if(allCheck == true){    
+            document.querySelector('.chkCount').innerText = '(選択者数：0)';
+        }
+    }
     return (
         <>
             <div className="dashboard orange">
@@ -379,7 +408,14 @@ const DashboardBusiness = () => {
                     <div className="dashboard-top p-5 border-b border-slate-200/60 text-sm">求職者検索一覧</div>
                     <div className="list-top flex justify-end items-center mt-10 mb-5 px-5">
                         <div className="flex gap-2">
-                            <select className="form-select w-32" onChange={(e) => setSelectValue(e.target.value)}>
+                            <select id="selectBox" className="form-select w-32" onChange={(e) => setSelectValue(e.target.value)} 
+                            onClick={()=>{
+                                let skillBox = document.getElementById('skillBox');
+                                setInputValue("");
+                                setTagActive("");
+                                skillBox.disabled = true;
+                                skillBox.value = "";
+                            }}> 
                                 <option value="000">全て</option>
                                 <option value="101">スキル</option>
                                 <option value="51">年齢</option>
@@ -400,11 +436,13 @@ const DashboardBusiness = () => {
                                 <input
                                     type="text"
                                     id="texttest"
-                                    className="form-control pr-10"
-                                    placeholder="検索ワードを必ずクリック"                                    
+                                    className="form-control pr-5"
+                                    style={{width: 300 + 'px'}}
+                                    placeholder="全体を確認するためには「Space」を押す"                                    
                                     value={inputValue}
                                     onFocus={searchTags}
-                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onChange={(e) => setInputValue(e.target.value)
+                                    }
                                     onKeyDown={(e) => {
                                         if (e.code === "Enter") {
                                             setCurrentPageIdx(1)
@@ -413,9 +451,6 @@ const DashboardBusiness = () => {
                                         return;
                                     }}
                                 />
-                                <button className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" onClick={() => {setCurrentPageIdx(1), searchFind()}}>
-                                    <img src={Search} alt="" />
-                                </button>
 
                                 <div className="search_button_area" ref={target}>
                                     {tagsList?.length > 0 && (
@@ -423,36 +458,65 @@ const DashboardBusiness = () => {
                                             {tagsList.map((code, index) => {
                                                 return (
                                                     <li key={index} 
-                                                        className={tagActive === code.code ? "orange" : ""} 
-                                                        onClick={() => {setTagActive(code.code); document.getElementById('texttest').value = code.codeName;}}>
-                                                            
-                                                        <button type="button" onClick={() => handleSelectTags(code)}>
-                                                            {code.codeName}
-                                                        </button>
-                                                    </li>
+                                                    className={tagActive === code ? "orange" : ""}>
+                                                    <button type="button" onClick={() => {
+                                                         let selectBox = document.getElementById('selectBox');
+                                                         let skillBox = document.getElementById('skillBox');
+                                                        if (selectBox.value !== "101" ||code.code.length === 5) {
+                                                             setTagActive(code);
+                                                             skillBox.disabled = true;
+                                                             skillBox.value = "";
+                                                        } else {
+                                                             setSkillTagActive(code);
+                                                             skillBox.disabled = false;
+                                                        }     
+                                                        document.getElementById('texttest').value = code.codeName; 
+                                                        setInputValue(code.codeName); 
+                                                        }}>
+                                                        {code.codeName}
+                                                    </button>
+                                                </li>
                                                 );
                                             })}
                                         </ul>
                                     )}
                                 </div>
                             </div>
-
-                            {/* 経歴 셀렉트박스 추가 */}
-                            {
-                                careerActive && (
-                                    <select className="form-select w-32 mr-2" onChange={(e) => handleSkillSelect(e.target.value)}>
-                                        {skillCareerList.map((career, index) => {
-                                            return (
-                                                <option value={career.value} key={index}>
-                                                    {career.text}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                )
-                            }
-                            <button className="btn-lg btn btn-pending w-20" onClick={() => {setCurrentPageIdx(1), searchFind()}}>
-                                検索
+                            <select id="skillBox" className="form-select w-32 mr-2" disabled>
+                                {skillCareerList.map((career, index) => {
+                                    return (
+                                        <option value={career.value} key={index}>
+                                            {career.text}
+                                        </option>
+                                    );
+                                })}
+                            </select>
+                            <button className="btn-lg btn btn-pending w-20" onClick={() => {   
+                                if(inputValue.length === 0){
+                                    setInputModal(true);
+                                    return false;
+                                }
+                                let selectBox = document.getElementById('selectBox');      
+                                if(selectBox.value === "101") {
+                                    let skillBox = document.getElementById('skillBox');
+                                    if(skillBox.value === ""){
+                                        setOptionModal(true);
+                                        setTagActive("");
+                                        return false;
+                                    }
+                                }
+                                if (tagActive != "") {
+                                    handleSelectTags(tagActive);
+                                } else {
+                                    let targetValue = document.getElementById('skillBox').value;
+                                    if(targetValue === ""){
+                                        setOptionModal(true);
+                                        return false;
+                                    }
+                                    handleSkillSelect(targetValue);
+                                }                               
+                            }}>
+                                追加
                             </button>
                             <button
                                 className="btn btn-lg btn-cancle-type1 w-32"
@@ -463,10 +527,12 @@ const DashboardBusiness = () => {
                             </button>
                         </div>
                     </div>
+                    <div className="flex gap-3 flex-row-reverse">
+                    <div><button className="btn-lg btn btn-pending w-32" style={{height: 60 + 'px', float : 'right', marginRight : 20 + 'px'}} onClick={() => {setCurrentPageIdx(1), searchFind()}}><img src={Search} alt="" />　検&nbsp;索</button></div>
                     {selectTags?.length > 0 && (
                         <div className="skill-list-wrap business2">
                             <div className="skill-list-cont">
-                                <div className="blue-btn-wrap flex gap-2 items-center justify-end flex-wrap">
+                                <div className="blue-btn-wrap flex gap-2 items-center justify-end flex-wrap" style={{paddingRight : 10 + 'px'}}>
                                     {tagsList01.map((tag, index) => {
                                         const codeName = tag.codeName;
                                         const slicedStr01 = codeName && codeName.includes(":") && codeName.split(":")[0].trim();
@@ -490,11 +556,21 @@ const DashboardBusiness = () => {
                                     {tagsList02?.length > 0 && (
                                         <div className="blue-btn gray-change">
                                             <span>{tagsList02[0].categoryName}</span>
-                                            <span>
-                                                {tagsList02[0].codeName}
-                                                {tagsList02[1] && " ~ "}
-                                                {tagsList02[1]?.codeName}
-                                            </span>
+                                            {
+                                                (tagsList02[0].codeName).indexOf('歳') == 2
+                                                ?
+                                                <span>
+                                                    {tagsList02[0].codeName}
+                                                    {tagsList02[1] ? tagsList02[1].codeName && " ~ " : ""}
+                                                    {tagsList02[1] ? tagsList02[1]?.codeName : ""}
+                                                </span>
+                                                :
+                                                <span>
+                                                    {keisanAge(tagsList02[0].codeName)}
+                                                    {tagsList02[1] ? keisanAge(tagsList02[1].codeName) && " ~ " : ""}
+                                                    {tagsList02[1] ? keisanAge(tagsList02[1]?.codeName) : ""}
+                                                </span>
+                                            }
                                             <button
                                                 className="blue-x-btn"
                                                 onClick={() => {
@@ -559,10 +635,10 @@ const DashboardBusiness = () => {
                             </div>
                         </div>
                     )}
-
-                    <div className="flex justify-end p_20">
+                    </div>
+                    <div className="flex space-between p_20" style={{marginTop : 10 + 'px'}}>
+                        <div className="flex items-center">対象者：{searchCount}人</div>
                         <div className="dash-cont-cont3 flex items-center">
-                            <div className="color-a8">※全体を確認するためには「Space」を押下してください。</div>
                             <div className="color-a8">面談依頼有効期限</div>
                             <div className="minus-plus-wrap flex items-center">
                                 <button className="minus-gray-btn" onClick={handleClickMinus}>
@@ -585,10 +661,17 @@ const DashboardBusiness = () => {
                     <div className="dashboard-cont pb-12">
                         <div className="flex items-center dashboard-cont-tit">
                             <div className="form-check w-24">
-                                <input id="vertical-form-3" className="form-check-input" type="checkbox" checked={allCheck} onChange={() => setAllCheck(!allCheck)} />
+                                <input id="vertical-form-3" className="form-check-input chkInput" 
+                                    type="checkbox" checked={allCheck} 
+                                    onChange={() => setAllCheck(!allCheck)}
+                                    onClick={() => setAllCount(allCheck)}
+                                />
                                 <label className="form-check-label" htmlFor="vertical-form-3">
                                     一括選択
                                 </label>
+                            </div>
+                            <div className="chkCount" style={{width: 120 + 'px'}}>
+                                (選択者数：0)
                             </div>
                             <div className="dashboard-tit-list ml-auto flex flex-center w-full">LIST</div>
                         </div>
@@ -677,7 +760,7 @@ const DashboardBusiness = () => {
                     </div>
                     <div className="flex flex-end gap-3">
                         <a href="#" className="btn btn-pending" onClick={offer}>
-                            確認
+                            はい
                         </a>
                         <a
                             href="#"
@@ -687,7 +770,7 @@ const DashboardBusiness = () => {
                                 setSubmitCheckState(!submitCheckState);
                                 setCheckId([]);
                             }}>
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>
@@ -756,6 +839,41 @@ const DashboardBusiness = () => {
                     </div>
                 </ModalBody>
             </Modal>
+
+             {/* 검색창 공백상태 */}
+             <Modal
+                show={inputModal}
+                onHidden={() => {
+                    setInputModal(false);
+                }}>
+                <ModalBody className="p-10 text-center">
+                    <div className="modal-tit">追加失敗</div>
+                    <div className="modal-subtit">検索ワードを選択してください。</div>
+                    <div className="flex flex-end gap-3">
+                        <a href="#" className="btn btn-pending" onClick={() => setInputModal(false)}>
+                            確認
+                        </a>
+                    </div>
+                </ModalBody>
+            </Modal>
+
+            {/* 경력 옵션 미 선택 */}
+            <Modal
+                show={optionModal}
+                onHidden={() => {
+                    setOptionModal(false);
+                }}>
+                <ModalBody className="p-10 text-center">
+                    <div className="modal-tit">追加失敗</div>
+                    <div className="modal-subtit">経歴を選択してください。</div>
+                    <div className="flex flex-end gap-3">
+                        <a href="#" className="btn btn-pending" onClick={() =>  setOptionModal(false)}>
+                            確認
+                        </a>
+                    </div>
+                </ModalBody>
+            </Modal>
+
         </>
     );
 };
