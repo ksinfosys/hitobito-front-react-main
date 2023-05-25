@@ -440,14 +440,19 @@ function SignUpBusiness() {
 
     // // 사원수,매출 유효성 검사
     const numberPattern = /^[\d,\s]*$/;
-
+    const salesAmountPattern = /^[0-9]+(.)?[0-9]{1,2}$/;
+    let checkSalesAmountPattern = data.salesAmount.replaceAll(",", "");
     if (!numberPattern.test(data.empCount)) {
-      setRegPrice(true);
+      setRegNumber(true);
       empCountRef.current.focus()
       return;
     }
+    //매출 부분을 클릭 하고 입력 후 지웠을 때 필수값이 아님을 허용 
+    if(checkSalesAmountPattern ===""){
+      return true;
+    }
 
-    if (!numberPattern.test(data.salesAmount)) {
+    if (!salesAmountPattern.test(checkSalesAmountPattern)) {
       setRegPrice(true);
       salesAmountRef.current.focus()
       return;
@@ -520,7 +525,7 @@ function SignUpBusiness() {
     const pattern = /^[\d,\s]*$/;
 
     if (!pattern.test(inputValue)) {
-      setRegPrice(true);
+      setRegNumber(true);
       empCountRef.current.focus()
     }
   }
@@ -529,9 +534,15 @@ function SignUpBusiness() {
   // 매출 유효성 검사
   const checkPrice = (e) => {
     const inputValue = e.target.value;
-    const pattern = /^[\d,\s]*$/;
+    const pattern = /^[0-9]+(.)?[0-9]{1,2}$/;
+    let checkValue = inputValue.replaceAll(",", "");
 
-    if (!pattern.test(inputValue)) {
+    //매출 부분을 클릭 하고 입력 후 지웠을 때 필수값이 아님을 허용 
+    if(inputValue === ""){
+      return true;
+    }
+
+    if (!pattern.test(checkValue)) {
       setRegPrice(true);
       salesAmountRef.current.focus()
     }
@@ -816,17 +827,17 @@ function SignUpBusiness() {
                 <div className="flex items-center gap-2">
                   <div className="box-item flex flex-col">
                     <div className="form-tit">
-                      社員数
+                      社員数（名）
                       {/* 사원수 <span>*</span> */}
                     </div>
-                    <input type="text" className="form-control" maxLength={10} placeholder="社員数入力" onChange={(e) => setEmpCount(e.target.value)} onBlur={checkEmp} />
+                    <input type="text" className="form-control" maxLength={10} placeholder="数字入力" onChange={(e) => setEmpCount(e.target.value)} onBlur={checkEmp} />
                   </div>
                   <div className="box-item flex flex-col">
                     <div className="form-tit">
-                      売上高
+                      売上高（億円）
                       {/* 매출 <span>*</span> */}
                     </div>
-                    <input type="text" className="form-control" maxLength={20} placeholder="売上高" onChange={(e) => {
+                    <input type="text" className="form-control" maxLength={20} placeholder="数字、少数入力" onChange={(e) => {
                       if (e.currentTarget.value.length > 20) {
                         alert("입력내용이 너무 많습니다.");
                       } else {
@@ -1190,8 +1201,8 @@ function SignUpBusiness() {
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">認証コード再入力</div>
           <div className="modal-subtit">
-            認証コードが正しくありません<br />
-            。もう一度入力してください。
+            認証コードが正しくありません。<br />
+            もう一度入力してください。
           </div>
           <div className="flex flex-end gap-3">
             <a className="btn btn-pending" onClick={() => (setModal06(false), setIsSending(false))}>確認</a>
@@ -1559,7 +1570,7 @@ function SignUpBusiness() {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">数字以外の文字が入力されています。</div>
+          <div className="modal-tit">入力形式を守ってください。（定数13文字、少数2文字）<br/>例）1,234.56</div>
           <div className="modal-subtit">
 
           </div>

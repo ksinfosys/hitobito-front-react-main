@@ -398,10 +398,16 @@ const CorpInfoMng = () => {
     const numberPattern = /^[\d,\s]*$/;
     const salesAmountPattern = /^[0-9]+(.)?[0-9]{1,2}$/;
     let checkSalesAmountPattern = data.salesAmount.replaceAll(",", "");
+
     if (!numberPattern.test(data.empCount)) {
       setRegPrice(true);
       empCountRef.current.focus()
       return;
+    }
+    //매출 부분을 클릭 하고 입력 후 지웠을 때 필수값이 아님을 허용 
+    if(checkSalesAmountPattern ===""){
+      checkSalesAmountPattern = "";
+      return true;
     }
 
     if (!salesAmountPattern.test(checkSalesAmountPattern)) {
@@ -636,6 +642,12 @@ const CorpInfoMng = () => {
     const pattern = /^[0-9]+(.)?[0-9]{1,2}$/;
     let checkValue = inputValue.replaceAll(",", "");
     
+    //매출 부분을 클릭 하고 입력 후 지웠을 때 필수값이 아님을 허용 
+    if(checkValue === ""){
+      checkValue = "";
+      return true;
+    }
+
     if (!pattern.test(checkValue)) {
       setRegPrice(true);
       salesAmountRef.current.focus()
