@@ -164,8 +164,7 @@ const UsePlan = () => {
                   sessionId: response.data.result.sessionId,
                   isOpenWindow: 1
                 })
-                // window.open(response.data.result.sessionUrl, "_blank");
-                window.location.href = response.data.result.sessionUrl
+                window.open(response.data.result.sessionUrl, "_blank");
               }
               // await openSessionURL(response.data.result.sessionUrl)
               break;
