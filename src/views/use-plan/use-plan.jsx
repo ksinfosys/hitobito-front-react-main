@@ -335,7 +335,14 @@ const UsePlan = () => {
                   className={"btn btn-pending mt-5 w-full"}
                   onClick={() => {
                     setIsPlanCode("P0001");
+                    document.getElementById('planPaymentModalTitle').textContent = 'プランＡ';
+                    document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)33,000円⇒(税込)32,340円';
+                    document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)49,500円⇒(税込)47,520円';
+                    document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)99,000円⇒(税込)89,100円';
+                    console.log("abdfwe");
                     setPlanPaymentModal(true);
+
+                    
                   }}
                 >
                   変更する
@@ -363,7 +370,12 @@ const UsePlan = () => {
                   className={ "btn btn-pending mt-5 w-full"}
                   onClick={() => {
                     setIsPlanCode("P0002");
+                    document.getElementById('planPaymentModalTitle').textContent = 'プランＢ';
+                    document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)66,000円⇒(税込)64,680円';
+                    document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)99,000円⇒(税込)95,040円';
+                    document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)198,000円⇒(税込)178,200円';
                     setPlanPaymentModal(true);
+                    
                   }}
                 >
                   変更する
@@ -428,6 +440,10 @@ const UsePlan = () => {
                     type="button"
                     className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
                     onClick={() => {
+                      document.getElementById('planPaymentModalTitle').textContent = 'プランＡ';
+                      document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)33,000円⇒(税込)32,340円';
+                      document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)49,500円⇒(税込)47,520円';
+                      document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)99,000円⇒(税込)89,100円';
                       if (planList.invalidFlag === "8") {
                         setWaitPayFail(true);
                       }
@@ -455,6 +471,10 @@ const UsePlan = () => {
                     }
                     onClick={planList?.planEndDate !== "21001231" ? () => {
                       setIsPlanCode("P0001");
+                      document.getElementById('planPaymentModalTitle').textContent = 'プランＡ';
+                      document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)33,000円⇒(税込)32,340円';
+                      document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)49,500円⇒(税込)47,520円';
+                      document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)99,000円⇒(税込)89,100円';
                       setPlanPaymentModal(true);
                     } : null}
                   >
@@ -490,10 +510,15 @@ const UsePlan = () => {
                   </li>
                 </ul>
                 {planList.planCode === "P0002" ? (
+                  
                   <button
                     type="button"
                     className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
                     onClick={() => {
+                      document.getElementById('planPaymentModalTitle').textContent = 'プランＢ';
+                      document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)66,000円⇒(税込)64,680円';
+                      document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)99,000円⇒(税込)95,040円';
+                      document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)198,000円⇒(税込)178,200円';
                       if (planList.invalidFlag === "8") {
                         setWaitPayFail(true);
                       }
@@ -523,6 +548,10 @@ const UsePlan = () => {
                     }
                     onClick={planList?.planEndDate !== "21001231" ? () => {
                       setIsPlanCode("P0002");
+                      document.getElementById('planPaymentModalTitle').textContent = 'プランＢ';
+                      document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)66,000円⇒(税込)64,680円';
+                      document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)99,000円⇒(税込)95,040円';
+                      document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)198,000円⇒(税込)178,200円';
                       setPlanPaymentModal(true);
                     } : null}
                   >
@@ -753,9 +782,7 @@ const UsePlan = () => {
           <Lucide icon="X" className="w-5 h-5 text-slate-400" />
         </a>
         <ModalHeader className="flex-col">
-          <h2 className="font-bold text-base mr-auto ">
-            プラン決済
-          </h2>
+          <h2 className="font-bold text-base mr-auto " id="planPaymentModalTitle"></h2>
         </ModalHeader>
         <ModalBody className="p-5 plan-pay-modal business-modal">
           <div id="detail-cont" className="border-b pb-5">
@@ -809,7 +836,7 @@ const UsePlan = () => {
                   className="form-check-label text-sm w-full"
                   htmlFor="2m-pay"
                 >
-                  2ヶ月決済 <span className="text-pending">(2%割引)</span>
+                  2ヶ月決済 <span className="text-pending" id="payTwoMonth"></span>
                 </label>
               </div>
               <div className="form-check p-2 border mt-2">
@@ -833,7 +860,7 @@ const UsePlan = () => {
                   className="form-check-label text-sm w-full"
                   htmlFor="3m-pay"
                 >
-                  3ヶ月決済 <span className="text-pending">(4%割引)</span>
+                  3ヶ月決済 <span className="text-pending" id="payThreeMonth"></span>
                 </label>
               </div>
               <div className="form-check p-2 border mt-2">
@@ -858,7 +885,7 @@ const UsePlan = () => {
                   className="form-check-label text-sm w-full"
                   htmlFor="6m-pay"
                 >
-                  6ヶ月決済 <span className="text-pending">(10%割引)</span>
+                  6ヶ月決済 <span className="text-pending" id="paySixMonth"></span>
                 </label>
               </div>
             </div>
