@@ -59,7 +59,7 @@ const MessageBoxList02 = ({data, msgIdx, msgTypeName, nickname, msgTitle, msgSen
       </td>
       <td onClick={handleLink}>{msgTypeName}</td>
       <td onClick={handleLink}>{nickname}</td>
-      <td onClick={handleLink}>{msgTitle}</td>
+      <td className="text-left" onClick={handleLink}>{msgTitle}</td>
       <td className="text-slate-500" onClick={handleLink}>
         {moment(msgSendDate).format(`YYYY-MM-DD HH:mm`)}
       </td>

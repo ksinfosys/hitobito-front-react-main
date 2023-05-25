@@ -11,7 +11,7 @@ import { regexUserHypenJoinDate, regexUserJoinDate, regexUserPoint, replaceToPoi
 
 function PointDetail() {
   const navigate = useNavigate();
-
+  
   // S : 에러
 
   // Front
@@ -44,7 +44,7 @@ function PointDetail() {
   const [amount, setAmount] = useState(0);
   const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
 
-  console.log("result::", result)
+  // console.log("result::", result)
 
   useEffect(() => {
     getGiftPointList();
@@ -168,6 +168,49 @@ function PointDetail() {
           <div className="cont-wrap p-5">
             <div className="mt-5">
               <div className="">
+                <div className="flex flex-end flex-col lg:flex-row gap-5 mb-5 mt-5">
+                  <p>交換するポイントを、500ポイント単位で指定してください。</p>
+                  <div className="flex gap-5 space-between">
+                    <div className="point-input border-b-2">
+                      <input
+                        type="text"
+                        placeholder="0000"
+                        className="w-24"
+                        onChange={(e) => {
+                          setAmount(e.currentTarget.value);
+                        }}
+                      />
+                      <span className="font-bold ml-2">P</span>
+                    </div>
+                    {
+                      (amount % 500 !== 0 || amount === 0)
+                      ?
+                      <button
+                        className="btn btn-sm btn-primary w-24 mr-2"
+                        disabled={true}
+                      >
+                        交換する
+                      </button>
+                      :
+                      <button
+                        className="btn btn-sm btn-primary w-24 mr-2"
+                        onClick={() => {
+                          if (amount % 500 !== 0) {
+                            setPointFail(true);
+                            return;
+                          } else if (amount % 500 === 0) {
+                            exchangePoint();
+                          } else {
+                            alert("");
+                          }
+                        }}
+                      >
+                        交換する
+                      </button>
+                    }
+                    
+                  </div>
+                </div>
                 <ul className="relative flex flex-col lg:flex-row space-between items-center sm:gap-2 p-3 bg-lb">
                   <li className="absolute -top-6 right-0 lg:relative lg:top-0 text-sm lg:text-normal text-slate-400 shrink-0">
                     {result.today &&
@@ -196,37 +239,7 @@ function PointDetail() {
                     </div>   
                   </li>
                 </ul>
-                <div className="flex flex-end flex-col lg:flex-row gap-5 mt-5">
-                  <p>交換するポイントを入力してください。</p>
-                  <div className="flex gap-5 space-between">
-                    <div className="point-input border-b-2">
-                      <input
-                        type="text"
-                        placeholder="0000"
-                        className="w-24"
-                        onChange={(e) => {
-                          setAmount(e.currentTarget.value);
-                        }}
-                      />
-                      <span className="font-bold ml-2">P</span>
-                    </div>
-                    <button
-                      className="btn btn-sm btn-primary w-24 mr-2"
-                      onClick={() => {
-                        if (amount % 500 !== 0) {
-                          setPointFail(true);
-                          return;
-                        } else if (amount % 500 === 0) {
-                          exchangePoint();
-                        } else {
-                          alert("");
-                        }
-                      }}
-                    >
-                      交換する
-                    </button>
-                  </div>
-                </div>
+                
               </div>
               {/* 테이블 10줄
               <div className="mt-8">

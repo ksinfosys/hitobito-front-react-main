@@ -945,9 +945,9 @@ function Main() {
           }}
         >
           <ModalBody className="p-10 text-center">
-            <div className="modal-tit">ログアウトをしますか？</div>
-            <div className="modal-subtit">もう一度ご確認お願いします。</div>
-            <div className="flex flex-end gap-3">
+            <div className="modal-tit">hitobitoからログアウトしますか?</div>
+            <div className="modal-subtit"></div>
+            <div className="flex justify-end pt-5 gap-3">
               <a
                 href="#"
                 className="btn btn-business"
@@ -955,7 +955,7 @@ function Main() {
                   logOut();
                 }}
               >
-                確認
+                はい
               </a>
               <a
                 href="#"
@@ -964,7 +964,7 @@ function Main() {
                   setLogoutModal(false);
                 }}
               >
-                キャンセル
+                いいえ
               </a>
             </div>
           </ModalBody>
@@ -979,9 +979,9 @@ function Main() {
           }}
         >
           <ModalBody className="p-10 text-center">
-            <div className="modal-tit">로그아웃 오류</div>
+            <div className="modal-tit">ログアウトエラー</div>
             <div className="modal-subtit">
-              처리중 문제가 발생했습니다. 관리자에게 문의해주세요.
+              処理中に問題が発生しました。 管理者にお問い合わせください。
             </div>
             <div className="flex flex-end gap-3">
               <a
@@ -991,7 +991,7 @@ function Main() {
                   setLogoutError(false);
                 }}
               >
-                확인
+                確認
               </a>
             </div>
           </ModalBody>

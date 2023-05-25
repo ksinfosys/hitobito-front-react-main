@@ -24,7 +24,7 @@ const DashboardBusiness = () => {
     const skillCareerList = [
         {
             value: "",
-            text: "経歴선택"
+            text: "経歴選択"
         },
         {
             value: "65001",
@@ -75,7 +75,7 @@ const DashboardBusiness = () => {
     useEffect(() => {
         const tagsList = searchConditionList.map(({ category, codeType, codes, searchCondition }) => ({ categoryName: category, codeType: codeType, code: codes, codeName: searchCondition }));
         // Recoil로 검색 데이터 관리
-        searchConditionList && setSearchRecoil(tagsList);
+        searchConditionList && setSearchRecoil([]);
     }, [searchConditionList, searchStatus])
 
     // 검색
@@ -210,6 +210,7 @@ const DashboardBusiness = () => {
             selectCode: selectCode,
         }).then((res) => {
             res.resultCode === '200' ? (
+                console.log(res.result),
                 setListState(res.result.searchList),
                 setPgnInfo(res.result.pageItem),
                 setSearchId(res.result.searchCondition.srchId),
@@ -398,8 +399,9 @@ const DashboardBusiness = () => {
                             <div className="search-box relative text-slate-500">
                                 <input
                                     type="text"
+                                    id="texttest"
                                     className="form-control pr-10"
-                                    placeholder="検索ワードを入力"
+                                    placeholder="検索ワードを必ずクリック"                                    
                                     value={inputValue}
                                     onFocus={searchTags}
                                     onChange={(e) => setInputValue(e.target.value)}
@@ -420,7 +422,10 @@ const DashboardBusiness = () => {
                                         <ul>
                                             {tagsList.map((code, index) => {
                                                 return (
-                                                    <li key={index} className={tagActive === code.code ? "orange" : ""} onClick={() => setTagActive(code.code)}>
+                                                    <li key={index} 
+                                                        className={tagActive === code.code ? "orange" : ""} 
+                                                        onClick={() => {setTagActive(code.code); document.getElementById('texttest').value = code.codeName;}}>
+                                                            
                                                         <button type="button" onClick={() => handleSelectTags(code)}>
                                                             {code.codeName}
                                                         </button>
@@ -431,6 +436,7 @@ const DashboardBusiness = () => {
                                     )}
                                 </div>
                             </div>
+
                             {/* 経歴 셀렉트박스 추가 */}
                             {
                                 careerActive && (
@@ -449,7 +455,7 @@ const DashboardBusiness = () => {
                                 検索
                             </button>
                             <button
-                                className="btn btn-lg btn-cancle-type1 w-24"
+                                className="btn btn-lg btn-cancle-type1 w-32"
                                 onClick={() => {
                                     setSelectTags([]), setSelectCode([]), setTagsFilter([]);
                                 }}>
@@ -626,7 +632,7 @@ const DashboardBusiness = () => {
                     setSearchFailModal(false);
                 }}>
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">검색확인</div>
+                    <div className="modal-tit">検索確認</div>
                     <div className="modal-subtit">求職者の検索条件を設定してください。</div>
                     <div className="flex flex-end gap-3">
                         <a href="#" className="btn btn-pending" onClick={() => setSearchFailModal(false)}>

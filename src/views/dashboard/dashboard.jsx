@@ -700,7 +700,7 @@ const Dashboard = () => {
         show={acceptCheck}
         onHidden={() => { setIdx([]); setAcceptCheck(false); }}>
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">面談可否</div>
+          <div className="modal-tit">面談承諾</div>
           <div className="modal-subtit">
             面談を承認しますか？
           </div>
@@ -782,7 +782,7 @@ const Dashboard = () => {
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-primary"
-              onClick={() => { reject() }}
+              onClick={() => { reject(); setRejectModal(false);}}
             >確認</a>
             <a
               className="btn btn-outline-secondary"
@@ -802,7 +802,10 @@ const Dashboard = () => {
           <div className="flex flex-end gap-3">
             <a
               className="btn btn-primary"
-              onClick={() => { setRejectSuccessModal(false) }}
+              onClick={() => { 
+                setRejectSuccessModal(false)
+                , window.location.reload() 
+              }}
             >確認</a>
           </div>
         </ModalBody>

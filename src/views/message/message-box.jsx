@@ -17,6 +17,7 @@ import { useDidMountEffect } from "../../utils/customHooks";
 
 function MessageBox() {
     const navigate = useNavigate();
+    const [disable, setDisable] = React.useState(false);
 
     // 모달 상태들
     const [msgModal, setMsgModal] = useState(false);
@@ -266,6 +267,7 @@ function MessageBox() {
     const msgSaveSubmit = () => {
         ServiceFetch("/msg/tmpsave", "post", {
             msgContents: editorData,
+            msgTitle: msgSendTitle
         }).then((res) => {
             res.resultCode === '200' ? (
                 setSaveMsgSuccess(true)
@@ -289,7 +291,8 @@ function MessageBox() {
         }).then((response) => {
             response.data.resultCode === '200' ? (
                 setMsgSaveModal(true),
-                setEditorData(response.data.result.templateContents ? response.data.result.templateContents : "")
+                setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
+                setMsgSendTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
             ) : (
                 setModalFail(true)
             )
@@ -313,118 +316,197 @@ function MessageBox() {
             <div className="message-sent">
                 <div className="box-type-default">
                     <div className="p-5 border-b border-slate-200/60 text-lg font-bold lg:text-sm lg:font-normal">
-                        メッセージボックス
+                        メッセージ箱
                     </div>
                     <div className="into-y grid grid-cols-12 gap-6 list-top items-center lg:p-5">
                         <ul className="col-span-12 flex border-b-2 w/3">
                             <li>
                                 <button type="button" className="p-2 tab-btn w-full">
-                                    <Link to="/message-reception">受信メッセージ箱</Link>
+                                    <Link to="/message-reception">受信メッセージ</Link>
                                 </button>
                             </li>
                             <li>
                                 <button type="button" className="p-2 tab-btn w-full">
-                                    <Link to="/message-sent">送信メッセージ箱</Link>
+                                    <Link to="/message-sent">送信メッセージ</Link>
                                 </button>
                             </li>
                             <li>
                                 <button type="button" className="p-2 tab-btn tab-active w-full">
-                                    <Link to="/message-box">保管箱</Link>
+                                    <Link to="/message-box">保管メッセージ</Link>
                                 </button>
                             </li>
                         </ul>
 
                         <div className="col-span-12 relative">
-                            <div className="flex flex-col items-end lg:flex-row itmes-center space-between">
-                                <div className="flex items-center gap-2 w-full lg:w-auto">
-                                    <select
-                                        className="form-select w-32 lg:w-36 shrink-0"
-                                        onChange={(e) => setSearchCategory(e.target.value)}
-                                    >
-                                        <option value="20601">受信者/発信者</option>
-                                        <option value="20602">タイトル/内容</option>
-                                    </select>
-                                    <div className="search search-message block w-full">
-                                        <input
-                                            type="text"
-                                            className="form-input form-control cu-search"
-                                            placeholder="検索ワードを入力してください。"
-                                            onChange={(e) => {
-                                                setMsgState(false);
-                                                setCurPageMob(null);
-                                                setSearchKeyword(e.target.value)
-                                            }}
-                                            onKeyDown={(e) => {
-                                                if (e.code === "Enter") {
-                                                    handleSearch();
-                                                }
-                                                return;
-                                            }}
-                                        />
-                                        <button
-                                            className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
-                                            onClick={handleSearch}
+                            {
+                                (messageList == null) || (messageList?.length == 0)
+                                ?
+                                <div className="flex flex-col items-end lg:flex-row itmes-center space-between">
+                                    <div className="flex items-center gap-2 w-full lg:w-auto">
+                                        <select
+                                            className="form-select w-32 lg:w-36 shrink-0"
+                                            onChange={(e) => setSearchCategory(e.target.value)}
                                         >
-                                            <img src={Search} alt="" />
-                                        </button>
+                                            <option value="20601">受信者/発信者</option>
+                                            <option value="20602">タイトル/内容</option>
+                                        </select>
+                                        <div className="search search-message block w-full">
+                                            <input
+                                                type="text"
+                                                className="form-input form-control cu-search"
+                                                placeholder="検索ワードを入力してください。"
+                                                onChange={(e) => {
+                                                    setMsgState(false);
+                                                    setCurPageMob(null);
+                                                    setSearchKeyword(e.target.value)
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.code === "Enter") {
+                                                        handleSearch();
+                                                    }
+                                                    return;
+                                                }}
+                                            />
+                                            <button
+                                                className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
+                                                onClick={handleSearch}
+                                            >
+                                                <img src={Search} alt="" />
+                                            </button>
+                                        </div>
                                     </div>
+                                    <ul className="flex gap-2 mt-5 lg:mt-0">
+                                        <li>
+                                            <input
+                                                className="all-check form-check-input btn absolute left-0 block lg:hidden"
+                                                type="checkbox"
+                                                value="all-check"
+                                                checked={allCheckboxMob}
+                                                onChange={() => { }}
+                                                onClick={(e) => {
+                                                    e.target.checked ? (() => {
+                                                        setAllCheckboxMob(true);
+                                                        let allCbxIdx = [];
+                                                        messageListMob.map((msg, index) => {
+                                                            allCbxIdx.push(msg.msgIdx)
+                                                        })
+                                                        setMsgIdxes([...[], ...allCbxIdx]);
+                                                    })() : (() => {
+                                                        setAllCheckboxMob(false);
+                                                        setMsgIdxes([]);
+                                                    })();
+                                                }}
+                                            />
+                                        </li>
+                                        <li>
+                                            <button
+                                                className="btn btn-sm btn-primary sm:w-24 w-16 hidden lg:inline-block"
+                                                disabled={true}
+                                            >返信</button>
+                                        </li>
+                                        <li>
+                                            <button
+                                                className="btn btn-sm btn-primary sm:w-24 w-16 lg:hidden"
+                                                disabled={true}
+                                            >
+                                                返信
+                                            </button>
+                                        </li>
+                                        <li><button className="btn btn-sm btn-outline-secondary sm:w-24 w-16" disabled={true}>削除</button></li>
+                                    </ul>
                                 </div>
-                                <ul className="flex gap-2 mt-5 lg:mt-0">
-                                    <li>
-                                        <input
-                                            className="all-check form-check-input btn absolute left-0 block lg:hidden"
-                                            type="checkbox"
-                                            value="all-check"
-                                            checked={allCheckboxMob}
-                                            onChange={() => { }}
-                                            onClick={(e) => {
-                                                e.target.checked ? (() => {
-                                                    setAllCheckboxMob(true);
-                                                    let allCbxIdx = [];
-                                                    messageListMob.map((msg, index) => {
-                                                        allCbxIdx.push(msg.msgIdx)
-                                                    })
-                                                    setMsgIdxes([...[], ...allCbxIdx]);
-                                                })() : (() => {
-                                                    setAllCheckboxMob(false);
-                                                    setMsgIdxes([]);
-                                                })();
-                                            }}
-                                        />
-                                    </li>
-                                    <li>
-                                        <button
-                                            className="btn btn-sm btn-primary sm:w-24 w-16 hidden lg:inline-block"
-                                            onClick={() => {
-                                                msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
-                                                    msgIdxes.length > 1 ? setMessageReplyFail(true) :
-                                                        setMessageReplyModal(true);
-                                            }}
-                                        >返事</button>
-                                    </li>
-                                    {/* 모바일 > 답장하기 페이지 연결 */}
-                                    <li>
-                                        <button
-                                            className="btn btn-sm btn-primary sm:w-24 w-16 lg:hidden"
-                                            onClick={() => {
-                                                msgIdxes.length === 1 ? (() => {
-                                                    let fltrdMsgInfo = messageListMob.filter((element) => element.msgIdx == msgIdxes[0])[0];
-                                                    navigate("/message-reply", {
-                                                        state: {
-                                                            nickname: fltrdMsgInfo.nickname,
-                                                            receiveUserId: fltrdMsgInfo.receiveUserId,
-                                                            msgIdx: msgIdxes[0]
-                                                        }
-                                                    })
-                                                })() : alert("メッセージの返信は一件ずつ転送できます。")
-                                            }}
+                                :
+                                <div className="flex flex-col items-end lg:flex-row itmes-center space-between">
+                                    <div className="flex items-center gap-2 w-full lg:w-auto">
+                                        <select
+                                            className="form-select w-32 lg:w-36 shrink-0"
+                                            onChange={(e) => setSearchCategory(e.target.value)}
                                         >
-                                            返事
-                                        </button>
-                                    </li>
-                                    <li><button className="btn btn-sm btn-outline-secondary sm:w-24 w-16" onClick={() => { msgIdxes.length > 0 ? setMessageDeleteModal(true) : setMsgCheckModal(true); }}>削除</button></li>
-                                </ul>
-                            </div>
+                                            <option value="20601">受信者/発信者</option>
+                                            <option value="20602">タイトル/内容</option>
+                                        </select>
+                                        <div className="search search-message block w-full">
+                                            <input
+                                                type="text"
+                                                className="form-input form-control cu-search"
+                                                placeholder="検索ワードを入力してください。"
+                                                onChange={(e) => {
+                                                    setMsgState(false);
+                                                    setCurPageMob(null);
+                                                    setSearchKeyword(e.target.value)
+                                                }}
+                                                onKeyDown={(e) => {
+                                                    if (e.code === "Enter") {
+                                                        handleSearch();
+                                                    }
+                                                    return;
+                                                }}
+                                            />
+                                            <button
+                                                className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
+                                                onClick={handleSearch}
+                                            >
+                                                <img src={Search} alt="" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <ul className="flex gap-2 mt-5 lg:mt-0">
+                                        <li>
+                                            <input
+                                                className="all-check form-check-input btn absolute left-0 block lg:hidden"
+                                                type="checkbox"
+                                                value="all-check"
+                                                checked={allCheckboxMob}
+                                                onChange={() => { }}
+                                                onClick={(e) => {
+                                                    e.target.checked ? (() => {
+                                                        setAllCheckboxMob(true);
+                                                        let allCbxIdx = [];
+                                                        messageListMob.map((msg, index) => {
+                                                            allCbxIdx.push(msg.msgIdx)
+                                                        })
+                                                        setMsgIdxes([...[], ...allCbxIdx]);
+                                                    })() : (() => {
+                                                        setAllCheckboxMob(false);
+                                                        setMsgIdxes([]);
+                                                    })();
+                                                }}
+                                            />
+                                        </li>
+                                        <li>
+                                            <button
+                                                className="btn btn-sm btn-primary sm:w-24 w-16 hidden lg:inline-block"
+                                                onClick={() => {
+                                                    msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
+                                                        msgIdxes.length > 1 ? setMessageReplyFail(true) :
+                                                            setMessageReplyModal(true);
+                                                }}
+                                            >返信</button>
+                                        </li>
+                                        
+                                        <li>
+                                            <button
+                                                className="btn btn-sm btn-primary sm:w-24 w-16 lg:hidden"
+                                                onClick={() => {
+                                                    msgIdxes.length === 1 ? (() => {
+                                                        let fltrdMsgInfo = messageListMob.filter((element) => element.msgIdx == msgIdxes[0])[0];
+                                                        navigate("/message-reply", {
+                                                            state: {
+                                                                nickname: fltrdMsgInfo.nickname,
+                                                                receiveUserId: fltrdMsgInfo.receiveUserId,
+                                                                msgIdx: msgIdxes[0]
+                                                            }
+                                                        })
+                                                    })() : alert("メッセージの返信は一件ずつ転送できます。")
+                                                }}
+                                            >
+                                                返信
+                                            </button>
+                                        </li>
+                                        <li><button className="btn btn-sm btn-outline-secondary sm:w-24 w-16" onClick={() => { msgIdxes.length > 0 ? setMessageDeleteModal(true) : setMsgCheckModal(true); }}>削除</button></li>
+                                    </ul>
+                                </div>
+                            }
                             {/* 테이블 10줄 */}
                             <div className="overflow-x-auto">
                                 <table className="table mt-5 pc">
@@ -442,7 +524,7 @@ function MessageBox() {
                                             <th className="whitespace-nowrap">受信者/発信者</th>
                                             <th className="whitespace-nowrap">タイトル</th>
                                             <th className="whitespace-nowrap">受信時間</th>
-                                            <th className="whitespace-nowrap">返事</th>
+                                            <th className="whitespace-nowrap">返信</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-center">
@@ -470,7 +552,7 @@ function MessageBox() {
                                                 )
                                             }) : (
                                                 <tr>
-                                                    <td colSpan={6}>メッセージ保管箱が空いています。</td>
+                                                    <td colSpan={6}>表示できるメッセージがありません。</td>
                                                 </tr>
                                             )
                                         }
@@ -572,7 +654,7 @@ function MessageBox() {
                             }}
                             className="btn btn-sm btn-primary w-24"
                         >
-                            返事
+                            返信
                         </button>
                     </div>
                 </ModalBody>
@@ -727,7 +809,7 @@ function MessageBox() {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">送信成功</div>
                     <div className="modal-subtit">
-                        メッセージを転送しました。
+                        メッセージを送信しました。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a

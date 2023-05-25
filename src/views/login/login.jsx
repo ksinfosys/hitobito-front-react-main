@@ -299,11 +299,11 @@ const Login = () => {
                 >
                   <ModalBody className="p-10 text-center">
                     <div className="modal-tit">存在しないユーザです。</div>
-                    <div className="modal-subtit">
+                    <div className="modal-subtit pt-2">
                       {loginId}は存在しないユーザーです。<br />
                       もう一度確認してください。
                     </div>
-                    <div className="flex flex-end gap-3">
+                    <div className="flex flex-end pt-5 gap-3">
                       <a
                         href="#"
                         className="btn btn-primary"
@@ -326,11 +326,11 @@ const Login = () => {
                 >
                   <ModalBody className="p-10 text-center">
                     <div className="modal-tit">パスワードが間違ってます。</div>
-                    <div className="modal-subtit">
+                    <div className="modal-subtit pt-2">
                       IDまたはパスワードが正しくありません。 <br />
                       再度確認してください。
                     </div>
-                    <div className="flex flex-end gap-3">
+                    <div className="flex flex-end pt-5 gap-3">
                       <a
                         href="#"
                         className="btn btn-primary"
@@ -353,8 +353,8 @@ const Login = () => {
                 >
                   <ModalBody className="p-10 text-center">
                     <div className="modal-tit">入力した情報に問題があります。</div>
-                    <div className="modal-subtit">入力した内容を確認してください。</div>
-                    <div className="flex flex-end gap-3">
+                    <div className="modal-subtit pt-2">入力した内容を確認してください。</div>
+                    <div className="flex flex-end pt-5 gap-3">
                       <a
                         href="#"
                         className="btn btn-primary"
@@ -377,8 +377,8 @@ const Login = () => {
                 >
                   <ModalBody className="p-10 text-center">
                     <div className="modal-tit">IDを入力してください。</div>
-                    <div className="modal-subtit">IDを確認してください。</div>
-                    <div className="flex flex-end gap-3">
+                    <div className="modal-subtit pt-2">IDを確認してください。</div>
+                    <div className="flex flex-end pt-5 gap-3">
                       <a
                         href="#"
                         className="btn btn-primary"
@@ -401,8 +401,8 @@ const Login = () => {
                 >
                   <ModalBody className="p-10 text-center">
                     <div className="modal-tit">パスワードを入力してください。</div>
-                    <div className="modal-subtit">パスワードを確認してください。</div>
-                    <div className="flex flex-end gap-3">
+                    <div className="modal-subtit pt-2">パスワードを確認してください。</div>
+                    <div className="flex flex-end pt-5 gap-3">
                       <a
                         href="#"
                         className="btn btn-primary"

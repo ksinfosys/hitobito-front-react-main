@@ -46,24 +46,27 @@ const DashboardList = (props) => {
             props.setRejectState(updatedRejectState);
         }
     }
+
     useEffect(() => {
-        props.allCheckState ? (
+        if(props.allCheckState && props.item.rqStatus == "20101"){
             setCheckState(true),
             props.setIdx((prev) => [...prev, props.item.rqIdx]),
-            props.setRejectState({
+            props.setRejectState((prevState) => ({
+                ...prevState,
                 ...props.rejectState, [requestText]: {
                     rqIdx: props.item.rqIdx,
                     cpUserId: props.item.cpUserId,
                     cpPointIdx: props.item.cpPointIdx,
                 }
             })
-        ) : (
+    )}
+        else if(!props.allCheckState && props.item.rqStatus == "20101") {
             setCheckState(false),
             props.setIdx([]),
             props.setRejectState({})
-        )
+        }
     }, [props.allCheckState])
-
+    
     // 거절 Evnet
     const handleReject = () => {
         const requestText = 'requestMap' + props.index;
@@ -148,7 +151,6 @@ const DashboardList = (props) => {
         })
     };
     /* ********** 면접제의 삭제 API 끝 ********** */
-
 
     //면접의뢰 기업정보 확인 모달
     const [companyInfo, setcompanyInfo] = useState(false);
@@ -242,7 +244,7 @@ const DashboardList = (props) => {
                         <div className="form-check dash-cont1-tit">
                             <input
                                 type="checkbox"
-                                className="form-check-input"
+                                className= {props.item.rqStatus == "20101" ? "form-check-input" : "form-check-input visibility-hidden"}
                                 checked={checkState}
                                 onChange={() => handleCheckChange(props.item.rqIdx)}
                             />
@@ -322,7 +324,7 @@ const DashboardList = (props) => {
                                     ポイント支給待ち
                                 </button>
                             ) : props.item.pointStatus === '21106' ? (
-                                <button className="btn btn-long btn-outline-secondary">ポイント支給完了</button>
+                                <button className="btn btn-long btn-outline-secondary" onClick={() => {window.location.assign("/point-detail")}}>ポイント支給完了</button>
                             ) : (
                                 <button className="btn btn-sm btn-gray-type1 w-auto">
                                     支払い拒否
@@ -354,9 +356,14 @@ const DashboardList = (props) => {
                     size="modal-lg"
                 >
                     <ModalBody className="p-10 text-center">
-                        <div className="modal-tit">企業情報</div>
-                        <div className="modal-subtit h-600">
-                            <div className="flex items-center gap-3 border-b pb-3">
+                        <div className="modal-subtit">
+                        <div className="half-div">
+                            <div className="modal-tit half-div-left">企業情報</div>
+                            <div><a href="#"
+                                    className="half-div-right"
+                                    onClick={() => {setcompanyInfo(false);}}> X </a></div>
+                        </div>
+                            <div className="flex items-center gap-3 border-b pb-3 half-div-next">
                                 <div className="btn btn-secondary dashboard-logo-wrap">
                                     {console.log()}
                                     {
@@ -389,25 +396,20 @@ const DashboardList = (props) => {
                                             <td>{cpInfoData.requiredSkill}</td>
                                         </tr>
                                         <tr>
-                                            <td>가능연수입</td>
+                                            <td>提示年収</td>
                                             <td>{cpInfoData.income}</td>
                                         </tr>
                                         <tr>
-                                            <td>홈페이지</td>
+                                            <td>ホームページ</td>
                                             <td>{cpInfoData.homepage}</td>
                                         </tr>
                                         <tr>
-                                            <td>구인광고</td>
+                                            <td>求人広告</td>
                                             <td>{cpInfoData.cpAd}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <Link to="">
-                                <button
-                                    className="btn btn-secondary w-300 mt-5"
-                                >Tomodomo 에서 기업정보 확인하기</button>
-                            </Link>
                             {/* 이미지영역 */}
                             {/* <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
                                 {
@@ -420,26 +422,6 @@ const DashboardList = (props) => {
                                     })
                                 }
                             </div> */}
-                        </div>
-                        <div className="flex flex-end gap-3">
-                            <a
-                                href="#"
-                                className="btn btn-primary"
-                                onClick={() => {
-                                    setcompanyInfo(false);
-                                }}
-                            >
-                                確認
-                            </a>
-                            <a
-                                href="#"
-                                className="btn btn-outline-secondary"
-                                onClick={() => {
-                                    setcompanyInfo(false);
-                                }}
-                            >
-                                キャンセル
-                            </a>
                         </div>
                     </ModalBody>
                 </Modal>
@@ -504,7 +486,7 @@ const DashboardList = (props) => {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">面談承認取消</div>
                     <div className="modal-subtit">
-                        정상적으로 취소되었습니다.
+                        成功的に取り消されました。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
@@ -522,7 +504,7 @@ const DashboardList = (props) => {
                 onHidden={() => { setFailModal(false) }}
             >
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">문제 발생</div>
+                    <div className="modal-tit">問題発生</div>
                     <div className="modal-subtit">
                         処理中に問題が発生しました。
                     </div>
@@ -643,9 +625,9 @@ const DashboardList = (props) => {
                 }}
             >
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">삭제 성공</div>
+                    <div className="modal-tit">削除成功</div>
                     <div className="modal-subtit">
-                        성공적으로 삭제되었습니다.
+                        成功的に削除されました。
                     </div>
                     <div className="flex flex-end gap-3">
                         <button
