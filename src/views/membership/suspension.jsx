@@ -50,7 +50,7 @@ const Suspension = () => {
             <button type="button" className="btn btn-primary w-80 mt-10" onClick={() => { resignState?.resignStatus === '0' ? suspensionRequest(true) : handleResignUser() }}>
               {resignState?.resignStatus === '0' ? '進む' : '利用再開'}
             </button>
-            <button type="button" className="btn btn-outline-secondary w-80 mt-10" onClick={() => { navigate(-1); }}>戻る</button>
+            <button type="button" className="btn btn-outline-secondary w-80 mt-10" onClick={() => {window.location.replace("/");}}>戻る</button>
             </div>
           </div>
         </div>
