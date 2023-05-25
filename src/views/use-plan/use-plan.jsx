@@ -336,9 +336,9 @@ const UsePlan = () => {
                   onClick={() => {
                     setIsPlanCode("P0001");
                     document.getElementById('planPaymentModalTitle').textContent = 'プランＡ';
-                    document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)33,000円⇒(税込)32,340円';
-                    document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)49,500円⇒(税込)47,520円';
-                    document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)99,000円⇒(税込)89,100円';
+                    document.getElementById('payTwoMonth').textContent = '2%割引：(税込)33,000円⇒(税込)32,340円';
+                    document.getElementById('payThreeMonth').textContent = '4%割引：(税込)49,500円⇒(税込)47,520円';
+                    document.getElementById('paySixMonth').textContent = '10%割引：(税込)99,000円⇒(税込)89,100円';
                     console.log("abdfwe");
                     setPlanPaymentModal(true);
 
@@ -371,9 +371,9 @@ const UsePlan = () => {
                   onClick={() => {
                     setIsPlanCode("P0002");
                     document.getElementById('planPaymentModalTitle').textContent = 'プランＢ';
-                    document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)66,000円⇒(税込)64,680円';
-                    document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)99,000円⇒(税込)95,040円';
-                    document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)198,000円⇒(税込)178,200円';
+                    document.getElementById('payTwoMonth').textContent = '2%割引：(税込)66,000円⇒(税込)64,680円';
+                    document.getElementById('payThreeMonth').textContent = '4%割引：(税込)99,000円⇒(税込)95,040円';
+                    document.getElementById('paySixMonth').textContent = '10%割引：(税込)198,000円⇒(税込)178,200円';
                     setPlanPaymentModal(true);
                     
                   }}
@@ -441,9 +441,9 @@ const UsePlan = () => {
                     className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
                     onClick={() => {
                       document.getElementById('planPaymentModalTitle').textContent = 'プランＡ';
-                      document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)33,000円⇒(税込)32,340円';
-                      document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)49,500円⇒(税込)47,520円';
-                      document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)99,000円⇒(税込)89,100円';
+                      document.getElementById('payTwoMonth').textContent = '2%割引：(税込)33,000円⇒(税込)32,340円';
+                      document.getElementById('payThreeMonth').textContent = '4%割引：(税込)49,500円⇒(税込)47,520円';
+                      document.getElementById('paySixMonth').textContent = '10%割引：(税込)99,000円⇒(税込)89,100円';
                       if (planList.invalidFlag === "8") {
                         setWaitPayFail(true);
                       }
@@ -472,9 +472,9 @@ const UsePlan = () => {
                     onClick={planList?.planEndDate !== "21001231" ? () => {
                       setIsPlanCode("P0001");
                       document.getElementById('planPaymentModalTitle').textContent = 'プランＡ';
-                      document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)33,000円⇒(税込)32,340円';
-                      document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)49,500円⇒(税込)47,520円';
-                      document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)99,000円⇒(税込)89,100円';
+                      document.getElementById('payTwoMonth').textContent = '2%割引：(税込)33,000円⇒(税込)32,340円';
+                      document.getElementById('payThreeMonth').textContent = '4%割引：(税込)49,500円⇒(税込)47,520円';
+                      document.getElementById('paySixMonth').textContent = '10%割引：(税込)99,000円⇒(税込)89,100円';
                       setPlanPaymentModal(true);
                     } : null}
                   >
@@ -516,9 +516,9 @@ const UsePlan = () => {
                     className="flex flex-col btn btn-outline-pending bg-white mt-5 w-full disabled"
                     onClick={() => {
                       document.getElementById('planPaymentModalTitle').textContent = 'プランＢ';
-                      document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)66,000円⇒(税込)64,680円';
-                      document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)99,000円⇒(税込)95,040円';
-                      document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)198,000円⇒(税込)178,200円';
+                      document.getElementById('payTwoMonth').textContent = '2%割引：(税込)66,000円⇒(税込)64,680円';
+                      document.getElementById('payThreeMonth').textContent = '4%割引：(税込)99,000円⇒(税込)95,040円';
+                      document.getElementById('paySixMonth').textContent = '10%割引：(税込)198,000円⇒(税込)178,200円';
                       if (planList.invalidFlag === "8") {
                         setWaitPayFail(true);
                       }
@@ -549,9 +549,9 @@ const UsePlan = () => {
                     onClick={planList?.planEndDate !== "21001231" ? () => {
                       setIsPlanCode("P0002");
                       document.getElementById('planPaymentModalTitle').textContent = 'プランＢ';
-                      document.getElementById('payTwoMonth').textContent = '(2%)割引：(税込)66,000円⇒(税込)64,680円';
-                      document.getElementById('payThreeMonth').textContent = '(4%)割引：(税込)99,000円⇒(税込)95,040円';
-                      document.getElementById('paySixMonth').textContent = '(10%)割引：(税込)198,000円⇒(税込)178,200円';
+                      document.getElementById('payTwoMonth').textContent = '2%割引：(税込)66,000円⇒(税込)64,680円';
+                      document.getElementById('payThreeMonth').textContent = '4%割引：(税込)99,000円⇒(税込)95,040円';
+                      document.getElementById('paySixMonth').textContent = '10%割引：(税込)198,000円⇒(税込)178,200円';
                       setPlanPaymentModal(true);
                     } : null}
                   >
