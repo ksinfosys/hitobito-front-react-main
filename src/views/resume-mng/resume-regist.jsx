@@ -950,7 +950,7 @@ const ResumeRegist = () => {
             既に登録されているスキルリスト
           </div>
           <div className='blue-btn-wrap flex gap-2 items-center'>
-            {
+            { 
               skillItem.arr.map((item, key) => {
                 return (
                   <div className='blue-btn new-skillist' key={key}>
