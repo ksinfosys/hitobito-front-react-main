@@ -15,7 +15,7 @@ import CareerReWrite from "./desktop-items/CareerReWrite";
 import ModalEvent from "./ModalEvent";
 import DepthSplit from "../../../util/DepthSplit";
 import {useRecoilState} from "recoil";
-//import {mobileStatus} from "../../stores/mobile-status";//mobileStatus
+import {mobileStatus} from "../../stores/mobile-status";
 import {Lucide, Modal, ModalBody, ModalFooter, ModalHeader} from "@/base-components";
 import {useNavigate} from "react-router-dom";
 import MobileSelectBox from "./mobile-items/MobileSelectBox";
@@ -23,7 +23,7 @@ import $ from "jquery";
 
 const ResumeChange = () => {
 
-  //const [mobile, setMobileStatus] = useRecoilState(mobileStatus);//mobileStatus
+  const [mobile, setMobileStatus] = useRecoilState(mobileStatus);
   const categoryRef = useRef(null);
   const skillNameRef = useRef(null)
 
@@ -511,38 +511,40 @@ const ResumeChange = () => {
         setFetchDocument(res.data.result.attachedfileList)
         // console.log(res.data.result.attachedfileList)
         // setFileNames(res.data.result.attachedfileList)
-
-        // setMobileStatus(prev => {
-        //   return {...prev, api: res.data.result}
-        // })
-        // if (mobile) {
-        //   let tempResult = {...res.data.result.regiInfoDto}
-        //   let tempKeys = Object.keys(tempResult);
-        //   for (let i = 0; i < tempKeys.length; i++) {
-        //     if (tempKeys[i].includes('Select')) {
-        //       tempResult[tempKeys[i].replace('Select', '')] = tempResult[tempKeys[i]];
-        //       delete tempResult[tempKeys[i]];
-        //     }
-        //   }//mobileStatus
+        setMobileStatus(prev => {
+          return {...prev, api: res.data.result}
+        })
+        if (mobile) {
+          let tempResult = {...res.data.result.regiInfoDto}
+          let tempKeys = Object.keys(tempResult);
+          for (let i = 0; i < tempKeys.length; i++) {
+            if (tempKeys[i].includes('Select')) {
+              tempResult[tempKeys[i].replace('Select', '')] = tempResult[tempKeys[i]];
+              delete tempResult[tempKeys[i]];
+            }
+          }
 
           // console.log(mobile)
           // console.log(res.data.result.regiInfoDto)
 
-          // const businessDepthMenu = DepthSplit(mobile, 'businessDepthMenu', 'businessTypeList', 'businessType');
-          // const jobDepthMenu = DepthSplit(mobile, 'jobDepthMenu', 'jobTypeList', 'jobType');
-          // const hopeCareerDepthMenu = DepthSplit(mobile, 'hopeCareerDepthMenu', 'hopeCareerList', 'hopeCareer');
-          // setMobileStatus({
-          //   ...mobile,
-          //   ...tempResult,
-          //   // country: res.data.result.regiInfoDto.countrySelect,
-          //   businessTypeOneDeps: findOneDepth(res.data.result.regiInfoDto.businessTypeSelect, businessDepthMenu).businessType,
-          //   hopeCareerOneDeps: findOneDepth(res.data.result.regiInfoDto.hopeCareerSelect, hopeCareerDepthMenu).hopeCareer,
-          //   jobTypeOneDeps: findOneDepth(res.data.result.regiInfoDto.jobTypeSelect, jobDepthMenu).jobType,
-          //   businessDepthMenu: businessDepthMenu,
-          //   jobDepthMenu: jobDepthMenu,
-          //   hopeCareerDepthMenu: hopeCareerDepthMenu
-          // })       
-        // }//mobileStatus
+          const businessDepthMenu = DepthSplit(mobile, 'businessDepthMenu', 'businessTypeList', 'businessType');
+          const jobDepthMenu = DepthSplit(mobile, 'jobDepthMenu', 'jobTypeList', 'jobType');
+          const hopeCareerDepthMenu = DepthSplit(mobile, 'hopeCareerDepthMenu', 'hopeCareerList', 'hopeCareer');
+
+          setMobileStatus({
+            ...mobile,
+            ...tempResult,
+            // country: res.data.result.regiInfoDto.countrySelect,
+
+            businessTypeOneDeps: findOneDepth(res.data.result.regiInfoDto.businessTypeSelect, businessDepthMenu).businessType,
+            hopeCareerOneDeps: findOneDepth(res.data.result.regiInfoDto.hopeCareerSelect, hopeCareerDepthMenu).hopeCareer,
+            jobTypeOneDeps: findOneDepth(res.data.result.regiInfoDto.jobTypeSelect, jobDepthMenu).jobType,
+
+            businessDepthMenu: businessDepthMenu,
+            jobDepthMenu: jobDepthMenu,
+            hopeCareerDepthMenu: hopeCareerDepthMenu
+          })       
+        }
       } else {
         alert('등록된 이력서가 없습니다. 이력서를 먼저 등록해주세요.')
         navigate('/resume-regist')
@@ -1199,7 +1201,7 @@ const ResumeChange = () => {
           </div>
 
 
-          {/* {
+          {
             mobile.businessDepthMenu && mobile.jobDepthMenu && mobile.hopeCareerDepthMenu ? <Modal
               show={modalFlag.main}
               onHidden={() => {
@@ -1290,12 +1292,12 @@ const ResumeChange = () => {
             </Modal> : null
 
 
-          } //mobileStatus*/}
+          }
 
 
-          {/* <div className='mo-resume-mng'>
+          <div className='mo-resume-mng'>
             <ResumeMobileChange/>
-          </div> //mobileStatus*/}
+          </div>
         </div>
         : null
     }
