@@ -399,7 +399,10 @@ const ResumeChange = () => {
       if (res.data.resultCode === '200') {
         alert(res.data.resultMessage)
         window.location.href = '/';
+      } else {
+        window.alert(res.data.resultMessage)
       }
+
       console.log(res)
     })
       .catch((res) => console.log(res))
