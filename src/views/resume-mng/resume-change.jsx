@@ -615,7 +615,7 @@ const ResumeChange = () => {
       setRsFileDocument([])
 
       for(let i = 0; i < fetchImage.length; i++){
-        if(fetchImage[i].invalidFlag === "1"){
+        if(fetchImage[i].invalidFlag === "0"){
           axios.get('/api' + fetchImage[i].rsFileUrl, {
             responseType: 'blob',
             headers: {
@@ -635,7 +635,7 @@ const ResumeChange = () => {
         }
       }
       for(let i = 0; i < fetchImage.length; i++){
-        if(fetchImage[i].invalidFlag === "0"){
+        if(fetchImage[i].invalidFlag === "1"){
           axios.get('/api' + fetchImage[i].rsFileUrl, {
             responseType: 'blob',
             headers: {
