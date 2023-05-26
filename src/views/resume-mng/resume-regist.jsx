@@ -785,7 +785,7 @@ const ResumeRegist = () => {
               </div>
             </div>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>電話番号 <span>*</span></div>
+              <div className='form-tit'>連絡先 <span>*</span></div>
               <div className='flex items-center gap-2'>
                 <input id='phoneNumber regular-form-1' type='text' className='form-control'
                   placeholder='-なしで数字だけ入力してください。' onChange={handleInputTextChangeEvent}

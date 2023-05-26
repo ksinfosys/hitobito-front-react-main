@@ -819,7 +819,7 @@ function MessageReception() {
                                 setMsgIdxes([...msgIdxes, receptionState.msgIdx]);
                             }}
                             className="btn btn-sm btn-outline-primary w-24"
-                        >보관</button>
+                        >保管</button>
                         <button
                             type="button"
                             onClick={() => {

@@ -47,7 +47,7 @@ const MessageDetail = () => {
             const code = response.data.resultCode;
             code === "200" ? (() => {
                 navigate(-2);
-                alert("메세지를 보관 완료처리 하였습니다.");
+                alert("メッセージが保管されました。");
             })() : console.log("fetching error:::", response);
         });
     }
@@ -73,7 +73,7 @@ const MessageDetail = () => {
                                 </Link>
                             </li>
                             <li className="w-full md:w-24">
-                                <button type="button" onClick={() => { setMessageSave(true); }} className="btn btn-outline-primary w-full">보관</button>
+                                <button type="button" onClick={() => { setMessageSave(true); }} className="btn btn-outline-primary w-full">保管</button>
                             </li>
                         </ul>
                     </div>
