@@ -329,6 +329,48 @@ const ResumeRegist = () => {
     setFileNames(updatedNames);
     setRsFileDocument(updatedDocument);
   };
+  
+  const [countryError, setCountryError] = useState(false);
+  const [educationError, setEducationError] = useState(false);
+  const [schoolNameError, setSchoolNameError] = useState(false);
+  const [genderError, setGenderError] = useState(false);
+  const [majorNameError, setMajorNameError] = useState(false);
+  const [ageError, setAgeError] = useState(false);
+  const [residentialAreaError, setResidentialAreaError] = useState(false);
+  const [hopeIncomeError, setHopeIncomeError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [careerError, setCareerError] = useState(false);
+  const [hopeCareerError, setHopeCareerError] = useState(false);
+  const [jobTypeError, setJobTypeError] = useState(false);
+  const [businessTypeError, setBusinessTypeError] = useState(false);
+  const [projectError, setProjectError] = useState(false);
+  const [skillCodeError, setSkillCodeError] = useState(false);
+  
+  const educationRef = useRef(null);
+  const schoolNameRef = useRef(null);
+  const countryRef = useRef(null);
+  const userGenderRef = useRef(null);
+  const majorNameRef = useRef(null);
+  const userAgeRef = useRef(null);
+  const residentialAreaRef = useRef(null);
+  const hopeIncomeRef = useRef(null);
+  const userEmailRef = useRef(null);
+  const phoneNumberRef = useRef(null);
+  const careerRef = useRef(null);
+  const projectRef = useRef(null);
+  const skillCodeRef = useRef(null);
+  
+  const selectCountryRef = useRef(null);
+  const selectEducationRef = useRef(null);
+  const selectGenderRef = useRef(null);
+  const selectAgeRef = useRef(null);
+  const selectResidentialAreaRef = useRef(null);
+  const selectHopeIncomeRef = useRef(null);
+  const selectCareerRef = useRef(null);
+  const selectHopeCareerRef = useRef(null);
+  const selectJobTypeRef = useRef(null);
+  const selectbusinessTypeRef = useRef(null);
 
   // 전송
   const handleSubmit = async () => {
@@ -336,6 +378,174 @@ const ResumeRegist = () => {
     const blob = new Blob([JSON.stringify(body)], { type: 'application/json' })
     await formData.append('request', blob)
 
+    if (!body.country) {
+      alert("国籍を選択してください。");
+      selectCountryRef.current.focus();
+      setCountryError(true);
+      return false;
+    } else {
+      setCountryError(false);
+    }
+
+    if(!body.education){
+      alert("学歴を選択してください。")
+      selectEducationRef.current.focus();
+      setEducationError(true);
+      return false;
+    } else {
+      setEducationError(false);
+    }
+    
+    if (!body.userGender) {
+      alert("性別を選択してください。");
+      selectGenderRef.current.focus();
+      setGenderError(true);
+      return false;
+    } else {
+      setGenderError(false);
+    }
+
+    if (!body.schoolName) {
+      alert("最終学校名を入力してください。");
+      if (schoolNameRef.current) {
+        schoolNameRef.current.focus();
+        setSchoolNameError(true);
+      }
+      return false;
+    } else {
+      setSchoolNameError(false);
+    }
+
+    if (!body.userAge) {
+      alert("生年を選択してください。");
+      selectAgeRef.current.focus();
+      setAgeError(true);
+      return false;
+    } else {
+      setAgeError(false);
+    }
+
+    if (!body.majorName) {
+      alert("専攻を入力してください");
+      if (majorNameRef.current) {
+        majorNameRef.current.focus();
+        setMajorNameError(true);
+      }
+      return false;
+    } else {
+      setMajorNameError(false);
+    }
+
+    if (!body.residentialArea) {
+      alert("居住地を選択してください。");
+      selectResidentialAreaRef.current.focus();
+      setResidentialAreaError(true);
+      return false;
+    } else {
+      setResidentialAreaError(false);
+    }
+
+
+    if (!body.hopeIncome) {
+      alert("希望年収を選択してください。");
+      selectHopeIncomeRef.current.focus();
+      setHopeIncomeError(true);
+      return false;
+    } else {
+      setHopeIncomeError(false);
+    }
+
+
+    if (!body.userEmail) {
+      alert("イーメールを入力してください。");
+      if (userEmailRef.current) {
+        userEmailRef.current.focus();
+        setEmailError(true);
+      }
+      return false;
+    } else {
+      setEmailError(false);
+    }
+
+
+    if (!body.phoneNumber) {
+      alert("電話番号を入力してください。");
+      if (phoneNumberRef.current) {
+        phoneNumberRef.current.focus();
+        setPhoneError(true);
+      }
+      return false;
+    } else {
+      setPhoneError(false);
+    }
+
+    if (!body.phoneNumber) {
+      alert("電話番号を入力してください。");
+      if (phoneNumberRef.current) {
+        phoneNumberRef.current.focus();
+        setPhoneError(true);
+      }
+      return false;
+    } else {
+      setPhoneError(false);
+    }
+
+    if (!body.hopeCareer) {
+      alert("将来の目標を選択してください。");
+      selectHopeCareerRef.current.focus();
+      setHopeCareerError(true);
+      return false;
+    } else {
+      setHopeCareerError(false);
+    }
+
+    if (!body.career) {
+      alert("経歴を選択してください。");
+      selectCareerRef.current.focus();
+      setCareerError(true);
+      return false;
+    } else {
+      setCareerError(false);
+    }
+
+    if (!body.jobType) {
+      alert("現在の職種を選択してください。");
+      selectJobTypeRef.current.focus();
+      setJobTypeError(true);
+      return false;
+    } else {
+      setJobTypeError(false);
+    }
+
+    if (!body.jobType) {
+      alert("所属会社の業種を選択してください。");
+      selectbusinessTypeRef.current.focus();
+      setBusinessTypeError(true);
+      return false;
+    } else {
+      setBusinessTypeError(false);
+    }
+
+    if (career.map.length == 1 && career[0].process.length == 0) {
+      alert("主要経歴を入力してください。");
+      if (projectRef.current) {
+        projectRef.current.focus();
+        setProjectError(true);
+      }
+      return false;
+    } else {
+      setProjectError(false);
+    }
+  
+    if(skillItem.arr.length == 0){
+      alert("スキルを選択してください。")
+      skillCodeRef.current.focus();
+      setSkillCodeError(true);
+      return false;
+    } else {
+      setSkillCodeError(false);
+    }
+    
     rsFileDocument.length > 0 ? rsFileDocument.map(item => formData.append('rsFileDocument', item)) : formData.append('rsFileDocument', new File([], 'photo.jpg'))
     rsFilePhoto.length > 0 ? rsFilePhoto.map(item => formData.append('rsFilePhoto', item)) : formData.append('rsFilePhoto', new File([], 'document.pdf'))
 
@@ -715,62 +925,65 @@ const ResumeRegist = () => {
 
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>国籍 <span>*</span></div>
-              <SelectBox id={'country'} data={data && data.countryList} onChange={handleSelectChangeEvent} defaultValue={body.country} />
+              <div className='form-tit'  tabIndex={0} ref={selectCountryRef} >国籍 <span>*</span></div>
+              <SelectBox id={'country'} data={data && data.countryList} className={countryError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.country} ref={countryRef}/>
 
             </div>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>学歴 <span>*</span></div>
-              <SelectBox id={'education'} data={data && data.educationList} onChange={handleSelectChangeEvent} defaultValue={body.education} />
+              <div className='form-tit' tabIndex={0} ref={selectEducationRef}>学歴 <span>*</span></div>
+              <SelectBox id={'education'} data={data && data.educationList} className={educationError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.education} ref={educationRef}/>
             </div>
           </div>
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>性別 <span>*</span></div>
-              <SelectBox id={'userGender'} data={data && data.userGenderList} onChange={handleSelectChangeEvent} defaultValue={body.userGender} />
+              <div className='form-tit' tabIndex={0} ref={selectGenderRef}>性別 <span>*</span></div>
+              <SelectBox id={'userGender'} data={data && data.userGenderList} className={genderError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.userGender} ref={userGenderRef}/>
             </div>
             <div className='box-item flex flex-col'>
               <div className='form-tit'>最終学校名 <span>*</span></div>
-              <input id='schoolName regular-form-1' type='text' className='form-control' placeholder='最終学校名入力'
+              <input id='schoolName regular-form-1' type='text' className={schoolNameError ? 'form-control error' : 'form-control'} placeholder='最終学校名入力' ref={schoolNameRef}
                 onChange={handleInputTextChangeEvent} />
             </div>
           </div>
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>生年 <span>*</span></div>
+              <div className='form-tit' tabIndex={0} ref={selectAgeRef}>生年 <span>*</span></div>
               <div className='flex items-center gap-2'>
-                <SelectBox id={'userAge'} data={data && data.userAgeList} onChange={handleSelectChangeEvent} defaultValue={body.userAge} />
+                <SelectBox id={'userAge'} data={data && data.userAgeList} className={ageError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.userAge} ref={userAgeRef}/>
                 <div
                   className='btn btn-sm btn-ouline-secondary w-40 btn-age'>{body && body.userAge ? handleAgeCalculator() : '0歳'}</div>
               </div>
             </div>
             <div className='box-item flex flex-col'>
               <div className='form-tit'>専攻 <span>*</span></div>
-              <input id='majorName regular-form-1' type='text' className='form-control' placeholder='専攻入力'
+              <input id='majorName regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} placeholder='専攻入力' ref={majorNameRef}
                 onChange={handleInputTextChangeEvent} />
             </div>
           </div>
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>居住地 <span>*</span></div>
+              <div className='form-tit' tabIndex={0} ref={selectResidentialAreaRef}>居住地 <span>*</span></div>
               <SelectBox id={'residentialArea'} data={data && data.residentialAreaList}
+                className={residentialAreaError ? 'error' : ''}
                 onChange={handleSelectChangeEvent}
                 defaultValue={body.residentialArea}
+                ref={residentialAreaRef}
               />
 
             </div>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>希望年収 <span>*</span></div>
-              <SelectBox id={'hopeIncome'} data={data && data.hopeIncomeList} onChange={handleSelectChangeEvent} defaultValue={body.hopeIncome} />
+              <div className='form-tit' tabIndex={0} ref={selectHopeIncomeRef}>希望年収 <span>*</span></div>
+              <SelectBox id={'hopeIncome'} data={data && data.hopeIncomeList} className={hopeIncomeError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.hopeIncome} ref={hopeIncomeRef}/>
             </div>
           </div>
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
               <div className='form-tit'>イーメール <span>*</span></div>
               <div className='flex items-center gap-2'>
-                <input id='userEmail regular-form-1' type='text' className='form-control' placeholder='イーメール入力'
+                <input id='userEmail regular-form-1' type='text' className={emailError ? 'form-control error' : 'form-control'} placeholder='イーメール入力'
                   onChange={handleInputTextChangeEvent}
                   onBlur={handleCheckText}
+                  ref={userEmailRef}
                 />
                 <div className='form-check form-switch flex gap-2'>
                   <div className='switch-tit shrink-0 w50'>{body.userEmailFlag === '0' ? '非公開' : '公開'}</div>
@@ -787,9 +1000,10 @@ const ResumeRegist = () => {
             <div className='box-item flex flex-col'>
               <div className='form-tit'>電話番号 <span>*</span></div>
               <div className='flex items-center gap-2'>
-                <input id='phoneNumber regular-form-1' type='text' className='form-control'
+                <input id='phoneNumber regular-form-1' type='text' className={phoneError ? 'form-control error' : 'form-control'}
                   placeholder='-なしで数字だけ入力してください。' onChange={handleInputTextChangeEvent}
                   onBlur={handleCheckText}
+                  ref={phoneNumberRef}
                 />
                 <div className='form-check form-switch flex gap-2'>
                   <div className='switch-tit shrink-0 w50'>{body.phoneNumberFlag === '0' ? '非公開' : '公開'}</div>
@@ -809,8 +1023,8 @@ const ResumeRegist = () => {
 
           <div className="form-flex-box flex space-between items-start">
             <div className="box-item2 flex flex-col">
-              <div className="form-tit">将来の目標<span>*</span></div>
-              <button className='btn btn-primary flex-start selectButton'
+              <div className="form-tit" tabIndex={0} ref={selectHopeCareerRef}>将来の目標<span>*</span></div>
+              <button className= {hopeCareerError ? 'btn btn-primary flex-start selectButton error' : 'btn btn-primary flex-start selectButton'}
                 onClick={() => {
                   hopeCareer1(),
                   setHopeCareerModal(true),
@@ -822,12 +1036,12 @@ const ResumeRegist = () => {
 
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>経歴 <span>*</span></div>
-              <SelectBox id={'career'} data={data && data.careerList} onChange={handleSelectChangeEvent} defaultValue={body.career} />
+              <div className='form-tit' tabIndex={0} ref={selectCareerRef}>経歴 <span>*</span></div>
+              <SelectBox id={'career'} data={data && data.careerList} className={careerError ? 'form-control error' : 'form-control'} onChange={handleSelectChangeEvent} defaultValue={body.career} ref={careerRef} />
             </div>
             <div className="box-item flex flex-col">
-              <div className="form-tit">現在の職種 <span>*</span></div>
-              <button className='btn btn-primary selectButton'
+              <div className="form-tit" tabIndex={0} ref={selectJobTypeRef}>現在の職種 <span>*</span></div>
+              <button className={jobTypeError ? 'btn btn-primary selectButton error' : 'btn btn-primary selectButton'}
                 onClick={() => {
                   jobType1(),
                   setJobTypeModal(true),
@@ -838,8 +1052,8 @@ const ResumeRegist = () => {
               </button>
             </div>
             <div className="box-item flex flex-col">
-              <div className="form-tit">所属会社の業種 <span>*</span></div>
-              <button className='btn btn-primary selectButton'
+              <div className="form-tit" tabIndex={0} ref={selectbusinessTypeRef}>所属会社の業種 <span>*</span></div>
+              <button className={businessTypeError ? 'btn btn-primary selectButton error' : 'btn btn-primary selectButton' }
                 onClick={() => {
                   businessType1(),
                   setBusinessTypeModal(true),
@@ -851,9 +1065,9 @@ const ResumeRegist = () => {
             </div>
           </div>
 
-          <div className='divider' />
+          <div className='divider'/>
 
-
+          <div className={projectError ? 'error' : ''} tabIndex={0} ref={projectRef}>
           {/* 主要経歴 */
             career.map((career, key) => {
               return <CareerWrite
@@ -873,7 +1087,7 @@ const ResumeRegist = () => {
               />
             })
           }
-
+          </div>
           <div className='divider' />
 
           {/* 나의 스킬 */}
@@ -887,8 +1101,9 @@ const ResumeRegist = () => {
                 <div className='relative text-slate-500'>
                   <input
                     type='text'
-                    className='form-control pr-10'
+                    className= {skillCodeError ? 'form-control pr-10 error' : 'form-control pr-10'}
                     placeholder='検索'
+                    ref={skillCodeRef}
                     onChange={(e) => {
                       if (e.target.value !== '') {
                         setSkillList({

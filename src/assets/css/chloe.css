@@ -4071,3 +4071,7 @@ td.table-br-tab {
 .half-div-next {
   clear:left;
 }
+
+.error {
+  border-color: red;
+}

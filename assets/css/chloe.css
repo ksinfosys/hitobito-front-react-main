@@ -2501,3 +2501,7 @@ tr.table-content:hover td {
 .period-wrap .btn-skyblue2 {
   height: 44px;
 }
+
+.error {
+  border-color: red;
+}
