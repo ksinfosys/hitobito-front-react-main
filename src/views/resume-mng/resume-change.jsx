@@ -1297,12 +1297,12 @@ const ResumeChange = () => {
                     </label>
                   </div>
                 </div>
-                <div className='flex flex-col attach-cont-wrap'>
+                <div className=' blue-btn-wrap flex flex-col attach-cont-wrap'>
                   {fileNames.map((file, index) => {
-                    return <div className='attach-cont-item flex items-center space-between' key={index}>
-                      <input className='upload-name mr-2 attach-cont-tit' value={file} placeholder='' readOnly/>
+                    return <div className='blue-btn attach-cont-item flex items-center space-between' style={{backgroundColor: '#EDF5FF'}} key={index}>
+                      <input className='upload-name mr-2 attach-cont-tit' style={{backgroundColor: '#EDF5FF'}} value={file} placeholder='' readOnly/>
                       <button className='attach-cont-btn' onClick={() => handleDeleteFile(index)}>
-                        ✕削除
+                        ✕
                       </button>
                     </div>
                   })}
