@@ -310,7 +310,7 @@ const ResumeRegist = () => {
   // 파일 업로드 부분
   const handleFileUpload = (event) => {
     if (rsFileDocument.length >= 5) {
-      alert("ファイルは５つまで添付できます。")
+      alert("ファイルは４つまで添付できます。")
       return false;
     }
     const files = Array.from(event.target.files);

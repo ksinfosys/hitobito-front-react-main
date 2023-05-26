@@ -340,7 +340,7 @@ const ResumeChange = () => {
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     if (rsFileDocument.length + files.length >= 5) {
-      alert("ファイルは５つまで添付できます。")
+      alert("ファイルは４つまで添付できます。")
       return false;
     }
     files.map(file => {
