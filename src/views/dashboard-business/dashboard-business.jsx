@@ -460,9 +460,11 @@ const DashboardBusiness = () => {
                                                     <li key={index} 
                                                     className={tagActive === code ? "orange" : ""}>
                                                     <button type="button" onClick={() => {
+                                                        let selectSkillCode = code.code;
                                                          let selectBox = document.getElementById('selectBox');
                                                          let skillBox = document.getElementById('skillBox');
-                                                        if (selectBox.value !== "101" ||code.code.length === 5) {
+                                                        // if (selectBox.value !== "101" ||code.code.length === 5) {
+                                                        if (!selectSkillCode.includes("101") ||code.code.length === 5) {
                                                              setTagActive(code);
                                                              skillBox.disabled = true;
                                                              skillBox.value = "";
