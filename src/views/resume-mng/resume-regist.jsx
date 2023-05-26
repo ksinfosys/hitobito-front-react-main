@@ -14,7 +14,7 @@ import axios from "axios";
 import { getCookie } from "../../utils/cookie";
 import CareerWrite from "./desktop-items/CareerWrite";
 import { useRecoilState } from "recoil";
-import { mobileStatus } from "../../stores/mobile-status";
+// import { mobileStatus } from "../../stores/mobile-status";
 import { Lucide, Modal, ModalBody, ModalFooter, ModalHeader } from "@/base-components";
 import DepthSplit from "../../../util/DepthSplit";
 import ModalEvent from "./ModalEvent";
@@ -22,7 +22,7 @@ import $ from "jquery";
 
 const ResumeRegist = () => {
   // const [selectPop, setselectPop] = useState(false);
-  const [mobile, setMobileStatus] = useRecoilState(mobileStatus);
+  // const [mobile, setMobileStatus] = useRecoilState(mobileStatus);
   const categoryRef = useRef(null);
   const skillNameRef = useRef(null)
 
@@ -51,7 +51,7 @@ const ResumeRegist = () => {
     },
   })
 
-  const [data, setData] = useState()
+  const [data, setListData] = useState()
   const [skillList, setSkillList] = useState({
     category: [],
     skillName: [],
@@ -584,7 +584,7 @@ const ResumeRegist = () => {
       }
     }).then((res) => {
       // console.log(res.data.result)
-      setData(res.data.result)
+      setListData(res.data.result)
       setSkillList({
         ...skillList,
         category: Array.from(new Set(res.data.result.skillList.map(item => item.skillCategory))),
@@ -596,13 +596,13 @@ const ResumeRegist = () => {
         origin: res.data.result.skillList
       })
       // console.log(Array.from(new Set(res.data.result.skillList.map(item => item.skillCategory))))
-      setMobileStatus({
-        ...mobile,
-        api: res.data.result,
-        businessDepthMenu: DepthSplit(mobile, 'businessDepthMenu', res.data.result.businessTypeList, 'businessType'),
-        jobDepthMenu: DepthSplit(mobile, 'jobDepthMenu', res.data.result.jobTypeList, 'jobType'),
-        hopeCareerDepthMenu: DepthSplit(mobile, 'hopeCareerDepthMenu', res.data.result.hopeCareerList, 'hopeCareer'),
-      })
+      // setMobileStatus({
+      //   ...mobile,
+      //   api: res.data.result,
+      //   businessDepthMenu: DepthSplit(mobile, 'businessDepthMenu', res.data.result.businessTypeList, 'businessType'),
+      //   jobDepthMenu: DepthSplit(mobile, 'jobDepthMenu', res.data.result.jobTypeList, 'jobType'),
+      //   hopeCareerDepthMenu: DepthSplit(mobile, 'hopeCareerDepthMenu', res.data.result.hopeCareerList, 'hopeCareer'),
+      // })
     })
   }, [])
 
@@ -978,7 +978,7 @@ const ResumeRegist = () => {
           </div>
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>イーメール <span>*</span></div>
+              <div className='form-tit'>メールアドレス <span>*</span></div>
               <div className='flex items-center gap-2'>
                 <input id='userEmail regular-form-1' type='text' className={emailError ? 'form-control error' : 'form-control'} placeholder='イーメール入力'
                   onChange={handleInputTextChangeEvent}
@@ -1124,12 +1124,18 @@ const ResumeRegist = () => {
                 </div>
               </div>
               <div className='box-item flex flex-col'>
-                <div className='form-tit'>経歴期間</div>
+                <div className='form-tit'>経験期間</div>
                 <div className='flex items-center gap-2'>
                   <SelectBox className={'refTarget_select'} id={'careerCode'} data={data && data.skillCareerList}
                     onChange={handleUpdateSkill} defaultValue={skillItem.temp?.careerCode?.careerCode} />
                 </div>
               </div>
+            </div>
+            <div>
+            検索ボックスに、言語名、フレームワーク名、DB名などの頭文字を入力し、
+            </div>
+            <div>
+            表示されたリストから選択してください。
             </div>
             <div className="flex items-center space-between mb-4">
               <button onClick={() => {
@@ -1156,10 +1162,10 @@ const ResumeRegist = () => {
             </div>
           </div>
           <div className='blue-tit'>
-            登録されたスキルリスト
+            既に登録されているスキルリスト
           </div>
           <div className='blue-btn-wrap flex gap-2 items-center'>
-            {
+            { 
               skillItem.arr.map((item, key) => {
                 return (
                   <div className='blue-btn new-skillist' key={key}>
@@ -1211,7 +1217,7 @@ const ResumeRegist = () => {
                 <div className='attach-cont-item flex items-center space-between' key={index}>
                   <input className='upload-name mr-2 attach-cont-tit' value={name} placeholder='' readOnly />
                   <button className='attach-cont-btn' onClick={() => handleDeleteFile(index)}>
-                    <img src={blacksmallX} alt='' />
+                    ✕削除
                   </button>
                 </div>
               ))}
@@ -1224,7 +1230,7 @@ const ResumeRegist = () => {
               <img src={Download} alt='' />
             </button>
             <button className='btn btn-primary flex items-center h48' onClick={handleSubmit}>
-              登録
+              この内容で履歴書を登録する
             </button>
           </div>
           <div className='blue-tit'>
@@ -1237,17 +1243,12 @@ const ResumeRegist = () => {
         <Modal
           show={hopeCareerModal}
           onHidden={() => {
-            setModalFlag({
-              main: false,
-              goal: false,
-              occupation: false,
-              business: false,
-            })
+            setHopeCareerModal(false)
           }}
         >
           <ModalHeader>
             <h2 className="font-medium text-base mr-auto">
-              {modalFlag.goal ? '将来の目標' : modalFlag.occupation ? '現在の職種' : modalFlag.business ? '所属会社の業種' : ''}
+              将来の目標
             </h2>
           </ModalHeader>
           <ModalBody className="p-10 text-center">
@@ -1256,30 +1257,11 @@ const ResumeRegist = () => {
                       className={`hopeCareerOneDeps form-select flex items-center space-between`}
                       onChange={(e) => {
                         hopeCareer2(e),
-                        ModalEvent('hopeCareer').oneDepth(e, depthMenu, setDepthMenu, mobile, modalFlag)
+                        ModalEvent('hopeCareer').oneDepth(e, depthMenu, setDepthMenu)
                       }}
                       >
                 <option disabled selected value={'DEFAULT'}> -- select an option --</option>
               </select>
-              {/* <SelectBox
-                className={modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''}
-                id={modalFlag.goal ? 'hopeCareerOneDeps' : modalFlag.occupation ? 'jobTypeOneDeps' : modalFlag.business ? 'businessTypeOneDeps' : ''}
-                data={data && hopeCareer1()}
-                // data={mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : '']}
-                // value={mobile[modalFlag.goal ? 'hopeCareerOneDepth' : modalFlag.occupation ? 'jobTypeOneDepth' : modalFlag.business ? 'businessTypeOneDepth' : '']}
-                // defaultValue={
-                //   mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : '']
-                //     ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_first).length > 0 ?
-                //     mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : '']
-                //       ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_first)[0][modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']
-                //     : ''
-                // }
-                onChange={(e) => {
-                  ModalEvent(modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '')
-                    .oneDepth(e, depthMenu, setDepthMenu, mobile, modalFlag),
-                  hopeCareer2(e)
-                }}
-              /> */}
               <select id={'hopeCareer dropdown-button-dark-example1'}
                       className={`hopeCareer form-select flex items-center space-between`}
                       onChange={(e) => {
@@ -1288,30 +1270,6 @@ const ResumeRegist = () => {
                       >
                 <option disabled selected value={'DEFAULT'}> -- select an option --</option>
               </select>
-              {/* <SelectBox
-                id={'hopeCareer'}
-                data={data && data.hopeCareerList}
-                // data={
-                //   mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : 'ap'] && mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''].length > 0
-                //     ? mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''][modalFlag.goal ? depthMenu.hopeCareer.depth : modalFlag.occupation ? depthMenu.jobType.depth : modalFlag.business ? depthMenu.businessType.depth : 0]?.child
-                //     : []
-                // }
-                // defaultValue={
-                //   (mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : 'ap'] && mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''].length > 0
-                //     ? mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''][modalFlag.goal ? depthMenu.hopeCareer.depth : modalFlag.occupation ? depthMenu.jobType.depth : modalFlag.business ? depthMenu.businessType.depth : 0]?.child
-                //     : [])
-                //     ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_seconds).length > 0 ?
-                //     (mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : 'ap'] && mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''].length > 0
-                //       ? mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''][modalFlag.goal ? depthMenu.hopeCareer.depth : modalFlag.occupation ? depthMenu.jobType.depth : modalFlag.business ? depthMenu.businessType.depth : 0]?.child
-                //       : [])
-                //       ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_seconds)[0][modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']
-                //     : null
-                // }
-                // onChange={(e) => {
-                //   ModalEvent(modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '')
-                //     .secondDepth(e, depthMenu, setDepthMenu, body, setBody)
-                // }}
-              /> */}
             </div>
 
           </ModalBody>
@@ -1319,25 +1277,13 @@ const ResumeRegist = () => {
             <div className="sel-btn-wrap flex justify-center gap-2">
               <button className="btn btn-outline-secondary"
                 onClick={() => {
-                  setHopeCareerModal(false),
-                  setModalFlag({
-                    main: false,
-                    goal: false,
-                    occupation: false,
-                    business: false,
-                  })
+                  setHopeCareerModal(false)
                 }}
               >
                 キャンセル
               </button>
               <button className="btn btn-primary" onClick={() => {
-                setHopeCareerModal(false),
-                setModalFlag({
-                  main: false,
-                  goal: false,
-                  occupation: false,
-                  business: false,
-                })
+                setHopeCareerModal(false)
               }}>
                 登録
               </button>
@@ -1349,17 +1295,12 @@ const ResumeRegist = () => {
         <Modal
           show={jopTypeModal}
           onHidden={() => {
-            setModalFlag({
-              main: false,
-              goal: false,
-              occupation: false,
-              business: false,
-            })
+            setJobTypeModal(false)
           }}
         >
           <ModalHeader>
             <h2 className="font-medium text-base mr-auto">
-              {modalFlag.goal ? '将来の目標' : modalFlag.occupation ? '現在の職種' : modalFlag.business ? '所属会社の業種' : ''}
+              現在の職種
             </h2>
           </ModalHeader>
           <ModalBody className="p-10 text-center">
@@ -1368,30 +1309,11 @@ const ResumeRegist = () => {
                       className={`jobTypeOneDeps form-select flex items-center space-between`}
                       onChange={(e) => {
                         jobType2(e),
-                        ModalEvent('jobType').oneDepth(e, depthMenu, setDepthMenu, mobile, modalFlag)
+                        ModalEvent('jobType').oneDepth(e, depthMenu, setDepthMenu)
                       }}
                       >
                 <option disabled selected value={'DEFAULT'}> -- select an option --</option>
               </select>
-              {/* <SelectBox
-                className={modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''}
-                id={modalFlag.goal ? 'hopeCareerOneDeps' : modalFlag.occupation ? 'jobTypeOneDeps' : modalFlag.business ? 'businessTypeOneDeps' : ''}
-                data={data && hopeCareer1()}
-                // data={mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : '']}
-                // value={mobile[modalFlag.goal ? 'hopeCareerOneDepth' : modalFlag.occupation ? 'jobTypeOneDepth' : modalFlag.business ? 'businessTypeOneDepth' : '']}
-                // defaultValue={
-                //   mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : '']
-                //     ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_first).length > 0 ?
-                //     mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : '']
-                //       ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_first)[0][modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']
-                //     : ''
-                // }
-                onChange={(e) => {
-                  ModalEvent(modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '')
-                    .oneDepth(e, depthMenu, setDepthMenu, mobile, modalFlag),
-                  hopeCareer2(e)
-                }}
-              /> */}
               <select id={'jobType dropdown-button-dark-example1'}
                       className={`jobType form-select flex items-center space-between`}
                       onChange={(e) => {
@@ -1400,30 +1322,6 @@ const ResumeRegist = () => {
                       >
                 <option disabled selected value={'DEFAULT'}> -- select an option --</option>
               </select>
-              {/* <SelectBox
-                id={'hopeCareer'}
-                data={data && data.hopeCareerList}
-                // data={
-                //   mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : 'ap'] && mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''].length > 0
-                //     ? mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''][modalFlag.goal ? depthMenu.hopeCareer.depth : modalFlag.occupation ? depthMenu.jobType.depth : modalFlag.business ? depthMenu.businessType.depth : 0]?.child
-                //     : []
-                // }
-                // defaultValue={
-                //   (mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : 'ap'] && mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''].length > 0
-                //     ? mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''][modalFlag.goal ? depthMenu.hopeCareer.depth : modalFlag.occupation ? depthMenu.jobType.depth : modalFlag.business ? depthMenu.businessType.depth : 0]?.child
-                //     : [])
-                //     ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_seconds).length > 0 ?
-                //     (mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : 'ap'] && mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''].length > 0
-                //       ? mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''][modalFlag.goal ? depthMenu.hopeCareer.depth : modalFlag.occupation ? depthMenu.jobType.depth : modalFlag.business ? depthMenu.businessType.depth : 0]?.child
-                //       : [])
-                //       ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_seconds)[0][modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']
-                //     : null
-                // }
-                // onChange={(e) => {
-                //   ModalEvent(modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '')
-                //     .secondDepth(e, depthMenu, setDepthMenu, body, setBody)
-                // }}
-              /> */}
             </div>
 
           </ModalBody>
@@ -1431,25 +1329,13 @@ const ResumeRegist = () => {
             <div className="sel-btn-wrap flex justify-center gap-2">
               <button className="btn btn-outline-secondary"
                 onClick={() => {
-                  setJobTypeModal(false),
-                  setModalFlag({
-                    main: false,
-                    goal: false,
-                    occupation: false,
-                    business: false,
-                  })
+                  setJobTypeModal(false)
                 }}
               >
                 キャンセル
               </button>
               <button className="btn btn-primary" onClick={() => {
-                setJobTypeModal(false),
-                setModalFlag({
-                  main: false,
-                  goal: false,
-                  occupation: false,
-                  business: false,
-                })
+                setJobTypeModal(false)
               }}>
                 登録
               </button>
@@ -1461,17 +1347,12 @@ const ResumeRegist = () => {
         <Modal
           show={businessTypeModal}
           onHidden={() => {
-            setModalFlag({
-              main: false,
-              goal: false,
-              occupation: false,
-              business: false,
-            })
+            setBusinessTypeModal(false)
           }}
         >
           <ModalHeader>
             <h2 className="font-medium text-base mr-auto">
-              {modalFlag.goal ? '将来の目標' : modalFlag.occupation ? '現在の職種' : modalFlag.business ? '所属会社の業種' : ''}
+              所属会社の業種
             </h2>
           </ModalHeader>
           <ModalBody className="p-10 text-center">
@@ -1480,30 +1361,11 @@ const ResumeRegist = () => {
                       className={`businessTypeOneDeps form-select flex items-center space-between`}
                       onChange={(e) => {
                         businessType2(e),
-                        ModalEvent('businessType').oneDepth(e, depthMenu, setDepthMenu, mobile, modalFlag)
+                        ModalEvent('businessType').oneDepth(e, depthMenu, setDepthMenu)
                       }}
                       >
                 <option disabled selected value={'DEFAULT'}> -- select an option --</option>
               </select>
-              {/* <SelectBox
-                className={modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''}
-                id={modalFlag.goal ? 'hopeCareerOneDeps' : modalFlag.occupation ? 'jobTypeOneDeps' : modalFlag.business ? 'businessTypeOneDeps' : ''}
-                data={data && hopeCareer1()}
-                // data={mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : '']}
-                // value={mobile[modalFlag.goal ? 'hopeCareerOneDepth' : modalFlag.occupation ? 'jobTypeOneDepth' : modalFlag.business ? 'businessTypeOneDepth' : '']}
-                // defaultValue={
-                //   mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : '']
-                //     ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_first).length > 0 ?
-                //     mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : '']
-                //       ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_first)[0][modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']
-                //     : ''
-                // }
-                onChange={(e) => {
-                  ModalEvent(modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '')
-                    .oneDepth(e, depthMenu, setDepthMenu, mobile, modalFlag),
-                  hopeCareer2(e)
-                }}
-              /> */}
               <select id={'businessType dropdown-button-dark-example1'}
                       className={`businessType form-select flex items-center space-between`}
                       onChange={(e) => {
@@ -1512,30 +1374,6 @@ const ResumeRegist = () => {
                       >
                 <option disabled selected value={'DEFAULT'}> -- select an option --</option>
               </select>
-              {/* <SelectBox
-                id={'hopeCareer'}
-                data={data && data.hopeCareerList}
-                // data={
-                //   mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : 'ap'] && mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''].length > 0
-                //     ? mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''][modalFlag.goal ? depthMenu.hopeCareer.depth : modalFlag.occupation ? depthMenu.jobType.depth : modalFlag.business ? depthMenu.businessType.depth : 0]?.child
-                //     : []
-                // }
-                // defaultValue={
-                //   (mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : 'ap'] && mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''].length > 0
-                //     ? mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''][modalFlag.goal ? depthMenu.hopeCareer.depth : modalFlag.occupation ? depthMenu.jobType.depth : modalFlag.business ? depthMenu.businessType.depth : 0]?.child
-                //     : [])
-                //     ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_seconds).length > 0 ?
-                //     (mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : 'ap'] && mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''].length > 0
-                //       ? mobile[modalFlag.goal ? 'hopeCareerDepthMenu' : modalFlag.occupation ? 'jobDepthMenu' : modalFlag.business ? 'businessDepthMenu' : ''][modalFlag.goal ? depthMenu.hopeCareer.depth : modalFlag.occupation ? depthMenu.jobType.depth : modalFlag.business ? depthMenu.businessType.depth : 0]?.child
-                //       : [])
-                //       ?.filter(item => item[modalFlag.goal ? 'hopeCareerName' : modalFlag.occupation ? 'jobTypeName' : modalFlag.business ? 'businessTypeName' : ''] === depthMenu[modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']?.depth_seconds)[0][modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '']
-                //     : null
-                // }
-                // onChange={(e) => {
-                //   ModalEvent(modalFlag.goal ? 'hopeCareer' : modalFlag.occupation ? 'jobType' : modalFlag.business ? 'businessType' : '')
-                //     .secondDepth(e, depthMenu, setDepthMenu, body, setBody)
-                // }}
-              /> */}
             </div>
 
           </ModalBody>
@@ -1543,25 +1381,13 @@ const ResumeRegist = () => {
             <div className="sel-btn-wrap flex justify-center gap-2">
               <button className="btn btn-outline-secondary"
                 onClick={() => {
-                  setBusinessTypeModal(false),
-                  setModalFlag({
-                    main: false,
-                    goal: false,
-                    occupation: false,
-                    business: false,
-                  })
+                  setBusinessTypeModal(false)
                 }}
               >
                 キャンセル
               </button>
               <button className="btn btn-primary" onClick={() => {
-                setBusinessTypeModal(false),
-                setModalFlag({
-                  main: false,
-                  goal: false,
-                  occupation: false,
-                  business: false,
-                })
+                setBusinessTypeModal(false)
               }}>
                 登録
               </button>
