@@ -387,7 +387,9 @@ const CorpInfoMng = () => {
 
     // 담당자 연락처 (숫자 이외의 것테스트)
     const phonePattern = /^\d{2,3}-\d{4}-\d{4}$/; // 숫자와 하이픈으로 구성된 정규식
-    if (!phonePattern.test(data.phoneNumber)) {
+    //8자리 고정형 7자리 숫자 입력시 공백을 지움
+    const fixphonephonePattern = data.phoneNumber.replace(/\s/g, "");
+    if (!phonePattern.test(fixphonephonePattern)) {
       setRegPhone(true);
       //console.log(phoneNumberRef)
       phoneNumberRef.current.focus();
@@ -406,7 +408,6 @@ const CorpInfoMng = () => {
     }
     //매출 부분을 클릭 하고 입력 후 지웠을 때 필수값이 아님을 허용 
     if(checkSalesAmountPattern ===""){
-      checkSalesAmountPattern = "";
       return true;
     }
 
@@ -615,7 +616,8 @@ const CorpInfoMng = () => {
 
   // 담당자 연락처 (숫자 이외의 것테스트)
   const checkNumber = (e) => {
-    const inputValue = e.target.value;
+    //8자리 고정형 7자리 숫자 입력시 공백을 지움
+    const inputValue = e.target.value.replace(/\s/g, "");
     const pattern = /^\d{2,3}-\d{4}-\d{4}$/; // 숫자와 하이픈으로 구성된 정규식
 
     if (!pattern.test(inputValue)) {
@@ -644,7 +646,6 @@ const CorpInfoMng = () => {
     
     //매출 부분을 클릭 하고 입력 후 지웠을 때 필수값이 아님을 허용 
     if(checkValue === ""){
-      checkValue = "";
       return true;
     }
 
@@ -1751,7 +1752,7 @@ const CorpInfoMng = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">'-なしで数字だけ入力してください。</div>
+          <div className="modal-tit">電話番号の形式を確認してください。</div>
           <div className="modal-subtit">
 
           </div>
