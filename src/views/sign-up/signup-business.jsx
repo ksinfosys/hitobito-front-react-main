@@ -1249,7 +1249,7 @@ function SignUpBusiness() {
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">連絡先確認</div>
           <div className="modal-subtit">
-          電話番号の形式を確認してください。
+            電話番号の形式を確認してください。
           </div>
           <div className="flex flex-end gap-3">
             <a className="btn btn-pending" onClick={() => setModal11(false)}>確認</a>
