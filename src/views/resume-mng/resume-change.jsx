@@ -628,14 +628,11 @@ const ResumeChange = () => {
             reader.readAsDataURL(file)
             reader.onload = (loadResponse) => {
               const imageData = loadResponse.currentTarget.result
-              setImage(prevState => [...prevState, imageData])
+              setImage(prevState => [imageData, ...prevState])
             }
-            setRsFilePhoto(prev => [...prev, res.data])
+            setRsFilePhoto(prev => [res.data, ...prev])
           })
-        }
-      }
-      for(let i = 0; i < fetchImage.length; i++){
-        if(fetchImage[i].invalidFlag === "1"){
+        } else {
           axios.get('/api' + fetchImage[i].rsFileUrl, {
             responseType: 'blob',
             headers: {
