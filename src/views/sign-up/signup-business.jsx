@@ -1128,7 +1128,7 @@ function SignUpBusiness() {
             パスワードは英文・数字・特殊記号で組み合わせ8~16字で入力してください。
           </div>
           <div className="flex flex-end gap-3">
-            <a className="btn btn-pending" onClick={() => (setModal04(false), passwordRef.current.focus())}>확인</a>
+            <a className="btn btn-pending" onClick={() => (setModal04(false), passwordRef.current.focus())}>確認</a>
           </div>
         </ModalBody>
       </Modal>

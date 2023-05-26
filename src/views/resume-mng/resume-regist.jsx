@@ -1369,7 +1369,7 @@ const ResumeRegist = () => {
     >
       <ModalBody className="p-10 text-center">
         <div className="modal-tit mb-5">
-          글자는 200까지 입력 가능합니다.
+        自己紹介は200字まで入力可能です。
         </div>
         {/* <div className="modal-subtit">管理者に問い合わせしてください。</div> */}
         <div className="flex flex-end gap-3">
