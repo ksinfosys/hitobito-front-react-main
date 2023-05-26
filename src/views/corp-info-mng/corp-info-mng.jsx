@@ -1751,7 +1751,7 @@ const CorpInfoMng = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">'-なしで数字だけ入力してください。</div>
+          <div className="modal-tit">電話番号の形式を確認してください。</div>
           <div className="modal-subtit">
 
           </div>

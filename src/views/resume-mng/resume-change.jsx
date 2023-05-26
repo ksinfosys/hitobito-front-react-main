@@ -164,7 +164,7 @@ const ResumeChange = () => {
         })
       }
       if (key === 'phoneNumberSelect' && !phoneCheck.test(value)) {
-        alert('入力形式:000-0000-0000.に合わせてください。')
+        alert('電話番号の形式を確認してください。')
         e.target.value = ''
         setBody({
           ...body,
@@ -917,7 +917,7 @@ const ResumeChange = () => {
                   <div className='flex items-center gap-2'>
                     <input id='phoneNumberSelect regular-form-1' type='text' className='form-control'
                            value={body.phoneNumberSelect}
-                           placeholder='入力形式: 000-0000-0000に合わせてください。'
+                           placeholder='-なしで数字だけ入力してください。'
                            onChange={handleInputTextChangeEvent}
                            onBlur={handleCheckText}
                     />

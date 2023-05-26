@@ -138,7 +138,7 @@ const ResumeRegist = () => {
         })
       }
       if (key === 'phoneNumber' && !phoneCheck.test(value)) {
-        alert('入力形式:000-0000-0000.に合わせてください。')
+        alert('電話番号の形式を確認してください。')
         e.target.value = ''
         setBody({
           ...body,
