@@ -363,6 +363,20 @@ const ResumeChange = () => {
     setRsFileDocument(updatedDocument);
   };
 
+  const [schoolNameError, setSchoolNameError] = useState(false);
+  const [majorNameError, setMajorNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [projectError, setProjectError] = useState(false);
+  const [skillCodeError, setSkillCodeError] = useState(false);
+
+  const schoolNameRef = useRef(null);
+  const majorNameRef = useRef(null);
+  const userEmailRef = useRef(null);
+  const phoneNumberRef = useRef(null);
+  const projectRef = useRef(null);
+  const skillCodeRef = useRef(null);
+
   // 전송
   const handleSubmit = async () => {
 
@@ -385,6 +399,70 @@ const ResumeChange = () => {
     await formData.append('request', blob)
     rsFilePhoto.length > 0 ? rsFilePhoto.map(item => formData.append('rsFilePhoto', item)) : formData.append('rsFilePhoto', new File([], 'photo.png'))
     rsFileDocument.length > 0 ? rsFileDocument.map(item => formData.append('rsFileDocument', item)) : formData.append('rsFileDocument', new File([], 'document.pdf'))
+
+    if (!body.schoolNameSelect) {
+      alert("最終学校名を入力してください。");
+      if (schoolNameRef.current) {
+        schoolNameRef.current.focus();
+        setSchoolNameError(true);
+      }
+      return false;
+    } else {
+      setSchoolNameError(false);
+    }
+
+    if (!body.majorNameSelect) {
+      alert("専攻を入力してください");
+      if (majorNameRef.current) {
+        majorNameRef.current.focus();
+        setMajorNameError(true);
+      }
+      return false;
+    } else {
+      setMajorNameError(false);
+    }
+
+    if (!body.userEmailSelect) {
+      alert("イーメールを入力してください。");
+      if (userEmailRef.current) {
+        userEmailRef.current.focus();
+        setEmailError(true);
+      }
+      return false;
+    } else {
+      setEmailError(false);
+    }
+
+    if (!body.phoneNumberSelect) {
+      alert("電話番号を入力してください。");
+      if (phoneNumberRef.current) {
+        phoneNumberRef.current.focus();
+        setPhoneError(true);
+      }
+      return false;
+    } else {
+      setPhoneError(false);
+    }
+
+    if (career.map.length == 1 && career[0].process.length == 0) {
+      alert("主要経歴を入力してください。");
+      if (projectRef.current) {
+        projectRef.current.focus();
+        setProjectError(true);
+      }
+      return false;
+    } else {
+      setProjectError(false);
+    }
+    
+    if(skillItem.arr.length == 0){
+      alert("スキルを選択してください。")
+      skillCodeRef.current.focus();
+      setSkillCodeError(true);
+      return false;
+    } else {
+      setSkillCodeError(false);
+    }
 
     //서버로 보내기
     axios.put('/api/resume/modify',
@@ -1003,9 +1081,10 @@ const ResumeChange = () => {
                 </div>
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>最終学校名 <span>*</span></div>
-                  <input id='schoolNameSelect regular-form-1' type='text' className='form-control'
-                         placeholder='最終学校名入力'
-                         onChange={handleInputTextChangeEvent} value={body.schoolNameSelect}/>
+                  <input id='schoolNameSelect regular-form-1' type='text' className={schoolNameError ? 'form-control error' : 'form-control'} 
+                  placeholder='最終学校名入力' 
+                  ref={schoolNameRef}
+                  onChange={handleInputTextChangeEvent} value={body.schoolNameSelect}/>
                 </div>
               </div>
               <div className='form-flex-box flex space-between items-start'>
@@ -1020,8 +1099,10 @@ const ResumeChange = () => {
                 </div>
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>専攻 <span>*</span></div>
-                  <input id='majorNameSelect regular-form-1' type='text' className='form-control' placeholder='専攻入力'
-                         onChange={handleInputTextChangeEvent} value={body.majorNameSelect}/>
+                  <input id='majorNameSelect regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} 
+                  placeholder='専攻入力' 
+                  ref={majorNameRef}
+                  onChange={handleInputTextChangeEvent} value={body.majorNameSelect}/>
                 </div>
               </div>
               <div className='form-flex-box flex space-between items-start'>
@@ -1042,10 +1123,12 @@ const ResumeChange = () => {
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>メールアドレス <span>*</span></div>
                   <div className='flex items-center gap-2'>
-                    <input id='userEmailSelect regular-form-1' type='text' className='form-control'
+                    <input id='userEmailSelect regular-form-1' type='text' className={emailError ? 'form-control error' : 'form-control'} 
                            placeholder='イーメール入力'
                            onChange={handleInputTextChangeEvent}
-                           onBlur={handleCheckText} value={body.userEmailSelect}/>
+                           onBlur={handleCheckText} 
+                           value={body.userEmailSelect}
+                           ref={userEmailRef}/>
                     <div className='form-check form-switch flex gap-2'>
                       <div
                         className='switch-tit shrink-0 w50 text-center'>{body.userEmailFlag === '0' ? '非公開' : '公開'}</div>
@@ -1062,11 +1145,12 @@ const ResumeChange = () => {
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>連絡先 <span>*</span></div>
                   <div className='flex items-center gap-2'>
-                    <input id='phoneNumberSelect regular-form-1' type='text' className='form-control'
+                    <input id='phoneNumberSelect regular-form-1' type='text' className={phoneError ? 'form-control error' : 'form-control'}
                            value={body.phoneNumberSelect}
                            placeholder='-なしで数字だけ入力してください。'
                            onChange={handleInputTextChangeEvent}
                            onBlur={handleCheckText}
+                           ref={phoneNumberRef}
                     />
                     <div className='form-check form-switch flex gap-2'>
                       <div
@@ -1131,6 +1215,7 @@ const ResumeChange = () => {
               </div>
 
               <div className='divider'/>
+              <div className={projectError ? 'error' : ''} tabIndex={0} ref={projectRef}>
               {
                 isLoading && career.map((item, key) => {
                   return <CareerReWrite
@@ -1152,6 +1237,7 @@ const ResumeChange = () => {
                   />
                 })
               }
+              </div>
               <div className='divider'/>
 
               {/* 나의 스킬 */}
@@ -1165,8 +1251,9 @@ const ResumeChange = () => {
                     <div className='relative text-slate-500'>
                       <input
                         type='text'
-                        className='form-control pr-10'
+                        className= {skillCodeError ? 'form-control pr-10 error' : 'form-control pr-10'}
                         placeholder='検索'
+                        ref={skillCodeRef}
                         onChange={(e) => {
                           if (e.target.value !== '') {
                             setSkillList({
