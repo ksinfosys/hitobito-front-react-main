@@ -766,7 +766,7 @@ const ResumeRegist = () => {
           </div>
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>イーメール <span>*</span></div>
+              <div className='form-tit'>メールアドレス <span>*</span></div>
               <div className='flex items-center gap-2'>
                 <input id='userEmail regular-form-1' type='text' className='form-control' placeholder='イーメール入力'
                   onChange={handleInputTextChangeEvent}
@@ -909,12 +909,18 @@ const ResumeRegist = () => {
                 </div>
               </div>
               <div className='box-item flex flex-col'>
-                <div className='form-tit'>経歴期間</div>
+                <div className='form-tit'>経験期間</div>
                 <div className='flex items-center gap-2'>
                   <SelectBox className={'refTarget_select'} id={'careerCode'} data={data && data.skillCareerList}
                     onChange={handleUpdateSkill} defaultValue={skillItem.temp?.careerCode?.careerCode} />
                 </div>
               </div>
+            </div>
+            <div>
+            検索ボックスに、言語名、フレームワーク名、DB名などの頭文字を入力し、
+            </div>
+            <div>
+            表示されたリストから選択してください。
             </div>
             <div className="flex items-center space-between mb-4">
               <button onClick={() => {
@@ -941,10 +947,10 @@ const ResumeRegist = () => {
             </div>
           </div>
           <div className='blue-tit'>
-            登録されたスキルリスト
+            既に登録されているスキルリスト
           </div>
           <div className='blue-btn-wrap flex gap-2 items-center'>
-            {
+            { 
               skillItem.arr.map((item, key) => {
                 return (
                   <div className='blue-btn new-skillist' key={key}>
@@ -996,7 +1002,7 @@ const ResumeRegist = () => {
                 <div className='attach-cont-item flex items-center space-between' key={index}>
                   <input className='upload-name mr-2 attach-cont-tit' value={name} placeholder='' readOnly />
                   <button className='attach-cont-btn' onClick={() => handleDeleteFile(index)}>
-                    <img src={blacksmallX} alt='' />
+                    ✕削除
                   </button>
                 </div>
               ))}
@@ -1009,7 +1015,7 @@ const ResumeRegist = () => {
               <img src={Download} alt='' />
             </button>
             <button className='btn btn-primary flex items-center h48' onClick={handleSubmit}>
-              登録
+              この内容で履歴書を登録する
             </button>
           </div>
           <div className='blue-tit'>
