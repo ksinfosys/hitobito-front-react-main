@@ -1,6 +1,6 @@
 const ModalEvent = (type) => {
   return {
-    oneDepth: (e, depthMenu, setDepthMenu, mobile, modalFlag, flag) => {
+    oneDepth: (e, depthMenu, setDepthMenu, flag) => {
       const depth = parseInt(e.nativeEvent.target.selectedIndex) - 1
       const text = e.nativeEvent.target[depth + 1].text
       const sFlag = flag ? flag : ''
