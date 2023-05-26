@@ -1646,7 +1646,7 @@ const CorpInfoMng = () => {
         }}
       >
         <ModalBody className="p-10 text-center">
-          <div className="modal-tit">添付ファイルは5個を超えることはできません。</div>
+          <div className="modal-tit">添付ファイルは４個を超えることはできません。</div>
           <div className="modal-subtit">
           </div>
           <div className="flex flex-end gap-3">

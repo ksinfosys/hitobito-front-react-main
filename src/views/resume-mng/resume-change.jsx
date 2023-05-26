@@ -168,7 +168,7 @@ const ResumeChange = () => {
         })
       }
       if (key === 'phoneNumberSelect' && !phoneCheck.test(value)) {
-        alert('入力形式:000-0000-0000.に合わせてください。')
+        alert('電話番号の形式を確認してください。')
         e.target.value = ''
         setBody({
           ...body,
@@ -344,7 +344,7 @@ const ResumeChange = () => {
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     if (rsFileDocument.length + files.length >= 5) {
-      alert("ファイルは５つまで添付できます。")
+      alert("ファイルは４つまで添付できます。")
       return false;
     }
     files.map(file => {
@@ -399,7 +399,10 @@ const ResumeChange = () => {
       if (res.data.resultCode === '200') {
         alert(res.data.resultMessage)
         window.location.href = '/';
+      } else {
+        window.alert(res.data.resultMessage)
       }
+
       console.log(res)
     })
       .catch((res) => console.log(res))
@@ -1061,7 +1064,7 @@ const ResumeChange = () => {
                   <div className='flex items-center gap-2'>
                     <input id='phoneNumberSelect regular-form-1' type='text' className='form-control'
                            value={body.phoneNumberSelect}
-                           placeholder='入力形式: 000-0000-0000に合わせてください。'
+                           placeholder='-なしで数字だけ入力してください。'
                            onChange={handleInputTextChangeEvent}
                            onBlur={handleCheckText}
                     />
@@ -1294,12 +1297,12 @@ const ResumeChange = () => {
                     </label>
                   </div>
                 </div>
-                <div className='flex flex-col attach-cont-wrap'>
+                <div className=' blue-btn-wrap flex flex-col attach-cont-wrap'>
                   {fileNames.map((file, index) => {
-                    return <div className='attach-cont-item flex items-center space-between' key={index}>
-                      <input className='upload-name mr-2 attach-cont-tit' value={file} placeholder='' readOnly/>
+                    return <div className='blue-btn attach-cont-item flex items-center space-between' style={{backgroundColor: '#EDF5FF'}} key={index}>
+                      <input className='upload-name mr-2 attach-cont-tit' style={{backgroundColor: '#EDF5FF'}} value={file} placeholder='' readOnly/>
                       <button className='attach-cont-btn' onClick={() => handleDeleteFile(index)}>
-                        ✕削除
+                        ✕
                       </button>
                     </div>
                   })}

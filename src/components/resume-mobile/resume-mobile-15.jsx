@@ -25,7 +25,7 @@ const ResumeMobile15 = (props) => {
     // 파일 업로드 부분
     const handleFileUpload = (event) => {
         if (props.rsFileDocument.length >= 5) {
-            alert("ファイルは５つまで添付できます。")
+            alert("ファイルは４つまで添付できます。")
             return false;
         }
         const files = Array.from(event.target.files);

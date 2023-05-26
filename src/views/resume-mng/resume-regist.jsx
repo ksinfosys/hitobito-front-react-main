@@ -138,7 +138,7 @@ const ResumeRegist = () => {
         })
       }
       if (key === 'phoneNumber' && !phoneCheck.test(value)) {
-        alert('入力形式:000-0000-0000.に合わせてください。')
+        alert('電話番号の形式を確認してください。')
         e.target.value = ''
         setBody({
           ...body,
@@ -310,7 +310,7 @@ const ResumeRegist = () => {
   // 파일 업로드 부분
   const handleFileUpload = (event) => {
     if (rsFileDocument.length >= 5) {
-      alert("ファイルは５つまで添付できます。")
+      alert("ファイルは４つまで添付できます。")
       return false;
     }
     const files = Array.from(event.target.files);
@@ -785,7 +785,7 @@ const ResumeRegist = () => {
               </div>
             </div>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>電話番号 <span>*</span></div>
+              <div className='form-tit'>連絡先 <span>*</span></div>
               <div className='flex items-center gap-2'>
                 <input id='phoneNumber regular-form-1' type='text' className='form-control'
                   placeholder='-なしで数字だけ入力してください。' onChange={handleInputTextChangeEvent}
@@ -997,12 +997,12 @@ const ResumeRegist = () => {
                 </label>
               </div>
             </div>
-            <div className='flex flex-col attach-cont-wrap'>
+            <div className='blue-btn-wrap flex flex-col attach-cont-wrap'>
               {fileNames.map((name, index) => (
-                <div className='attach-cont-item flex items-center space-between' key={index}>
-                  <input className='upload-name mr-2 attach-cont-tit' value={name} placeholder='' readOnly />
+                <div className='blue-btn attach-cont-item flex items-center space-between' style={{backgroundColor: '#EDF5FF'}}  key={index}>
+                  <input className='upload-name mr-2 attach-cont-tit'style={{backgroundColor: '#EDF5FF'}}  value={name} placeholder='' readOnly />
                   <button className='attach-cont-btn' onClick={() => handleDeleteFile(index)}>
-                    ✕削除
+                    ✕
                   </button>
                 </div>
               ))}
@@ -1195,7 +1195,7 @@ const ResumeRegist = () => {
     >
       <ModalBody className="p-10 text-center">
         <div className="modal-tit mb-5">
-          글자는 200까지 입력 가능합니다.
+        自己紹介は200字まで入力可能です。
         </div>
         {/* <div className="modal-subtit">管理者に問い合わせしてください。</div> */}
         <div className="flex flex-end gap-3">
