@@ -20,6 +20,7 @@ import {Lucide, Modal, ModalBody, ModalFooter, ModalHeader} from "@/base-compone
 import {useNavigate} from "react-router-dom";
 import MobileSelectBox from "./mobile-items/MobileSelectBox";
 import $ from "jquery";
+import { CornerDownLeft } from 'lucide-react';
 
 const ResumeChange = () => {
 
@@ -425,7 +426,7 @@ const ResumeChange = () => {
         lastLoginTime: getCookie('lastLoginTime'),
       }
     }).then((res) => {
-      // console.log(res.data.result);
+      console.log(res.data.result);
       let hopeCareerDepthFirst = "";
       let hopeCareerDepthSeconds = "";
       let jobTypeDepthFirst = "";
@@ -613,25 +614,46 @@ const ResumeChange = () => {
       setRsFilePhoto([])
       setRsFileDocument([])
 
-      fetchImage?.map((img) => {
-        axios.get('/api' + img.rsFileUrl, {
-          responseType: 'blob',
-          headers: {
-            accessToken: getCookie('accessToken').toString(),
-            lastLoginTime: getCookie('lastLoginTime').toString()
-          }
-        }).then(res => {
-          const file = new File([res.data], res.rsFileName)
-          const reader = new FileReader()
-          reader.readAsDataURL(file)
-          reader.onload = (loadResponse) => {
-            const imageData = loadResponse.currentTarget.result
-            // console.log(imageData)
-            setImage(prevState => [...prevState, imageData])
-          }
-          setRsFilePhoto(prev => [...prev, res.data])
-        })
-      })
+      for(let i = 0; i < fetchImage.length; i++){
+        if(fetchImage[i].invalidFlag === "0"){
+          axios.get('/api' + fetchImage[i].rsFileUrl, {
+            responseType: 'blob',
+            headers: {
+              accessToken: getCookie('accessToken').toString(),
+              lastLoginTime: getCookie('lastLoginTime').toString()
+            }
+          }).then(res => {
+            const file = new File([res.data], res.rsFileName)
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onload = (loadResponse) => {
+              const imageData = loadResponse.currentTarget.result
+              setImage(prevState => [...prevState, imageData])
+            }
+            setRsFilePhoto(prev => [...prev, res.data])
+          })
+        }
+      }
+      for(let i = 0; i < fetchImage.length; i++){
+        if(fetchImage[i].invalidFlag === "1"){
+          axios.get('/api' + fetchImage[i].rsFileUrl, {
+            responseType: 'blob',
+            headers: {
+              accessToken: getCookie('accessToken').toString(),
+              lastLoginTime: getCookie('lastLoginTime').toString()
+            }
+          }).then(res => {
+            const file = new File([res.data], res.rsFileName)
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onload = (loadResponse) => {
+              const imageData = loadResponse.currentTarget.result
+              setImage(prevState => [...prevState, imageData])
+            }
+            setRsFilePhoto(prev => [...prev, res.data])
+          })
+        }
+      }
 
       setFileNames([])
       fetchDocument?.map((document) => {
