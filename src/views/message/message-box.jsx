@@ -1010,7 +1010,7 @@ function MessageBox() {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">選択確認</div>
                     <div className="modal-subtit">
-                        メッセージを１つ以上選択してください。
+                        メッセージを１つ選択してください。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
