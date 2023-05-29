@@ -18,6 +18,7 @@ function Withdraw() {
       .then((res) => {
         if (CheckToken(res, navigate)){
           liff.logout()
+          delCookie("LIFF_STORE:expires:1657832968-ZeGx3gbz")
         }
       })
   }
