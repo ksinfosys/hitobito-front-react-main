@@ -583,7 +583,14 @@ const Dashboard = () => {
                                       type="radio"
                                       value={report.reportReasonCode}
                                       checked={declaration.reportReasonCode === report.reportReasonCode}
-                                      onChange={(e) => setDeclaration({ ...declaration, reportReasonCode: e.target.value })}
+                                      onChange={(e) => {
+                                        let inputarea = document.getElementById('inputarea');   
+                                        if(e.target.value === "14"){
+                                          inputarea.disabled = false;
+                                        }else if(e.target.value !== "14"){
+                                          inputarea.disabled = true;
+                                        }
+                                        setDeclaration({ ...declaration, reportReasonCode: e.target.value })}}
                                   />
                                   <label className="form-check-label" htmlFor={`radio-switch-${index}`}>
                                       {report.reportReason}
@@ -594,9 +601,11 @@ const Dashboard = () => {
                   }
               </div>
               <textarea
+                  id = "inputarea"
                   className="form-control mt-4 h-20 resize-none"
                   rows="1"
                   placeholder="通の報理由を具体的に記入してください。"
+                  disabled
                   onChange={(e) => setDeclaration({ ...declaration, reportReasonContent: e.target.value })}
               ></textarea>
               <div className="flex flex-end mt-4">

@@ -857,7 +857,7 @@ const MessageSent = () => {
                     <div id="reply-title" className="font-normal text-base mr-auto pt-3 w-full">
                         <span className="text-slate-400 font-normal mr-2 block md:inline-block w-24">タイトル</span>
                         <span className="relative">
-                            <input value={msgSendTitle} type="text" placeholder="タイトルを入力してください。" onChange={(e) => setMsgSendTitle(e.target.value)} />
+                            <input value={msgSendTitle} id="inputTittle" type="text" placeholder="タイトルを入力してください。" onChange={(e) => setMsgSendTitle(e.target.value)} />
                             <span className="limit-wrap text-slate-400">
                                 <span className="text-slate-400">{msgSendTitle.length}</span><span className="word-limit text-slate-400">/200</span>
                             </span>
@@ -881,7 +881,14 @@ const MessageSent = () => {
                             <button
                                 type="button"
                                 className="btn btn-sm btn-secondary w-24"
-                                onClick={msgSaveSubmit}
+                                onClick={()=> {
+                                    let inputTittle = document.getElementById('inputTittle');
+                                    if(inputTittle.value === "" || editorData ===""){
+                                        setSaveMsgFail01(true);
+                                        return false;
+                                    }
+                                    msgSaveSubmit()
+                                }}
                                 onKeyDown={(e) => {
                                     if (e.code === "Enter") {
                                         e.preventDefault();
@@ -1188,6 +1195,7 @@ const MessageSent = () => {
                     </div>
                 </ModalBody>
             </Modal>
+
         </>
     );
 }
