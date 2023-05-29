@@ -1384,6 +1384,8 @@ const ResumeChange = () => {
                     </label>
                   </div>
                 </div>
+              </div>
+              <div className='attach-wrap flex'>
                 <div className=' blue-btn-wrap flex flex-col attach-cont-wrap'>
                   {fileNames.map((file, index) => {
                     return <div className='blue-btn attach-cont-item flex items-center space-between' style={{backgroundColor: '#EDF5FF'}} key={index}>
