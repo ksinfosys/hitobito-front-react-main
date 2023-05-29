@@ -648,7 +648,7 @@ const ResumeRegist = () => {
         }
       })
       if (flag) {
-        alert('스킬이 중복선택 되었습니다.')
+        alert('スキルが重複されました。')
 
         return 0
       }
