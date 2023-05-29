@@ -127,6 +127,7 @@ const UserLogin = () => {
 				} else if (res.data.resultCode === '207') {
 					setSocialFail(true)
 				} else if (res.data.resultCode === '220') {
+					delCookie("LIFF_STORE:expires:1657832968-ZeGx3gbz");
 					setSecessionFail(true)
 				} else if (res.data.resultCode === '218') {
 					setReportFail(true)

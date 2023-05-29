@@ -311,7 +311,9 @@ const InterviewMng = () => {
                                     placeholder="検索ワードを入力"
                                     onKeyDown={(e) => {
                                         if (e.code === "Enter") {
+                                            if(searchValue){
                                             searchSubmit();
+                                            }
                                         }
                                         return;
                                     }}
@@ -319,6 +321,7 @@ const InterviewMng = () => {
                                 <button
                                     className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                     onClick={searchSubmit}
+                                    disabled={!searchValue}
                                 >
                                     <img src={Search} alt="" />
                                 </button>
