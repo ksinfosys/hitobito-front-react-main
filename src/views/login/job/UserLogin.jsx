@@ -16,7 +16,7 @@ import KakaoLogin from "react-kakao-login";
 import axios from "axios";
 import CustomLineLogin from "./CusotmLineLogin";
 import serviceFetch from "../../../../util/ServiceFetch";
-import { setCookie } from "../../../utils/cookie";
+import { delCookie, setCookie } from "../../../utils/cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import { userCount } from "../../../stores/search-count";
 import { isMobile } from "react-device-detect";
@@ -119,6 +119,7 @@ const UserLogin = () => {
 						interviewCount: res.data.result.interviewCount
 					}))
 					localStorage.clear();
+					delCookie("LIFF_STORE:expires:1657832968-ZeGx3gbz");
 				} else if (res.data.resultCode === '212') {
 					setOAuthTokenFail(true)
 				} else if (res.data.resultCode === '213') {
