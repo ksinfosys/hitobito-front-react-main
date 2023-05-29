@@ -517,7 +517,7 @@ const ResumeRegist = () => {
       setJobTypeError(false);
     }
 
-    if (!body.jobType) {
+    if (!body.businessType) {
       alert("所属会社の業種を選択してください。");
       selectbusinessTypeRef.current.focus();
       setBusinessTypeError(true);
