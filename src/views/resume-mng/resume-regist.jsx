@@ -309,11 +309,11 @@ const ResumeRegist = () => {
 
   // 파일 업로드 부분
   const handleFileUpload = (event) => {
-    if (rsFileDocument.length >= 5) {
+    const files = Array.from(event.target.files);
+    if (rsFileDocument.length + files.length >= 5) {
       alert("ファイルは４つまで添付できます。")
       return false;
     }
-    const files = Array.from(event.target.files);
     files.map(file => {
       setRsFileDocument(prevItem => [...prevItem, file])
       setFileNames(prevItem => [...prevItem, file.name])
