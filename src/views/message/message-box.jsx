@@ -362,7 +362,9 @@ function MessageBox() {
                                                 }}
                                                 onKeyDown={(e) => {
                                                     if (e.code === "Enter") {
-                                                        handleSearch();
+                                                        if(searchKeyword){
+                                                            handleSearch();
+                                                          }
                                                     }
                                                     return;
                                                 }}
@@ -370,6 +372,7 @@ function MessageBox() {
                                             <button
                                                 className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                                 onClick={handleSearch}
+                                                disabled={!searchKeyword}
                                             >
                                                 <img src={Search} alt="" />
                                             </button>
@@ -437,7 +440,9 @@ function MessageBox() {
                                                 }}
                                                 onKeyDown={(e) => {
                                                     if (e.code === "Enter") {
-                                                        handleSearch();
+                                                        if(searchKeyword){
+                                                            handleSearch();
+                                                          }
                                                     }
                                                     return;
                                                 }}
@@ -445,6 +450,7 @@ function MessageBox() {
                                             <button
                                                 className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                                 onClick={handleSearch}
+                                                disabled={!searchKeyword}
                                             >
                                                 <img src={Search} alt="" />
                                             </button>

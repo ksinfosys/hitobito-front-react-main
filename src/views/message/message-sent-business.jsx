@@ -273,7 +273,9 @@ function MessageSentBusiness() {
                                             onChange={(e) => setSearchValue(e.target.value)}
                                             onKeyDown={(e) => {
                                                 if (e.code === "Enter") {
-                                                    handleSearch();
+                                                    if(searchValue){
+                                                        handleSearch();
+                                                      }
                                                 }
                                                 return;
                                             }}
@@ -281,6 +283,7 @@ function MessageSentBusiness() {
                                         <button
                                             className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                             onClick={handleSearch}
+                                            disabled={!searchValue}
                                         >
                                             <img src={Search} alt="" />
                                         </button>

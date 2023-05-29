@@ -248,7 +248,9 @@ function MessageBoxBusiness() {
                                             onChange={(e) => setSearchKeyword(e.target.value)}
                                             onKeyDown={(e) => {
                                                 if (e.code === "Enter") {
-                                                    handleSearch();
+                                                    if(searchKeyword){
+                                                        handleSearch();
+                                                    }
                                                 }
                                                 return;
                                             }}
@@ -256,6 +258,7 @@ function MessageBoxBusiness() {
                                         <button
                                             className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                             onClick={handleSearch}
+                                            disabled={!searchKeyword}
                                         >
                                             <img src={Search} alt="" />
                                         </button>
