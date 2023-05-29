@@ -740,7 +740,7 @@ function MessageBoxBusiness() {
                                 setMessageReplyFail(false);
                             }}
                         >
-                            送信
+                            確認
                         </a>
                     </div>
                 </ModalBody>
@@ -762,7 +762,7 @@ function MessageBoxBusiness() {
                                 setMessageReplyCheckFail(false);
                             }}
                         >
-                            送信
+                            確認
                         </a>
                     </div>
                 </ModalBody>
@@ -776,7 +776,7 @@ function MessageBoxBusiness() {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">選択確認</div>
                     <div className="modal-subtit">
-                        メッセージを１つ以上選択してください。
+                        メッセージを１つ選択してください。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
@@ -786,7 +786,7 @@ function MessageBoxBusiness() {
                                 setMsgCheckModal(false);
                             }}
                         >
-                            送信
+                            確認
                         </a>
                     </div>
                 </ModalBody>
