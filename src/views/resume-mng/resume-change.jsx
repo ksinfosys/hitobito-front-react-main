@@ -1709,9 +1709,9 @@ const ResumeChange = () => {
                   </button>
                 </div>
               </div>
-              <div className="flex flex-col gap-2 items-start ">
+              <div className="flex flex-col gap-2 items-start "  style={{width: 300 +'px'}} >
                 <div className='form-tit'>経歴期間</div>
-                <SelectBox className={'refTarget_select w-40'} id={'careerCode'} data={data && data.skillCareerList}
+                <SelectBox className={'refTarget_select'} id={'careerCode'} data={data && data.skillCareerList}
                            onChange={handleUpdateMultipleSkill} defaultValue={multipleSkills.selector?.careerCode}/>
               </div>
             </div>
@@ -1731,7 +1731,39 @@ const ResumeChange = () => {
               </div>
             </div>
           </div>
-          <div class="blue-btn-wrap flex gap-2 items-center">
+          {/* <div class="blue-btn-wrap flex gap-2 items-center">
+            {
+              multipleSkills.selector.arr.map((item, key) => {
+                return (
+                  <div key={key} className='blue-btn'>
+                    <span className="skilllist-langu blue-line pr-2 inline-block">
+                      {multipleSkills.origin.filter(skill => skill.skill === item.name)[0]?.skillCategoryName}
+                    </span>
+                    <span className="pr-2 inline-block">{
+                      multipleSkills.origin.filter(skill => skill.skill === item.name)[0]?.skillName
+                    }</span>
+                    <span>{data.skillCareerList.filter(career => career.skillCareer === item.year)[0]?.skillCareerName}</span>
+                    <button className='blue-x-btn'
+                            onClick={(e) => {
+                              const tempArr = [...multipleSkills.selector.arr.filter(it => it.name !== item.name)]
+                              setMultipleSkills({
+                                ...multipleSkills,
+                                selector: {
+                                  ...multipleSkills.selector,
+                                  arr: [...tempArr]
+                                }
+                              })
+                            }}>
+                      <img src={blueX} alt=''/>
+                    </button>
+                  </div>
+                )
+              })
+            }
+          </div> */}
+        </div>
+        <div className="w-full text-left mt-4 text-slate-500">* カテゴリー選択後、スキルを検索し経歴を入力してください。</div>
+        <div class="blue-btn-wrap flex gap-2 items-center">
             {
               multipleSkills.selector.arr.map((item, key) => {
                 return (
@@ -1761,8 +1793,6 @@ const ResumeChange = () => {
               })
             }
           </div>
-        </div>
-        <div className="w-full text-left mt-4 text-slate-500">* カテゴリー選択後、スキルを検索し経歴を入力してください。</div>
         {/* <div className="modal-subtit">管理者に問い合わせしてください。</div> */}
         <div className="flex flex-end gap-3 mt-16">
           <a
