@@ -236,9 +236,15 @@ function PointDetail() {
                       <div className="text-dark font-bold lg:text-lg lg:w-3/5 text-left lg:text-right mr-12">
                         {result.expectedDate && replaceToPointFormat(result.expectedDate)} 積立予定のポイント数
                       </div>
+                      {result.today.substring(6,8) > 27 ?
+                      <div className="text-primary font-bold">
+                        {result.expectedPoint && result.expectedPoint}
+                      </div>
+                      :
                       <div className="text-primary font-bold lg:text-2xl">
                         {result.expectedPoint && regexUserPoint(result.expectedPoint)}P
                       </div>
+                      }
                     </div>   
                   </li>
                 </ul>

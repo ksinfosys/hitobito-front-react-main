@@ -301,7 +301,7 @@ const ResumeRegist = () => {
       document.querySelector('.refTarget_select').value = null;
       document.querySelectorAll('.refTarget_radio').forEach(radio => radio.checked = false)
     } else {
-      //alert('스킬이나 経歴이 선택되지 않았습니다.')
+      alert('スキルと経験期間を両方選択してください。')
     }
 
   }
