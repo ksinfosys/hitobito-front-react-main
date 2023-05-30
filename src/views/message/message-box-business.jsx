@@ -174,7 +174,7 @@ function MessageBoxBusiness() {
         }).then((res) => {
             res.resultCode === '200' ? (
                 setSaveMsgSuccess(true)
-            ) : res.resultCode === '302' ? (
+            ) : res.resultCode === '301' || res.resultCode === '302' ? (
                 setSaveMsgFail01(true)
             ) : (
                 setModalFail(true)
