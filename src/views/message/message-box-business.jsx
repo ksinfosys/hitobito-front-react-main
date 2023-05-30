@@ -132,7 +132,10 @@ function MessageBoxBusiness() {
             setIsSending(true); // 전송 시작
             setMsgModal(false);
             ServiceFetch("/msg/reply", "post", {
-                receiveUserId: receptionState.receiveUserId ? receptionState.receiveUserId : msgData[0].receiveUserId,
+                // receiveUserId: receptionState.receiveUserId ? receptionState.receiveUserId : msgData[0].receiveUserId,
+                receiveUserId : (receptionState.msgTypeName==="送信")
+                                ? (receptionState.receiveUserId ? receptionState.receiveUserId : msgData[0].receiveUserId)
+                                : (receptionState.sendUserId ? receptionState.sendUserId : msgData[0].sendUserId),
                 msgTitle: msgSendTitle,
                 msgContents: editorData,
                 msgIdx: receptionState.msgIdx ? receptionState.msgIdx : msgIdxes[0]
