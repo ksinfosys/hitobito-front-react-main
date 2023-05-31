@@ -219,13 +219,14 @@ const DashboardBusiness = () => {
             curPage: currentPageIdx,
             selectCode: selectCode,
         }).then((res) => {
-            console.log(res.result.searchCount);
+            console.log(res.result);
             setUserCountV({searchCount : res.result.searchCount});
             res.resultCode === '200' ? (
                 setListState(res.result.searchList),
                 setPgnInfo(res.result.pageItem),
                 setSearchId(res.result.searchCondition.srchId),
-                getList(),
+                setSearchConditionList(res.result.searchCondition.searchConditionList),
+                setSearchCount(res.result.searchCount),
                 setSearchStatus(!searchStatus)
             ) : res.resultCode === "702" ? (
                 setSearchFailModal(true)
@@ -345,7 +346,11 @@ const DashboardBusiness = () => {
 
     // 최초 방 진입 시 list 가져오기
     useEffect(() => {
-        selectTags?.length > 0 ? searchFind() : getList();
+        if (selectTags && selectTags.length > 0) {
+            searchFind();
+        } else {
+            getList();
+        }
         setAllCheck(false);
     }, [currentPageIdx, offerState]);
 
@@ -530,7 +535,15 @@ const DashboardBusiness = () => {
                         </div>
                     </div>
                     <div className="flex gap-3 flex-row-reverse">
-                    <div><button className="btn-lg btn btn-pending w-32" style={{height: 60 + 'px', float : 'right', marginRight : 20 + 'px'}} onClick={() => {setCurrentPageIdx(1), searchFind()}}><img src={Search} alt="" />　検&nbsp;索</button></div>
+                    <div><button className="btn-lg btn btn-pending w-32" style={{height: 60 + 'px', float : 'right', marginRight : 20 + 'px'}} 
+                        onClick={() => {
+                            if (currentPageIdx && currentPageIdx === 1) {
+                                searchFind();
+                            }else{
+                                setCurrentPageIdx(1);
+                            }
+                        }}>
+                        <img src={Search} alt="" />　検&nbsp;索</button></div>
                     {selectTags?.length > 0 && (
                         <div className="skill-list-wrap business2">
                             <div className="skill-list-cont">
