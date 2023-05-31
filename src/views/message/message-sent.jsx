@@ -299,7 +299,7 @@ const MessageSent = () => {
         }).then((res) => {
             res.resultCode === '200' ? (
                 setSaveMsgSuccess(true)
-            ) : res.resultCode === '302' ? (
+            ) : res.resultCode === '301' || res.resultCode === '302' ? (
                 setSaveMsgFail01(true)
             ) : (
                 setModalFail(true)
@@ -881,14 +881,7 @@ const MessageSent = () => {
                             <button
                                 type="button"
                                 className="btn btn-sm btn-secondary w-24"
-                                onClick={()=> {
-                                    let inputTitle = document.getElementById('inputTitle');
-                                    if(inputTitle.value === "" || editorData ===""){
-                                        setSaveMsgFail01(true);
-                                        return false;
-                                    }
-                                    msgSaveSubmit()
-                                }}
+                                onClick={msgSaveSubmit}
                                 onKeyDown={(e) => {
                                     if (e.code === "Enter") {
                                         e.preventDefault();

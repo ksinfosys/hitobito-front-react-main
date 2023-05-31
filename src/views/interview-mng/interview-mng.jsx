@@ -244,7 +244,7 @@ const InterviewMng = () => {
         }).then((res) => {
             res.resultCode === '200' ? (
                 setSaveMsgSuccess(true)
-            ) : res.resultCode === '302' ? (
+            ) : res.resultCode === '301' || res.resultCode === '302' ? (
                 setSaveMsgFail01(true)
             ) : (
                 setSaveMsgFail01(true)
@@ -579,9 +579,11 @@ const InterviewMng = () => {
                                                 let inputarea = document.getElementById('inputarea');
                                                 if(e.target.value === "00"){
                                                     inputarea.disabled = false;
-                                                }else 
+                                                }else if(e.target.value !== "00"){
                                                     inputarea.disabled = true;
-
+                                                    declaration.reportReasonContent = "";
+                                                    inputarea.value = "";
+                                                }
                                                 setDeclaration({ ...declaration, reportReasonCode: e.target.value })}}
                                         />
                                         <label className="form-check-label" htmlFor={`radio-switch-${index}`}>
@@ -598,7 +600,7 @@ const InterviewMng = () => {
                         rows="1"
                         placeholder="通報の理由を具体的に記入してください。"
                         disabled
-                        value={declaration.reportReasonContent}
+                        //value={declaration.reportReasonContent}
                         onChange={(e) => setDeclaration({ ...declaration, reportReasonContent: e.target.value })}
                     ></textarea>
                     <div className="flex flex-end mt-4">
@@ -606,6 +608,8 @@ const InterviewMng = () => {
                             className="btn btn-business btn-report"
                             onClick={() => {
                                 reportSubmit();
+                                let inputarea = document.getElementById('inputarea');
+                                inputarea.value = "";
                             }}
                         >
                             通報

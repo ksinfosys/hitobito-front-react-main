@@ -602,6 +602,8 @@ const Dashboard = () => {
                                           inputarea.disabled = false;
                                         }else if(e.target.value !== "14"){
                                           inputarea.disabled = true;
+                                          declaration.reportReasonContent = "";
+                                          inputarea.value = "";
                                         }
                                         setDeclaration({ ...declaration, reportReasonCode: e.target.value })}}
                                   />
@@ -626,7 +628,9 @@ const Dashboard = () => {
                       href="#"
                       className="btn btn-primary btn-report"
                       onClick={() => {
-                            reportSubmit();
+                          reportSubmit();
+                          let inputarea = document.getElementById('inputarea');
+                          inputarea.value = "";  
                       }}
                   >
                       通報
