@@ -1816,6 +1816,12 @@ const ResumeChange = () => {
           <a
             className="btn btn-outline-primary w-auto"
             onClick={(e) => {
+              e.preventDefault(); 
+              if(!multipleSkills.selector.careerCode || !multipleSkills.selector.skillCode){
+                setResumeLabel("スキルと経験期間を両方選択してください。");
+                setResumeAlert(true); 
+                skillCodeRef.current.focus();
+              }
               handleAddMultipleSkill(e)
             }}
           >
