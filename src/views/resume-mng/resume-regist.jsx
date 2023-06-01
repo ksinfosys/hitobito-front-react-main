@@ -1619,6 +1619,12 @@ const ResumeRegist = () => {
           <a
             className="btn btn-primary"
             onClick={(e) => {
+              e.preventDefault(); 
+              if(multipleSkills.selector.arr.length == 0){
+                setResumeLabel("スキルを追加してから登録してください。");
+                setResumeAlert(true); 
+                skillCodeRef.current.focus();
+              }
               // setskillPlusModal(false);
               handleChangeSKillList()
               skillNameRef.current.value = ''
