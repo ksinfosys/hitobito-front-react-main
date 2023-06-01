@@ -198,7 +198,7 @@ const UserLogin = () => {
 				loginType: 'apple',
 				OAuthToken: {
 					access_token: null,
-					token_type: null,
+					token_type: "web",
 					refresh_token: null,
 					expires_in: null,
 					scope: null,
