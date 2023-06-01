@@ -1610,6 +1610,13 @@ const ResumeRegist = () => {
           <a
             className="btn btn-outline-primary w-auto"
             onClick={(e) => {
+              e.preventDefault(); 
+              if(!multipleSkills.selector.careerCode || !multipleSkills.selector.skillCode){
+                setResumeLabel("スキルと経験期間を両方選択してください。");
+                setResumeAlert(true); 
+                skillCodeRef.current.focus();
+                return false;
+              }
               handleAddMultipleSkill(e)
             }}
           >
@@ -1619,6 +1626,13 @@ const ResumeRegist = () => {
           <a
             className="btn btn-primary"
             onClick={(e) => {
+              e.preventDefault(); 
+              if(multipleSkills.selector.arr.length == 0){
+                setResumeLabel("スキルを追加してから登録してください。");
+                setResumeAlert(true); 
+                skillCodeRef.current.focus();
+                return false;
+              }
               // setskillPlusModal(false);
               handleChangeSKillList()
               skillNameRef.current.value = ''
