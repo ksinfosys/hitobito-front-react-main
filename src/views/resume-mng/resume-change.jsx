@@ -1821,6 +1821,7 @@ const ResumeChange = () => {
                 setResumeLabel("スキルと経験期間を両方選択してください。");
                 setResumeAlert(true); 
                 skillCodeRef.current.focus();
+                return false;
               }
               handleAddMultipleSkill(e)
             }}
@@ -1836,6 +1837,7 @@ const ResumeChange = () => {
                 setResumeLabel("スキルを追加してから登録してください。");
                 setResumeAlert(true); 
                 skillCodeRef.current.focus();
+                return false;
               }
               // setskillPlusModal(false);
               handleChangeSKillList()
