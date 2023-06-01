@@ -296,7 +296,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setOAuthTokenFail(false);
 				}}
@@ -322,7 +322,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setSocialIdFail(false);
 				}}
@@ -348,7 +348,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setSocialFail(false);
 				}}
@@ -374,7 +374,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setSecessionFail(false);
 				}}
@@ -400,7 +400,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setReportFail(false);
 				}}
@@ -426,7 +426,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setStopFail(false);
 				}}
