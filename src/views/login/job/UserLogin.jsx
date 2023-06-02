@@ -32,7 +32,6 @@ const UserLogin = () => {
 	const [socialFail, setSocialFail] = useState(false);
 	const [secessionFail, setSecessionFail] = useState(false);
 	const [reportFail, setReportFail] = useState(false);
-	const [stopFail, setStopFail] = useState(false);
 	// 에러메시지 케이스 : E
 	const navigate = useNavigate()
 	const location = useLocation();
@@ -132,7 +131,20 @@ const UserLogin = () => {
 				} else if (res.data.resultCode === '218') {
 					setReportFail(true)
 				} else if (res.data.resultCode === '231') {
-					setStopFail(true)
+					await setCookie("accessToken", res.headers.accesstoken, 1);
+					await setCookie("lastLoginTime", res.headers.lastlogintime, 1);
+					setUserInfoV(prevValue => ({
+						...prevValue,
+						userType: 1,
+						userNickName: res.data.result.nickname,
+						historyBalance: res.data.result.historyBalance
+					}));
+					setUserCountV(prev => ({
+						...prev,
+						interviewCount: res.data.result.interviewCount
+					}))
+					localStorage.clear();
+					navigate('/suspension')
 				} else {
 					return
 				}
@@ -410,6 +422,7 @@ const UserLogin = () => {
 			</div>
 		</ModalBody>
 		</Modal>
+
 
 		{/* stop fail */}
 		<Modal

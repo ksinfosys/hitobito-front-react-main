@@ -5,7 +5,7 @@ import { helper as $h } from "@/utils";
 import { sideMenu as useSideMenuStore } from "@/stores/side-menu";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { enter, leave, linkTo, nestedMenu } from "./index";
-
+import ServiceFetch from "../../../util/ServiceFetch";
 import {
   Dropdown,
   DropdownContent,
@@ -31,7 +31,6 @@ import { userInfo } from "../../stores/user-info";
 import { useLiff } from "react-liff";
 import NewAlarm from "@/assets/images/new-al.svg";
 import { userCount } from "../../stores/search-count";
-
 
 function Main() {
   const token = getCookie("accessToken");
@@ -66,6 +65,8 @@ function Main() {
 
   const sideMenu = () => nestedMenu($h.toRaw(sideMenuStore.menu), location);
 
+  const [stopFail, setStopFail] = useState(false);
+  const [resignState, setResignState] = useState(false);
   //사이드메뉴
   const logOut = () => {
     if (userInfoV.userType === 1) {
@@ -203,6 +204,17 @@ function Main() {
     };
   });
 
+  useEffect(() => {
+    ServiceFetch('/user/resign', 'get')
+      .then((res) => {
+        console.log(res.result)
+        if(res.result.resignStatus == "2"){
+          setResignState(true)
+          setStopFail(true)
+        }
+      })
+  }, [])
+
   return (
     <div>
       <div>
@@ -218,7 +230,7 @@ function Main() {
 
 
               <Dropdown className="new-alarm-icon-btn">
-                <DropdownToggle tag="div" role="button" className="">
+                <DropdownToggle tag="div" role="button">
                   <img src={NewAlarm} alt="" />
                   <div className="number-noti">{unreadNotiCnt}</div>
                 </DropdownToggle>
@@ -645,16 +657,17 @@ function Main() {
                   <SideMenuTooltip
                     tag="a"
                     content={menu.title}
-                    href={menu.subMenu ? "#" : menu.pathname}
-                    className={classnames({
+                    href={resignState ? "#" : menu.subMenu ? "#" : menu.pathname}
+                    className={(resignState ? "disabled " : "") + classnames({
                       "side-menu": true,
                       "side-menu--active": menu.active,
                       "side-menu--open": menu.activeDropdown,
                     })}
                     onClick={(event) => {
-                      event.preventDefault();
-                      linkTo(menu, navigate);
-                      setFormattedMenu($h.toRaw(formattedMenu));
+                      resignState ? (event.preventDefault()) :
+                      (event.preventDefault(),
+                      linkTo(menu, navigate),
+                      setFormattedMenu($h.toRaw(formattedMenu)))
                     }}
                   >
                     {/* <div className="side-menu__icon">
@@ -698,9 +711,9 @@ function Main() {
                                 "side-menu--active": subMenu.active,
                               })}
                               onClick={(event) => {
-                                event.preventDefault();
-                                linkTo(subMenu, navigate);
-                                setFormattedMenu($h.toRaw(formattedMenu));
+                                event.preventDefault(),
+                                linkTo(subMenu, navigate),
+                                setFormattedMenu($h.toRaw(formattedMenu))
                               }}
                             >
                               {/* <div className={sidesMenu ? "side-menu__icon" : "side-menu__icon ml-3"}>
@@ -882,7 +895,32 @@ function Main() {
         </div>
         {/* END: Content */}
       </div>
-    </div>
+
+      <Modal
+      show={stopFail}
+      onHidden={() => {
+        setStopFail(false);
+      }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit">利用停止中です。</div>
+          <div className="modal-subtit">
+          メニューの選択に制限があります。いつでも利用再開できます。
+          </div>
+          <div className="flex flex-end gap-3">
+          <a
+            href="#"
+            className="btn btn-primary"
+            onClick={() => {
+            setStopFail(false);
+            }}
+          >
+            確認
+          </a>
+          </div>
+        </ModalBody>
+      </Modal>
+    </div> 
   );
 }
 
