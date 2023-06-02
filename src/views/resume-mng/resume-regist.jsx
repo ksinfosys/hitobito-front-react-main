@@ -703,12 +703,19 @@ const ResumeRegist = () => {
       }
 
       // console.log(tempBodySkill.indexOf(multi.name))
+      // if (tempBodySkill.indexOf(multi.name) === -1) {
+      //   tempBodySkill.push(multi.name)
+      // }
+      // if (tempBodyCareer.indexOf(multi.year) === -1) {
+      //   tempBodyCareer.push(multi.year)
+      // }
+
       if (tempBodySkill.indexOf(multi.name) === -1) {
         tempBodySkill.push(multi.name)
-      }
-      if (tempBodyCareer.indexOf(multi.year) === -1) {
         tempBodyCareer.push(multi.year)
       }
+
+
 
       setSkillList({
         ...skillList,
@@ -732,7 +739,8 @@ const ResumeRegist = () => {
         hopeCareerList1.push(data.hopeCareerList[i]);
       }
     }
-    
+    $('.hopeCareerOneDeps').empty();
+    $('.hopeCareerOneDeps').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
     for(let i = 0; i < hopeCareerList1.length; i++){
       var option = $("<option value='"+ hopeCareerList1[i].hopeCareer +"'>"+ hopeCareerList1[i].hopeCareerName +"</option>");
       $('.hopeCareerOneDeps').append(option);
@@ -773,6 +781,8 @@ const ResumeRegist = () => {
       }
     }
     
+    $('.jobTypeOneDeps').empty();
+    $('.jobTypeOneDeps').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
     for(let i = 0; i < jobTypeList1.length; i++){
       var option = $("<option value='"+ jobTypeList1[i].jobType +"'>"+ jobTypeList1[i].jobTypeName +"</option>");
       $('.jobTypeOneDeps').append(option);
@@ -783,10 +793,26 @@ const ResumeRegist = () => {
     let jobTypeList2 = [];
     let jobTypeOneDepsVal = "";
     let jobTypeListVal = "";
+    //console.log("가져온 데이터 스트링 확인: "+e.target.value.toString())
+
+    if(e.target.value.toString() === "57000"){
+      //console.log("가져온 데이터 스트링 확인2: "+e.target.value.toString()) //"57000"
+      for(let i = 0; i < data.jobTypeList.length; i++){
+          if(Number(data.jobTypeList[i].jobType) === 57000){
+          jobTypeList2.push(data.jobTypeList[i]);
+        }
+      }
+      //console.log("리스트 길이: "+jobTypeList2[0].value);
+      for(let i = 0 ; i < jobTypeList2.length; i++){
+        var option = $("<option value='"+ jobTypeList2[i].jobType +"'>"+ jobTypeList2[i].jobTypeName +"</option>");
+        $('.jobType').append(option);
+      }
+
+    }
 
     for(let i = 0; i < data.jobTypeList.length; i++){
-      jobTypeOneDepsVal = e.target.value.toString();
-      jobTypeListVal = (data.jobTypeList[i].jobType).toString();
+      jobTypeOneDepsVal = e.target.value.toString(); //선택한 값 
+      jobTypeListVal = (data.jobTypeList[i].jobType).toString(); // 리스트에서 가져온 애들
 
       if(jobTypeOneDepsVal.substring(0,4) == jobTypeListVal.substring(0,4)){
         if(Number(data.jobTypeList[i].jobType) % 10 != 0){
@@ -813,6 +839,8 @@ const ResumeRegist = () => {
       }
     }
     
+    $('.businessTypeOneDeps').empty();
+    $('.businessTypeOneDeps').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
     for(let i = 0; i < businessTypeList1.length; i++){
       var option = $("<option value='"+ businessTypeList1[i].businessType +"'>"+ businessTypeList1[i].businessTypeName +"</option>");
       $('.businessTypeOneDeps').append(option);
@@ -823,6 +851,23 @@ const ResumeRegist = () => {
     let businessTypeList2 = [];
     let businessTypeOneDepsVal = "";
     let businessTypeListVal = "";
+
+    console.log(e.target.value.toString());
+
+    if(e.target.value.toString() === "56000"){
+      //console.log("가져온 데이터 스트링 확인2: "+e.target.value.toString()) //"57000"
+      for(let i = 0; i < data.businessTypeList.length; i++){
+          if(Number(data.businessTypeList[i].businessType) === 56000){
+            businessTypeList2.push(data.businessTypeList[i]);
+        }
+      }
+      //console.log("리스트 길이: "+businessTypeList2[0].value);
+      for(let i = 0 ; i < businessTypeList2.length; i++){
+        var option = $("<option value='"+ businessTypeList2[i].businessType +"'>"+ businessTypeList2[i].businessTypeName +"</option>");
+        $('.jobType').append(option);
+      }
+
+    }
 
     for(let i = 0; i < data.businessTypeList.length; i++){
       businessTypeOneDepsVal = e.target.value.toString();
@@ -1177,9 +1222,27 @@ const ResumeRegist = () => {
                     <button className='blue-x-btn'
                       onClick={(e) => {
                         const tempArr = [...skillItem.arr.filter(it => it.name !== item.name)]
+                        const tempSkillCode = []
+                        const tempYearCode = []
                         setSkillItem({
                           ...skillItem.temp,
                           arr: [...tempArr]
+                        })
+                        console.log(tempArr);
+                        tempArr.map((skill) => {
+                          const code = skillList.origin.filter( origin => origin.skillName === skill.name)[0]?.skill
+                          const year = data.skillCareerList.filter(career => career.skillCareerName === skill.year)[0]?.skillCareer
+                          tempSkillCode.push(code)
+                          tempYearCode.push(year)
+                        })
+                        //console.log("스킬코드의 "+tempSkillCode.length);
+                        //console.log("근무연수의 "+tempYearCode.length);
+                        setBody({
+                          ...body,
+                          //skillCodeSelect: [...tempSkillCode],
+                          //careerCodeSelect: [...tempYearCode]
+                          skillCode: [...tempSkillCode],
+                          careerCode: [...tempYearCode]
                         })
                       }}>
                       <img src={blueX} alt='' />
@@ -1561,12 +1624,13 @@ const ResumeRegist = () => {
           </div> */}
         </div>
         <div className="w-full text-left mt-4 text-slate-500">* カテゴリー選択後、スキルを検索し経歴を入力してください。</div>
-        <div class="blue-btn-wrap flex gap-2 items-center">
+          <div class="blue-btn-wrap flex gap-2 items-center">
             {
               multipleSkills.selector.arr.map((item, key) => {
+                //console.log("아이템: "+item.value+", 키: "+key);
                 return (
-                  <div key={key} className='blue-btn'>
-                    <span className="skilllist-langu blue-line pr-2 inline-block">
+                  <div key={key} className='blue-btn' id="sInputvalue">
+                    <span className="skilllist-langu blue-line pr-2 inline-block" id="sInputvalue2">
                       {multipleSkills.origin.filter(skill => skill.skill === item.name)[0]?.skillCategoryName}
                     </span>
                     <span className="pr-2 inline-block">{
@@ -1583,6 +1647,15 @@ const ResumeRegist = () => {
                             arr: [...tempArr]
                           }
                         })
+                        //console.log("삭제 창에서 값: "+$("#sInputvalue").html());//삭제하는 순간에는 있는 것으로 판단하기 때문에
+                        //console.log("삭제 창에서 값2: "+$("#sInputvalue2").html());
+                        //console.log("아이템"+item);
+                        //console.log("키"+key);
+                        //console.log(multipleSkills.selector.arr.length)
+                        if(multipleSkills.selector.arr.length === 1){
+                          $("#registbtn").css({'pointerEvents':'none','color':'gray'});
+                        }
+
                       }}>
                       <img src={blueX} alt='' />
                     </button>
@@ -1593,18 +1666,26 @@ const ResumeRegist = () => {
           </div>
         {/* <div className="modal-subtit">管理者に問い合わせしてください。</div> */}
         <div className="flex flex-end gap-3 mt-16">
-          <a
+          <button
             className="btn btn-outline-primary w-auto"
             onClick={(e) => {
               handleAddMultipleSkill(e)
+              //console.log($("#sInputvalue").html()); 
+              //console.log(multipleSkills.selector.arr.length);
+              if(multipleSkills.selector.arr.length >0){//배열의 길이가 있다면 
+                $("#registbtn").removeAttr("style");
+              } else 
+                $("#registbtn").css({'pointerEvents':'none','color':'gray'});
             }}
           >
             <img className='mr-2' src="/src/assets/images/add-btn.svg" alt=""/>
             スキル追加
-          </a>
-          <a
+          </button>
+          <button id="registbtn"
             className="btn btn-primary"
+            style={{cursor: 'not-allowed', pointerEvents: 'none', color: 'gray'}}
             onClick={(e) => {
+              console.log("등록버튼");
               // setskillPlusModal(false);
               handleChangeSKillList()
               skillNameRef.current.value = ''
@@ -1619,7 +1700,7 @@ const ResumeRegist = () => {
             }}
           >
             登録
-          </a>
+          </button>
         </div>
       </ModalBody>
     </Modal>
