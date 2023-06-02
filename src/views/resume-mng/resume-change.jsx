@@ -884,7 +884,9 @@ const ResumeChange = () => {
         hopeCareerList1.push(data.hopeCareerList[i]);
       }
     }
-    
+
+    $('.hopeCareerOneDeps').empty();
+    $('.hopeCareerOneDeps').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
     for(let i = 0; i < hopeCareerList1.length; i++){
       var option = $("<option value='"+ hopeCareerList1[i].hopeCareer +"'>"+ hopeCareerList1[i].hopeCareerName +"</option>");
       $('.hopeCareerOneDeps').append(option);
@@ -924,7 +926,9 @@ const ResumeChange = () => {
         jobTypeList1.push(data.jobTypeList[i]);
       }
     }
-    
+
+    $('.jobTypeOneDeps').empty();
+    $('.jobTypeOneDeps').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
     for(let i = 0; i < jobTypeList1.length; i++){
       var option = $("<option value='"+ jobTypeList1[i].jobType +"'>"+ jobTypeList1[i].jobTypeName +"</option>");
       $('.jobTypeOneDeps').append(option);
@@ -935,6 +939,22 @@ const ResumeChange = () => {
     let jobTypeList2 = [];
     let jobTypeOneDepsVal = "";
     let jobTypeListVal = "";
+    //console.log("가져온 데이터 스트링 확인: "+e.target.value.toString())
+
+    if(e.target.value.toString() === "57000"){
+      //console.log("가져온 데이터 스트링 확인2: "+e.target.value.toString()) //"57000"
+      for(let i = 0; i < data.jobTypeList.length; i++){
+          if(Number(data.jobTypeList[i].jobType) === 57000){
+          jobTypeList2.push(data.jobTypeList[i]);
+        }
+      }
+      //console.log("리스트 길이: "+jobTypeList2[0].value);
+      for(let i = 0 ; i < jobTypeList2.length; i++){
+        var option = $("<option value='"+ jobTypeList2[i].jobType +"'>"+ jobTypeList2[i].jobTypeName +"</option>");
+        $('.jobType').append(option);
+      }
+
+    }
 
     for(let i = 0; i < data.jobTypeList.length; i++){
       jobTypeOneDepsVal = e.target.value.toString();
@@ -964,7 +984,9 @@ const ResumeChange = () => {
         businessTypeList1.push(data.businessTypeList[i]);
       }
     }
-    
+
+    $('.businessTypeOneDeps').empty();
+    $('.businessTypeOneDeps').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
     for(let i = 0; i < businessTypeList1.length; i++){
       var option = $("<option value='"+ businessTypeList1[i].businessType +"'>"+ businessTypeList1[i].businessTypeName +"</option>");
       $('.businessTypeOneDeps').append(option);
@@ -975,6 +997,23 @@ const ResumeChange = () => {
     let businessTypeList2 = [];
     let businessTypeOneDepsVal = "";
     let businessTypeListVal = "";
+
+    //console.log(e.target.value.toString());
+
+    if(e.target.value.toString() === "56000"){
+      //console.log("가져온 데이터 스트링 확인2: "+e.target.value.toString()) //"57000"
+      for(let i = 0; i < data.businessTypeList.length; i++){
+          if(Number(data.businessTypeList[i].businessType) === 56000){
+            businessTypeList2.push(data.businessTypeList[i]);
+        }
+      }
+      //console.log("리스트 길이: "+businessTypeList2[0].value);
+      for(let i = 0 ; i < businessTypeList2.length; i++){
+        var option = $("<option value='"+ businessTypeList2[i].businessType +"'>"+ businessTypeList2[i].businessTypeName +"</option>");
+        $('.jobType').append(option);
+      }
+
+    }
 
     for(let i = 0; i < data.businessTypeList.length; i++){
       businessTypeOneDepsVal = e.target.value.toString();
@@ -1785,8 +1824,8 @@ const ResumeChange = () => {
             {
               multipleSkills.selector.arr.map((item, key) => {
                 return (
-                  <div key={key} className='blue-btn'>
-                    <span className="skilllist-langu blue-line pr-2 inline-block">
+                  <div key={key} className='blue-btn' id="sInputvalue">
+                    <span className="skilllist-langu blue-line pr-2 inline-block" id="sInputvalue2">
                       {multipleSkills.origin.filter(skill => skill.skill === item.name)[0]?.skillCategoryName}
                     </span>
                     <span className="pr-2 inline-block">{
@@ -1803,6 +1842,9 @@ const ResumeChange = () => {
                                   arr: [...tempArr]
                                 }
                               })
+                              if(multipleSkills.selector.arr.length === 1){
+                                $("#registbtn").css({'pointerEvents':'none','color':'gray'});
+                              }
                             }}>
                       <img src={blueX} alt=''/>
                     </button>
@@ -1813,7 +1855,7 @@ const ResumeChange = () => {
           </div>
         {/* <div className="modal-subtit">管理者に問い合わせしてください。</div> */}
         <div className="flex flex-end gap-3 mt-16">
-          <a
+          <button
             className="btn btn-outline-primary w-auto"
             onClick={(e) => {
               e.preventDefault(); 
@@ -1824,13 +1866,18 @@ const ResumeChange = () => {
                 return false;
               }
               handleAddMultipleSkill(e)
+              if(multipleSkills.selector.arr.length >0){//배열의 길이가 있다면 
+                $("#registbtn").removeAttr("style");
+              } else 
+                $("#registbtn").css({'pointerEvents':'none','color':'gray'});
             }}
           >
             <img className='mr-2' src="/src/assets/images/add-btn.svg" alt=""/>
             スキル追加
-          </a>
-          <a
+          </button>
+          <button id="registbtn"
             className="btn btn-primary"
+            style={{cursor: 'not-allowed', pointerEvents: 'none', color: 'gray'}}
             onClick={(e) => {
               e.preventDefault(); 
               if(multipleSkills.selector.arr.length == 0){
@@ -1839,7 +1886,6 @@ const ResumeChange = () => {
                 skillCodeRef.current.focus();
                 return false;
               }
-              // setskillPlusModal(false);
               handleChangeSKillList()
               skillNameRef.current.value = ''
               setMultipleSkills({
@@ -1853,7 +1899,7 @@ const ResumeChange = () => {
             }}
           >
             登録
-          </a>
+          </button>
         </div>
       </ModalBody>
     </Modal>
