@@ -112,6 +112,7 @@ const Dashboard = () => {
   const [reportReasonList, setReportReasonList] = useState([]);
   const [reportRequestModal1, setreportRequestModal1] = useState(false);
   const [reportModal, setReportModal] = useState(false);
+  const [reportModal02, setReportModal02] = useState(false);
   // userInfo
   const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
   // 신고 대상자
@@ -141,6 +142,7 @@ const Dashboard = () => {
   // 신고하기 API
   const reportSubmit = () => {
       !declaration.reportReasonCode ? setReportCheckModal(true) :
+      declaration.reportReasonCode !== '14' ? (
           ServiceFetch("/report/jobseeker", "post", declaration
           ).then((res) => {
               setreportRequestModal1(false);
@@ -149,6 +151,17 @@ const Dashboard = () => {
           }).catch((e) => {
               console.log(e);
           })
+          )
+          : !declaration.reportReasonContent ? setReportModal02(true) : (
+          ServiceFetch("/report/company", "post", declaration
+          ).then((res) => {
+              setreportRequestModal1(false);
+              setReportModal(true);
+              setDeclaration({ ...declaration, reportReasonCode: "", reportReasonContent: "" });
+          }).catch((e) => {
+              console.log(e);
+          })
+      )    
   };
 
   /* ********** 신고리스트 API 끝 ********** */
@@ -583,7 +596,16 @@ const Dashboard = () => {
                                       type="radio"
                                       value={report.reportReasonCode}
                                       checked={declaration.reportReasonCode === report.reportReasonCode}
-                                      onChange={(e) => setDeclaration({ ...declaration, reportReasonCode: e.target.value })}
+                                      onChange={(e) => {
+                                        let inputarea = document.getElementById('inputarea');   
+                                        if(e.target.value === "14"){
+                                          inputarea.disabled = false;
+                                        }else if(e.target.value !== "14"){
+                                          inputarea.disabled = true;
+                                          declaration.reportReasonContent = "";
+                                          inputarea.value = "";
+                                        }
+                                        setDeclaration({ ...declaration, reportReasonCode: e.target.value })}}
                                   />
                                   <label className="form-check-label" htmlFor={`radio-switch-${index}`}>
                                       {report.reportReason}
@@ -594,9 +616,11 @@ const Dashboard = () => {
                   }
               </div>
               <textarea
+                  id = "inputarea"
                   className="form-control mt-4 h-20 resize-none"
                   rows="1"
                   placeholder="通の報理由を具体的に記入してください。"
+                  disabled
                   onChange={(e) => setDeclaration({ ...declaration, reportReasonContent: e.target.value })}
               ></textarea>
               <div className="flex flex-end mt-4">
@@ -605,6 +629,8 @@ const Dashboard = () => {
                       className="btn btn-primary btn-report"
                       onClick={() => {
                           reportSubmit();
+                          let inputarea = document.getElementById('inputarea');
+                          inputarea.value = "";  
                       }}
                   >
                       通報
@@ -613,6 +639,29 @@ const Dashboard = () => {
           </ModalBody>
       </Modal>
       {/* 신고 체크 모달 */}
+      <Modal
+          show={reportModal02}
+          onHidden={() => {
+              setReportModal02(false);
+          }}
+      >
+          <ModalBody className="p-10 text-center">
+              <div className="modal-tit">通報の内容を作成してください。</div>
+              <div className="modal-subtit">
+                  その他を選択した場合は通報の内容を入力してください。
+              </div>
+              <div className="flex flex-end gap-3">
+                  <a
+                      className="btn btn-primary"
+                      onClick={() => {
+                          setReportModal02(false);
+                      }}
+                  >
+                      確認
+                  </a>
+              </div>
+          </ModalBody>
+      </Modal>
       <Modal
           show={reportCheckModal}
           onHidden={() => {

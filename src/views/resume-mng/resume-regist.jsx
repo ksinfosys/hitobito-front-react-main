@@ -130,7 +130,8 @@ const ResumeRegist = () => {
 
     if (e.target.value !== '') {
       if (key === 'userEmail' && !emailCheck.test(value)) {
-        alert('入力形式:abc@test.com.に合わせてください。')
+        setResumeLabel("入力形式:abc@test.com.に合わせてください。");
+        setResumeAlert(true); 
         e.target.value = ''
         setBody({
           ...body,
@@ -138,7 +139,8 @@ const ResumeRegist = () => {
         })
       }
       if (key === 'phoneNumber' && !phoneCheck.test(value)) {
-        alert('電話番号の形式を確認してください。')
+        setResumeLabel("電話番号の形式を確認してください。");
+        setResumeAlert(true); 
         e.target.value = ''
         setBody({
           ...body,
@@ -167,7 +169,8 @@ const ResumeRegist = () => {
   const handleChangeImage = async (e, index) => {
     const file = e.target.files
     if (rsFilePhoto.length >= 5 || file.length + rsFilePhoto.length > 5) {
-      alert('5個まで登録できます。')
+      setResumeLabel("5個まで登録できます。");
+      setResumeAlert(true); 
       return false
     }
 
@@ -280,7 +283,8 @@ const ResumeRegist = () => {
 
     if (skillItem.temp.skillCode && skillItem.temp.careerCode) {
       if (skillItem.arr.filter(skill => skill.name === skillItem.temp.skillCode.skillName).length > 0) {
-        alert('スキルが重複されました。')
+        setResumeLabel("スキルが重複されました。");
+        setResumeAlert(true); 
         document.querySelector('.refTarget_select').value = null;
         document.querySelectorAll('.refTarget_radio').forEach(radio => radio.checked = false)
         return
@@ -301,7 +305,8 @@ const ResumeRegist = () => {
       document.querySelector('.refTarget_select').value = null;
       document.querySelectorAll('.refTarget_radio').forEach(radio => radio.checked = false)
     } else {
-      //alert('스킬이나 経歴이 선택되지 않았습니다.')
+      setResumeLabel("スキルと経験期間を両方選択してください。");
+      setResumeAlert(true); 
     }
 
   }
@@ -311,7 +316,8 @@ const ResumeRegist = () => {
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     if (rsFileDocument.length + files.length >= 5) {
-      alert("ファイルは４つまで添付できます。")
+      setResumeLabel("ファイルは5個まで添付できます。");
+      setResumeAlert(true); 
       return false;
     }
     files.map(file => {
@@ -372,6 +378,13 @@ const ResumeRegist = () => {
   const selectJobTypeRef = useRef(null);
   const selectbusinessTypeRef = useRef(null);
 
+  //이력서 알림 모달
+  const [resumeAlert, setResumeAlert] = useState(false);
+  const [resumeLabel, setResumeLabel] = useState("");
+  const [resumeComplete, setResumeComplete] = useState(false);
+  const [resumeFail, setReresumeFail] = useState(false);
+
+  
   // 전송
   const handleSubmit = async () => {
     const formData = new FormData()
@@ -379,7 +392,8 @@ const ResumeRegist = () => {
     await formData.append('request', blob)
 
     if (!body.country) {
-      alert("国籍を選択してください。");
+      setResumeLabel("国籍を選択してください。");
+      setResumeAlert(true); 
       selectCountryRef.current.focus();
       setCountryError(true);
       return false;
@@ -388,7 +402,8 @@ const ResumeRegist = () => {
     }
 
     if(!body.education){
-      alert("学歴を選択してください。")
+      setResumeLabel("学歴を選択してください。");
+      setResumeAlert(true); 
       selectEducationRef.current.focus();
       setEducationError(true);
       return false;
@@ -397,7 +412,8 @@ const ResumeRegist = () => {
     }
     
     if (!body.userGender) {
-      alert("性別を選択してください。");
+      setResumeLabel("性別を選択してください。");
+      setResumeAlert(true); 
       selectGenderRef.current.focus();
       setGenderError(true);
       return false;
@@ -406,7 +422,8 @@ const ResumeRegist = () => {
     }
 
     if (!body.schoolName) {
-      alert("最終学校名を入力してください。");
+      setResumeLabel("最終学校名を入力してください。");
+      setResumeAlert(true); 
       if (schoolNameRef.current) {
         schoolNameRef.current.focus();
         setSchoolNameError(true);
@@ -417,7 +434,8 @@ const ResumeRegist = () => {
     }
 
     if (!body.userAge) {
-      alert("生年を選択してください。");
+      setResumeLabel("生年を選択してください。");
+      setResumeAlert(true); 
       selectAgeRef.current.focus();
       setAgeError(true);
       return false;
@@ -426,7 +444,8 @@ const ResumeRegist = () => {
     }
 
     if (!body.majorName) {
-      alert("専攻を入力してください");
+      setResumeLabel("専攻を入力してください。");
+      setResumeAlert(true); 
       if (majorNameRef.current) {
         majorNameRef.current.focus();
         setMajorNameError(true);
@@ -437,7 +456,8 @@ const ResumeRegist = () => {
     }
 
     if (!body.residentialArea) {
-      alert("居住地を選択してください。");
+      setResumeLabel("居住地を選択してください。");
+      setResumeAlert(true); 
       selectResidentialAreaRef.current.focus();
       setResidentialAreaError(true);
       return false;
@@ -447,7 +467,8 @@ const ResumeRegist = () => {
 
 
     if (!body.hopeIncome) {
-      alert("希望年収を選択してください。");
+      setResumeLabel("希望年収を選択してください。");
+      setResumeAlert(true); 
       selectHopeIncomeRef.current.focus();
       setHopeIncomeError(true);
       return false;
@@ -457,7 +478,8 @@ const ResumeRegist = () => {
 
 
     if (!body.userEmail) {
-      alert("イーメールを入力してください。");
+      setResumeLabel("イーメールを入力してください。");
+      setResumeAlert(true); 
       if (userEmailRef.current) {
         userEmailRef.current.focus();
         setEmailError(true);
@@ -467,20 +489,9 @@ const ResumeRegist = () => {
       setEmailError(false);
     }
 
-
     if (!body.phoneNumber) {
-      alert("電話番号を入力してください。");
-      if (phoneNumberRef.current) {
-        phoneNumberRef.current.focus();
-        setPhoneError(true);
-      }
-      return false;
-    } else {
-      setPhoneError(false);
-    }
-
-    if (!body.phoneNumber) {
-      alert("電話番号を入力してください。");
+      setResumeLabel("電話番号を入力してください。");
+      setResumeAlert(true); 
       if (phoneNumberRef.current) {
         phoneNumberRef.current.focus();
         setPhoneError(true);
@@ -491,7 +502,8 @@ const ResumeRegist = () => {
     }
 
     if (!body.hopeCareer) {
-      alert("将来の目標を選択してください。");
+      setResumeLabel("将来の目標を選択してください。");
+      setResumeAlert(true); 
       selectHopeCareerRef.current.focus();
       setHopeCareerError(true);
       return false;
@@ -500,7 +512,8 @@ const ResumeRegist = () => {
     }
 
     if (!body.career) {
-      alert("経歴を選択してください。");
+      setResumeLabel("経歴を選択してください。");
+      setResumeAlert(true); 
       selectCareerRef.current.focus();
       setCareerError(true);
       return false;
@@ -509,7 +522,8 @@ const ResumeRegist = () => {
     }
 
     if (!body.jobType) {
-      alert("現在の職種を選択してください。");
+      setResumeLabel("現在の職種を選択してください。");
+      setResumeAlert(true); 
       selectJobTypeRef.current.focus();
       setJobTypeError(true);
       return false;
@@ -517,8 +531,9 @@ const ResumeRegist = () => {
       setJobTypeError(false);
     }
 
-    if (!body.jobType) {
-      alert("所属会社の業種を選択してください。");
+    if (!body.businessType) {
+      setResumeLabel("所属会社の業種を選択してください。");
+      setResumeAlert(true); 
       selectbusinessTypeRef.current.focus();
       setBusinessTypeError(true);
       return false;
@@ -527,7 +542,8 @@ const ResumeRegist = () => {
     }
 
     if (career.map.length == 1 && career[0].process.length == 0) {
-      alert("主要経歴を入力してください。");
+      setResumeLabel("主要経歴を入力してください。");
+      setResumeAlert(true); 
       if (projectRef.current) {
         projectRef.current.focus();
         setProjectError(true);
@@ -538,7 +554,8 @@ const ResumeRegist = () => {
     }
   
     if(skillItem.arr.length == 0){
-      alert("スキルを選択してください。")
+      setResumeLabel("スキルを選択してください。");
+      setResumeAlert(true); 
       skillCodeRef.current.focus();
       setSkillCodeError(true);
       return false;
@@ -560,14 +577,12 @@ const ResumeRegist = () => {
         },
       }).then((res) => {
         if (res.data.resultCode === '803') {
-          window.alert(res.data.resultMessage)
+          setReresumeFail(true);
         } else if (res.data.resultCode === '200') {
-          window.alert(res.data.resultMessage)
-          window.location.href = '/';
+          setResumeComplete(true);
         } else {
           window.alert(res.data.resultMessage)
         }
-
       })
       .catch((res) => console.log(res))
 
@@ -648,8 +663,8 @@ const ResumeRegist = () => {
         }
       })
       if (flag) {
-        alert('스킬이 중복선택 되었습니다.')
-
+        setResumeLabel("スキルが重複されました。");
+        setResumeAlert(true); 
         return 0
       }
       const tempSelector = selector.arr
@@ -927,7 +942,6 @@ const ResumeRegist = () => {
             <div className='box-item flex flex-col'>
               <div className='form-tit'  tabIndex={0} ref={selectCountryRef} >国籍 <span>*</span></div>
               <SelectBox id={'country'} data={data && data.countryList} className={countryError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.country} ref={countryRef}/>
-
             </div>
             <div className='box-item flex flex-col'>
               <div className='form-tit' tabIndex={0} ref={selectEducationRef}>学歴 <span>*</span></div>
@@ -1212,6 +1226,8 @@ const ResumeRegist = () => {
                 </label>
               </div>
             </div>
+          </div>
+          <div className='attach-wrap flex'>
             <div className='blue-btn-wrap flex flex-col attach-cont-wrap'>
               {fileNames.map((name, index) => (
                 <div className='blue-btn attach-cont-item flex items-center space-between' style={{backgroundColor: '#EDF5FF'}}  key={index}>
@@ -1505,9 +1521,9 @@ const ResumeRegist = () => {
                   </button>
                 </div>
               </div>
-              <div className="flex flex-col gap-2 items-start">
+              <div className="flex flex-col gap-2 items-start"  style={{width: 300 +'px'}}>
                 <div className='form-tit'>経歴期間</div>
-                <SelectBox className={'refTarget_select w-40'} id={'careerCode'} data={data && data.skillCareerList}
+                <SelectBox className={'refTarget_select'} id={'careerCode'} data={data && data.skillCareerList}
                   onChange={handleUpdateMultipleSkill} defaultValue={multipleSkills.selector?.careerCode} />
               </div>
             </div>
@@ -1527,7 +1543,39 @@ const ResumeRegist = () => {
               </div>
             </div>
           </div>
-          <div class="blue-btn-wrap flex gap-2 items-center">
+          {/* <div class="blue-btn-wrap flex gap-2 items-center">
+            {
+              multipleSkills.selector.arr.map((item, key) => {
+                return (
+                  <div key={key} className='blue-btn'>
+                    <span className="skilllist-langu blue-line pr-2 inline-block">
+                      {multipleSkills.origin.filter(skill => skill.skill === item.name)[0]?.skillCategoryName}
+                    </span>
+                    <span className="pr-2 inline-block">{
+                      multipleSkills.origin.filter(skill => skill.skill === item.name)[0]?.skillName
+                    }</span>
+                    <span>{data.skillCareerList.filter(career => career.skillCareer === item.year)[0]?.skillCareerName}</span>
+                    <button className='blue-x-btn'
+                      onClick={(e) => {
+                        const tempArr = [...multipleSkills.selector.arr.filter(it => it.name !== item.name)]
+                        setMultipleSkills({
+                          ...multipleSkills,
+                          selector: {
+                            ...multipleSkills.selector,
+                            arr: [...tempArr]
+                          }
+                        })
+                      }}>
+                      <img src={blueX} alt='' />
+                    </button>
+                  </div>
+                )
+              })
+            }
+          </div> */}
+        </div>
+        <div className="w-full text-left mt-4 text-slate-500">* カテゴリー選択後、スキルを検索し経歴を入力してください。</div>
+        <div class="blue-btn-wrap flex gap-2 items-center">
             {
               multipleSkills.selector.arr.map((item, key) => {
                 return (
@@ -1557,13 +1605,18 @@ const ResumeRegist = () => {
               })
             }
           </div>
-        </div>
-        <div className="w-full text-left mt-4 text-slate-500">* カテゴリー選択後、スキルを検索し経歴を入力してください。</div>
         {/* <div className="modal-subtit">管理者に問い合わせしてください。</div> */}
         <div className="flex flex-end gap-3 mt-16">
           <a
             className="btn btn-outline-primary w-auto"
             onClick={(e) => {
+              e.preventDefault(); 
+              if(!multipleSkills.selector.careerCode || !multipleSkills.selector.skillCode){
+                setResumeLabel("スキルと経験期間を両方選択してください。");
+                setResumeAlert(true); 
+                skillCodeRef.current.focus();
+                return false;
+              }
               handleAddMultipleSkill(e)
             }}
           >
@@ -1573,6 +1626,13 @@ const ResumeRegist = () => {
           <a
             className="btn btn-primary"
             onClick={(e) => {
+              e.preventDefault(); 
+              if(multipleSkills.selector.arr.length == 0){
+                setResumeLabel("スキルを追加してから登録してください。");
+                setResumeAlert(true); 
+                skillCodeRef.current.focus();
+                return false;
+              }
               // setskillPlusModal(false);
               handleChangeSKillList()
               skillNameRef.current.value = ''
@@ -1591,6 +1651,83 @@ const ResumeRegist = () => {
         </div>
       </ModalBody>
     </Modal>
+
+    {/* 이력서 알림 모달창*/}
+    <Modal
+        show={resumeAlert}
+        onHidden={() => {
+          setResumeAlert(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit mb-5">
+            {resumeLabel}
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-primary"
+              onClick={(event) => {
+                event.preventDefault(); 
+                setResumeAlert(false);
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
+
+          {/* 이력서 작성 성공 모달*/}
+    <Modal
+        show={resumeComplete}
+        onHidden={() => {
+          setResumeComplete(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit mb-5">
+            履歴書を登録しました。
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-primary"
+              onClick={() => {
+                setResumeComplete(false);
+                window.location.href = '/';
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
+
+        {/* 이력서 수정 실패 모달*/}        
+        <Modal
+        show={resumeFail}
+        onHidden={() => {
+          setReresumeFail(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit mb-5">
+            入力情報に問題があります。入力内容を確認してください。
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-primary"
+              onClick={() => {
+                setReresumeFail(false);
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
   </>
 };
 export default ResumeRegist;

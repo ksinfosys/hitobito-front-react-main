@@ -228,7 +228,10 @@ function MessageBox() {
             setIsSending(true); // 전송 시작
             setMsgModal(false);
             ServiceFetch("/msg/reply", "post", {
-                receiveUserId: receptionState.receiveUserId ? receptionState.receiveUserId : msgData[0].receiveUserId,
+                // receiveUserId: receptionState.receiveUserId ? receptionState.receiveUserId : msgData[0].receiveUserId,
+                receiveUserId : (receptionState.msgTypeName==="送信")
+                                ? (receptionState.receiveUserId ? receptionState.receiveUserId : msgData[0].receiveUserId)
+                                : (receptionState.sendUserId ? receptionState.sendUserId : msgData[0].sendUserId),
                 msgTitle: msgSendTitle,
                 msgContents: editorData,
                 msgIdx: receptionState.msgIdx ? receptionState.msgIdx : msgIdxes[0]
@@ -362,7 +365,9 @@ function MessageBox() {
                                                 }}
                                                 onKeyDown={(e) => {
                                                     if (e.code === "Enter") {
-                                                        handleSearch();
+                                                        if(searchKeyword){
+                                                            handleSearch();
+                                                          }
                                                     }
                                                     return;
                                                 }}
@@ -370,6 +375,7 @@ function MessageBox() {
                                             <button
                                                 className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                                 onClick={handleSearch}
+                                                disabled={!searchKeyword}
                                             >
                                                 <img src={Search} alt="" />
                                             </button>
@@ -437,7 +443,9 @@ function MessageBox() {
                                                 }}
                                                 onKeyDown={(e) => {
                                                     if (e.code === "Enter") {
-                                                        handleSearch();
+                                                        if(searchKeyword){
+                                                            handleSearch();
+                                                          }
                                                     }
                                                     return;
                                                 }}
@@ -445,6 +453,7 @@ function MessageBox() {
                                             <button
                                                 className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                                 onClick={handleSearch}
+                                                disabled={!searchKeyword}
                                             >
                                                 <img src={Search} alt="" />
                                             </button>
@@ -1010,7 +1019,7 @@ function MessageBox() {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">選択確認</div>
                     <div className="modal-subtit">
-                        メッセージを１つ以上選択してください。
+                        メッセージを１つ選択してください。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a

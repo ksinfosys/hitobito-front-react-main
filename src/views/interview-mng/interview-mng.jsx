@@ -244,7 +244,7 @@ const InterviewMng = () => {
         }).then((res) => {
             res.resultCode === '200' ? (
                 setSaveMsgSuccess(true)
-            ) : res.resultCode === '302' ? (
+            ) : res.resultCode === '301' || res.resultCode === '302' ? (
                 setSaveMsgFail01(true)
             ) : (
                 setSaveMsgFail01(true)
@@ -311,7 +311,9 @@ const InterviewMng = () => {
                                     placeholder="検索ワードを入力"
                                     onKeyDown={(e) => {
                                         if (e.code === "Enter") {
+                                            if(searchValue){
                                             searchSubmit();
+                                            }
                                         }
                                         return;
                                     }}
@@ -319,6 +321,7 @@ const InterviewMng = () => {
                                 <button
                                     className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                     onClick={searchSubmit}
+                                    disabled={!searchValue}
                                 >
                                     <img src={Search} alt="" />
                                 </button>
@@ -572,7 +575,16 @@ const InterviewMng = () => {
                                             type="radio"
                                             value={report.reportReasonCode}
                                             checked={declaration.reportReasonCode === report.reportReasonCode}
-                                            onChange={(e) => setDeclaration({ ...declaration, reportReasonCode: e.target.value })}
+                                            onChange={(e) => {
+                                                let inputarea = document.getElementById('inputarea');
+                                                if(e.target.value === "00"){
+                                                    inputarea.disabled = false;
+                                                }else if(e.target.value !== "00"){
+                                                    inputarea.disabled = true;
+                                                    declaration.reportReasonContent = "";
+                                                    inputarea.value = "";
+                                                }
+                                                setDeclaration({ ...declaration, reportReasonCode: e.target.value })}}
                                         />
                                         <label className="form-check-label" htmlFor={`radio-switch-${index}`}>
                                             {report.reportReason}
@@ -583,10 +595,12 @@ const InterviewMng = () => {
                         }
                     </div>
                     <textarea
+                        id = "inputarea"
                         className="form-control mt-4 h-20 resize-none"
                         rows="1"
                         placeholder="通報の理由を具体的に記入してください。"
-                        value={declaration.reportReasonContent}
+                        disabled
+                        //value={declaration.reportReasonContent}
                         onChange={(e) => setDeclaration({ ...declaration, reportReasonContent: e.target.value })}
                     ></textarea>
                     <div className="flex flex-end mt-4">
@@ -594,6 +608,8 @@ const InterviewMng = () => {
                             className="btn btn-business btn-report"
                             onClick={() => {
                                 reportSubmit();
+                                let inputarea = document.getElementById('inputarea');
+                                inputarea.value = "";
                             }}
                         >
                             通報
