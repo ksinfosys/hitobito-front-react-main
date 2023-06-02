@@ -423,33 +423,6 @@ const UserLogin = () => {
 		</ModalBody>
 		</Modal>
 
-
-		{/* stop fail */}
-		<Modal
-		show={stopFail}
-		onHidden={() => {
-			setStopFail(false);
-		}}
-		>
-		<ModalBody className="p-10 text-center">
-			<div className="modal-tit">利用停止中です。</div>
-			<div className="modal-subtit">
-			メニューの選択に制限があります。いつでも利用再開できます。
-			</div>
-			<div className="flex flex-end gap-3">
-			<a
-				href="#"
-				className="btn btn-primary"
-				onClick={() => {
-				setStopFail(false);
-				}}
-			>
-				確認
-			</a>
-			</div>
-		</ModalBody>
-		</Modal>
-
 	</div>
 }
 
