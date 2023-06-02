@@ -12,6 +12,7 @@ import { replaceSlashToHypen, todayReplaceSlashToHypen } from "../../utils/utils
 import ServiceFetch from "../../../util/ServiceFetch";
 import Xicon from "@/assets/images/x_ic.svg"
 import FileDown from "@/assets/images/file-down.svg";
+import default_Img from "@/assets/images/company_default.png"
 
 
 const DashboardList = (props) => {
@@ -260,6 +261,10 @@ const DashboardList = (props) => {
     const [rqLimitDatetime, setRqLimitDatetime] = useState("");
     // 현재날짜,시간
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
+
+
+    //이미지 대체경로
+    const onErrorImg = (e) => {e.target.src = default_Img}
       
     return (
         <>
@@ -467,23 +472,24 @@ const DashboardList = (props) => {
                                         <span style={{wordWrap:"break-word", whiteSpace: "pre-wrap" }}>{cpInfoData.cpAd}</span>
                             </div>
                             <hr/>
-                            {/* 企業イメージ */}
+                            {/* 企業イメージ */}                            
                             { <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
-                                {
+                                {   
                                     cpInfoData?.cpFileUrl?.map((v, i) => {
-                                        return (
-                                            <div key={i}>
-                                                <img
-                                                    style={{ cursor: "pointer" }} 
-                                                    src={`https://hitobito-net.com/api${v}`} 
-                                                    alt="company image" 
-                                                    onClick={() => {
-                                                        window.open(`https://hitobito-net.com/api${v}`, "_blank");
-                                                    }}
-                                                />
-                                            </div>
-                                        )
-                                    })
+                                            return (
+                                                <div key={i}>                                                
+                                                    <img
+                                                        style={{ cursor: "pointer", backgroundColor: "white" }} 
+                                                        src={`https://hitobito-net.com/api${v}`} 
+                                                        alt={''}
+                                                        onError={onErrorImg}
+                                                        onClick={() => {
+                                                            window.open(`https://hitobito-net.com/api${v}`, "_blank");
+                                                        }}
+                                                    />
+                                                </div>
+                                            )
+                                        })                                    
                                 }
                             </div> }
                             

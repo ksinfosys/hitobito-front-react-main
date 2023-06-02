@@ -4,34 +4,35 @@ import AppleIcon from "@/assets/images/apple_login.svg";
 import KakaoIcon from "@/assets/images/kakao-icon.svg";
 import GoogleIcon from "@/assets/images/google-icon.svg";
 import { useGoogleLogin } from "@react-oauth/google";
+import LineIcon from "@/assets/images/line-icon.svg";
 import AppleLogin from 'react-apple-login'
-import { liff } from "@line/liff";
+// import { liff } from "@line/liff";
 import {
   Modal,
   ModalBody,
 } from "@/base-components";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import KakaoLogin from "react-kakao-login";
 import axios from "axios";
-import CustomLineLogin from "./CusotmLineLogin";
+// import CustomLineLogin from "./CusotmLineLogin";
 import serviceFetch from "../../../../util/ServiceFetch";
 import { delCookie, setCookie } from "../../../utils/cookie";
 import { useNavigate, useLocation } from "react-router-dom";
 import { userCount } from "../../../stores/search-count";
 import { isMobile } from "react-device-detect";
 import jwt_decode from "jwt-decode";
+// import LineAuthCallback from "../line-auth-callback";
 
 const UserLogin = () => {
+	const [response, setResponse] = useState();
 	// 에러메시지 케이스 : S
 	const [oAuthTokenFail, setOAuthTokenFail] = useState(false);
 	const [socialIdFail, setSocialIdFail] = useState(false);
 	const [socialFail, setSocialFail] = useState(false);
 	const [secessionFail, setSecessionFail] = useState(false);
 	const [reportFail, setReportFail] = useState(false);
-	const [stopFail, setStopFail] = useState(false);
 	// 에러메시지 케이스 : E
-
 	const navigate = useNavigate()
 	const location = useLocation();
 	//const kakao_code = location.search.split('=')[1];
@@ -60,7 +61,7 @@ const UserLogin = () => {
 		line: {
 			client_id: '1657832968',
 			client_secret: '627d99da809d143545a2b26f694ff47e',
-			redirect_url: 'https://hitobito-net.com/api/auth/line/callback',
+			redirect_url: 'https://hitobito-net.com',
 			scope: 'profile%20openid%20email',
 			state: '12345abcde'
 		}, 
@@ -119,7 +120,6 @@ const UserLogin = () => {
 						interviewCount: res.data.result.interviewCount
 					}))
 					localStorage.clear();
-					delCookie("LIFF_STORE:expires:1657832968-ZeGx3gbz");
 				} else if (res.data.resultCode === '212') {
 					setOAuthTokenFail(true)
 				} else if (res.data.resultCode === '213') {
@@ -127,12 +127,24 @@ const UserLogin = () => {
 				} else if (res.data.resultCode === '207') {
 					setSocialFail(true)
 				} else if (res.data.resultCode === '220') {
-					delCookie("LIFF_STORE:expires:1657832968-ZeGx3gbz");
 					setSecessionFail(true)
 				} else if (res.data.resultCode === '218') {
 					setReportFail(true)
 				} else if (res.data.resultCode === '231') {
-					setStopFail(true)
+					await setCookie("accessToken", res.headers.accesstoken, 1);
+					await setCookie("lastLoginTime", res.headers.lastlogintime, 1);
+					setUserInfoV(prevValue => ({
+						...prevValue,
+						userType: 1,
+						userNickName: res.data.result.nickname,
+						historyBalance: res.data.result.historyBalance
+					}));
+					setUserCountV(prev => ({
+						...prev,
+						interviewCount: res.data.result.interviewCount
+					}))
+					localStorage.clear();
+					navigate('/suspension')
 				} else {
 					return
 				}
@@ -188,9 +200,49 @@ const UserLogin = () => {
 		window.location.href = `https://appleid.apple.com/auth/authorize?response_type=code&response_mode=query&client_id=${snsKey.apple.client_id}&redirect_uri=${snsKey.apple.redirect_url}`;
 	}
 
+	const handleLineLogin = () => {
+		localStorage.setItem('clickSnsType', 'line');
+		window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${snsKey.line.client_id}&redirect_uri=${snsKey.line.redirect_url}&state=${snsKey.line.state}&scope=${snsKey.line.scope}`
+	}
+
+	const getLineToken = (line_code) => {
+		console.log(snsKey.line.client_id)
+		let url = 'https://api.line.me/oauth2/v2.1/token';
+
+		let config = {
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			}
+		};
+
+		let grant_type = 'authorization_code';
+		let code = line_code;
+		let redirect_uri = snsKey.line.redirect_url;
+		let client_id = snsKey.line.client_id;
+		let client_secret = snsKey.line.client_secret;
+
+		var params = new URLSearchParams();
+		params.append('grant_type',grant_type);
+		params.append('code',code);
+		params.append('redirect_uri',redirect_uri);
+		params.append('client_id',client_id);
+		params.append('client_secret',client_secret);
+
+		axios.post(url, params, config)
+		.then(res => {
+			console.log("getLineToken.res")
+			console.log(res);
+			console.log(res.data)
+			snsLogin(res.data, 'line')
+		}).catch(err => {
+			console.log(err);
+		})
+	}
+	
 	useEffect(() => {
 		if (!location.search) return;
 		const code = location.search.split('=')[1];
+		const codeExceptState = code.split("&")[0];
 		if (localStorage.getItem('clickSnsType') === 'kakao') {
 			getKakaoToken(code);
 		} else if (localStorage.getItem('clickSnsType') === 'apple') {
@@ -198,7 +250,7 @@ const UserLogin = () => {
 				loginType: 'apple',
 				OAuthToken: {
 					access_token: null,
-					token_type: null,
+					token_type: "web",
 					refresh_token: null,
 					expires_in: null,
 					scope: null,
@@ -206,12 +258,19 @@ const UserLogin = () => {
 					refresh_token_expires_in: null,
 				}
 			})
+		} else if (localStorage.getItem('clickSnsType') === 'line') {
+			getLineToken(codeExceptState);
 		}
 	}, []);
 
 	return <div className="btn-wrap">
 
-		<CustomLineLogin setSnsBody={setSnsBody} />
+		<button className="btn-line flex flex-center" onClick={handleLineLogin}>
+		<div className="button-wrap flex items-center gap-2">
+			<img src={LineIcon} alt="" />
+			Lineログイン
+		</div>
+		</button>
 
 		<button className="mobile_none btn-google flex flex-center" onClick={googleLogin}>
 		<div className="button-wrap flex items-center gap-2">
@@ -249,7 +308,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setOAuthTokenFail(false);
 				}}
@@ -275,7 +334,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setSocialIdFail(false);
 				}}
@@ -301,7 +360,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setSocialFail(false);
 				}}
@@ -327,7 +386,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setSecessionFail(false);
 				}}
@@ -353,35 +412,9 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setReportFail(false);
-				}}
-			>
-				確認
-			</a>
-			</div>
-		</ModalBody>
-		</Modal>
-
-		{/* stop fail */}
-		<Modal
-		show={stopFail}
-		onHidden={() => {
-			setStopFail(false);
-		}}
-		>
-		<ModalBody className="p-10 text-center">
-			<div className="modal-tit">利用停止中です。</div>
-			<div className="modal-subtit">
-			メニューの選択に制限があります。いつでも利用再開できます。
-			</div>
-			<div className="flex flex-end gap-3">
-			<a
-				href="#"
-				className="btn btn-business"
-				onClick={() => {
-				setStopFail(false);
 				}}
 			>
 				確認
