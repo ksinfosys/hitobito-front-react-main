@@ -250,7 +250,7 @@ const UserLogin = () => {
 				loginType: 'apple',
 				OAuthToken: {
 					access_token: null,
-					token_type: null,
+					token_type: "web",
 					refresh_token: null,
 					expires_in: null,
 					scope: null,
@@ -308,7 +308,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setOAuthTokenFail(false);
 				}}
@@ -334,7 +334,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setSocialIdFail(false);
 				}}
@@ -360,7 +360,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setSocialFail(false);
 				}}
@@ -386,7 +386,7 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setSecessionFail(false);
 				}}
@@ -412,9 +412,36 @@ const UserLogin = () => {
 			<div className="flex flex-end gap-3">
 			<a
 				href="#"
-				className="btn btn-business"
+				className="btn btn-primary"
 				onClick={() => {
 				setReportFail(false);
+				}}
+			>
+				確認
+			</a>
+			</div>
+		</ModalBody>
+		</Modal>
+
+
+		{/* stop fail */}
+		<Modal
+		show={stopFail}
+		onHidden={() => {
+			setStopFail(false);
+		}}
+		>
+		<ModalBody className="p-10 text-center">
+			<div className="modal-tit">利用停止中です。</div>
+			<div className="modal-subtit">
+			メニューの選択に制限があります。いつでも利用再開できます。
+			</div>
+			<div className="flex flex-end gap-3">
+			<a
+				href="#"
+				className="btn btn-primary"
+				onClick={() => {
+				setStopFail(false);
 				}}
 			>
 				確認

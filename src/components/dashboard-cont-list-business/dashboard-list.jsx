@@ -469,7 +469,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <div className="skill-tit">
                                     役割
                                 </div>
-                                <div className="cont-btm-btn orange">
+                                <div className="cont-btm-btn-1 orange">
                                     {buttonList3}
                                 </div>
                             </div>

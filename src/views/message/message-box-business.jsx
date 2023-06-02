@@ -132,7 +132,10 @@ function MessageBoxBusiness() {
             setIsSending(true); // 전송 시작
             setMsgModal(false);
             ServiceFetch("/msg/reply", "post", {
-                receiveUserId: receptionState.receiveUserId ? receptionState.receiveUserId : msgData[0].receiveUserId,
+                // receiveUserId: receptionState.receiveUserId ? receptionState.receiveUserId : msgData[0].receiveUserId,
+                receiveUserId : (receptionState.msgTypeName==="送信")
+                                ? (receptionState.receiveUserId ? receptionState.receiveUserId : msgData[0].receiveUserId)
+                                : (receptionState.sendUserId ? receptionState.sendUserId : msgData[0].sendUserId),
                 msgTitle: msgSendTitle,
                 msgContents: editorData,
                 msgIdx: receptionState.msgIdx ? receptionState.msgIdx : msgIdxes[0]
@@ -174,7 +177,7 @@ function MessageBoxBusiness() {
         }).then((res) => {
             res.resultCode === '200' ? (
                 setSaveMsgSuccess(true)
-            ) : res.resultCode === '302' ? (
+            ) : res.resultCode === '301' || res.resultCode === '302' ? (
                 setSaveMsgFail01(true)
             ) : (
                 setModalFail(true)
@@ -248,7 +251,9 @@ function MessageBoxBusiness() {
                                             onChange={(e) => setSearchKeyword(e.target.value)}
                                             onKeyDown={(e) => {
                                                 if (e.code === "Enter") {
-                                                    handleSearch();
+                                                    if(searchKeyword){
+                                                        handleSearch();
+                                                    }
                                                 }
                                                 return;
                                             }}
@@ -256,6 +261,7 @@ function MessageBoxBusiness() {
                                         <button
                                             className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                                             onClick={handleSearch}
+                                            disabled={!searchKeyword}
                                         >
                                             <img src={Search} alt="" />
                                         </button>
@@ -740,7 +746,7 @@ function MessageBoxBusiness() {
                                 setMessageReplyFail(false);
                             }}
                         >
-                            送信
+                            確認
                         </a>
                     </div>
                 </ModalBody>
@@ -762,7 +768,7 @@ function MessageBoxBusiness() {
                                 setMessageReplyCheckFail(false);
                             }}
                         >
-                            送信
+                            確認
                         </a>
                     </div>
                 </ModalBody>
@@ -776,7 +782,7 @@ function MessageBoxBusiness() {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">選択確認</div>
                     <div className="modal-subtit">
-                        メッセージを１つ以上選択してください。
+                        メッセージを１つ選択してください。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
@@ -786,7 +792,7 @@ function MessageBoxBusiness() {
                                 setMsgCheckModal(false);
                             }}
                         >
-                            送信
+                            確認
                         </a>
                     </div>
                 </ModalBody>

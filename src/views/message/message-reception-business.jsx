@@ -194,7 +194,7 @@ function MessageReceptionBusiness() {
     }).then((res) => {
       res.resultCode === "200" ? (
         setSaveMsgSuccess(true)
-      ) : res.resultCode === "302" ? (
+      ) : res.resultCode === "301" || res.resultCode === "302" ? (
         setSaveMsgFail01(true)
       ) : (
         setModalFail(true)
@@ -266,7 +266,9 @@ function MessageReceptionBusiness() {
                       onChange={(e) => setSearchValue(e.target.value)}
                       onKeyDown={(e) => {
                         if (e.code === "Enter") {
-                          handleSearch();
+                          if(searchValue){
+                            handleSearch();
+                          }
                         }
                         return;
                       }}
@@ -274,6 +276,7 @@ function MessageReceptionBusiness() {
                     <button
                       className="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"
                       onClick={handleSearch}
+                      disabled={!searchValue}
                     >
                       <img src={Search} alt="" />
                     </button>
