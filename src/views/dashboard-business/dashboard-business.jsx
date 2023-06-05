@@ -634,9 +634,13 @@ const DashboardBusiness = () => {
                                             <span>{tagsList05[0].categoryName}</span>
                                             <span>
                                                 {tagsList05[0].codeName}
-                                                {tagsList05[1] && " ~ "}
-                                                {tagsList05[1]?.codeName}
-                                            </span>
+                                                {tagsList05[1] && (
+                                                    <>
+                                                        {" ~ "}
+                                                        {tagsList05[1]?.codeName.slice(0, -2) + "以下"}
+                                                    </>
+                                                )}
+                                            </span>    
                                             <button
                                                 className="blue-x-btn"
                                                 onClick={() => {
@@ -750,7 +754,7 @@ const DashboardBusiness = () => {
                     <div className="modal-subtit">
                         同じカテゴリを選択しています.
                         <br />
-                        年齢は2つまで選択できます。
+                        2つまで選択できます。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a href="#" className="btn btn-pending" onClick={() => setModalState07(false)}>
