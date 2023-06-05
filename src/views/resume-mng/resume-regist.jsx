@@ -1152,8 +1152,8 @@ const ResumeRegist = () => {
           {/* 나의 스킬 */}
           <div className='flex-box2-tit flex space-between mt-16'> 
             <div className='box2-tit'>私のスキル <span> *</span></div> 
-            <div className='flex justify-content-end'>
-              <div className='justify-content-end'>
+            <div className='flex justify-content-end mr-5'>
+              <div className='justify-content-end mr-2'>
                <p className='blue-tit mt-0 mr-5'>拡張検索をクリックして、</p>
                <p className='blue-tit mt-0'>複数のスキルを一度に登録できます。</p>
               </div>
