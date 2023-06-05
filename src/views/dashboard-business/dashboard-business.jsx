@@ -12,6 +12,7 @@ import ServiceFetch from "../../../util/ServiceFetch";
 import { useRecoilState } from "recoil";
 import { searchBusiness } from "../../stores/search-business";
 import { userCount } from "../../stores/search-count";
+import { userInfo } from "../../stores/user-info";
 
 const DashboardBusiness = () => {
     // Search 상태 관리
@@ -102,6 +103,7 @@ const DashboardBusiness = () => {
     const [submitCheckState, setSubmitCheckState] = useState(false);
 
     const [userCountV, setUserCountV] = useRecoilState(userCount);
+    const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
 
     // getList API
     const getList = () => {
@@ -272,6 +274,10 @@ const DashboardBusiness = () => {
                 console.log(e);
             });
     };
+
+    useEffect(() => {
+        document.getElementsByClassName("historyBalance").innerText = userInfoV.historyBalance;
+    }, [userInfoV])
 
     // Tag 선택하기
     //const [careerActive, setCareerActive] = useState(false);

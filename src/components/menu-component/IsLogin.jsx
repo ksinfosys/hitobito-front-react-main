@@ -21,7 +21,7 @@ function IsLogin(prop) {
                     <div className="topuser-item">
                         {userInfoV.userNickName || userInfoV.cpUserName}
                     </div>
-                    <div className="topuser-item">
+                    <div className="topuser-item historyBalance">
                         {userInfoV.historyBalance} P
                     </div>
                 </React.Fragment>
