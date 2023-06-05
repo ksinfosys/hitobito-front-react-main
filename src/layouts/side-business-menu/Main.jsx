@@ -242,7 +242,7 @@ function Main() {
             <div className="flex items-center topLink_menu gap-2">
               <div className="flex items-center topuser-menu">
                 <div className="topuser-item">{userInfoV.cpUserName}</div>
-                <div className="topuser-item">
+                <div className="topuser-item historyBalance">
                   {regexUserPoint(userInfoV.historyBalance)}P
                 </div>
               </div>
