@@ -261,10 +261,6 @@ const DashboardList = (props) => {
     const [rqLimitDatetime, setRqLimitDatetime] = useState("");
     // 현재날짜,시간
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
-
-
-    //이미지 대체경로
-    const onErrorImg = (e) => {e.target.src = default_Img}
       
     return (
         <>
@@ -473,25 +469,34 @@ const DashboardList = (props) => {
                             </div>
                             <hr/>
                             {/* 企業イメージ */}                            
-                            { <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
+                            <div className="flex items-center gap-2 mt-5 cp-info-modal flex-wrap">
                                 {   
                                     cpInfoData?.cpFileUrl?.map((v, i) => {
-                                            return (
-                                                <div key={i}>                                                
-                                                    <img
-                                                        style={{ cursor: "pointer", backgroundColor: "white" }} 
-                                                        src={`https://hitobito-net.com/api${v}`} 
-                                                        alt={''}
-                                                        onError={onErrorImg}
-                                                        onClick={() => {
-                                                            window.open(`https://hitobito-net.com/api${v}`, "_blank");
-                                                        }}
-                                                    />
-                                                </div>
-                                            )
-                                        })                                    
+                                        return (
+                                            <div key={i}>
+                                                {
+                                                    v ? (
+                                                        <img
+                                                            style={{ cursor: "pointer", backgroundColor: "white" }} 
+                                                            src={`https://hitobito-net.com/api${v}`} 
+                                                            alt={''}
+                                                            onClick={() => {
+                                                                window.open(`https://hitobito-net.com/api${v}`, "_blank");
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <img
+                                                            style={{ backgroundColor: "white" }} 
+                                                            src={default_Img} 
+                                                            alt={''}
+                                                        />
+                                                    )
+                                                }
+                                            </div>
+                                        )
+                                    })                                    
                                 }
-                            </div> }
+                            </div>
                             
                             {/* 添付ファイル */}
                             <div className="flex flex-col attach-cont-wrap my-4">
