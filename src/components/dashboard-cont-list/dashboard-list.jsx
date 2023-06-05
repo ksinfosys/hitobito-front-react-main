@@ -479,7 +479,7 @@ const DashboardList = (props) => {
                                                         <img
                                                             style={{ cursor: "pointer", backgroundColor: "white" }} 
                                                             src={`https://hitobito-net.com/api${v}`} 
-                                                            alt={''}
+                                                            alt={'company image'}
                                                             onClick={() => {
                                                                 window.open(`https://hitobito-net.com/api${v}`, "_blank");
                                                             }}
@@ -488,7 +488,7 @@ const DashboardList = (props) => {
                                                         <img
                                                             style={{ backgroundColor: "white" }} 
                                                             src={default_Img} 
-                                                            alt={''}
+                                                            alt={'company image'}
                                                         />
                                                     )
                                                 }
