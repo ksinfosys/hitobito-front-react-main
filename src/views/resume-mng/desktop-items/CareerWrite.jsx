@@ -53,7 +53,15 @@ const CareerWrite = ({
     <div className="flex-box2-tit flex space-between">
       <div className="box2-tit">主要経歴</div>
 
-     
+      {
+        addState ? <button className="add-btn flex items-center" onClick={(e) => handleAddBtn(e, index)}>
+          <img src={AddBtn} alt="" />
+          主要経歴追加
+        </button> : <button className="minus-btn flex items-center" onClick={(e) => handleAddBtn(e, index)}>
+          <img src={MinusBtn} alt="" />
+          この経歴を削除
+        </button>
+      }
     </div>
 
     <div className="flex-box2-cont form-flex-box">
@@ -121,7 +129,7 @@ const CareerWrite = ({
         }
       </div>
     </div>
-    <div>
+    {/* <div>
     {
         addState ? <button className="add-btn flex items-center" onClick={(e) => handleAddBtn(e, index)}>
           <img src={AddBtn} alt="" />
@@ -131,7 +139,7 @@ const CareerWrite = ({
           この経歴を削除
         </button>
       }
-    </div>
+    </div> */}
 
     {/* 担当工程選択 */}
     <Modal
