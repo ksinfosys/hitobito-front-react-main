@@ -1150,8 +1150,17 @@ const ResumeRegist = () => {
           <div className='divider' />
 
           {/* 나의 스킬 */}
-          <div className='flex-box2-tit flex space-between mt-16'>
-            <div className='box2-tit'>私のスキル <span> *</span></div>
+          <div className='flex-box2-tit flex space-between mt-16'> 
+            <div className='box2-tit'>私のスキル <span> *</span></div> 
+            <div className='flex justify-content-end'>
+              <div className='justify-content-end'>
+               <p className='blue-tit mt-0 mr-5'>拡張検索をクリックして、</p>
+               <p className='blue-tit mt-0'>複数のスキルを一度に登録できます。</p>
+              </div>
+              <button className="btn btn-primary items-center shrink-0 w-30 btn-age" onClick={() => {
+                  setskillPlusModal(true);
+                }}>拡張検索</button>
+            </div>
           </div>
           <div className="flex-box2-cont form-flex-box">
             <div className="form-flex-box flex space-between items-start">
@@ -1196,13 +1205,8 @@ const ResumeRegist = () => {
             <div>
             表示されたリストから選択してください。
             </div>
-            <div className="flex items-center space-between mb-4">
-              <button onClick={() => {
-                setskillPlusModal(true);
-              }}>
-                <img src={attachIcon} alt='' className='ml-2' />
-              </button>
-              <div className='btn btn-sm btn-register w-40 btn-age' onClick={handleAddSkills}>登録</div>
+            <div className="flex items-center flex-row-reverse mt-4 mb-4">
+              <button className='btn btn-sm btn-register w-40 btn-age' onClick={handleAddSkills}>登録</button>
             </div>
             <div className='skil_list'>
               <div className="list-group list-over">
@@ -1667,7 +1671,7 @@ const ResumeRegist = () => {
                         //console.log("키"+key);
                         //console.log(multipleSkills.selector.arr.length)
                         if(multipleSkills.selector.arr.length === 1){
-                          $("#registbtn").css({'pointerEvents':'none','color':'gray'});
+                          $("#registbtn").css({'cursor': 'not-allowed','pointerEvents':'none','color':'#808386', 'backgroundColor': '#E4E7EA', 'border': 'none'});
                         }
 
                       }}>
@@ -1696,7 +1700,7 @@ const ResumeRegist = () => {
               if(multipleSkills.selector.arr.length >0){//배열의 길이가 있다면 
                 $("#registbtn").removeAttr("style");
               } else 
-                $("#registbtn").css({'pointerEvents':'none','color':'gray'});
+                $("#registbtn").css({'cursor': 'not-allowed','pointerEvents':'none','color':'#808386', 'backgroundColor': '#E4E7EA', 'border': 'none'});
             }}
           >
             <img className='mr-2' src="/src/assets/images/add-btn.svg" alt=""/>
@@ -1704,7 +1708,7 @@ const ResumeRegist = () => {
           </button>
           <button id="registbtn"
             className="btn btn-primary"
-            style={{cursor: 'not-allowed', pointerEvents: 'none', color: 'gray'}}
+            style={{cursor: 'not-allowed', pointerEvents: 'none', color: '#808386', backgroundColor: '#E4E7EA', border: 'none'}}
             onClick={(e) => {
               e.preventDefault(); 
               if(multipleSkills.selector.arr.length == 0){
