@@ -310,27 +310,38 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
         if (scrollContainerRef.current) {
           scrollContainerRef.current.scrollTop = 0; 
         }
-        if (scrollContainerRef2.current) {
-            scrollContainerRef2.current.scrollTop = 0; 
-        }
       };
 
-      if (scrollContainerRef.current) {
+        if (scrollContainerRef.current) {
         scrollContainerRef.current.addEventListener('scroll', handleScroll);
-      }
-      if (scrollContainerRef2.current) {
-        scrollContainerRef2.current.addEventListener('scroll', handleScroll);
       }
   
       return () => {
         if (scrollContainerRef.current) {
           scrollContainerRef.current.removeEventListener('scroll', handleScroll);
         }
-        if (scrollContainerRef2.current) {
-          scrollContainerRef2.current.removeEventListener('scroll', handleScroll);
-        }
       };
     }, []);
+
+    useEffect(() => {
+        const handleScroll2 = (event) => {
+          event.preventDefault();
+  
+          if (scrollContainerRef2.current) {
+            scrollContainerRef2.current.scrollTop = 0; 
+          }
+        };
+  
+          if (scrollContainerRef2.current) {
+            scrollContainerRef2.current.addEventListener('scroll', handleScroll2);
+        }
+    
+        return () => {
+          if (scrollContainerRef2.current) {
+            scrollContainerRef2.current.removeEventListener('scroll', handleScroll2);
+          }
+        };
+      }, []);
 
     return (
         <>
