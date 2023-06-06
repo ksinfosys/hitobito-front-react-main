@@ -137,6 +137,7 @@ const ResumeRegist = () => {
           ...body,
           [key]: ''
         })
+        setEmailError(true);
       }
       if (key === 'phoneNumber' && !phoneCheck.test(value)) {
         setResumeLabel("電話番号の形式を確認してください。");
@@ -146,6 +147,7 @@ const ResumeRegist = () => {
           ...body,
           [key]: ''
         })
+        setPhoneError(ture);
       }
       return false
     }
@@ -350,8 +352,8 @@ const ResumeRegist = () => {
   const [hopeCareerError, setHopeCareerError] = useState(false);
   const [jobTypeError, setJobTypeError] = useState(false);
   const [businessTypeError, setBusinessTypeError] = useState(false);
-  const [projectError, setProjectError] = useState(false);
   const [skillCodeError, setSkillCodeError] = useState(false);
+  const [skillCarrerError, setSkillCarrerError] = useState(false);
   
   const educationRef = useRef(null);
   const schoolNameRef = useRef(null);
@@ -546,11 +548,56 @@ const ResumeRegist = () => {
       setResumeAlert(true); 
       if (projectRef.current) {
         projectRef.current.focus();
-        setProjectError(true);
       }
       return false;
     } else {
-      setProjectError(false);
+    }
+
+    const max = Math.max(
+      body.projectName?.length || 0,
+      body.projectPeriod?.length || 0,
+      body.projectRole?.length || 0
+    );
+    
+      // console.log("career:::",career)
+       console.log("body:::",body)
+      // console.log("max:::",max)
+
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectName[i] !== "string" || body.projectName[i] == "") {
+        const errorMessage = i === 0 ? "プロジェクト名を入力してください。" : (i + 1) + "番目のプロジェクト名を入力してください。";
+        setResumeLabel(errorMessage);
+        setResumeAlert(true); 
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        return false;
+      } 
+    }
+
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectPeriod[i] !== "number" || isNaN(body.projectPeriod[i])) {
+        const errorMessage = i === 0 ? "プロジェクト期間を入力してください。" : (i + 1) + "番目のプロジェクト期間を入力してください。";
+        console.log("errorMessage:::",errorMessage)
+        setResumeLabel(errorMessage);
+        setResumeAlert(true); 
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        return false;
+      }
+    }
+
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectRole[i] !== "string" || body.projectRole[i] == "") {
+        const errorMessage = i === 0 ? "プロジェクト役割を入力してください。" : (i + 1) + "番目のプロジェクト役割を入力してください。";
+        setResumeLabel(errorMessage);
+        setResumeAlert(true); 
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        return false;
+      }
     }
   
     if(skillItem.arr.length == 0){
@@ -558,9 +605,11 @@ const ResumeRegist = () => {
       setResumeAlert(true); 
       skillCodeRef.current.focus();
       setSkillCodeError(true);
+      setSkillCarrerError(true)
       return false;
     } else {
       setSkillCodeError(false);
+      setSkillCarrerError(false)
     }
     
     rsFileDocument.length > 0 ? rsFileDocument.map(item => formData.append('rsFileDocument', item)) : formData.append('rsFileDocument', new File([], 'photo.jpg'))
@@ -986,29 +1035,67 @@ const ResumeRegist = () => {
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
               <div className='form-tit'  tabIndex={0} ref={selectCountryRef} >国籍 <span>*</span></div>
-              <SelectBox id={'country'} data={data && data.countryList} className={countryError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.country} ref={countryRef}/>
+              <SelectBox id={'country'} data={data && data.countryList} className={countryError ? 'error' : ''} 
+              onChange={(e) => {
+                handleSelectChangeEvent(e);
+                if (countryError) {
+                  setCountryError(false);
+                }
+              }}
+              defaultValue={body.country} 
+              ref={countryRef}/>
             </div>
             <div className='box-item flex flex-col'>
               <div className='form-tit' tabIndex={0} ref={selectEducationRef}>学歴 <span>*</span></div>
-              <SelectBox id={'education'} data={data && data.educationList} className={educationError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.education} ref={educationRef}/>
+              <SelectBox id={'education'} data={data && data.educationList} className={educationError ? 'error' : ''} 
+              onChange={(e) => {
+                handleSelectChangeEvent(e);
+                if (educationError) {
+                  setEducationError(false);
+                }
+              }}
+              defaultValue={body.education} 
+              ref={educationRef}/>
             </div>
           </div>
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
               <div className='form-tit' tabIndex={0} ref={selectGenderRef}>性別 <span>*</span></div>
-              <SelectBox id={'userGender'} data={data && data.userGenderList} className={genderError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.userGender} ref={userGenderRef}/>
+              <SelectBox id={'userGender'} data={data && data.userGenderList} className={genderError ? 'error' : ''} 
+              onChange={(e) => {
+                handleSelectChangeEvent(e);
+                if (genderError) {
+                  setGenderError(false);
+                }
+              }}
+              defaultValue={body.userGender} 
+              ref={userGenderRef}/>
             </div>
             <div className='box-item flex flex-col'>
               <div className='form-tit'>最終学校名 <span>*</span></div>
               <input id='schoolName regular-form-1' type='text' className={schoolNameError ? 'form-control error' : 'form-control'} placeholder='最終学校名入力' ref={schoolNameRef}
-                onChange={handleInputTextChangeEvent} />
+                onChange={(e) => {
+                  handleInputTextChangeEvent(e);
+                  if (schoolNameError) {
+                    setSchoolNameError(false);
+                  }
+                }} 
+                />
             </div>
           </div>
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
               <div className='form-tit' tabIndex={0} ref={selectAgeRef}>生年 <span>*</span></div>
               <div className='flex items-center gap-2'>
-                <SelectBox id={'userAge'} data={data && data.userAgeList} className={ageError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.userAge} ref={userAgeRef}/>
+                <SelectBox id={'userAge'} data={data && data.userAgeList} className={ageError ? 'error' : ''} 
+                onChange={(e) => {
+                  handleSelectChangeEvent(e);
+                  if (ageError) {
+                    setAgeError(false);
+                  }
+                }}
+                defaultValue={body.userAge} 
+                ref={userAgeRef}/>
                 <div
                   className='btn btn-sm btn-ouline-secondary w-40 btn-age'>{body && body.userAge ? handleAgeCalculator() : '0歳'}</div>
               </div>
@@ -1016,7 +1103,13 @@ const ResumeRegist = () => {
             <div className='box-item flex flex-col'>
               <div className='form-tit'>専攻 <span>*</span></div>
               <input id='majorName regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} placeholder='専攻入力' ref={majorNameRef}
-                onChange={handleInputTextChangeEvent} />
+              onChange={(e) => {
+                handleInputTextChangeEvent(e);
+                if (majorNameError) {
+                  setMajorNameError(false);
+                }
+              }}  
+              />
             </div>
           </div>
           <div className='form-flex-box flex space-between items-start'>
@@ -1024,7 +1117,12 @@ const ResumeRegist = () => {
               <div className='form-tit' tabIndex={0} ref={selectResidentialAreaRef}>居住地 <span>*</span></div>
               <SelectBox id={'residentialArea'} data={data && data.residentialAreaList}
                 className={residentialAreaError ? 'error' : ''}
-                onChange={handleSelectChangeEvent}
+                onChange={(e) => {
+                  handleSelectChangeEvent(e);
+                  if (residentialAreaError) {
+                    setResidentialAreaError(false);
+                  }
+                }}
                 defaultValue={body.residentialArea}
                 ref={residentialAreaRef}
               />
@@ -1032,7 +1130,15 @@ const ResumeRegist = () => {
             </div>
             <div className='box-item flex flex-col'>
               <div className='form-tit' tabIndex={0} ref={selectHopeIncomeRef}>希望年収 <span>*</span></div>
-              <SelectBox id={'hopeIncome'} data={data && data.hopeIncomeList} className={hopeIncomeError ? 'error' : ''} onChange={handleSelectChangeEvent} defaultValue={body.hopeIncome} ref={hopeIncomeRef}/>
+              <SelectBox id={'hopeIncome'} data={data && data.hopeIncomeList} className={hopeIncomeError ? 'error' : ''} 
+              onChange={(e) => {
+                handleSelectChangeEvent(e);
+                if (hopeIncomeError) {
+                  setHopeIncomeError(false);
+                }
+              }}
+              defaultValue={body.hopeIncome} 
+              ref={hopeIncomeRef}/>
             </div>
           </div>
           <div className='form-flex-box flex space-between items-start'>
@@ -1040,7 +1146,12 @@ const ResumeRegist = () => {
               <div className='form-tit'>メールアドレス <span>*</span></div>
               <div className='flex items-center gap-2'>
                 <input id='userEmail regular-form-1' type='text' className={emailError ? 'form-control error' : 'form-control'} placeholder='イーメール入力'
-                  onChange={handleInputTextChangeEvent}
+                  onChange={(e) => {
+                    handleInputTextChangeEvent(e);
+                    if (emailError) {
+                      setEmailError(false);
+                    }
+                  }}  
                   onBlur={handleCheckText}
                   ref={userEmailRef}
                 />
@@ -1060,7 +1171,13 @@ const ResumeRegist = () => {
               <div className='form-tit'>連絡先 <span>*</span></div>
               <div className='flex items-center gap-2'>
                 <input id='phoneNumber regular-form-1' type='text' className={phoneError ? 'form-control error' : 'form-control'}
-                  placeholder='-なしで数字だけ入力してください。' onChange={handleInputTextChangeEvent}
+                  placeholder='-なしで数字だけ入力してください。' 
+                  onChange={(e) => {
+                    handleInputTextChangeEvent(e);
+                    if (phoneError) {
+                      setPhoneError(false);
+                    }
+                  }}  
                   onBlur={handleCheckText}
                   ref={phoneNumberRef}
                 />
@@ -1088,6 +1205,9 @@ const ResumeRegist = () => {
                   hopeCareer1(),
                   setHopeCareerModal(true),
                   setModalFlag({ ...modalFlag, main: true, goal: true})
+                  if (hopeCareerError) {
+                    setHopeCareerError(false);
+                  }
                 }}
               >{depthMenu.hopeCareer.depth_first} &gt; {depthMenu.hopeCareer.depth_seconds}</button>
             </div>
@@ -1096,7 +1216,15 @@ const ResumeRegist = () => {
           <div className='form-flex-box flex space-between items-start'>
             <div className='box-item flex flex-col'>
               <div className='form-tit' tabIndex={0} ref={selectCareerRef}>経歴 <span>*</span></div>
-              <SelectBox id={'career'} data={data && data.careerList} className={careerError ? 'form-control error' : 'form-control'} onChange={handleSelectChangeEvent} defaultValue={body.career} ref={careerRef} />
+              <SelectBox id={'career'} data={data && data.careerList} className={careerError ? 'form-control error' : 'form-control'} 
+              onChange={(e) => {
+                handleSelectChangeEvent(e);
+                if (careerError) {
+                  setCareerError(false);
+                }
+              }}
+              defaultValue={body.career} 
+              ref={careerRef} />
             </div>
             <div className="box-item flex flex-col">
               <div className="form-tit" tabIndex={0} ref={selectJobTypeRef}>現在の職種 <span>*</span></div>
@@ -1105,6 +1233,9 @@ const ResumeRegist = () => {
                   jobType1(),
                   setJobTypeModal(true),
                   setModalFlag({ ...modalFlag, main: true, occupation: true })
+                  if (jobTypeError) {
+                    setJobTypeError(false);
+                  }
                 }}
               >
                 {depthMenu.jobType.depth_first} &gt; {depthMenu.jobType.depth_seconds}
@@ -1117,6 +1248,9 @@ const ResumeRegist = () => {
                   businessType1(),
                   setBusinessTypeModal(true),
                   setModalFlag({ ...modalFlag, main: true, business: true })
+                  if (businessTypeError) {
+                    setBusinessTypeError(false);
+                  }
                 }}
               >
                 {depthMenu.businessType.depth_first} &gt; {depthMenu.businessType.depth_seconds}
@@ -1126,7 +1260,7 @@ const ResumeRegist = () => {
 
           <div className='divider'/>
 
-          <div className={projectError ? 'error' : ''} tabIndex={0} ref={projectRef}>
+          <div tabIndex={0} ref={projectRef}>
           {/* 主要経歴 */
             career.map((career, key) => {
               return <CareerWrite
@@ -1143,6 +1277,9 @@ const ResumeRegist = () => {
                 handleProjectProcessChange={handleProjectProcessAdd}
                 handleProjectProcessDel={handleProjectProcessDel}
                 handleCareerChangeAndProcess={handleCareerChangeAndProcess}
+                name={body.projectName[key]}
+                role={body.projectRole[key]}
+                period={body.projectPeriod[key]}
               />
             })
           }
@@ -1184,6 +1321,9 @@ const ResumeRegist = () => {
                           skillName: []
                         })
                       }
+                      if (skillCodeError) {
+                        setSkillCodeError(false);
+                      }
                     }}
                   />
                   <button className='w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0'>
@@ -1194,8 +1334,14 @@ const ResumeRegist = () => {
               <div className='box-item flex flex-col'>
                 <div className='form-tit'>経験期間</div>
                 <div className='flex items-center gap-2'>
-                  <SelectBox className={'refTarget_select'} id={'careerCode'} data={data && data.skillCareerList}
-                    onChange={handleUpdateSkill} defaultValue={skillItem.temp?.careerCode?.careerCode} />
+                  <SelectBox className={skillCarrerError ? 'refTarget_select error' : 'refTarget_select' } id={'careerCode'} data={data && data.skillCareerList}
+                    onChange={(e) => {
+                      handleUpdateSkill(e);
+                      if (skillCarrerError) {
+                        setSkillCarrerError(false);
+                      }
+                    }}
+                    defaultValue={skillItem.temp?.careerCode?.careerCode} />
                 </div>
               </div>
             </div>
