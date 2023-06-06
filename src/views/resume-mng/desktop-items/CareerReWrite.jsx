@@ -21,6 +21,9 @@ const CareerReWrite = ({
   role,
   period,
   process_re = process_re.toString().split(','),
+  projectNameError,
+  projectRoleError,
+  projectPeriodError,
 }) => {
   const [selectPop, setSelectPop] = useState(false);
   const [process, setProcess] = useState([])
@@ -83,13 +86,16 @@ const CareerReWrite = ({
     <div className="flex-box2-cont form-flex-box">
       <div className="box-item2 flex flex-col">
         <div className="form-tit">プロジェクト名 <span>*</span></div>
-        <input id="projectNameSelect" type="text" className="form-control" placeholder="プロジェクト名入力" maxLength={100}
-          onChange={(e) => handleCareerChange(e, index)} value={name} />
+        <input id="projectNameSelect" type="text" className={projectNameError? "form-control error" : "form-control"} placeholder="プロジェクト名入力" maxLength={100}
+          onChange={(e) => {handleCareerChange(e, index)}} 
+          defaultValue={name || ""} />
       </div>
       <div className="form-flex-box flex space-between items-start">
         <div className="box-item flex flex-col">
           <div className="form-tit">役割 <span>*</span></div>
-          <SelectBox id={'projectRoleSelect'} data={projectRoleList} onChange={async (e) => {
+          <SelectBox id={'projectRoleSelect'} data={projectRoleList} 
+            className={projectRoleError? "error" : ""}
+            onChange={async (e) => {
             const arr = projectProcessDefault[e.target.value].split(',')
             const value = e.target.value
             const tempArr = []
@@ -107,13 +113,15 @@ const CareerReWrite = ({
             setProcess(tempProcess)
             handleCareerChangeAndProcess(e, index, tempArr, value)
             setRoleSelect(false)
-          }} defaultValue={role} />
+          }} defaultValue={role || ""} />
         </div>
         <div className="box-item flex flex-col">
           <div className="form-tit">期間(月数) <span>*</span></div>
           {/* select > input 변경 */}
-          <input id="projectPeriodSelect" type="number" min={0} className="form-control" placeholder="カ月(数字で入力してください)"
-            onChange={(e) => handleCareerChange(e, index)} value={period} />
+          <input id="projectPeriodSelect" type="number" min={0} 
+            className={projectPeriodError ? "form-control error" : "form-control"} 
+            placeholder="カ月(数字で入力してください)"
+            onChange={(e) => handleCareerChange(e, index)} defaultValue={period || ""} />
         </div>
       </div>
     </div>

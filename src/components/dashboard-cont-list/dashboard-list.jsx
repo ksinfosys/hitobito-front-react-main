@@ -4,7 +4,7 @@ import {
     ModalBody,
     ModalHeader,
 } from "@/base-components";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getCookie } from "../../utils/cookie";
@@ -261,6 +261,27 @@ const DashboardList = (props) => {
     const [rqLimitDatetime, setRqLimitDatetime] = useState("");
     // 현재날짜,시간
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
+
+    //buttonList 스크롤 방지
+    const scrollContainerRef = useRef(null);
+    useEffect(() => {
+      const handleScroll = (event) => {
+        event.preventDefault();
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.scrollTop = 0; 
+        }
+      };
+  
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.addEventListener('scroll', handleScroll);
+      }
+  
+      return () => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.removeEventListener('scroll', handleScroll);
+        }
+      };
+    }, []);
       
     return (
         <>
@@ -393,7 +414,7 @@ const DashboardList = (props) => {
                     </div>
                 </div>
                 <div className="cont-btm">
-                    <div className={btnActive ? "cont-btm-btn active" : "cont-btm-btn"}>
+                    <div className={btnActive ? "cont-btm-btn active" : "cont-btm-btn"} ref={scrollContainerRef}>
                         {buttonList}
                     </div>
                     <div className={btnActive ? "cont-btm-arrow active" : "cont-btm-arrow"} onClick={handleClick}>
