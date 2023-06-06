@@ -578,7 +578,6 @@ const ResumeRegist = () => {
     for(let i = 0; i < max; i++){
       if (typeof body.projectPeriod[i] !== "number" || isNaN(body.projectPeriod[i])) {
         const errorMessage = i === 0 ? "プロジェクト期間を入力してください。" : (i + 1) + "番目のプロジェクト期間を入力してください。";
-        console.log("errorMessage:::",errorMessage)
         setResumeLabel(errorMessage);
         setResumeAlert(true); 
         if (projectRef.current) {
