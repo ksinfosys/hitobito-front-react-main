@@ -481,7 +481,7 @@ const ResumeChange = () => {
     );
 
     //  console.log("career:::",career)
-      console.log("body:::",body)
+    //  console.log("body:::",body)
     //  console.log("max:::",max)
     
     for(let i = 0; i < max; i++){
