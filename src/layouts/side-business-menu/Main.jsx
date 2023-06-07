@@ -39,6 +39,7 @@ import CheckToken from "../../../util/CheckToken";
 import { regexUserPoint } from "../../utils/utils";
 import { userCount } from "../../stores/search-count";
 import {businessPlan} from "../../stores/business-plan";
+import QuestionImg from "@/assets/images/question-icon.svg";
 
 function Main() {
   const navigate = useNavigate();
@@ -240,6 +241,9 @@ function Main() {
             </div>
 
             <div className="flex items-center topLink_menu gap-2">
+                <Link to="/user-guide-business">
+                  <img src={QuestionImg} alt="user-guide-business" />
+                </Link>
               <div className="flex items-center topuser-menu">
                 <div className="topuser-item">{userInfoV.cpUserName}</div>
                 <div className="topuser-item historyBalance">
