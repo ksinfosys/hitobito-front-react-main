@@ -1218,7 +1218,8 @@ const ResumeChange = () => {
                 </div>
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>最終学校名 <span>*</span></div>
-                  <input id='schoolNameSelect regular-form-1' type='text' className={schoolNameError ? 'form-control error' : 'form-control'} 
+                  <input id='schoolNameSelect regular-form-1' type='text' className={schoolNameError ? 'form-control error' : 'form-control'}
+                  maxLength={200}
                   placeholder='最終学校名入力' 
                   ref={schoolNameRef}
                   onChange={(e) => {
