@@ -248,11 +248,13 @@ const ResumeChange = () => {
     })
   }
 
+  const [crwProject, setCrwProject] = useState(false);
   const handleAddBtn = (e, idx) => {
     // console.log(idx)
     if (idx === 0) {
       setCareer(prevState => [...prevState, {process: []}])
       setIndex(index+1)
+      setCrwProject(true);
     } else {
       const tempArr = [...career]
       const tempBody = {...body}
@@ -381,7 +383,7 @@ const ResumeChange = () => {
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     if (rsFileDocument.length + files.length >= 5) {
-      setResumeLabel("ファイルは5個まで添付できます。");
+      setResumeLabel("ファイルは４つまで添付できます。");
       setResumeAlert(true); 
       return false;
     }
@@ -1392,6 +1394,7 @@ const ResumeChange = () => {
                     role={body.projectRoleSelect[key]}
                     period={body.projectPeriodSelect[key]}
                     process_re={body.projectProcessSelect[key] ? body.projectProcessSelect[key] : []}
+                    crwProject = {crwProject}
                   />
                 })
               }
