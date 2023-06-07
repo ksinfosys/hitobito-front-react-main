@@ -31,6 +31,7 @@ import { userInfo } from "../../stores/user-info";
 import { useLiff } from "react-liff";
 import NewAlarm from "@/assets/images/new-al.svg";
 import { userCount } from "../../stores/search-count";
+import QuestionImg from "@/assets/images/question-icon.svg";
 
 function Main() {
   const token = getCookie("accessToken");
@@ -226,6 +227,10 @@ function Main() {
               </Link>
             </div>
             <div className="flex items-center topLink_menu gap-1">
+              <Link to="/user-guide-employee">
+                <img src={QuestionImg} alt="user-guide-employee" />
+              </Link>
+
               <IsLogin login={`${token ? null : "N"}`} />
 
 

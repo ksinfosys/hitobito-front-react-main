@@ -364,6 +364,17 @@ function Router() {
         },
       ]
       : [
+        // 기업 이용가이드
+        {
+          path: "/user-guide-business",
+          element: <TopMenu/>,
+          children: [
+            {
+              path: "/user-guide-business",
+              element: <UserGuideBusiness/>,
+            },
+          ],
+        },
         //기업 화면
         {
           path: "/",
