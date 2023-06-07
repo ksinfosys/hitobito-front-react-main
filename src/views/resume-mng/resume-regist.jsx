@@ -1077,7 +1077,7 @@ const ResumeRegist = () => {
                   setHopeCareerModal(true),
                   setModalFlag({ ...modalFlag, main: true, goal: true})
                 }}
-              >{depthMenu.hopeCareer.depth_first} &gt; {depthMenu.hopeCareer.depth_seconds}</button>
+              >{depthMenu.hopeCareer.depth_first} {' > ' + depthMenu.hopeCareer.depth_seconds}</button>
             </div>
           </div>
 
@@ -1097,7 +1097,8 @@ const ResumeRegist = () => {
                   setModalFlag({ ...modalFlag, main: true, occupation: true })
                 }}
               >
-                {depthMenu.jobType.depth_first} &gt; {depthMenu.jobType.depth_seconds}
+                {depthMenu.jobType.depth_first} {
+                depthMenu.jobType.depth_first === 'なし'? '' : ' > ' + depthMenu.jobType.depth_seconds}
               </button>
             </div>
             <div className="box-item flex flex-col">
@@ -1111,7 +1112,8 @@ const ResumeRegist = () => {
                   setModalFlag({ ...modalFlag, main: true, business: true })
                 }}
               >
-                {depthMenu.businessType.depth_first} &gt; {depthMenu.businessType.depth_seconds}
+                {depthMenu.businessType.depth_first} {
+                depthMenu.businessType.depth_first === 'なし'? '' : ' > '+ depthMenu.businessType.depth_seconds}
               </button>
             </div>
           </div>
