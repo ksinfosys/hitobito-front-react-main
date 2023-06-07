@@ -269,11 +269,19 @@ const ResumeChange = () => {
     }
   }
 
-  useEffect(() => {
-    if($(".projectName_"+index) && index != 0){
-      $(".projectName_"+index).focus();
+  const crwProjectRef = useRef(null);
+
+    useEffect(() => {
+    if (crwProjectRef.current && index !== 0) {
+      crwProjectRef.current.focus();
     }
-  }, [index])
+  }, [index]);
+
+  // useEffect(() => {
+  //   if($(".projectName_"+index) && index != 0){
+  //     $(".projectName_"+index).focus();
+  //   }
+  // }, [index])
 
   const handleCareerChange = (e, idx) => {
     const id = e.target.id.replaceAll(' dropdown-button-dark-example1', '')
@@ -416,7 +424,7 @@ const ResumeChange = () => {
 
   // 전송
   const handleSubmit = async () => {
-
+    
     let temp = {}
     Object.entries(body).forEach(obj => {
       temp[obj[0].replaceAll('Select', '')] = obj[1]

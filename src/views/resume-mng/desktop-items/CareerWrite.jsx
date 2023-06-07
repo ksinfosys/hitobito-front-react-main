@@ -1,5 +1,5 @@
 import { Modal, ModalBody, ModalFooter } from "@/base-components";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import AddBtn from "@/assets/images/add-btn.svg";
 import MinusBtn from "@/assets/images/minus-icon.svg";
 import blueX from "@/assets/images/blue-x.svg";
@@ -49,6 +49,14 @@ const CareerWrite = ({
     })
   }, [selectPop])
 
+  const crwProjectRef = useRef(null);
+
+  useEffect(() => {
+    if (crwProjectRef.current) {
+      crwProjectRef.current.focus();
+    }
+  }, []);
+
 
   return <>
     <div className="flex-box2-tit flex space-between">
@@ -69,7 +77,7 @@ const CareerWrite = ({
       <div className="box-item2 flex flex-col">
         <div className="form-tit">プロジェクト名 <span>*</span></div>
         <input id="projectName" type="text" className={"form-control projectName_"+index} placeholder="プロジェクト名入力" maxLength={100}
-          onChange={(e) => handleCareerChange(e, index)} />
+          onChange={(e) => handleCareerChange(e, index)} ref={crwProjectRef}/>
       </div>
       <div className="form-flex-box flex space-between items-start">
         <div className="box-item flex flex-col">
