@@ -101,6 +101,10 @@ const ResumeChange = () => {
   const [hopeCareerModal, setHopeCareerModal] = useState(false);
   const [jopTypeModal, setJobTypeModal] = useState(false);
   const [businessTypeModal, setBusinessTypeModal] = useState(false);
+  const [hopeOptionSelectFail, setHopeOptionSelectFail] = useState(false);
+  const [jobOptionSelectFail, setJobOptionSelectFail] = useState(false);
+  const [businessOptionSelectFail, setBusinessOptionSelectFail] = useState(false);
+
   const handleAgeCalculator = (yearSelect) => new Date().getFullYear() - (parseInt(yearSelect)) + '歳'
   const [index, setIndex] = useState(0);
 
@@ -1009,22 +1013,14 @@ const ResumeChange = () => {
     let jobTypeList2 = [];
     let jobTypeOneDepsVal = "";
     let jobTypeListVal = "";
+    let getJobType = document.getElementById('jobType dropdown-button-dark-example1');
     //console.log("가져온 데이터 스트링 확인: "+e.target.value.toString())
 
     if(e.target.value.toString() === "57000"){
-      //console.log("가져온 데이터 스트링 확인2: "+e.target.value.toString()) //"57000"
-      for(let i = 0; i < data.jobTypeList.length; i++){
-          if(Number(data.jobTypeList[i].jobType) === 57000){
-          jobTypeList2.push(data.jobTypeList[i]);
-        }
-      }
-      //console.log("리스트 길이: "+jobTypeList2[0].value);
-      for(let i = 0 ; i < jobTypeList2.length; i++){
-        var option = $("<option value='"+ jobTypeList2[i].jobType +"'>"+ jobTypeList2[i].jobTypeName +"</option>");
-        $('.jobType').append(option);
-      }
-
+      getJobType.disabled = true;
+      ModalEvent('jobType').secondDepth(e, depthMenu, setDepthMenu, body, setBody);
     }
+    else getJobType.disabled = false;
 
     for(let i = 0; i < data.jobTypeList.length; i++){
       jobTypeOneDepsVal = e.target.value.toString();
@@ -1067,23 +1063,14 @@ const ResumeChange = () => {
     let businessTypeList2 = [];
     let businessTypeOneDepsVal = "";
     let businessTypeListVal = "";
-
+    let getBusinessType = document.getElementById('businessType dropdown-button-dark-example1');
     //console.log(e.target.value.toString());
 
     if(e.target.value.toString() === "56000"){
-      //console.log("가져온 데이터 스트링 확인2: "+e.target.value.toString()) //"57000"
-      for(let i = 0; i < data.businessTypeList.length; i++){
-          if(Number(data.businessTypeList[i].businessType) === 56000){
-            businessTypeList2.push(data.businessTypeList[i]);
-        }
-      }
-      //console.log("리스트 길이: "+businessTypeList2[0].value);
-      for(let i = 0 ; i < businessTypeList2.length; i++){
-        var option = $("<option value='"+ businessTypeList2[i].businessType +"'>"+ businessTypeList2[i].businessTypeName +"</option>");
-        $('.jobType').append(option);
-      }
-
+      getBusinessType.disabled = true;
+      ModalEvent('businessType').secondDepth(e, depthMenu, setDepthMenu, body, setBody)
     }
+    else getBusinessType.disabled = false;
 
     for(let i = 0; i < data.businessTypeList.length; i++){
       businessTypeOneDepsVal = e.target.value.toString();
@@ -1323,6 +1310,8 @@ const ResumeChange = () => {
                   <div className="form-tit">将来の目標<span>*</span></div>
                   <button className='btn btn-primary flex-start selectButton'
                     onClick={() => {
+                      $('.hopeCareer').empty();
+                      $('.hopeCareer').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
                       hopeCareer1(),
                       setHopeCareerModal(true),
                       setModalFlag({ ...modalFlag, main: true, goal: true})
@@ -1341,6 +1330,8 @@ const ResumeChange = () => {
                   <div className="form-tit">現在の職種 <span>*</span></div>
                   <button className='btn btn-primary selectButton'
                     onClick={() => {
+                      $('.jobType').empty();
+                      $('.jobType').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
                       jobType1(),
                       setJobTypeModal(true),
                       setModalFlag({ ...modalFlag, main: true, occupation: true })
@@ -1353,6 +1344,8 @@ const ResumeChange = () => {
                   <div className="form-tit">所属会社の業種 <span>*</span></div>
                   <button className='btn btn-primary selectButton'
                     onClick={() => {
+                      $('.businessType').empty();
+                      $('.businessType').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
                       businessType1(),
                       setBusinessTypeModal(true),
                       setModalFlag({ ...modalFlag, main: true, business: true })
@@ -1398,7 +1391,7 @@ const ResumeChange = () => {
                     <p className='blue-tit mt-0 mr-5'>拡張検索をクリックして、</p>
                     <p className='blue-tit mt-0'>複数のスキルを一度に登録できます。</p>
                   </div>
-                  <button className="btn btn-primary items-center shrink-0 w-30 btn-age" onClick={() => {
+                  <button className="btn btn-primary items-center shrink-0 w-30 pl-5 pr-5 btn-age" onClick={() => {
                     setskillPlusModal(true);
                     }}>拡張検索</button>
                 </div>
@@ -1605,6 +1598,7 @@ const ResumeChange = () => {
 
           {
             <Modal
+              backdrop="static"
               show={hopeCareerModal}
               onHidden={() => {
                 setHopeCareerModal(false)
@@ -1620,6 +1614,7 @@ const ResumeChange = () => {
                   <select id={'hopeCareerOneDeps dropdown-button-dark-example1'}
                           className={`hopeCareerOneDeps form-select flex items-center space-between`}
                           onChange={(e) => {
+                            depthMenu.hopeCareer.depth_seconds = "";
                             hopeCareer2(e),
                             ModalEvent('hopeCareer').oneDepth(e, depthMenu, setDepthMenu)
                           }}
@@ -1638,18 +1633,17 @@ const ResumeChange = () => {
 
               </ModalBody>
               <ModalFooter>
-                <div className="sel-btn-wrap flex justify-center gap-2">
-                  <button className="btn btn-outline-secondary"
-                          onClick={() => {
-                            setHopeCareerModal(false)
-                          }}
-                  >
-                    キャンセル
-                  </button>
+                <div className="sel-btn-wrap flex-row-reverse gap-2">
                   <button className="btn btn-primary" onClick={() => {
+                    let getHopeCareer2 = document.getElementById('hopeCareer dropdown-button-dark-example1').value
+                    console.log(getHopeCareer2);
+                    if(getHopeCareer2 === "{'DEFAULT'}"){
+                      setHopeOptionSelectFail(true);
+                      return false;
+                    }
                     setHopeCareerModal(false)
                   }}>
-                    登録
+                   確定 
                   </button>
                 </div>
               </ModalFooter>
@@ -1657,6 +1651,7 @@ const ResumeChange = () => {
           }
           {
             <Modal
+             backdrop="static"
               show={jopTypeModal}
               onHidden={() => {
                 setJobTypeModal(false)
@@ -1672,6 +1667,7 @@ const ResumeChange = () => {
                   <select id={'jobTypeOneDeps dropdown-button-dark-example1'}
                           className={`jobTypeOneDeps form-select flex items-center space-between`}
                           onChange={(e) => {
+                            depthMenu.jobType.depth_seconds = "";
                             jobType2(e),
                             ModalEvent('jobType').oneDepth(e, depthMenu, setDepthMenu)
                           }}
@@ -1679,6 +1675,7 @@ const ResumeChange = () => {
                     <option disabled selected value={'DEFAULT'}> -- select an option --</option>
                   </select>
                   <select id={'jobType dropdown-button-dark-example1'}
+                          disabled={false}
                           className={`jobType form-select flex items-center space-between`}
                           onChange={(e) => {
                               ModalEvent('jobType').secondDepth(e, depthMenu, setDepthMenu, body, setBody)
@@ -1690,18 +1687,24 @@ const ResumeChange = () => {
 
               </ModalBody>
               <ModalFooter>
-                <div className="sel-btn-wrap flex justify-center gap-2">
-                  <button className="btn btn-outline-secondary"
-                    onClick={() => {
-                      setJobTypeModal(false)
-                    }}
-                  >
-                    キャンセル
-                  </button>
+                <div className="sel-btn-wrap flex-row-reverse gap-2">
                   <button className="btn btn-primary" onClick={() => {
+                    let getJobType1 = document.getElementById('jobTypeOneDeps dropdown-button-dark-example1').value
+                    let getJobType2 = document.getElementById('jobType dropdown-button-dark-example1').value
+                    console.log(getJobType1);
+                    console.log(getJobType2);
+                    if(getJobType1 !== '57000' && getJobType2 === "{'DEFAULT'}"){
+                      setJobOptionSelectFail(true);
+                      return false;
+                    }
+                    else if(getJobType1 === '57000' && getJobType2 === "{'DEFAULT'}"){
+                      getJobType2 = '57000';
+                      setJobTypeModal(false);
+                      return true;
+                    }
                     setJobTypeModal(false)
                   }}>
-                    登録
+                    確定
                   </button>
                 </div>
               </ModalFooter>
@@ -1709,6 +1712,7 @@ const ResumeChange = () => {
           }
           {
             <Modal
+              backdrop="static"
               show={businessTypeModal}
               onHidden={() => {
                 setBusinessTypeModal(false)
@@ -1724,6 +1728,7 @@ const ResumeChange = () => {
                   <select id={'businessTypeOneDeps dropdown-button-dark-example1'}
                           className={`businessTypeOneDeps form-select flex items-center space-between`}
                           onChange={(e) => {
+                            depthMenu.businessType.depth_seconds = "";
                             businessType2(e),
                             ModalEvent('businessType').oneDepth(e, depthMenu, setDepthMenu)
                           }}
@@ -1731,6 +1736,7 @@ const ResumeChange = () => {
                     <option disabled selected value={'DEFAULT'}> -- select an option --</option>
                   </select>
                   <select id={'businessType dropdown-button-dark-example1'}
+                          disabled={false}
                           className={`businessType form-select flex items-center space-between`}
                           onChange={(e) => {
                               ModalEvent('businessType').secondDepth(e, depthMenu, setDepthMenu, body, setBody)
@@ -1742,18 +1748,23 @@ const ResumeChange = () => {
 
               </ModalBody>
               <ModalFooter>
-                <div className="sel-btn-wrap flex justify-center gap-2">
-                  <button className="btn btn-outline-secondary"
-                    onClick={() => {
-                      setBusinessTypeModal(false)
-                    }}
-                  >
-                    キャンセル
-                  </button>
+                <div className="sel-btn-wrap flex-row-reverse gap-2">
                   <button className="btn btn-primary" onClick={() => {
+                    let businessType1 = document.getElementById('businessTypeOneDeps dropdown-button-dark-example1').value
+                    let businessType2 = document.getElementById('businessType dropdown-button-dark-example1').value
+                    console.log(businessType1);
+                    console.log(businessType2);
+                    if(businessType1 !== '56000' && businessType2 === "{'DEFAULT'}"){
+                      setBusinessOptionSelectFail(true);
+                      return false;
+                    }else if(businessType1 === '56000' && businessType2 === "{'DEFAULT'}"){
+                      businessType2 = '56000';
+                      setBusinessTypeModal(false);
+                      return true;
+                    }
                     setBusinessTypeModal(false)
                   }}>
-                    登録
+                    確定
                   </button>
                 </div>
               </ModalFooter>
@@ -1794,6 +1805,7 @@ const ResumeChange = () => {
     </Modal>
     {/* 스킬검색 모달*/}
     <Modal className="skill-search-modal"
+          backdrop="static"
            show={skillPlusModal}
            onHidden={() => {
              setskillPlusModal(false);
@@ -2035,8 +2047,8 @@ const ResumeChange = () => {
         </ModalBody>
       </Modal>
 
-    {/* 이력서 수정 성공 모달*/}
-    <Modal
+      {/* 이력서 수정 성공 모달*/}
+      <Modal
         show={resumeComplete}
         onHidden={() => {
           setResumeComplete(false);
@@ -2053,6 +2065,81 @@ const ResumeChange = () => {
               onClick={() => {
                 setResumeComplete(false);
                 window.location.href = '/';
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
+
+      {/* 장래 목표 미 선택시 생성 모달*/}        
+        <Modal
+        show={hopeOptionSelectFail}
+        onHidden={() => {
+          setHopeOptionSelectFail(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit mb-5">
+          将来の目標を選択してください。
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-primary"
+              onClick={() => {
+                setHopeOptionSelectFail(false);
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
+
+        {/* 현재직종 미 선택시 생성 모달*/}        
+      <Modal
+        show={jobOptionSelectFail}
+        onHidden={() => {
+          setJobOptionSelectFail(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit mb-5">
+          現在の職種を選択してください。
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-primary"
+              onClick={() => {
+                setJobOptionSelectFail(false);
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
+
+       {/* 소속회사 업종 미 선택시 생성 모달*/}        
+        <Modal
+        show={businessOptionSelectFail}
+        onHidden={() => {
+          setBusinessOptionSelectFail(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit mb-5">
+          所属会社の業種を選択してください。
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-primary"
+              onClick={() => {
+                setBusinessOptionSelectFail(false);
               }}
             >
               確認
