@@ -1244,6 +1244,7 @@ const ResumeChange = () => {
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>専攻 <span>*</span></div>
                   <input id='majorNameSelect regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} 
+                  maxLength={200}
                   placeholder='専攻入力' 
                   ref={majorNameRef}
                   onChange={(e) => {
@@ -1275,6 +1276,7 @@ const ResumeChange = () => {
                   <div className='flex items-center gap-2'>
                     <input id='userEmailSelect regular-form-1' type='text' className={emailError ? 'form-control error' : 'form-control'} 
                            placeholder='イーメール入力'
+                           maxLength={100}
                            onChange={(e) => {
                             handleInputTextChangeEvent(e);
                             if (emailError) {
@@ -1303,6 +1305,7 @@ const ResumeChange = () => {
                     <input id='phoneNumberSelect regular-form-1' type='text' className={phoneError ? 'form-control error' : 'form-control'}
                            value={body.phoneNumberSelect}
                            placeholder='-なしで数字だけ入力してください。'
+                           maxLength={20}
                            onChange={(e) => {
                             handleInputTextChangeEvent(e);
                             if (phoneError) {

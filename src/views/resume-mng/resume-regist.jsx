@@ -1102,6 +1102,7 @@ const ResumeRegist = () => {
             <div className='box-item flex flex-col'>
               <div className='form-tit'>最終学校名 <span>*</span></div>
               <input id='schoolName regular-form-1' type='text' className={schoolNameError ? 'form-control error' : 'form-control'} placeholder='最終学校名入力' ref={schoolNameRef}
+                maxLength={200}
                 onChange={(e) => {
                   handleInputTextChangeEvent(e);
                   if (schoolNameError) {
@@ -1131,6 +1132,7 @@ const ResumeRegist = () => {
             <div className='box-item flex flex-col'>
               <div className='form-tit'>専攻 <span>*</span></div>
               <input id='majorName regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} placeholder='専攻入力' ref={majorNameRef}
+              maxLength={200}
               onChange={(e) => {
                 handleInputTextChangeEvent(e);
                 if (majorNameError) {
@@ -1174,6 +1176,7 @@ const ResumeRegist = () => {
               <div className='form-tit'>メールアドレス <span>*</span></div>
               <div className='flex items-center gap-2'>
                 <input id='userEmail regular-form-1' type='text' className={emailError ? 'form-control error' : 'form-control'} placeholder='イーメール入力'
+                  maxLength={100}
                   onChange={(e) => {
                     handleInputTextChangeEvent(e);
                     if (emailError) {
@@ -1200,6 +1203,7 @@ const ResumeRegist = () => {
               <div className='flex items-center gap-2'>
                 <input id='phoneNumber regular-form-1' type='text' className={phoneError ? 'form-control error' : 'form-control'}
                   placeholder='-なしで数字だけ入力してください。' 
+                  maxLength={20}
                   onChange={(e) => {
                     handleInputTextChangeEvent(e);
                     if (phoneError) {
