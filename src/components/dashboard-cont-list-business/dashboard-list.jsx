@@ -4,7 +4,7 @@ import {
     ModalBody,
     ModalHeader
 } from "@/base-components";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import $, { each } from 'jquery'
 
 import PersonIcon from "@/assets/images/person-icon.png";
@@ -300,6 +300,49 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
         }
     }
 
+    //buttonList 스크롤 방지
+    const scrollContainerRef = useRef(null);
+    const scrollContainerRef2 = useRef(null);
+    useEffect(() => {
+      const handleScroll = (event) => {
+        event.preventDefault();
+
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.scrollTop = 0; 
+        }
+      };
+
+        if (scrollContainerRef.current) {
+        scrollContainerRef.current.addEventListener('scroll', handleScroll);
+      }
+  
+      return () => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.removeEventListener('scroll', handleScroll);
+        }
+      };
+    }, []);
+
+    useEffect(() => {
+        const handleScroll2 = (event) => {
+          event.preventDefault();
+  
+          if (scrollContainerRef2.current) {
+            scrollContainerRef2.current.scrollTop = 0; 
+          }
+        };
+  
+          if (scrollContainerRef2.current) {
+            scrollContainerRef2.current.addEventListener('scroll', handleScroll2);
+        }
+    
+        return () => {
+          if (scrollContainerRef2.current) {
+            scrollContainerRef2.current.removeEventListener('scroll', handleScroll2);
+          }
+        };
+      }, []);
+
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
@@ -453,7 +496,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                     スキル
                                 </div>
                                 {/* class명에 orange-type2 넣으면 오렌지색 배경 버튼으로 바뀜 */}
-                                <div className="cont-btm-btn-1 orange">
+                                <div className="cont-btm-btn-1 orange" ref={scrollContainerRef}>
                                     {buttonList1}
                                 </div>
                             </div>
@@ -461,7 +504,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <div className="skill-tit">
                                     担当工程
                                 </div>
-                                <div className="cont-btm-btn-1 orange">
+                                <div className="cont-btm-btn-1 orange" ref={scrollContainerRef2}>
                                     {buttonList2}
                                 </div>
                             </div>

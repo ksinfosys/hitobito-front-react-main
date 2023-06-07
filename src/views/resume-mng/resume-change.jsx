@@ -168,6 +168,7 @@ const ResumeChange = () => {
           ...body,
           [key]: ''
         })
+        setEmailError(true);
       }
       if (key === 'phoneNumberSelect' && !phoneCheck.test(value)) {
         setResumeLabel("電話番号の形式を確認してください。");
@@ -177,6 +178,7 @@ const ResumeChange = () => {
           ...body,
           [key]: ''
         })
+        setPhoneError(true);
       }
 
       return false
@@ -228,17 +230,17 @@ const ResumeChange = () => {
     const roleTemp = [...body.projectRoleSelect]
     const strArr = []
     processTemp[index].process = [...tempArr];
-    console.log(tempArr)
-    console.log(processTemp)
-    console.log(processTemp[index])
-    console.log(processTemp[index].process)
+    // console.log(tempArr)
+    // console.log(processTemp)
+    // console.log(processTemp[index])
+    // console.log(processTemp[index].process)
     processTemp.map((item, key) => {
-      console.log(item.process)
+      // console.log(item.process)
       strArr[key] = item.process.join()
     })
     roleTemp[index] = roleValue
 
-    console.log(strArr)
+    // console.log(strArr)
     setBody({
       ...body,
       projectRoleSelect: roleTemp,
@@ -275,7 +277,8 @@ const ResumeChange = () => {
 
   const handleCareerChange = (e, idx) => {
     const id = e.target.id.replaceAll(' dropdown-button-dark-example1', '')
-    console.log(id)
+    // console.log("id:::",id)
+    // console.log("e.target.value:::",e.target.value)
     const tempArr = [...body[id]]
     tempArr[idx] = id === 'projectPeriodSelect' ? parseInt(e.target.value) : e.target.value
     setBody({...body, [id]: tempArr})
@@ -309,7 +312,7 @@ const ResumeChange = () => {
   }
   const projectProcessEvent = (arr) => {
     let strArr = []
-    console.log(strArr)
+    // console.log(strArr)
     for (let i = 0; i < arr.length; i++) {
       strArr[i] = arr[i].process.join()
     }
@@ -394,8 +397,8 @@ const ResumeChange = () => {
   const [majorNameError, setMajorNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
-  const [projectError, setProjectError] = useState(false);
   const [skillCodeError, setSkillCodeError] = useState(false);
+  const [skillCarrerError, setSkillCarrerError] = useState(false);
 
   const schoolNameRef = useRef(null);
   const majorNameRef = useRef(null);
@@ -487,11 +490,55 @@ const ResumeChange = () => {
       setResumeAlert(true); 
       if (projectRef.current) {
         projectRef.current.focus();
-        setProjectError(true);
       }
       return false;
     } else {
-      setProjectError(false);
+    }
+
+    const max = Math.max(
+      body.projectNameSelect.length || 0,
+      body.projectPeriodSelect.length || 0,
+      body.projectRoleSelect.length || 0
+    );
+
+    //  console.log("career:::",career)
+      console.log("body:::",body)
+    //  console.log("max:::",max)
+    
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectNameSelect[i] !== "string" || body.projectNameSelect[i] == "") {
+        const errorMessage = i === 0 ? "プロジェクト名を入力してください。" : (i + 1) + "番目のプロジェクト名を入力してください。";
+        setResumeLabel(errorMessage);
+        setResumeAlert(true); 
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        return false;
+      } 
+    }
+
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectPeriodSelect[i] !== "number" || isNaN(body.projectPeriodSelect[i]) ) {
+        const errorMessage = i === 0 ? "プロジェクト期間を入力してください。" : (i + 1) + "番目のプロジェクト期間を入力してください。";
+        setResumeLabel(errorMessage);
+        setResumeAlert(true); 
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        return false;
+      } 
+    }
+
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectRoleSelect[i] !== "string" || body.projectRoleSelect[i] == "") {
+        const errorMessage = i === 0 ? "プロジェクト役割を入力してください。" : (i + 1) + "番目のプロジェクト役割を入力してください。";
+        setResumeLabel(errorMessage);
+        setResumeAlert(true); 
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        return false;
+      } 
     }
     
     if(skillItem.arr.length == 0){
@@ -499,9 +546,11 @@ const ResumeChange = () => {
       setResumeAlert(true); 
       skillCodeRef.current.focus();
       setSkillCodeError(true);
+      setSkillCarrerError(true);
       return false;
     } else {
       setSkillCodeError(false);
+      setSkillCarrerError(false);
     }
 
     //서버로 보내기
@@ -1162,7 +1211,13 @@ const ResumeChange = () => {
                   <input id='schoolNameSelect regular-form-1' type='text' className={schoolNameError ? 'form-control error' : 'form-control'} 
                   placeholder='最終学校名入力' 
                   ref={schoolNameRef}
-                  onChange={handleInputTextChangeEvent} value={body.schoolNameSelect}/>
+                  onChange={(e) => {
+                    handleInputTextChangeEvent(e);
+                    if (schoolNameError) {
+                      setSchoolNameError(false);
+                    }
+                  }}
+                  value={body.schoolNameSelect}/>
                 </div>
               </div>
               <div className='form-flex-box flex space-between items-start'>
@@ -1180,7 +1235,13 @@ const ResumeChange = () => {
                   <input id='majorNameSelect regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} 
                   placeholder='専攻入力' 
                   ref={majorNameRef}
-                  onChange={handleInputTextChangeEvent} value={body.majorNameSelect}/>
+                  onChange={(e) => {
+                    handleInputTextChangeEvent(e);
+                    if (majorNameError) {
+                      setMajorNameError(false);
+                    }
+                  }}
+                  value={body.majorNameSelect}/>
                 </div>
               </div>
               <div className='form-flex-box flex space-between items-start'>
@@ -1203,7 +1264,12 @@ const ResumeChange = () => {
                   <div className='flex items-center gap-2'>
                     <input id='userEmailSelect regular-form-1' type='text' className={emailError ? 'form-control error' : 'form-control'} 
                            placeholder='イーメール入力'
-                           onChange={handleInputTextChangeEvent}
+                           onChange={(e) => {
+                            handleInputTextChangeEvent(e);
+                            if (emailError) {
+                              setEmailError(false);
+                            }
+                          }}
                            onBlur={handleCheckText} 
                            value={body.userEmailSelect}
                            ref={userEmailRef}/>
@@ -1226,7 +1292,12 @@ const ResumeChange = () => {
                     <input id='phoneNumberSelect regular-form-1' type='text' className={phoneError ? 'form-control error' : 'form-control'}
                            value={body.phoneNumberSelect}
                            placeholder='-なしで数字だけ入力してください。'
-                           onChange={handleInputTextChangeEvent}
+                           onChange={(e) => {
+                            handleInputTextChangeEvent(e);
+                            if (phoneError) {
+                              setPhoneError(false);
+                            }
+                          }}
                            onBlur={handleCheckText}
                            ref={phoneNumberRef}
                     />
@@ -1293,7 +1364,7 @@ const ResumeChange = () => {
               </div>
 
               <div className='divider'/>
-              <div className={projectError ? 'error' : ''} tabIndex={0} ref={projectRef}>
+              <div tabIndex={0} ref={projectRef}>
               {
                 isLoading && career.map((item, key) => {
                   return <CareerReWrite
@@ -1354,6 +1425,9 @@ const ResumeChange = () => {
                               skillName: []
                             })
                           }
+                          if (skillCodeError) {
+                            setSkillCodeError(false);
+                          }
                         }}
                       />
                       <button className='w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0'>
@@ -1364,10 +1438,15 @@ const ResumeChange = () => {
                   <div className='box-item flex flex-col'>
                     <div className='form-tit'>経験期間</div>
                     <div className='flex items-center gap-2'>
-                      <SelectBox className={'refTarget_select'} id={'careerCodeSelect'}
+                      <SelectBox className={skillCarrerError ? 'refTarget_select error' : 'refTarget_select' } id={'careerCodeSelect'}
                                  data={data && data.skillCareerList}
                                  defaultValue={skillItem.temp?.careerCodeSelect?.careerCode}
-                                 onChange={handleUpdateSkill}/>
+                                 onChange={(e) => {
+                                  handleUpdateSkill(e);
+                                  if (skillCarrerError) {
+                                    setSkillCarrerError(false);
+                                  }
+                                }}/>
                     </div>
                   </div>
                 </div>
