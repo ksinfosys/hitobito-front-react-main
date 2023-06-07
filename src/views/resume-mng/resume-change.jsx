@@ -252,11 +252,13 @@ const ResumeChange = () => {
     })
   }
 
+  const [crwProject, setCrwProject] = useState(false);
   const handleAddBtn = (e, idx) => {
     // console.log(idx)
     if (idx === 0) {
       setCareer(prevState => [...prevState, {process: []}])
       setIndex(index+1)
+      setCrwProject(true);
     } else {
       const tempArr = [...career]
       const tempBody = {...body}
@@ -385,7 +387,7 @@ const ResumeChange = () => {
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     if (rsFileDocument.length + files.length >= 5) {
-      setResumeLabel("ファイルは5個まで添付できます。");
+      setResumeLabel("ファイルは４つまで添付できます。");
       setResumeAlert(true); 
       return false;
     }
@@ -1203,7 +1205,8 @@ const ResumeChange = () => {
                 </div>
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>最終学校名 <span>*</span></div>
-                  <input id='schoolNameSelect regular-form-1' type='text' className={schoolNameError ? 'form-control error' : 'form-control'} 
+                  <input id='schoolNameSelect regular-form-1' type='text' className={schoolNameError ? 'form-control error' : 'form-control'}
+                  maxLength={200}
                   placeholder='最終学校名入力' 
                   ref={schoolNameRef}
                   onChange={(e) => {
@@ -1387,6 +1390,7 @@ const ResumeChange = () => {
                     role={body.projectRoleSelect[key]}
                     period={body.projectPeriodSelect[key]}
                     process_re={body.projectProcessSelect[key] ? body.projectProcessSelect[key] : []}
+                    crwProject = {crwProject}
                   />
                 })
               }

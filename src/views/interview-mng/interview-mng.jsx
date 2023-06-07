@@ -1406,14 +1406,14 @@ const InterviewMng = () => {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">面接実施確認</div>
                     <div className="modal-subtit">
-                        面接実施確認
+                        面接を実施しましたか？
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
                             className="btn btn-pending"
                             onClick={accept}
                         >
-                            確認
+                            はい
                         </a>
                         <a
                             className="btn btn-outline-secondary"
@@ -1421,7 +1421,7 @@ const InterviewMng = () => {
                                 setModalState01(false);
                             }}
                         >
-                            キャンセル
+                            いいえ
                         </a>
                     </div>
                 </ModalBody>

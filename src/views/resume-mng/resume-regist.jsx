@@ -350,7 +350,7 @@ const ResumeRegist = () => {
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     if (rsFileDocument.length + files.length >= 5) {
-      setResumeLabel("ファイルは5個まで添付できます。");
+      setResumeLabel("ファイルは４つまで添付できます。");
       setResumeAlert(true); 
       return false;
     }

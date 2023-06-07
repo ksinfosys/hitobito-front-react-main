@@ -4,6 +4,7 @@ import AddBtn from "@/assets/images/add-btn.svg";
 import MinusBtn from "@/assets/images/minus-icon.svg";
 import blueX from "@/assets/images/blue-x.svg";
 import SelectBox from "./SelectBox";
+import Index from "../../../components/resume-mobile/MobileCareer";
 
 
 const CareerReWrite = ({
@@ -25,6 +26,7 @@ const CareerReWrite = ({
   projectNameError,
   projectRoleError,
   projectPeriodError,
+  crwProject,
 }) => {
   const [selectPop, setSelectPop] = useState(false);
   const [process, setProcess] = useState([])
@@ -72,10 +74,10 @@ const CareerReWrite = ({
   const crwProjectRef = useRef(null);
 
   useEffect(() => {
-    if (crwProjectRef.current) {
+    if (crwProjectRef.current && index !== 0 && crwProject === true) {
       crwProjectRef.current.focus();
     }
-  }, []);
+  }, [crwProject]);
 
   return <>
     <div className="flex-box2-tit flex space-between">

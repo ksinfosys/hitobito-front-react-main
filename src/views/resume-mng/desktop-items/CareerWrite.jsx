@@ -52,7 +52,7 @@ const CareerWrite = ({
   const crwProjectRef = useRef(null);
 
   useEffect(() => {
-    if (crwProjectRef.current) {
+    if (crwProjectRef.current && index !== 0) {
       crwProjectRef.current.focus();
     }
   }, []);
