@@ -102,6 +102,7 @@ const ResumeChange = () => {
   const [jopTypeModal, setJobTypeModal] = useState(false);
   const [businessTypeModal, setBusinessTypeModal] = useState(false);
   const handleAgeCalculator = (yearSelect) => new Date().getFullYear() - (parseInt(yearSelect)) + '歳'
+  const [index, setIndex] = useState(0);
 
   // body 데이터 수정
   const handleSelectChangeEvent = (e) => {
@@ -251,6 +252,7 @@ const ResumeChange = () => {
     // console.log(idx)
     if (idx === 0) {
       setCareer(prevState => [...prevState, {process: []}])
+      setIndex(index+1)
     } else {
       const tempArr = [...career]
       const tempBody = {...body}
@@ -263,8 +265,16 @@ const ResumeChange = () => {
 
       setCareer(tempArr)
       setBody({...tempBody})
+      setIndex(index-1)
     }
   }
+
+  useEffect(() => {
+    if($(".projectName_"+index) && index != 0){
+      $(".projectName_"+index).focus();
+    }
+  }, [index])
+
   const handleCareerChange = (e, idx) => {
     const id = e.target.id.replaceAll(' dropdown-button-dark-example1', '')
     // console.log("id:::",id)
@@ -279,6 +289,17 @@ const ResumeChange = () => {
       temp[idx].process.push(e.target.value)
       temp[idx].process.map(item => item.sort)
       projectProcessEvent(temp)
+    } else {
+      handleProjectProcessDel(idx, e.target.value)
+    }
+  }
+  const handleProjectProcessDelAll = (e, idx, flag) => {
+    const temp = [...career]
+    if (e.target.checked == false) {
+      temp[idx].process.pop(e.target.value)
+      temp[idx].process.map(item => item.sort)
+      projectProcessEvent(temp)
+
     } else {
       handleProjectProcessDel(idx, e.target.value)
     }
@@ -1356,6 +1377,7 @@ const ResumeChange = () => {
                     projectProcessList={data?.projectProcessList}
                     handleCareerChange={handleCareerChange}
                     handleProjectProcessChange={handleProjectProcessAdd}
+                    handleProjectProcessDelAll={handleProjectProcessDelAll}
                     handleProjectProcessDel={handleProjectProcessDel}
                     handleCareerChangeAndProcess={handleCareerChangeAndProcess}
                     name={body.projectNameSelect[key]}
@@ -1464,7 +1486,7 @@ const ResumeChange = () => {
                         <span className="skilllist-langu blue-line pr-2 inline-block">
                           {skillList.origin.filter(skill => skill.skillName === item.name)[0]?.skillCategoryName}
                         </span>
-                        <span className="pr-2 inline-block">{item.name}</span>
+                        <span className="pr-2 inline-block">{item.name}主要経歴追加</span>
                         <span>{item.year}</span>
                         <button className='blue-x-btn'
                                 onClick={(e) => {

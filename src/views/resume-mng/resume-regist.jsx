@@ -93,6 +93,7 @@ const ResumeRegist = () => {
   const [infoLimitFail, setInfoLimitFail] = useState(false);
 
   const handleAgeCalculator = () => new Date().getFullYear() - year + '歳'
+  const [index, setIndex] = useState(0);
 
   // body 데이터 수정
   const handleSelectChangeEvent = (e) => {
@@ -224,12 +225,21 @@ const ResumeRegist = () => {
   const handleAddBtn = (e, idx) => {
     if (idx === 0) {
       setCareer(prevState => [...prevState, { process: [] }])
+      setIndex(index+1)
     } else {
       const tempArr = [...career]
       tempArr.splice(idx, 1)
       setCareer(tempArr)
+      setIndex(index-1)
     }
   }
+
+  useEffect(() => {
+    if($(".projectName_"+index) && index != 0){
+      $(".projectName_"+index).focus();
+    }
+  }, [index])
+
   const handleCareerChange = async (e, idx) => {
     const id = e.target.id.replaceAll(' dropdown-button-dark-example1', '')
     const tempArr = [...body[id]]
@@ -240,6 +250,17 @@ const ResumeRegist = () => {
     const temp = [...career]
     if (e.target.checked) {
       temp[idx].process.push(e.target.value)
+      temp[idx].process.map(item => item.sort)
+      projectProcessEvent(temp)
+
+    } else {
+      handleProjectProcessDel(idx, e.target.value)
+    }
+  }
+  const handleProjectProcessDelAll = (e, idx, flag) => {
+    const temp = [...career]
+    if (e.target.checked == false) {
+      temp[idx].process.pop(e.target.value)
       temp[idx].process.map(item => item.sort)
       projectProcessEvent(temp)
 
@@ -1274,6 +1295,7 @@ const ResumeRegist = () => {
                 projectProcessList={data?.projectProcessList}
                 handleCareerChange={handleCareerChange}
                 handleProjectProcessChange={handleProjectProcessAdd}
+                handleProjectProcessDelAll={handleProjectProcessDelAll}
                 handleProjectProcessDel={handleProjectProcessDel}
                 handleCareerChangeAndProcess={handleCareerChangeAndProcess}
                 name={body.projectName[key]}

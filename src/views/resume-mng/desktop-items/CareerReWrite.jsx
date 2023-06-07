@@ -14,6 +14,7 @@ const CareerReWrite = ({
   handleAddBtn,
   handleCareerChange,
   handleProjectProcessChange,
+  handleProjectProcessDelAll,
   handleProjectProcessDel,
   projectProcessDefault,
   handleCareerChangeAndProcess,
@@ -86,9 +87,9 @@ const CareerReWrite = ({
     <div className="flex-box2-cont form-flex-box">
       <div className="box-item2 flex flex-col">
         <div className="form-tit">プロジェクト名 <span>*</span></div>
-        <input id="projectNameSelect" type="text" className={projectNameError? "form-control error" : "form-control"} placeholder="プロジェクト名入力" maxLength={100}
-          onChange={(e) => {handleCareerChange(e, index)}} 
-          defaultValue={name || ""} />
+        <input id={"projectNameSelect"} type="text" className={"form-control projectName_"+index} placeholder="プロジェクト名入力" maxLength={100}
+          onChange={(e) => handleCareerChange(e, index)}   defaultValue={name || ""}  />
+
       </div>
       <div className="form-flex-box flex space-between items-start">
         <div className="box-item flex flex-col">
@@ -204,6 +205,21 @@ const CareerReWrite = ({
             setProcess(tempArr)
           }}>
             すべて選択
+          </button>
+          <button className="btn btn-outline-secondary w-auto" onClick={() => {
+            const className = `.process-checked-box-${index}`
+            const tempArr = [...process]
+            document.querySelectorAll(className).forEach(async (item, key) => {
+              if (item.checked) {
+                const e = { target: { ...item } }
+                item.checked = false
+                tempArr.pop(item.parentNode.childNodes[1].textContent)
+                handleProjectProcessDelAll(e, index)
+              }
+            })
+            setProcess(tempArr)
+          }}>
+            すべて解除
           </button>
           <button className="btn btn-primary" onClick={() => {
             setSelectPop(false);
