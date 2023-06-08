@@ -391,6 +391,14 @@ const ResumeChange = () => {
       setResumeAlert(true); 
       return false;
     }
+
+    const fileSize = files.map(fs => fs.size);
+    if(fileSize>1024*1024*10){
+      setResumeLabel("ファイルの容量は10MBを超えることはできません。");
+      setResumeAlert(true); 
+      return false;
+    }
+
     files.map(file => {
       setRsFileDocument(prevItem => [...prevItem, file])
       setFileNames(prevItem => [...prevItem, file.name])

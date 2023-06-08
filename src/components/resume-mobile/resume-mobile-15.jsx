@@ -29,6 +29,14 @@ const ResumeMobile15 = (props) => {
             return false;
         }
         const files = Array.from(event.target.files);
+
+        const fileSize = files.map(fs => fs.size);
+        if(fileSize>1024*1024*10){
+          setResumeLabel("ファイルの容量は10MBを超えることはできません。");
+          setResumeAlert(true); 
+          return false;
+        }
+
         files.map(file => {
             console.log(file)
             props.setRsFileDocument(prevItem => [...prevItem, file])
