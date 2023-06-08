@@ -25,6 +25,7 @@ const InterviewMng = () => {
 
     // 실패시 공통 모달
     const [modalFail, setModalFail] = useState(false);
+    const [modalTmpLoadFail, setModalTmpLoadFail] = useState(false);
 
     // 레코일에 저장된 State
     const [userInfoV, setUserInfoV] = useRecoilState(userInfo);
@@ -262,10 +263,15 @@ const InterviewMng = () => {
             },
             withCredentials: true,
         }).then((response) => {
-            // console.log(response.data);
-            setMsgSaveModal(true),
-            setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
-            setMessageTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
+            response.data.resultCode === '200' ? (
+                setMsgSaveModal(true),
+                setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
+                setMsgSendTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
+            ) : response.data.resultCode === '303' ? (
+                setModalTmpLoadFail(true)
+            ) : (
+                setModalFail(true)
+            )
         }).catch((error) => {
             console.error(error);
         });
@@ -1468,6 +1474,30 @@ const InterviewMng = () => {
                             className="btn btn-business"
                             onClick={() => {
                                 setModalFail(false);
+                            }}
+                        >
+                            確認
+                        </a>
+                    </div>
+                </ModalBody>
+            </Modal>
+            {/* 임시저장 불러오기 실패모달 */}
+            <Modal
+                show={modalTmpLoadFail}
+                onHidden={() => {
+                    setModalTmpLoadFail(false);
+                }}
+            >
+                <ModalBody className="p-10 text-center">
+                    <div className="modal-tit">要請失敗</div>
+                    <div className="modal-subtit">
+                        臨時保存されたメッセージがありません。
+                    </div>
+                    <div className="flex flex-end gap-3">
+                        <a
+                            className="btn btn-business"
+                            onClick={() => {
+                                setModalTmpLoadFail(false);
                             }}
                         >
                             確認
