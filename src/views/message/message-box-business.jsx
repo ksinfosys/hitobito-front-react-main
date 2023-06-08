@@ -200,8 +200,10 @@ function MessageBoxBusiness() {
                 setMsgSaveModal(true),
                 setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
                 setMsgSendTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
-            ) : (
+            ) : response.data.resultCode === '303' ? (
                 setModalTmpLoadFail(true)
+            ) : (
+                setModalFail(true)
             )
         }).catch((error) => {
             console.error(error);
@@ -737,7 +739,7 @@ function MessageBoxBusiness() {
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">要請失敗</div>
                     <div className="modal-subtit">
-                        該当情報を見つかりません。
+                        臨時保存されたメッセージがありません。
                     </div>
                     <div className="flex flex-end gap-3">
                         <a
