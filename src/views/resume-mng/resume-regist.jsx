@@ -400,6 +400,8 @@ const ResumeRegist = () => {
   const careerRef = useRef(null);
   const projectRef = useRef(null);
   const skillCodeRef = useRef(null);
+  const userEmailClosedRef = useRef(null);
+  const phoneNumberClosedRef = useRef(null);
   
   const selectCountryRef = useRef(null);
   const selectEducationRef = useRef(null);
@@ -642,6 +644,15 @@ const ResumeRegist = () => {
       setSkillCodeError(false);
       setSkillCarrerError(false)
     }
+
+    //전화번호 이메일 모두 비 공개시 뜨는 팝업
+    if(body.userEmailFlag === '0' && body.phoneNumberFlag === '0'){
+      setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
+      setResumeAlert(true); 
+      userEmailClosedRef.current.focus();
+      phoneNumberClosedRef.current.focus();
+      return false;
+    }
     
     rsFileDocument.length > 0 ? rsFileDocument.map(item => formData.append('rsFileDocument', item)) : formData.append('rsFileDocument', new File([], 'photo.jpg'))
     rsFilePhoto.length > 0 ? rsFilePhoto.map(item => formData.append('rsFilePhoto', item)) : formData.append('rsFilePhoto', new File([], 'document.pdf'))
@@ -656,14 +667,12 @@ const ResumeRegist = () => {
           lastLoginTime: getCookie('lastLoginTime').toString()
         },
       }).then((res) => {
-        if (res.data.resultCode === '803') {
-          setReresumeFail(true);
-        } else if (res.data.resultCode === '200') {
+      if (res.data.resultCode === '200') {
           setResumeComplete(true);
-        } else {
-          window.alert(res.data.resultMessage)
-        }
-      })
+      } else {
+          setReresumeFail(true);
+      } 
+    })
       .catch((res) => console.log(res))
 
   }
@@ -1177,6 +1186,7 @@ const ResumeRegist = () => {
                   <input
                     id='userEmailFlag product-status-active'
                     className='form-check-input toggle-input'
+                    ref={userEmailClosedRef}
                     type='checkbox'
                     onChange={handleSelectChangeEvent}
                     checked={body.userEmailFlag === '1'}
@@ -1204,6 +1214,7 @@ const ResumeRegist = () => {
                   <input
                     id='phoneNumberFlag product-status-active'
                     className='form-check-input toggle-input'
+                    ref ={phoneNumberClosedRef}
                     type='checkbox'
                     onChange={handleSelectChangeEvent}
                     checked={body.phoneNumberFlag === '1'}
@@ -1452,7 +1463,7 @@ const ResumeRegist = () => {
             <div className='text-slate-400'>{body.additionalComment === "" ? "0" : body.additionalComment.length} / 200字</div>
           </div>
           <div className='flex-box2-cont textarea_style'>
-            <textarea name='' id='additionalComment' cols='' rows='10' className='w-full'
+            <textarea name='' id='additionalComment' cols='' rows='10' className='w-full resize-none'
               maxLength={200} placeholder='自由に自己紹介をしてください。' onChange={handleInputTextChangeEvent} />
           </div>
 
@@ -1956,6 +1967,7 @@ const ResumeRegist = () => {
 
           {/* 이력서 작성 성공 모달*/}
     <Modal
+        backdrop="static"
         show={resumeComplete}
         onHidden={() => {
           setResumeComplete(false);
