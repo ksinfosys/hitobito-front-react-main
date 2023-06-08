@@ -51,6 +51,7 @@ function MessageBoxBusiness() {
     const [msgSaveModal, setMsgSaveModal] = useState(false);
     // 실패시 공통 모달
     const [modalFail, setModalFail] = useState(false);
+    const [modalTmpLoadFail, setModalTmpLoadFail] = useState(false);
     // 메세지 제목 글자수 제한 모달
     const [msgSubjectFail, setMsgSubjectFail] = useState(false);
     const [msgContentsFail, setMsgContentsFail] = useState(false);
@@ -200,7 +201,7 @@ function MessageBoxBusiness() {
                 setEditorData(response.data.result.templateContents ? response.data.result.templateContents : ""),
                 setMsgSendTitle(response.data.result.templateTitle ? response.data.result.templateTitle : "")
             ) : (
-                setModalFail(true)
+                setModalTmpLoadFail(true)
             )
         }).catch((error) => {
             console.error(error);
@@ -722,6 +723,30 @@ function MessageBoxBusiness() {
                             }}
                         >
                             送信
+                        </a>
+                    </div>
+                </ModalBody>
+            </Modal>
+            {/* 임시저장 불러오기 실패모달 */}
+            <Modal
+                show={modalTmpLoadFail}
+                onHidden={() => {
+                    setModalTmpLoadFail(false);
+                }}
+            >
+                <ModalBody className="p-10 text-center">
+                    <div className="modal-tit">要請失敗</div>
+                    <div className="modal-subtit">
+                        該当情報を見つかりません。
+                    </div>
+                    <div className="flex flex-end gap-3">
+                        <a
+                            className="btn btn-business"
+                            onClick={() => {
+                                setModalTmpLoadFail(false);
+                            }}
+                        >
+                            確認
                         </a>
                     </div>
                 </ModalBody>
