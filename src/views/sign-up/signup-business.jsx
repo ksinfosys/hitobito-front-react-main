@@ -1350,7 +1350,7 @@ function SignUpBusiness() {
                 setDocumentFileFail(false);
               }}
             >
-              確認/
+              確認
             </a>
           </div>
         </ModalBody>
