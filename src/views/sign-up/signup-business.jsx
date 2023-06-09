@@ -770,7 +770,7 @@ function SignUpBusiness() {
                 <div className="flex flex-col gap-2">
                   <div className="form-tit">担当者のメールアドレス<span>*</span></div>
                   <div className="flex items-center gap-2">
-                    <input type="text" className="form-control" maxLength={30} placeholder="メールアドレス入力" disabled={isEmailDisabled} onChange={(e) => setCpEmail(e.target.value)} />
+                    <input type="text" className="form-control" autocomplete="email" maxLength={30} placeholder="メールアドレス入力" disabled={isEmailDisabled} onChange={(e) => setCpEmail(e.target.value)} />
                     <div className="form-check form-switch flex gap-2">
                       <button className="btn btn-sm btn-business w-28 font-14" onClick={() => {
                         if (isCodeComplete) {
