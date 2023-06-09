@@ -1285,7 +1285,7 @@ const ResumeChange = () => {
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>メールアドレス <span>*</span></div>
                   <div className='flex items-center gap-2'>
-                    <input id='userEmailSelect regular-form-1' type='text' className={emailError ? 'form-control error' : 'form-control'} 
+                    <input id='userEmailSelect regular-form-1' type='text' autocomplete="email" className={emailError ? 'form-control error' : 'form-control'} 
                            placeholder='イーメール入力'
                            maxLength={100}
                            onChange={(e) => {
@@ -1447,6 +1447,7 @@ const ResumeChange = () => {
                       <input
                         type='text'
                         className= {skillCodeError ? 'form-control pr-10 error' : 'form-control pr-10'}
+                        autocomplete="off"
                         placeholder='検索'
                         ref={skillCodeRef}
                         onChange={(e) => {
@@ -1901,6 +1902,7 @@ const ResumeChange = () => {
                   <input
                     type='text'
                     className='form-control'
+                    autocomplete="off"
                     placeholder='検索'
                     ref={skillNameRef}
                     onChange={(e) => {

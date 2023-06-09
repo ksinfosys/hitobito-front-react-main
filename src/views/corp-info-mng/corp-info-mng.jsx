@@ -1277,6 +1277,7 @@ const CorpInfoMng = () => {
                   id="regular-form-1"
                   type="text"
                   className="form-control h-48"
+                  autocomplete="email"
                   placeholder="新しいメールアドレス"
                   maxLength={30}
                   disabled={isDisabled ? true : false}
