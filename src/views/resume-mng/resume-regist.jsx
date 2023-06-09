@@ -259,28 +259,29 @@ const ResumeRegist = () => {
   }
   const handleProjectProcessAdd = (e, idx, flag) => {
     const temp = [...career]
+    console.log("tempAdd:::",temp)
     if (e.target.checked) {
       temp[idx].process.push(e.target.value)
       temp[idx].process.map(item => item.sort)
       projectProcessEvent(temp)
-
     } else {
       handleProjectProcessDel(idx, e.target.value)
     }
   }
   const handleProjectProcessDelAll = (e, idx, flag) => {
     const temp = [...career]
+    console.log("tempDel:::",temp)
     if (e.target.checked == false) {
       temp[idx].process.pop(e.target.value)
       temp[idx].process.map(item => item.sort)
       projectProcessEvent(temp)
-
     } else {
       handleProjectProcessDel(idx, e.target.value)
     }
   }
   const handleProjectProcessDel = (idx, target) => {
     const temp = [...career]
+    console.log("tempDel:::",temp)
     const position = temp[idx].process.indexOf(target)
     temp[idx].process.splice(position, 1)
     projectProcessEvent(temp)
@@ -584,7 +585,7 @@ const ResumeRegist = () => {
     } else {
       setBusinessTypeError(false);
     }
-
+    console.log("body.projectProcessSelect:::",body.projectProcessSelect)
     if (career.map.length == 1 && career[0].process.length == 0) {
       setResumeLabel("主要経歴を入力してください。");
       setResumeAlert(true); 
@@ -1326,6 +1327,7 @@ const ResumeRegist = () => {
                 name={body.projectName[key]}
                 role={body.projectRole[key]}
                 period={body.projectPeriod[key]}
+                process_re={body.projectProcess[key] ? body.projectProcess[key] : []}
               />
             })
           }

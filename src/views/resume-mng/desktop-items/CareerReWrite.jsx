@@ -22,7 +22,7 @@ const CareerReWrite = ({
   name,
   role,
   period,
-  process_re = process_re.toString().split(','),
+  process_re,
   projectNameError,
   projectRoleError,
   projectPeriodError,
@@ -49,18 +49,19 @@ const CareerReWrite = ({
     })
   }, [selectPop])
 
-  useEffect(() => {
-    const className = `.process-checked-box-${index}`
-    document.querySelectorAll(className).forEach(item => {
-      if (item.checked) {
-        const targetText = document.querySelector(`.label_${index}_${item.value}`).textContent
-        if (process.indexOf(targetText) === -1) item.checked = false
-      }
-    })
-  }, [selectPop])
+  // useEffect(() => {
+  //   const className = `.process-checked-box-${index}`
+  //   document.querySelectorAll(className).forEach(item => {
+  //     if (item.checked) {
+  //       const targetText = document.querySelector(`.label_${index}_${item.value}`).textContent
+  //       if (process.indexOf(targetText) === -1) item.checked = false
+  //     }
+  //   })
+  // }, [selectPop])
 
   useEffect(() => {
     const tempProcess = process_re.toString().split(',')
+    console.log("tempProcess",tempProcess)
     for (let i = 0; i < tempProcess.length; i++) {
       for (let j = 0; j < projectProcessList.length; j++) {
         if (projectProcessList[j].projectProcess === tempProcess[i]) {
@@ -111,7 +112,11 @@ const CareerReWrite = ({
             const value = e.target.value
             const tempArr = []
             const tempProcess = []
-
+            
+            document.querySelectorAll(`.process-checked-box-${index}`).forEach(item => {
+              item.checked = false;
+            });
+            
             await arr.map(processItem => {
               tempArr.push(processItem)
               const event = { target: { value: processItem, checked: true } }
@@ -166,6 +171,7 @@ const CareerReWrite = ({
       onHidden={() => {
         setSelectPop(false);
       }}
+      backdrop="static"
       className="select-modal"
     >
       <ModalBody className="p-10 text-center">
@@ -176,23 +182,41 @@ const CareerReWrite = ({
           <div className="select-input-wrap">
             {
               projectProcessList?.map((item, idx) => {
+                const checkboxIndex = `${index}_${idx}`; 
                 return <div className="form-check" key={idx}>
                   <input id={`process-${idx}-${item.projectProcess}`} className={`form-check-input process-checked-box-${index}`}
                     type="checkbox" value={item.projectProcess}
                     onChange={(e) => {
-                      const tempArr = [...process]
-                      tempArr[idx] = item.projectProcessName
-                      setProcess(tempArr)
                       if (e.target.checked) {
-                        handleProjectProcessChange(e, index)
+                        const tempArr = [...process, item.projectProcessName];
+                        setProcess(tempArr);
+                        handleProjectProcessChange(e, index);
                       } else {
-                        const idx = process.indexOf(e.target.value)
-                        handleDelProcess(idx)
+                        const tempArr = process.filter((value) => value !== item.projectProcessName);
+                        setProcess(tempArr);
+                        handleProjectProcessDelAll(e, index)
                       }
                     }}
                   />
-                  <label className={`form-check-label label_${index}_${item.projectProcess}`}
-                    htmlFor={`process-${idx}-${item.projectProcess}`}>{item.projectProcessName}</label>
+                  <label           
+                  htmlFor={`process-${checkboxIndex}-${item.projectProcess}`}
+                  onClick={(e) => {
+                    const checkbox = e.target.previousSibling;
+                    if (checkbox.checked) {
+                      checkbox.checked = false;
+                      const tempArr = process.filter((value) => value !== item.projectProcessName);
+                      setProcess(tempArr);
+                      handleProjectProcessDelAll(e, index)
+                    } else {
+                      checkbox.checked = true;
+                      const tempArr = [...process, item.projectProcessName];
+                      setProcess(tempArr);
+                      handleProjectProcessChange({ target: checkbox }, index);
+                    }
+                  }}
+                >
+                  {item.projectProcessName}
+                  </label>
                 </div>
               })
             }
@@ -201,7 +225,7 @@ const CareerReWrite = ({
       </ModalBody>
       <ModalFooter>
         <div className="sel-btn-wrap flex space-between">
-          <button className="btn btn-outline-secondary w-auto" onClick={() => {
+          {/* <button className="btn btn-outline-secondary w-auto" onClick={() => {
             const className = `.process-checked-box-${index}`
             const tempArr = [...process]
             document.querySelectorAll(className).forEach(async (item, key) => {
@@ -209,13 +233,32 @@ const CareerReWrite = ({
                 const e = { target: { ...item } }
                 item.checked = true
                 tempArr.push(item.parentNode.childNodes[1].textContent)
-                handleProjectProcessChange(e, index)
+                console.log("tempArr:::",tempArr)
+                handleProjectProcessChange(e, index, key)
               }
             })
             setProcess(tempArr)
           }}>
             すべて選択
-          </button>
+          </button> */}
+            <button className="btn btn-outline-secondary w-auto" onClick={() => {
+              const className = `.process-checked-box-${index}`;
+              const tempArr = [...process];
+              document.querySelectorAll(className).forEach((item, key) => {
+                if (!item.checked) {
+                  item.checked = true;
+                  const value = item.parentNode.childNodes[1].textContent;
+                  if (!tempArr.includes(value)) {
+                    tempArr.push(value);
+                    handleProjectProcessChange({ target: item }, index, key);
+                  }
+                }
+              });
+              setProcess(tempArr);
+            }}>
+              すべて選択
+            </button>
+          
           <button className="btn btn-outline-secondary w-auto" onClick={() => {
             const className = `.process-checked-box-${index}`
             const tempArr = [...process]
