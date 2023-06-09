@@ -147,16 +147,26 @@ function Main() {
   const notiReadAll = () => {
     axios
       .put("/api" + "/notification/readall", {}, { ...config })
-      .then(response => {
-        response === "200" ? (() => { })() : (() => { })();
+      .then((response) => {
+        console.log(response)
+        response.data.resultCode === "200" ? (() => { 
+          const updatedNotiList = [...notiList];
+          updatedNotiList.forEach((noti) => {
+            noti.readFlag = "1";
+          });
+          setNotiReadList(updatedNotiList);
+          setUnreadNotiCnt(response.data.result.unreadCount);
+        })() : (() => {
+
+         })();
       });
   };
 
   const notiDelAll = () => {
     axios
       .put("/api" + "/notification/deleteall", {}, { ...config })
-      .then(response => {
-        response === "200"
+      .then((response) => {
+        response.data.resultCode === "200"
           ? (() => {
             setNotiList([]);
           })()
@@ -164,7 +174,8 @@ function Main() {
       });
   };
 
-  const goNotiTypePage = (notiType, notiId) => {
+  const [notiReadList, setNotiReadList] = useState([]);
+  const goNotiTypePage = (notiType, notiId, index) => {
     axios
       .put(
         "/api" + "/notification/read",
@@ -188,6 +199,10 @@ function Main() {
                 break;
             }
             navigate(path);
+            setUnreadNotiCnt(response.data.result.unreadCount);
+            const updatedNotiList = [...notiList];
+            updatedNotiList[index].readFlag = "1";
+            setNotiReadList(updatedNotiList);
           })()
           : (() => {
             console.error("res error", response);
@@ -287,7 +302,8 @@ function Main() {
                               onClick={() => {
                                 goNotiTypePage(
                                   noti.notType,
-                                  noti.notificationId
+                                  noti.notificationId,
+                                  index
                                 );
                               }}
                             >
