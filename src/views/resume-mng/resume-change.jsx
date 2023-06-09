@@ -1430,7 +1430,7 @@ const ResumeChange = () => {
                     <p className='blue-tit mt-0'>複数のスキルを一度に登録できます。</p>
                   </div>
                   <button className="btn btn-primary items-center shrink-0 w-30 pl-5 pr-5 btn-age" onClick={() => {
-                    setskillPlusModal(true)
+                    setskillPlusModal(true);
                     }}>拡張検索</button>
                 </div>
               </div>
