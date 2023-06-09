@@ -368,7 +368,7 @@ const InterviewMng = () => {
                                         <th className="whitespace-nowrap text-sm th-blank border-tb0">
                                             <div className="flex gap-2 interview-mng-button-wrap">
                                                 <div>
-                                                    ポイント支払
+                                                    面談実施確認
                                                 </div>
                                                 <div>
                                                     メッセージ作成
@@ -408,7 +408,7 @@ const InterviewMng = () => {
                                                         {moment(data.rqConfirmDatetime).format("YY.MM.DD HH:mm")}
                                                     </td>
                                                     <td className="table-br-tab">
-                                                        {data.pointCngType === "20301" ? "+" : "-"}{regexUserPoint(data.pointCngAmount)}<br/>
+                                                        {data.pointCngType === "20301" ? "+" : regexUserPoint(data.pointCngAmount) == "0" ? "" : "-"}{regexUserPoint(data.pointCngAmount)}<br/>
                                                         {data.requestPointStatus}
                                                         {console.log(data)}
                                                     </td>
@@ -416,35 +416,43 @@ const InterviewMng = () => {
                                                         <div>
                                                             {
                                                                 data.pointAcceptFlag
-                                                                    ?
-                                                                    <button
-                                                                        className="btn btn-sm btn-business"
-                                                                        onClick={() => data.pointAcceptFlag && handleSubmit(data.rqIdx, data.rqReceiveUserId)}>
-                                                                        面接実施確認
-                                                                    </button>
-                                                                    :
-                                                                    <button
-                                                                        className="btn btn-sm btn-gray-business" disabled={true}>
-                                                                        面接実施確認
-                                                                    </button>
+                                                                ?
+                                                                <button
+                                                                    className="btn btn-sm btn-business"
+                                                                    onClick={() => data.pointAcceptFlag && handleSubmit(data.rqIdx, data.rqReceiveUserId)}>
+                                                                    面接実施確認
+                                                                </button>
+                                                                :
+                                                                !data.pointAcceptFlag && data.rqStatus !== "20102" 
+                                                                ?
+                                                                ""
+                                                                :
+                                                                <button
+                                                                    className="btn btn-sm btn-gray-business" disabled={true}>
+                                                                    面接実施確認
+                                                                </button>
                                                             }
                                                             {
                                                                 data.rqStatus === "20102"
-                                                                    ?
-                                                                    <button
-                                                                        className="btn btn-sm btn-business ml-2 btn-message-write"
-                                                                        onClick={() => {
-                                                                            setMessageSendId(data.rqReceiveUserId)
-                                                                            setDeclarationUser(data.nickname)
-                                                                            data.rqStatus === "20102" && setMessageReply(true)
-                                                                        }}>
-                                                                        メッセージ作成
-                                                                    </button>
-                                                                    :
-                                                                    <button
-                                                                        className="btn btn-sm btn-gray-business ml-2 btn-message-write" disabled={true}>
-                                                                        メッセージ作成
-                                                                    </button>
+                                                                ?
+                                                                <button
+                                                                    className="btn btn-sm btn-business ml-2 btn-message-write"
+                                                                    onClick={() => {
+                                                                        setMessageSendId(data.rqReceiveUserId)
+                                                                        setDeclarationUser(data.nickname)
+                                                                        data.rqStatus === "20102" && setMessageReply(true)
+                                                                    }}>
+                                                                    メッセージ作成
+                                                                </button>
+                                                                :
+                                                                !data.pointAcceptFlag && data.rqStatus !== "20102" 
+                                                                ?
+                                                                ""
+                                                                :
+                                                                <button
+                                                                    className="btn btn-sm btn-gray-business ml-2 btn-message-write" disabled={true}>
+                                                                    メッセージ作成
+                                                                </button>
                                                             }                                                        
                                                             {
                                                                 data.rqStatus === "20102"
@@ -459,6 +467,10 @@ const InterviewMng = () => {
                                                                     }}>
                                                                     通報
                                                                 </button>
+                                                                :
+                                                                !data.pointAcceptFlag && data.rqStatus !== "20102" 
+                                                                ?
+                                                                ""
                                                                 :
                                                                 <button
                                                                     className="btn btn-sm btn-gray-business ml-2" disabled={true}>
