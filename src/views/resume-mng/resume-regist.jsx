@@ -1401,7 +1401,13 @@ const ResumeRegist = () => {
             表示されたリストから選択してください。
             </div>
             <div className="flex items-center flex-row-reverse mt-4 mb-4">
-              <button className='btn btn-sm btn-register w-40 btn-age' onClick={handleAddSkills}>登録</button>
+                <button
+                  className="btn btn-outline-primary w-auto"
+                  onClick={handleAddSkills}
+                >
+                  <img className='mr-2' src="/src/assets/images/add-btn.svg" alt=""/>
+                  スキル追加
+                </button>
             </div>
             <div className='skil_list'>
               <div className="list-group list-over">

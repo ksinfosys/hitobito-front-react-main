@@ -253,11 +253,13 @@ const ResumeChange = () => {
   }
 
   const [crwProject, setCrwProject] = useState(false);
+  //const [resumeCareerDelFlag, setResumeCareerDelFlag] = useState(false);
   const handleAddBtn = (e, idx) => {
+    //console.log("body:::",body)
     // console.log(idx)
     if (idx === 0) {
-      setCareer(prevState => [...prevState, {process: []}])
-      setIndex(index+1)
+      setCareer(prevState => [...prevState, { process: [] }]);
+      setIndex(index + 1);
       setCrwProject(true);
     } else {
       const tempArr = [...career]
@@ -439,6 +441,7 @@ const ResumeChange = () => {
   const [resumeLabel, setResumeLabel] = useState("");
   const [resumeComplete, setResumeComplete] = useState(false);
   const [resumeFail, setReresumeFail] = useState(false);
+  //const [resumeCareerDel, setResumeCareerDel] = useState(false);
 
   // 전송
   const handleSubmit = async () => {
@@ -1402,6 +1405,7 @@ const ResumeChange = () => {
               <div tabIndex={0} ref={projectRef}>
               {
                 isLoading && career.map((item, key) => {
+                  console.log("data:::",data)
                   return <CareerReWrite
                     key={key}
                     index={key}
@@ -1494,8 +1498,15 @@ const ResumeChange = () => {
             表示されたリストから選択してください。
             </div>
                 <div className="flex items-center flex-row-reverse mt-4 mb-4">
-                  <button className='btn btn-sm btn-register w-40 btn-age' onClick={handleAddSkills}>登録</button>
+                  <button
+                  className="btn btn-outline-primary w-auto"
+                  onClick={handleAddSkills}
+                >
+                  <img className='mr-2' src="/src/assets/images/add-btn.svg" alt=""/>
+                  スキル追加
+                </button>
                 </div>
+
                 <div className='skil_list'>
                   <div className='list-group list-over'>
                     {
@@ -2218,6 +2229,35 @@ const ResumeChange = () => {
           </div>
         </ModalBody>
       </Modal>
+
+      {/* <Modal
+          show={resumeCareerDel}
+          onHidden={() => {
+            setResumeCareerDel(false);
+          }}
+      >
+          <ModalBody className="p-10 text-center">
+              <div className="modal-subtit">
+                  選択した経歴を削除しますか？
+              </div>
+              <div className="flex flex-end gap-3">
+                  <a
+                      className="btn btn-pending"
+                      onClick={() => {setResumeCareerDelFlag(true)}}
+                  >
+                      はい
+                  </a>
+                  <a
+                      className="btn btn-outline-secondary"
+                      onClick={() => {
+                          setResumeCareerDel(false);
+                      }}
+                  >
+                      いいえ
+                  </a>
+              </div>
+          </ModalBody>
+      </Modal> */}
   </>
 };
 export default ResumeChange;
