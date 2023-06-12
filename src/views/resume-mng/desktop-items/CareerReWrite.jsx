@@ -60,18 +60,20 @@ const CareerReWrite = ({
   // }, [selectPop])
 
   useEffect(() => {
-    const tempProcess = process_re.toString().split(',')
-    console.log("tempProcess",tempProcess)
+    const tempProcess = process_re.toString().split(',');
+    const updatedProcess = [];
     for (let i = 0; i < tempProcess.length; i++) {
       for (let j = 0; j < projectProcessList.length; j++) {
         if (projectProcessList[j].projectProcess === tempProcess[i]) {
-          setProcess(prevState => [...prevState, projectProcessList[j].projectProcessName])
+          updatedProcess.push(projectProcessList[j].projectProcessName);
           break;
         }
       }
     }
-  }, [])
-  
+
+    setProcess(updatedProcess);
+  }, [process_re, projectProcessList]);
+
   const crwProjectRef = useRef(null);
   
   useEffect(() => {
@@ -79,6 +81,8 @@ const CareerReWrite = ({
       crwProjectRef.current.focus();
     }
   }, [crwProject]);
+  
+
 
   return <>
     <div className="flex-box2-tit flex space-between">
@@ -99,7 +103,7 @@ const CareerReWrite = ({
       <div className="box-item2 flex flex-col">
         <div className="form-tit">プロジェクト名 <span>*</span></div>
         <input id={"projectNameSelect"} type="text" className={"form-control projectName_"+index} placeholder="プロジェクト名入力" maxLength={100}
-          onChange={(e) => handleCareerChange(e, index)}   defaultValue={name || ""}  ref={crwProjectRef}/>
+          onChange={(e) => handleCareerChange(e, index)}   value={name || ""}  ref={crwProjectRef}/>
 
       </div>
       <div className="form-flex-box flex space-between items-start">
@@ -137,9 +141,10 @@ const CareerReWrite = ({
           <input id="projectPeriodSelect" type="number" min="0"
             className={projectPeriodError ? "form-control error" : "form-control"} 
             placeholder="カ月(数字で入力してください)"
+
             onChange={(e) => 
-              {e.target.value = e.target.value.replaceAll(".", "").replaceAll("-", "");
-              handleCareerChange(e, index)}} defaultValue={period} />
+            {e.target.value = e.target.value.replaceAll(".", "").replaceAll("-", "");
+            handleCareerChange(e, index)} value={period || ""} />
         </div>
       </div>
     </div>
@@ -151,6 +156,9 @@ const CareerReWrite = ({
       <div className="blue-btn-wrap flex items-center">
         {
           process.map((item, key) => {
+            console.log("담당공정process:::",process)
+            console.log("담당공정process_re:::",process_re)
+            console.log("담당공정projectProcessList:::",projectProcessList)
             if (item) {
               return <div key={key} className="blue-btn no-after items-center flex">
                 <span>{item}</span>
@@ -199,6 +207,7 @@ const CareerReWrite = ({
                         handleProjectProcessDelAll(e, index)
                       }
                     }}
+                    checked={process.includes(item.projectProcessName)}
                   />
                   <label           
                   htmlFor={`process-${checkboxIndex}-${item.projectProcess}`}
