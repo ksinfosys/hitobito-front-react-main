@@ -130,7 +130,7 @@ const CareerWrite = ({
 
             onChange={(e) => 
             {e.target.value = e.target.value.replaceAll(".", "").replaceAll("-", "");
-            handleCareerChange(e, index)} value={period || ""} />
+            handleCareerChange(e, index)}} value={period || ""} />
         </div>
       </div>
       
