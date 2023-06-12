@@ -20,6 +20,9 @@ const CareerWrite = ({
   handleProjectProcessDelAll,
   handleProjectProcessDel,
   handleCareerChangeAndProcess,
+  name,
+  processRole,
+  period,
   process_re,
 }) => {
   const [selectPop, setSelectPop] = useState(false);
@@ -44,19 +47,21 @@ const CareerWrite = ({
   }, [selectPop])
 
   useEffect(() => {
-    const tempProcess = process_re.toString().split(',')
+    const tempProcess = process_re.toString().split(',');
+    const updatedProcess = [];
     console.log("tempProcess",tempProcess)
     if (projectProcessList && projectProcessList.length > 0) {
       for (let i = 0; i < tempProcess.length; i++) {
         for (let j = 0; j < projectProcessList.length; j++) {
           if (projectProcessList[j].projectProcess === tempProcess[i]) {
-            setProcess(prevState => [...prevState, projectProcessList[j].projectProcessName])
+            updatedProcess.push(projectProcessList[j].projectProcessName);
             break;
           }
         }
       }
     }
-  }, [projectProcessList])
+    setProcess(updatedProcess);
+  }, [process_re, projectProcessList])
 
   const crwProjectRef = useRef(null);
 
@@ -86,7 +91,7 @@ const CareerWrite = ({
       <div className="box-item2 flex flex-col">
         <div className="form-tit">プロジェクト名 <span>*</span></div>
         <input id="projectName" type="text" className={"form-control projectName_"+index} placeholder="プロジェクト名入力" maxLength={100}
-          onChange={(e) => handleCareerChange(e, index)} ref={crwProjectRef}/>
+          onChange={(e) => handleCareerChange(e, index)} value={name || ""} ref={crwProjectRef}/>
       </div>
       <div className="form-flex-box flex space-between items-start">
         <div className="box-item flex flex-col">
@@ -94,7 +99,7 @@ const CareerWrite = ({
           <SelectBox id={'projectRole'}
             onChange={async (e) => {
               setRole(e.target.value)
-
+              const value = e.target.value
               const arr = projectProcessDefault[e.target.value].split(',')
               const tempArr = []
               const tempProcess = []
@@ -113,17 +118,16 @@ const CareerWrite = ({
                 tempProcess.push(name)
               })
               setProcess(tempProcess)
-              handleCareerChangeAndProcess(e, index, tempArr)
-              console.log(role)
+              handleCareerChangeAndProcess(e, index, tempArr, value)
             }}
-            defaultValue={role}
-            data={projectRoleList} />
+            defaultValue={processRole || ""}
+            data={projectRoleList}  />
         </div>
         <div className="box-item flex flex-col">
           <div className="form-tit">期間(月数) <span>*</span></div>
           {/* select > input 변경 */}
           <input id="projectPeriod" type="number" min={0} className="form-control" placeholder="カ月(数字で入力してください)"
-            onChange={(e) => handleCareerChange(e, index)} />
+            onChange={(e) => handleCareerChange(e, index)} value={period || ""} />
         </div>
       </div>
       
@@ -197,6 +201,7 @@ const CareerWrite = ({
                         handleProjectProcessDelAll(e, index)
                       }
                     }}
+                    checked={process.includes(item.projectProcessName)}
                   />
                    <label           
                   htmlFor={`process-${checkboxIndex}-${item.projectProcess}`}

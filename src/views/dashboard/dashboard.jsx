@@ -619,7 +619,7 @@ const Dashboard = () => {
                   id = "inputarea"
                   className="form-control mt-4 h-20 resize-none"
                   rows="1"
-                  placeholder="通の報理由を具体的に記入してください。"
+                  placeholder="通報の理由を具体的に記入してください。"
                   disabled
                   onChange={(e) => setDeclaration({ ...declaration, reportReasonContent: e.target.value })}
               ></textarea>

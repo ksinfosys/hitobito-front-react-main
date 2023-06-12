@@ -208,7 +208,7 @@ const ResumeRegist = () => {
   </div>);
 
   //커리어 부분
-  const handleCareerChangeAndProcess = (e, index, tempArr) => {
+  const handleCareerChangeAndProcess = (e, index, tempArr, roleValue) => {
     const processTemp = [...career]
     const roleTemp = [...body.projectRole]
     const strArr = []
@@ -217,7 +217,7 @@ const ResumeRegist = () => {
       strArr[key] = item.process.toString()
     })
 
-    roleTemp[index] = e.target.value
+    roleTemp[index] = roleValue
     setBody({
       ...body,
       projectRole: roleTemp,
@@ -225,15 +225,35 @@ const ResumeRegist = () => {
     })
   }
 
+  const [resumeCareerDelIndex, setResumeCareerDelIndex] = useState();
   const handleAddBtn = (e, idx) => {
+    //console.log("body:::",body)
+    // console.log(idx)
     if (idx === 0) {
-      setCareer(prevState => [...prevState, { process: [] }])
-      setIndex(index+1)
+      setCareer(prevState => [...prevState, { process: [] }]);
+      setIndex(index + 1);
+      
     } else {
       const tempArr = [...career]
-      tempArr.splice(idx, 1)
-      setCareer(tempArr)
-      setIndex(index-1)
+      const tempBody = {...body}
+
+        if (idx < tempBody.projectName.length|| 
+          idx < tempBody.projectPeriod.length||
+          idx < tempBody.projectRole.length||
+          idx < tempBody.projectProcess.length) {
+          setResumeCareerDel(true);
+          setResumeCareerDelIndex(idx);
+        }else {
+          tempArr.splice(idx, 1)
+          tempBody.projectName.splice(idx, 1)
+          tempBody.projectPeriod.splice(idx, 1)
+          tempBody.projectRole.splice(idx, 1)
+          tempBody.projectProcess.splice(idx, 1)
+
+        setCareer(tempArr)
+        setBody({...tempBody})
+        setIndex(index-1)
+      }
     }
   }
 
@@ -418,6 +438,7 @@ const ResumeRegist = () => {
   const [resumeLabel, setResumeLabel] = useState("");
   const [resumeComplete, setResumeComplete] = useState(false);
   const [resumeFail, setReresumeFail] = useState(false);
+  const [resumeCareerDel, setResumeCareerDel] = useState(false);
 
   
   // 전송
@@ -1306,7 +1327,7 @@ const ResumeRegist = () => {
                 handleProjectProcessDel={handleProjectProcessDel}
                 handleCareerChangeAndProcess={handleCareerChangeAndProcess}
                 name={body.projectName[key]}
-                role={body.projectRole[key]}
+                processRole={body.projectRole[key]}
                 period={body.projectPeriod[key]}
                 process_re={body.projectProcess[key] ? body.projectProcess[key] : []}
               />
@@ -2086,6 +2107,50 @@ const ResumeRegist = () => {
             </a>
           </div>
         </ModalBody>
+      </Modal>
+
+      <Modal
+          show={resumeCareerDel}
+          onHidden={() => {
+            setResumeCareerDel(false);
+            setResumeCareerDelConfirmed(false);
+          }}
+      >
+          <ModalBody className="p-10 text-center">
+              <div className="modal-subtit">
+                  選択した経歴を削除しますか？
+              </div>
+              <div className="flex flex-end gap-3">
+                  <a
+                      className="btn btn-primary"
+                      onClick={() => {
+                        const tempArr = [...career];
+                        const tempBody = { ...body };
+                        tempArr.splice(resumeCareerDelIndex, 1);
+                        tempBody.projectName.splice(resumeCareerDelIndex, 1);
+                        tempBody.projectPeriod.splice(resumeCareerDelIndex, 1);
+                        tempBody.projectRole.splice(resumeCareerDelIndex, 1);
+                        tempBody.projectProcess.splice(resumeCareerDelIndex, 1);
+              
+                        setCareer(tempArr);
+                        setBody({ ...tempBody });
+                        setIndex(index - 1);
+              
+                        setResumeCareerDel(false);
+                      }}
+                  >
+                      はい
+                  </a>
+                  <a
+                      className="btn btn-outline-secondary"
+                      onClick={() => {
+                          setResumeCareerDel(false);
+                      }}
+                  >
+                      いいえ
+                  </a>
+              </div>
+          </ModalBody>
       </Modal>
   </>
 };

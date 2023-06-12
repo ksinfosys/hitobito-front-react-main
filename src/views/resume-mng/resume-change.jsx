@@ -244,14 +244,14 @@ const ResumeChange = () => {
     })
     roleTemp[index] = roleValue
 
-    // console.log(strArr)
+     //console.log("strArr:::",strArr)
     setBody({
       ...body,
       projectRoleSelect: roleTemp,
       projectProcessSelect: strArr
     })
   }
-
+  const [resumeCareerDelIndex, setResumeCareerDelIndex] = useState();
   const [crwProject, setCrwProject] = useState(false);
   //const [resumeCareerDelFlag, setResumeCareerDelFlag] = useState(false);
   const handleAddBtn = (e, idx) => {
@@ -264,16 +264,24 @@ const ResumeChange = () => {
     } else {
       const tempArr = [...career]
       const tempBody = {...body}
-      tempArr.splice(idx, 1)
 
-      tempBody.projectNameSelect.splice(idx, 1)
-      tempBody.projectPeriodSelect.splice(idx, 1)
-      tempBody.projectRoleSelect.splice(idx, 1)
-      tempBody.projectProcessSelect.splice(idx, 1)
+      if (idx < tempBody.projectNameSelect.length|| 
+        idx < tempBody.projectPeriodSelect.length||
+        idx < tempBody.projectRoleSelect.length||
+        idx < tempBody.projectProcessSelect.length) {
+        setResumeCareerDel(true);
+        setResumeCareerDelIndex(idx);
+      }else {
+        tempArr.splice(idx, 1)
+        tempBody.projectNameSelect.splice(idx, 1)
+        tempBody.projectPeriodSelect.splice(idx, 1)
+        tempBody.projectRoleSelect.splice(idx, 1)
+        tempBody.projectProcessSelect.splice(idx, 1)
 
       setCareer(tempArr)
       setBody({...tempBody})
       setIndex(index-1)
+      }
     }
   }
 
@@ -431,8 +439,8 @@ const ResumeChange = () => {
   const [resumeLabel, setResumeLabel] = useState("");
   const [resumeComplete, setResumeComplete] = useState(false);
   const [resumeFail, setReresumeFail] = useState(false);
-  //const [resumeCareerDel, setResumeCareerDel] = useState(false);
-
+  const [resumeCareerDel, setResumeCareerDel] = useState(false);
+  
   // 전송
   const handleSubmit = async () => {
     
@@ -505,7 +513,7 @@ const ResumeChange = () => {
     }
     
     console.log("body.projectProcessSelect:::",body.projectProcessSelect)
-    
+
     console.log("RCcareer:::",career)
     if (career.map.length == 1 && career[0].process.length == 0) {
       setResumeLabel("主要経歴を入力してください。");
@@ -1373,6 +1381,7 @@ const ResumeChange = () => {
                       setBusinessTypeModal(true),
                       setModalFlag({ ...modalFlag, main: true, business: true })
                     }}
+
                   >
                     {depthMenu.businessType.depth_first} {
                     depthMenu.businessType.depth_first === 'なし'? '' : ' > '+ depthMenu.businessType.depth_seconds}
@@ -1384,9 +1393,10 @@ const ResumeChange = () => {
               <div tabIndex={0} ref={projectRef}>
               {
                 isLoading && career.map((item, key) => {
-                  console.log("data:::",data)
+                  //console.log("data:::",data)
                   return <CareerReWrite
                     key={key}
+                    item={item}
                     index={key}
                     addState={key === 0}
                     handleAddBtn={handleAddBtn}
@@ -1403,6 +1413,7 @@ const ResumeChange = () => {
                     period={body.projectPeriodSelect[key]}
                     process_re={body.projectProcessSelect[key] ? body.projectProcessSelect[key] : []}
                     crwProject = {crwProject}
+                    processTemp1 = {body.projectProcessSelect[key] ? body.projectProcessSelect[key] : []}
                   />
                 })
               }
@@ -1512,7 +1523,7 @@ const ResumeChange = () => {
                         <span className="skilllist-langu blue-line pr-2 inline-block">
                           {skillList.origin.filter(skill => skill.skillName === item.name)[0]?.skillCategoryName}
                         </span>
-                        <span className="pr-2 inline-block">{item.name}主要経歴追加</span>
+                        <span className="pr-2 inline-block">{item.name}</span>
                         <span>{item.year}</span>
                         <button className='blue-x-btn'
                                 onClick={(e) => {
@@ -2206,10 +2217,11 @@ const ResumeChange = () => {
         </ModalBody>
       </Modal>
 
-      {/* <Modal
+      <Modal
           show={resumeCareerDel}
           onHidden={() => {
             setResumeCareerDel(false);
+            setResumeCareerDelConfirmed(false);
           }}
       >
           <ModalBody className="p-10 text-center">
@@ -2218,8 +2230,22 @@ const ResumeChange = () => {
               </div>
               <div className="flex flex-end gap-3">
                   <a
-                      className="btn btn-pending"
-                      onClick={() => {setResumeCareerDelFlag(true)}}
+                      className="btn btn-primary"
+                      onClick={() => {
+                        const tempArr = [...career];
+                        const tempBody = { ...body };
+                        tempArr.splice(resumeCareerDelIndex, 1);
+                        tempBody.projectNameSelect.splice(resumeCareerDelIndex, 1);
+                        tempBody.projectPeriodSelect.splice(resumeCareerDelIndex, 1);
+                        tempBody.projectRoleSelect.splice(resumeCareerDelIndex, 1);
+                        tempBody.projectProcessSelect.splice(resumeCareerDelIndex, 1);
+              
+                        setCareer(tempArr);
+                        setBody({ ...tempBody });
+                        setIndex(index - 1);
+              
+                        setResumeCareerDel(false);
+                      }}
                   >
                       はい
                   </a>
@@ -2233,7 +2259,7 @@ const ResumeChange = () => {
                   </a>
               </div>
           </ModalBody>
-      </Modal> */}
+      </Modal>
   </>
 };
 export default ResumeChange;
