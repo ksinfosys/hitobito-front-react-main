@@ -32,8 +32,8 @@ function WithdrawBusiness() {
                             すべてのポイントを使い切ってから退会することをお勧めします。</p> 
                             <br/>
                         <div className="flex flex-end gap-3">
-                            <button type="button" className="btn btn-pending" onClick={() => { setwidthdrawConfirm(true); }}>進む</button>
-                            <button type="button" className="btn btn-outline-secondary" onClick={() => {window.location.replace("/business");}}>戻る</button>
+                            <button type="button" className="btn btn-pending w-80 mt-5" onClick={() => { setwidthdrawConfirm(true); }}>進む</button>
+                            <button type="button" className="btn btn-outline-secondary w-80 mt-5" onClick={() => {window.location.replace("/business");}}>戻る</button>
                         </div>
                     </div>
                 </div>

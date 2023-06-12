@@ -448,6 +448,7 @@ const DashboardBusiness = () => {
                                     type="text"
                                     id="texttest"
                                     className="form-control pr-5"
+                                    autocomplete="off"
                                     style={{width: 300 + 'px'}}
                                     placeholder="全体を確認するためには「Space」を押す"                                    
                                     value={inputValue}
