@@ -254,10 +254,10 @@ const ResumeChange = () => {
   const [resumeCareerDelIndex, setResumeCareerDelIndex] = useState();
   const [crwProject, setCrwProject] = useState(false);
   //const [resumeCareerDelFlag, setResumeCareerDelFlag] = useState(false);
-  const handleAddBtn = (e, idx) => {
+  const handleAddBtn = (e, index) => {
     //console.log("body:::",body)
     // console.log(idx)
-    if (idx === 0) {
+    if (index === 0) {
       setCareer(prevState => [...prevState, { process: [] }]);
       setIndex(index + 1);
       setCrwProject(true);
@@ -265,18 +265,18 @@ const ResumeChange = () => {
       const tempArr = [...career]
       const tempBody = {...body}
 
-      if (idx < tempBody.projectNameSelect.length|| 
-        idx < tempBody.projectPeriodSelect.length||
-        idx < tempBody.projectRoleSelect.length||
-        idx < tempBody.projectProcessSelect.length) {
+      if (index < tempBody.projectNameSelect.length|| 
+        index < tempBody.projectPeriodSelect.length||
+        index < tempBody.projectRoleSelect.length||
+        index < tempBody.projectProcessSelect.length) {
         setResumeCareerDel(true);
-        setResumeCareerDelIndex(idx);
+        setResumeCareerDelIndex(index);
       }else {
-        tempArr.splice(idx, 1)
-        tempBody.projectNameSelect.splice(idx, 1)
-        tempBody.projectPeriodSelect.splice(idx, 1)
-        tempBody.projectRoleSelect.splice(idx, 1)
-        tempBody.projectProcessSelect.splice(idx, 1)
+        tempArr.splice(index, 1)
+        tempBody.projectNameSelect.splice(index, 1)
+        tempBody.projectPeriodSelect.splice(index, 1)
+        tempBody.projectRoleSelect.splice(index, 1)
+        tempBody.projectProcessSelect.splice(index, 1)
 
       setCareer(tempArr)
       setBody({...tempBody})
@@ -299,46 +299,60 @@ const ResumeChange = () => {
   //   }
   // }, [index])
 
-  const handleCareerChange = (e, idx) => {
+  const handleCareerChange = (e, index) => {
     const id = e.target.id.replaceAll(' dropdown-button-dark-example1', '')
     // console.log("id:::",id)
     // console.log("e.target.value:::",e.target.value)
     const tempArr = [...body[id]]
-    tempArr[idx] = id === 'projectPeriodSelect' ? parseInt(e.target.value) : e.target.value
+    tempArr[index] = id === 'projectPeriodSelect' ? parseInt(e.target.value) : e.target.value
     setBody({...body, [id]: tempArr})
   }
-  const handleProjectProcessAdd = (e, idx) => {
+  const handleProjectProcessAdd = (e, index) => {
     const temp = [...career]
-    console.log("tempAdd:::",temp)
     if (e.target.checked) {
-      temp[idx].process.push(e.target.value);
-      temp[idx].process.map(item => item.sort);
-      projectProcessEvent(temp);  
+      temp[index].process.push(e.target.value);
+      // temp[index].process.map(item => item.sort);
+      temp[index].process.sort();
+      setCareer(temp)
+      projectProcessEvent(temp); 
     } else {
-      handleProjectProcessDel(idx, e.target.value)
+      handleProjectProcessDel(index, e.target.value)
     }
   }
-  const handleProjectProcessDelAll = (e, idx, flag) => {
+  const handleProjectProcessDelAll = (e, index, flag) => {
     const temp = [...career]
-    console.log("tempDel:::",temp)
     if (e.target.checked == false) {
-      temp[idx].process.pop(e.target.value)
-      temp[idx].process.map(item => item.sort)
+      temp[index].process.splice(e.target.value.indexOf())
+      // temp[index].process.map(item => item.sort);
+      temp[index].process.sort();
+      setCareer(temp)
       projectProcessEvent(temp)
     } else {
-      handleProjectProcessDel(idx, e.target.value)
+      handleProjectProcessDel(index, e.target.value)
     }
   }
-  const handleProjectProcessDel = (idx, target) => {
+  const handleProjectProcessDel = (index, target) => {
     const temp = [...career]
-    console.log("tempDel:::",temp)
-    const position = temp[idx].process.indexOf(target)
-    temp[idx].process.splice(position, 1)
+    let targetCode = "";
+    let position = 0;
+    if(target.includes("63")){
+      position = temp[index].process.indexOf(target)
+    }else{
+      for(let i = 0; i < data?.projectProcessList.length; i++){
+        if(data?.projectProcessList[i].projectProcessName == target){
+          targetCode = data?.projectProcessList[i].projectProcess;
+        }
+      }
+      position = temp[index].process.indexOf(targetCode)
+    }
+    temp[index].process.splice(position, 1)
+    // temp[index].process.map(item => item.sort)
+    temp[index].process.sort();
+    setCareer(temp)
     projectProcessEvent(temp)
   }
   const projectProcessEvent = (arr) => {
     let strArr = []
-    // console.log(strArr)
     for (let i = 0; i < arr.length; i++) {
       strArr[i] = arr[i].process.join()
     }
