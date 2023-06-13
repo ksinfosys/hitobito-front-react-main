@@ -147,7 +147,7 @@ const CareerWrite = ({
               return <div key={key} className="blue-btn no-after items-center flex">
                 <span>{item}</span>
                 <button className="blue-x-btn" onClick={() => {
-                  handleDelProcess(key);
+                  // handleDelProcess(key);
                   handleProjectProcessDel(index, item)
                 }}>
                   <img src={blueX} alt="" />
@@ -189,37 +189,27 @@ const CareerWrite = ({
               projectProcessList?.map((item, idx) => {
                 const checkboxIndex = `${index}_${idx}`; 
                 return <div className="form-check" key={idx}>
-                  <input id={`process-${idx}-${item.projectProcess}`} 
-                    className={`form-check-input process-checked-box-${index}`}
+                  <input id={`process-${idx}-${item.projectProcess} process-${checkboxIndex}-${item.projectProcess}`} className={`form-check-input process-checked-box-${index}`}
                     type="checkbox" value={item.projectProcess}
                     onChange={(e) => {
-                      if (e.target.checked) {
-                        const tempArr = [...process, item.projectProcessName];
-                        setProcess(tempArr)
-                        handleProjectProcessChange(e, index)
-                      } else {
-                        const tempArr = process.filter((value) => value !== item.projectProcessName);
-                        setProcess(tempArr);
-                        const idx = process.indexOf(e.target.value)
-                        handleProjectProcessDelAll(e, index)
-                      }
+                      handleProjectProcessChange(e, index);
                     }}
                     checked={process.includes(item.projectProcessName)}
                   />
-                   <label           
+                  <label           
                   htmlFor={`process-${checkboxIndex}-${item.projectProcess}`}
                   onClick={(e) => {
                     const checkbox = e.target.previousSibling;
                     if (checkbox.checked) {
                       checkbox.checked = false;
-                      const tempArr = process.filter((value) => value !== item.projectProcessName);
-                      setProcess(tempArr);
-                      handleProjectProcessDelAll(e, index)
+                      // const tempArr = process.filter((value) => value !== item.projectProcessName);
+                      // setProcess(tempArr);
+                      // handleProjectProcessDelAll(e, index)
                     } else {
                       checkbox.checked = true;
-                      const tempArr = [...process, item.projectProcessName];
-                      setProcess(tempArr);
-                      handleProjectProcessChange({ target: checkbox }, index);
+                      // const tempArr = [...process, item.projectProcessName];
+                      // setProcess(tempArr);
+                      // handleProjectProcessChange({ target: checkbox }, index);
                     }
                   }}
                 >
@@ -234,34 +224,32 @@ const CareerWrite = ({
       <ModalFooter>
         <div className="sel-btn-wrap flex space-between">
           <button className="btn btn-outline-secondary w-auto" onClick={() => {
-                const className = `.process-checked-box-${index}`;
-                const tempArr = [...process];
-                document.querySelectorAll(className).forEach((item, key) => {
-                  if (!item.checked) {
-                    item.checked = true;
-                    const value = item.parentNode.childNodes[1].textContent;
-                    if (!tempArr.includes(value)) {
-                      tempArr.push(value);
-                      handleProjectProcessChange({ target: item }, index, key);
-                    }
-                  }
-                });
-                setProcess(tempArr);
-              }}>
-                すべて選択
+            const className = `.process-checked-box-${index}`;
+            const tempArr = [...process];
+            document.querySelectorAll(className).forEach((item, key) => {
+              if (!item.checked) {
+                item.checked = true;
+                const value = item.parentNode.childNodes[1].textContent;
+                if (!tempArr.includes(value)) {
+                  handleProjectProcessChange({ target: item }, index, key);
+                }
+              }
+            });
+          }}>
+            すべて選択
           </button>
           <button className="btn btn-outline-secondary w-auto" onClick={() => {
             const className = `.process-checked-box-${index}`
             const tempArr = [...process]
-            document.querySelectorAll(className).forEach(async (item, key) => {
+            document.querySelectorAll(className).forEach((item, key) => {
               if (item.checked) {
-                const e = { target: { ...item } }
                 item.checked = false
-                tempArr.pop(item.parentNode.childNodes[1].textContent)
-                handleProjectProcessDelAll(e, index)
+                const value = item.parentNode.childNodes[1].textContent;
+                if (tempArr.includes(value)) {
+                  handleProjectProcessDelAll({ target: item }, index, key);
+                }
               }
             })
-            setProcess(tempArr)
           }}>
             すべて解除
           </button>
