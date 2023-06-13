@@ -74,6 +74,7 @@ import Canceled from "../views/use-plan/Canceled";
 import PaymentSuccess from "../views/point/Success";
 import PaymentCanceled from "../views/point/Canceled";
 import AppleAuthCallback from "../views/login/apple-auth-callback";
+import PlanDetail from "../views/use-plan/plan-detail";
 
 function Router() {
   const token = getCookie("accessToken");
@@ -375,6 +376,20 @@ function Router() {
             },
           ],
         },
+
+        //이용규약
+        {
+          path: "/plan-detail",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/plan-detail",
+              element: <PlanDetail/>,
+            }
+          ]          
+        },
+
+        
         //기업 화면
         {
           path: "/",
@@ -422,6 +437,8 @@ function Router() {
                 {path: "canceled", element: <Canceled/>},
               ]
             },
+            
+
             {
               path: 'payment',
               children: [

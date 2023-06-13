@@ -18,11 +18,15 @@ const navigate = useNavigate();
       <div id="employee" className="user-guide-employee">
         <div className="box-type-default">
           <div className="p-5 border-b border-slate-200/60 text-sm">
-            hitobitoのご利用について
+            ◇hitobitoのご利用について（求職者様）
           </div>
           <div className="p-5 pt-10 pb-10">
             <div className="mb-10">
-              <div className="font-bold m">１．hitobitoはSNSアカウント（LINE、Kakao、Apple）でログインできます。</div>
+              <div className="font-bold m">１．会員登録について</div>
+                <ul className="p-2 flex flex-col gap-1 mt-3">
+                  <li>・hitobitoはSNSアカウント（LINE、Kakao、Apple）でログインできます。</li>
+                </ul>
+
             </div>
 
             <div className="mb-10">
