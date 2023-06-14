@@ -305,6 +305,17 @@ const ResumeChange = () => {
     // console.log("e.target.value:::",e.target.value)
     const tempArr = [...body[id]]
     tempArr[index] = id === 'projectPeriodSelect' ? parseInt(e.target.value) : e.target.value
+
+    if(id === 'projectPeriodSelect' && e.target.value === ""){
+      const errorMessage = "プロジェクト期間を入力してください。";
+      setResumeLabel(errorMessage);
+      setResumeAlert(true); 
+      if (projectRef.current) {
+        projectRef.current.focus();
+      }
+      return false;
+    }
+
     setBody({...body, [id]: tempArr})
   }
   const handleProjectProcessAdd = (e, index) => {
@@ -536,18 +547,18 @@ const ResumeChange = () => {
       setPhoneError(false);
     }
     
-    console.log("body.projectProcessSelect:::",body.projectProcessSelect)
+    // console.log("body.projectProcessSelect:::",body.projectProcessSelect)
 
-    console.log("RCcareer:::",career)
-    if (career.map.length == 1 && career[0].process.length == 0) {
-      setResumeLabel("主要経歴を入力してください。");
-      setResumeAlert(true); 
-      if (projectRef.current) {
-        projectRef.current.focus();
-      }
-      return false;
-    } else {
-    }
+    // console.log("RCcareer:::",career)
+    // if (career.map.length == 1 && career[0].process.length == 0) {
+    //   setResumeLabel("主要経歴を入力してください。");
+    //   setResumeAlert(true); 
+    //   if (projectRef.current) {
+    //     projectRef.current.focus();
+    //   }
+    //   return false;
+    // } else {
+    // }
 
     const max = Math.max(
       body.projectNameSelect.length || 0,

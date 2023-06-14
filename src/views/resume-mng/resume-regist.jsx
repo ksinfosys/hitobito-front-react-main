@@ -620,16 +620,17 @@ const ResumeRegist = () => {
     } else {
       setBusinessTypeError(false);
     }
-    console.log("body.projectProcessSelect:::",body.projectProcessSelect)
-    if (career.map.length == 1 && career[0].process.length == 0) {
-      setResumeLabel("主要経歴を入力してください。");
-      setResumeAlert(true); 
-      if (projectRef.current) {
-        projectRef.current.focus();
-      }
-      return false;
-    } else {
-    }
+    
+    // console.log("body.projectProcessSelect:::",body.projectProcessSelect)
+    // if (career.map.length == 1 && career[0].process.length == 0) {
+    //   setResumeLabel("主要経歴を入力してください。");
+    //   setResumeAlert(true); 
+    //   if (projectRef.current) {
+    //     projectRef.current.focus();
+    //   }
+    //   return false;
+    // } else {
+    // }
 
     const max = Math.max(
       body.projectName?.length || 0,
