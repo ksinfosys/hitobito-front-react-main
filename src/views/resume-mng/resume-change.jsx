@@ -305,17 +305,6 @@ const ResumeChange = () => {
     // console.log("e.target.value:::",e.target.value)
     const tempArr = [...body[id]]
     tempArr[index] = id === 'projectPeriodSelect' ? parseInt(e.target.value) : e.target.value
-
-    if(id === 'projectPeriodSelect' && e.target.value === ""){
-      const errorMessage = "プロジェクト期間を入力してください。";
-      setResumeLabel(errorMessage);
-      setResumeAlert(true); 
-      if (projectRef.current) {
-        projectRef.current.focus();
-      }
-      return false;
-    }
-
     setBody({...body, [id]: tempArr})
   }
   const handleProjectProcessAdd = (e, index) => {
