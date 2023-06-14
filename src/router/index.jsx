@@ -75,6 +75,7 @@ import PaymentSuccess from "../views/point/Success";
 import PaymentCanceled from "../views/point/Canceled";
 import AppleAuthCallback from "../views/login/apple-auth-callback";
 import PlanDetail from "../views/use-plan/plan-detail";
+import PointDetailRule from "../views/point/point-detail-rule";
 
 function Router() {
   const token = getCookie("accessToken");
@@ -209,7 +210,7 @@ function Router() {
         ],
       },
 
-      //이용규약
+      //플랜 -결제규약
       {
         path: "/plan-detail",
         element: <TopMenu/>,
@@ -217,6 +218,18 @@ function Router() {
           {
             path: "/plan-detail",
             element: <PlanDetail/>,
+          }
+        ]          
+      },
+
+      //포인트 -결제규약
+      {
+        path: "/point-detail-rule",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/point-detail-rule",
+            element:<PointDetailRule/>
           }
         ]          
       },
@@ -391,7 +404,7 @@ function Router() {
           ],
         },
 
-        //이용규약
+        //플랜 -결제규약
         {
           path: "/plan-detail",
           element: <TopMenu/>,
@@ -402,6 +415,18 @@ function Router() {
             }
           ]          
         },
+
+        //포인트 -결제규약
+      {
+        path: "/point-detail-rule",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/point-detail-rule",
+            element: <PointDetailRule/>,
+          }
+        ]          
+      },
 
         
         //기업 화면
