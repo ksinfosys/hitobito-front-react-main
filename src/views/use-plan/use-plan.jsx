@@ -906,47 +906,47 @@ const UsePlan = () => {
               </a>              
             </div>
             <div className="flex space-between pt-3">
-              <p>決済規約に同意しますか？</p>
-              {
-                agreeOpen && (
-                  <div className="flex gap-2">
-                    <div className="form-check">
-                      <input
-                        id="agree"
-                        className="form-check-input"
-                        type="radio"
-                        name="agree_button"
-                        value="horizontal-radio-daniel-craig"
-                        onClick={() => {
-                          setAgreeFlag(true);
-                        }}
-                      />
-                      <label className="form-check-label text-sm" htmlFor="agree">
-                        同意
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input
-                        id="disagree"
-                        className="form-check-input"
-                        type="radio"
-                        name="agree_button"
-                        value="horizontal-radio-daniel-craig"
-                        onClick={() => {
-                          setAgreeFlag(false);
-                        }}
-                      />
-                      <label
-                        className="form-check-label text-sm"
-                        htmlFor="disagree"
-                      >
-                        同意しません。
-                      </label>
-                    </div>
-                  </div>
-                )
-              }
-            </div>
+                  <p>決済規約に同意しますか？</p>
+                  {
+                    (
+                      <div className="flex gap-2">
+                        <div className="form-check">
+                          <input
+                            id="agree"
+                            className="form-check-input"
+                            type="radio"
+                            name="agree_button"
+                            value="horizontal-radio-daniel-craig"
+                            onClick={() => {
+                              setAgreeFlag(true);
+                            }}
+                          />
+                          <label className="form-check-label text-sm" htmlFor="agree">
+                            同意
+                          </label>
+                        </div>
+                        <div className="form-check">
+                          <input
+                            id="disagree"
+                            className="form-check-input"
+                            type="radio"
+                            name="agree_button"
+                            value="horizontal-radio-daniel-craig"
+                            onClick={() => {
+                              setAgreeFlag(false);
+                            }}
+                          />
+                          <label
+                            className="form-check-label text-sm"
+                            htmlFor="disagree"
+                          >
+                            同意しません。
+                          </label>
+                        </div>
+                      </div>
+                    )
+                  }
+                </div>
           </div>
 
           <div id="detail-modal-btn" className="flex justify-end pt-5">
@@ -968,7 +968,7 @@ const UsePlan = () => {
             >
               次へ
             </button>
-            {/*<button
+            {/* <button
               type="button"
               className="btn btn-sm w-24 mr-2"
               onClick={() => {
@@ -983,7 +983,7 @@ const UsePlan = () => {
               }}
             >
               キャンセル
-            </button>*/}
+            </button> */}
           </div>
         </ModalBody>
       </Modal>

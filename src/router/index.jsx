@@ -208,6 +208,20 @@ function Router() {
           },
         ],
       },
+
+      //이용규약
+      {
+        path: "/plan-detail",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/plan-detail",
+            element: <PlanDetail/>,
+          }
+        ]          
+      },
+
+
     ]
     :
     isSeeker
