@@ -527,12 +527,12 @@ function PointDetailBusiness() {
               <div className="w-full">
                 <div className="pt-10 pb-3 border-b">
                   決済規約に同意{" "}
-                  <span className="text-sm text-pending ml-2">
-                    以下の規約を読んでいただいた後に決済が可能です。
-                  </span>
                 </div>
                 <div ref={termsRef} className="agree-text text-slate-300 p-2 border-b text-sm" >
-                  ＜決済規約＞
+                  <a onClick={() => {window.open('/point-detail-rule');}} style={{cursor:"pointer"}}>
+                  ＜決済規約を確認するにはクリック＞
+                  </a> 
+                  {/* ＜決済規約＞
                   <br />
                   本決済規約（以下、「本規約」といいます。）は、KS情報システム株式会社（以下、「当社」といいます。）が提供するアプリ「hitobito」（以下、「本アプリ」といいます。）の企業側における決済行為に関する規定です。本規約にご同意いただくことで、本アプリの決済機能を利用することができます。本アプリの利用にあたっては、本規約をよくお読みいただき、ご理解いただいた上でご利用ください。
                   <br />
@@ -595,12 +595,12 @@ function PointDetailBusiness() {
                   利用規約の変更
                   <br />
                   7.1 当社は、必要に応じて本決済規約を変更することがあります。変更後の利用規約は、本アプリ上での掲示または通知により公表されます。変更後の利用規約にご同意いただくことで、引き続き本アプリの決済機能を利用することができます。
-                  <br />
+                  <br /> */}
                 </div>
                 <div className="flex space-between pt-3">
                   <p>決済規約に同意しますか？</p>
                   {
-                    agreeOpen && (
+                    (
                       <div className="flex gap-2">
                         <div className="form-check">
                           <input
