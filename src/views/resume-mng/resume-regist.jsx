@@ -276,7 +276,7 @@ const ResumeRegist = () => {
     // console.log("id:::",id)
     // console.log("e.target.value:::",e.target.value)
     const tempArr = [...body[id]]
-    tempArr[index] = id === 'projectPeriodSelect' ? parseInt(e.target.value) : e.target.value
+    tempArr[index] = id === 'projectPeriod' ? parseInt(e.target.value) : e.target.value
     setBody({...body, [id]: tempArr})
   }
   const handleProjectProcessAdd = (e, index) => {

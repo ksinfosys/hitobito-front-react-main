@@ -49,7 +49,6 @@ const CareerWrite = ({
   useEffect(() => {
     const tempProcess = process_re.toString().split(',');
     const updatedProcess = [];
-    console.log("tempProcess",tempProcess)
     if (projectProcessList && projectProcessList.length > 0) {
       for (let i = 0; i < tempProcess.length; i++) {
         for (let j = 0; j < projectProcessList.length; j++) {
