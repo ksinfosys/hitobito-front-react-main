@@ -204,15 +204,10 @@ const CareerReWrite = ({
                     const checkbox = e.target.previousSibling;
                     if (checkbox.checked) {
                       checkbox.checked = false;
-                      // const tempArr = process.filter((value) => value !== item.projectProcessName);
-                      // setProcess(tempArr);
-                      // handleProjectProcessDelAll(e, index)
                     } else {
                       checkbox.checked = true;
-                      // const tempArr = [...process, item.projectProcessName];
-                      // setProcess(tempArr);
-                      // handleProjectProcessChange({ target: checkbox }, index);
                     }
+                    handleProjectProcessChange({ target: checkbox }, index);
                   }}
                 >
                   {item.projectProcessName}
