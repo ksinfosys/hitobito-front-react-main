@@ -225,8 +225,9 @@ const TermsOfPrivacy = () => {
                 <div>
                   <br />アプリ運営会社　：　KS情報システム株式会社
                   <br />運営会社住所　　：　〒103-0003 東京都中央区日本橋横山町９−１３ 岩本ビル ２階
+                  <br />サポート対応時間：　09:00 - 18:00
                   <br />電話番号　　　　：　03-6380-4603
-                  <br />メールアドレス　：　app.contact@ks-infosys.com
+                  <br />メールアドレス　：　ksinfosys.co.ltd@gmail.com
                   <br />運営統括責任者　：　金仁鉉
                 </div>              
             </div>

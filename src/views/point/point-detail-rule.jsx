@@ -1,7 +1,9 @@
 import React, {useEffect} from "react";
 import { color } from "../../utils/utils";
+import { Link, useNavigate } from "react-router-dom";
 
 const PointDetailRule = () => {
+  const navigate = useNavigate();
   return(<> 
     <div className="find-wrap flex flex-col items-center">
       <div className="box-type-default">
@@ -77,20 +79,60 @@ const PointDetailRule = () => {
                       </li>
                     </ul>
                   </div>
+
+                <div className="font-bold"><br /> お支払い方法</div>
+                  <div>
+                    <ul className="p-2 flex flex-col gap-1 mt-3">
+                      <li>
+                      6.1 クレジットカードもしくはコンビニ決済
+                      </li>
+                    </ul>
+                  </div>
+
+                <div className="font-bold"><br /> 販売価格</div>
+                  <div>
+                    <ul className="p-2 flex flex-col gap-1 mt-3">
+                      <li>
+                      7.1 購入画面に表示
+                      </li>
+                    </ul>
+                  </div>
+
+                <div className="font-bold"><br /> 追加手数料</div>
+                  <div>
+                    <ul className="p-2 flex flex-col gap-1 mt-3">
+                      <li>
+                      8.1 商品/サービスの特性上送料は発生いたしません。
+                      </li>
+                    </ul>
+                  </div>
+
+                <div className="font-bold"><br /> 配送・引渡しについて</div>
+                  <div>
+                    <ul className="p-2 flex flex-col gap-1 mt-3">
+                      <li>
+                      9.1 クレジットカード：注文後すぐにご利用いただけます。
+                      </li>
+                      <li>
+                      9.2 コンビニ決済：コンビニで入金した後、ご利用いただけます。
+                      </li>
+                    </ul>
+                  </div>
+
                 <div className="font-bold"><br /> 免責事項</div>
                   <div>
                     <ul className="p-2 flex flex-col gap-1 mt-3">
                       <li>
-                      6.1 当社は、決済機能の提供に際して合理的な注意を払い、安全性を確保するために努力しますが、以下の場合において生じた損害について一切の責任を負いません：
+                      10.1 当社は、決済機能の提供に際して合理的な注意を払い、安全性を確保するために努力しますが、以下の場合において生じた損害について一切の責任を負いません：
                       </li>
                       <li>
-                      　6.1.1 システム障害や通信回線の不具合による決済処理の遅延、中断、失敗等の問題。
+                      　10.1.1 システム障害や通信回線の不具合による決済処理の遅延、中断、失敗等の問題。
                       </li>
                       <li>
-                      　6.1.2 本アプリの利用者が不正行為を行った場合や第三者による不正アクセスなどによって生じた損害。
+                      　10.1.2 本アプリの利用者が不正行為を行った場合や第三者による不正アクセスなどによって生じた損害。
                       </li>
                       <li>
-                      　6.1.3 決済代行会社による決済処理や個人情報の取り扱いに関する問題。
+                      　10.1.3 決済代行会社による決済処理や個人情報の取り扱いに関する問題。
                       </li>                      
                     </ul>
                   </div>   
@@ -98,7 +140,7 @@ const PointDetailRule = () => {
                   <div>
                     <ul className="p-2 flex flex-col gap-1 mt-3">
                       <li>
-                      7.1 当社は、必要に応じて本決済規約を変更することがあります。変更後の利用規約は、本アプリ上での掲示または通知により公表されます。変更後の利用規約にご同意いただくことで、引き続き本アプリの決済機能を利用することができます。
+                      11.1 当社は、必要に応じて本決済規約を変更することがあります。変更後の利用規約は、本アプリ上での掲示または通知により公表されます。変更後の利用規約にご同意いただくことで、引き続き本アプリの決済機能を利用することができます。
                       </li>
                     </ul>
                   </div>
@@ -106,7 +148,7 @@ const PointDetailRule = () => {
                   <div>
                     <ul className="p-2 flex flex-col gap-1 mt-3">
                       <li>
-                      8.1 本決済規約は、利用者が本アプリの決済機能を利用する間、または本アプリの利用者登録が終了した後も有効です。
+                      12.1 本決済規約は、利用者が本アプリの決済機能を利用する間、または本アプリの利用者登録が終了した後も有効です。
                       </li>
                     </ul>
                   </div>
@@ -114,13 +156,18 @@ const PointDetailRule = () => {
                 <div>
                   <br />アプリ運営会社　：　KS情報システム株式会社
                   <br />運営会社住所　　：　〒103-0003 東京都中央区日本橋横山町９−１３ 岩本ビル ２階
+                  <br />サポート対応時間：　09:00 - 18:00
                   <br />電話番号　　　　：　03-6380-4603
-                  <br />メールアドレス　：　app.contact@ks-infosys.com
+                  <br />メールアドレス　：　ksinfosys.co.ltd@gmail.com
                   <br />運営統括責任者　：　金仁鉉
                 </div>              
             </div>
           </div>
         </div>
+        <div className="flex items-center justify-center">
+            <button type="button" className="btn btn-pending w-80 mt-10 h-48" onClick={()=>navigate('/')}>
+              確認</button>
+          </div>
       </div>
     </div>
   </>);
