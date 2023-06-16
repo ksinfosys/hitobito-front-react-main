@@ -200,14 +200,14 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
 
 
     // Count State
-    const [countState, setCountState] = useState(1);
+    const [countState, setCountState] = useState(3);
     // Plus Button Click Event
     const handleClickPlus = () => {
-        countState < 3 && setCountState(prev => prev + 1)
+        countState < 7 && setCountState(prev => prev + 1)
     };
     // Minus Button Click Event
     const handleClickMinus = () => {
-        countState !== 1 && setCountState(prev => prev - 1)
+        countState !== 3 && setCountState(prev => prev - 1)
     };
 
     // Check State

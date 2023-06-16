@@ -86,15 +86,15 @@ const DashboardBusiness = () => {
     const [inputValue, setInputValue] = useState("");
     const [searchId, setSearchId] = useState();
     // Counter
-    const [allCountState, setAllCountState] = useState(1);
-    const [countState, setCountState] = useState(1);
+    const [allCountState, setAllCountState] = useState(3);
+    const [countState, setCountState] = useState(3);
     // Plus Button Click Event
     const handleClickPlus = () => {
-        allCountState < 3 && setAllCountState((prev) => prev + 1);
+        allCountState < 7 && setAllCountState((prev) => prev + 1);
     };
     // Minus Button Click Event
     const handleClickMinus = () => {
-        allCountState !== 1 && setAllCountState((prev) => prev - 1);
+        allCountState !== 3 && setAllCountState((prev) => prev - 1);
     };
     // 체크된 리스트 아이디
     const [allCheck, setAllCheck] = useState(false);
