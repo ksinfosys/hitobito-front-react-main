@@ -1028,7 +1028,7 @@ const UsePlan = () => {
                     getCheckOut(isplanCode, isPaymentMethod);
                   }}
                 >
-                  確認
+                  次へ
                 </a>
                 <a
                   href="#"
