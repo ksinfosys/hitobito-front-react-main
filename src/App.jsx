@@ -8,6 +8,7 @@ import Router from "./router";
 import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import { LiffProvider } from "react-liff";
 import { delCookie } from "./utils/cookie";
+import Footer from "./layouts/footer/Main";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -50,6 +51,7 @@ function App() {
         <GoogleOAuthProvider clientId={'994073566161-uheufnfp50scmu1lquhkg0mdbpr7ip56.apps.googleusercontent.com'}>
           <LiffProvider liffId={liffId}>
             <Router />
+            <Footer />
           </LiffProvider>
         </GoogleOAuthProvider>
         <ScrollToTop />

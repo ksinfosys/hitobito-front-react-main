@@ -77,6 +77,9 @@ import AppleAuthCallback from "../views/login/apple-auth-callback";
 import PlanDetail from "../views/use-plan/plan-detail";
 import PointDetailRule from "../views/point/point-detail-rule";
 
+import TermsOfUse from "../views/Intro/terms-of-use";
+import TermsOfPrivacy from "../views/Intro/terms-of-privacy";
+
 function Router() {
   const token = getCookie("accessToken");
   // const token = testToken;
@@ -87,6 +90,54 @@ function Router() {
 
   const routes = !token
     ? [
+
+      // 기업 이용가이드
+      {
+        path: "/user-guide-business",
+        element: <TopMenu/>,
+        children: [
+          {
+            path: "/user-guide-business",
+            element: <UserGuideBusiness/>,
+          },
+        ],
+      },
+
+      //플랜 -결제규약
+      {
+        path: "/plan-detail",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/plan-detail",
+            element: <PlanDetail/>,
+          },
+        ]    
+      },
+
+      //이용규약
+      {
+        path: "/terms-of-use",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/terms-of-use",
+            element: <TermsOfUse/>,
+          },
+        ]          
+      },
+
+      //프라이버시 규약
+      {
+        path: "/terms-of-privacy",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/terms-of-privacy",
+            element: <TermsOfPrivacy/>,
+          },
+        ]          
+      },
 
       // intro
       {
@@ -392,6 +443,29 @@ function Router() {
         },
       ]
       : [
+        //이용규약
+        {
+          path: "/terms-of-use",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/terms-of-use",
+              element: <TermsOfUse/>,
+            }
+          ]          
+        },
+
+        //프라이버시 규약
+        {
+          path: "/terms-of-privacy",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/terms-of-privacy",
+              element: <TermsOfPrivacy/>,
+            }
+          ]          
+        },
         // 기업 이용가이드
         {
           path: "/user-guide-business",
