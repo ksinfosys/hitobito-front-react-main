@@ -889,7 +889,7 @@ const ResumeRegist = () => {
       }
     }
     $('.hopeCareerOneDeps').empty();
-    $('.hopeCareerOneDeps').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
+    $('.hopeCareerOneDeps').append("<option disabled selected value={'DEFAULT'}> 選択してください。</option>");
     for(let i = 0; i < hopeCareerList1.length; i++){
       var option = $("<option value='"+ hopeCareerList1[i].hopeCareer +"'>"+ hopeCareerList1[i].hopeCareerName +"</option>");
       $('.hopeCareerOneDeps').append(option);
@@ -913,7 +913,7 @@ const ResumeRegist = () => {
     }
 
     $('.hopeCareer').empty();
-    $('.hopeCareer').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
+    $('.hopeCareer').append("<option disabled selected value={'DEFAULT'}> 選択してください。</option>");
 
     for(let i = 0 ; i < hopeCareerList2.length; i++){
       var option = $("<option value='"+ hopeCareerList2[i].hopeCareer +"'>"+ hopeCareerList2[i].hopeCareerName +"</option>");
@@ -931,7 +931,7 @@ const ResumeRegist = () => {
     }
     
     $('.jobTypeOneDeps').empty();
-    $('.jobTypeOneDeps').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
+    $('.jobTypeOneDeps').append("<option disabled selected value={'DEFAULT'}> 選択してください。</option>");
     for(let i = 0; i < jobTypeList1.length; i++){
       var option = $("<option value='"+ jobTypeList1[i].jobType +"'>"+ jobTypeList1[i].jobTypeName +"</option>");
       $('.jobTypeOneDeps').append(option);
@@ -963,7 +963,7 @@ const ResumeRegist = () => {
     }
 
     $('.jobType').empty();
-    $('.jobType').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
+    $('.jobType').append("<option disabled selected value={'DEFAULT'}> 選択してください。</option>");
 
     for(let i = 0 ; i < jobTypeList2.length; i++){
       var option = $("<option value='"+ jobTypeList2[i].jobType +"'>"+ jobTypeList2[i].jobTypeName +"</option>");
@@ -981,7 +981,7 @@ const ResumeRegist = () => {
     }
     
     $('.businessTypeOneDeps').empty();
-    $('.businessTypeOneDeps').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
+    $('.businessTypeOneDeps').append("<option disabled selected value={'DEFAULT'}> 選択してください。</option>");
     for(let i = 0; i < businessTypeList1.length; i++){
       var option = $("<option value='"+ businessTypeList1[i].businessType +"'>"+ businessTypeList1[i].businessTypeName +"</option>");
       $('.businessTypeOneDeps').append(option);
@@ -1013,7 +1013,7 @@ const ResumeRegist = () => {
     }
 
     $('.businessType').empty();
-    $('.businessType').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
+    $('.businessType').append("<option disabled selected value={'DEFAULT'}> 選択してください。</option>");
 
     for(let i = 0 ; i < businessTypeList2.length; i++){
       var option = $("<option value='"+ businessTypeList2[i].businessType +"'>"+ businessTypeList2[i].businessTypeName +"</option>");
@@ -1277,7 +1277,7 @@ const ResumeRegist = () => {
               <button className= {hopeCareerError ? 'btn btn-primary flex-start selectButton error' : 'btn btn-primary flex-start selectButton'}
                 onClick={() => {
                   $('.hopeCareer').empty();
-                  $('.hopeCareer').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
+                  $('.hopeCareer').append("<option disabled selected value={'DEFAULT'}> 選択してください。</option>");
                   hopeCareer1(),
                   setHopeCareerModal(true),
                   setModalFlag({ ...modalFlag, main: true, goal: true})
@@ -1307,7 +1307,7 @@ const ResumeRegist = () => {
               <button className={jobTypeError ? 'btn btn-primary selectButton error' : 'btn btn-primary selectButton'}
                 onClick={() => {
                   $('.jobType').empty();
-                  $('.jobType').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
+                  $('.jobType').append("<option disabled selected value={'DEFAULT'}> 選択してください。</option>");
                   jobType1(),
                   setJobTypeModal(true),
                   setModalFlag({ ...modalFlag, main: true, occupation: true })
@@ -1325,7 +1325,7 @@ const ResumeRegist = () => {
               <button className={businessTypeError ? 'btn btn-primary selectButton error' : 'btn btn-primary selectButton' }
                 onClick={() => {
                   $('.businessType').empty();
-                  $('.businessType').append("<option disabled selected value={'DEFAULT'}> -- select an option --</option>");
+                  $('.businessType').append("<option disabled selected value={'DEFAULT'}> 選択してください。</option>");
                   businessType1(),
                   setBusinessTypeModal(true),
                   setModalFlag({ ...modalFlag, main: true, business: true })
@@ -1582,7 +1582,7 @@ const ResumeRegist = () => {
                         ModalEvent('hopeCareer').oneDepth(e, depthMenu, setDepthMenu)
                       }}
                       >
-                <option disabled selected value={'DEFAULT'}> -- select an option --</option>
+                <option disabled selected value={'DEFAULT'}> 選択してください。</option>
               </select>
               <select id={'hopeCareer dropdown-button-dark-example1'}
                       className={`hopeCareer form-select flex items-center space-between`}
@@ -1590,7 +1590,7 @@ const ResumeRegist = () => {
                           ModalEvent('hopeCareer').secondDepth(e, depthMenu, setDepthMenu, body, setBody)
                         }}
                       >
-                <option disabled selected value={'DEFAULT'}> -- select an option --</option>
+                <option disabled selected value={'DEFAULT'}> 選択してください。</option>
               </select>
             </div>
 
@@ -1635,7 +1635,7 @@ const ResumeRegist = () => {
                         ModalEvent('jobType').oneDepth(e, depthMenu, setDepthMenu)
                       }}
                       >
-                <option disabled selected value={'DEFAULT'}> -- select an option --</option>
+                <option disabled selected value={'DEFAULT'}> 選択してください。</option>
               </select>
               <select id={'jobType dropdown-button-dark-example1'}
                       disabled={false}
@@ -1644,7 +1644,7 @@ const ResumeRegist = () => {
                           ModalEvent('jobType').secondDepth(e, depthMenu, setDepthMenu, body, setBody)
                         }}
                       >
-                <option disabled selected value={'DEFAULT'}> -- select an option --</option>
+                <option disabled selected value={'DEFAULT'}> 選択してください。</option>
               </select>
             </div>
 
@@ -1697,7 +1697,7 @@ const ResumeRegist = () => {
                         ModalEvent('businessType').oneDepth(e, depthMenu, setDepthMenu)
                       }}
                       >
-                <option disabled selected value={'DEFAULT'}> -- select an option --</option>
+                <option disabled selected value={'DEFAULT'}> 選択してください。</option>
               </select>
               <select id={'businessType dropdown-button-dark-example1'}
                       disabled={false}
@@ -1706,7 +1706,7 @@ const ResumeRegist = () => {
                           ModalEvent('businessType').secondDepth(e, depthMenu, setDepthMenu, body, setBody)
                         }}
                       >
-                <option disabled selected value={'DEFAULT'}> -- select an option --</option>
+                <option disabled selected value={'DEFAULT'}> 選択してください。</option>
               </select>
             </div>
 
