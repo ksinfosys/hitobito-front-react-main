@@ -13,7 +13,7 @@ const SelectBox = ({id, className, data, onChange, defaultValue}) => {
             className={`form-select flex items-center space-between ${className ? className : ''}`}
             onChange={onChange}
             multiple={false}>
-      <option disabled selected value={'DEFAULT'}> -- select an option --</option>
+      <option disabled selected value={'DEFAULT'}> 選択してください。</option>
       {
         data?.map((item, key) => {
           return <option key={key} value={item[Object.keys(item)[0]].toString()}>{item[Object.keys(item)[1]].toString()}</option>
