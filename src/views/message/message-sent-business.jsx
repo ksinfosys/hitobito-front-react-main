@@ -9,6 +9,7 @@ import { getCookie } from "../../utils/cookie";
 import Pagination from "../../components/pagination";
 import ServiceFetch from "../../../util/ServiceFetch";
 import { useRecoilState } from "recoil";
+import $ from "jquery";
 
 function MessageSentBusiness() {
     const [disable, setDisable] = React.useState(false);
@@ -237,6 +238,12 @@ function MessageSentBusiness() {
         msgState ? getMsgSearch() : getList();
         setAllCheckbox(false);
     }, [currentPageIdx]);
+
+    useEffect(() => {
+        $(".tab-active").on("click", function(){
+            location.reload();
+        })
+    }, []);
 
     return (
         <>
@@ -636,8 +643,7 @@ function MessageSentBusiness() {
                             <span className="text-slate-400">{editorData?.replace(/<[^>]*>|&nbsp;/g, '').trim().length}</span><span className="word-limit text-slate-400">/3000</span>
                         </span>
                     </div>
-                </ModalBody>
-                <ModalFooter>
+
                     <div id="detail-modal-btn" className="flex gap-2 space-between pt-5">
                         <div className="flex items-center gap-2">
                             <button
@@ -670,9 +676,12 @@ function MessageSentBusiness() {
                             className="btn btn-sm btn-pending w-24"
                             onClick={msgSend}
                         >
-                            送信
+                            再信
                         </button>
                     </div>
+                </ModalBody>
+                <ModalFooter>
+                    
                 </ModalFooter>
             </Modal>
             {/* 메세지 전송 성공 모달 */}

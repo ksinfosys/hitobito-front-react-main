@@ -15,6 +15,8 @@ import Xbutton from "@/assets/images/x_button.svg";
 import axios from "axios";
 import { regexUserPoint } from "../../utils/utils";
 
+import $ from "jquery";
+
 
 function SignUpBusiness() {
 
@@ -708,6 +710,11 @@ function SignUpBusiness() {
                     className="form-control"
                     placeholder="英文・数字・特殊記号で組み合わせ8~16字で入力"
                     onChange={(e) => setPassword(e.target.value)}
+                    onBlur={(e) => {
+                      const confirm = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
+                      let passwordAlertText1 = $(".password-alert-text-1");
+                      confirm.test(e.target.value) ? passwordAlertText1.css("display","none") : passwordAlertText1.css("display","block")
+                    }}
                   />
                   <button className="eye-btn" onClick={() => {
                     setPwFlag(prev => !prev)
@@ -717,6 +724,9 @@ function SignUpBusiness() {
                     }
                   </button>
                 </div>
+                <div className="password-alert-text-1" style={{display:"none",color:"red",fontSize:"12px"}}>
+                パスワードは英文・数字・特殊記号で組み合わせ8~16字で入力してください。
+                </div>
                 <div className="form-tit">パスワード確認<span>*</span></div>
                 <div className="pwd-eye-wrap">
                   <input
@@ -725,6 +735,10 @@ function SignUpBusiness() {
                     className="form-control"
                     placeholder="パスワード再入力"
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    onBlur={(e) => {
+                      let passwordAlertText2 = $(".password-alert-text-2");
+                      e.target.value == password ? passwordAlertText2.css("display","none") : passwordAlertText2.css("display","block")
+                    }}
                   />
                   <button className="eye-btn" onClick={() => {
                     setCheckFlag(prev => !prev)
@@ -733,6 +747,10 @@ function SignUpBusiness() {
                       checkFlag === true ? <img src="/images/eye-open.svg" alt="" /> : <img src="/images/eye-close.svg" alt="" />
                     }
                   </button>
+                </div>
+                <div className="password-alert-text-2" style={{display:"none",color:"red",fontSize:"12px"}}>
+                パスワードが一致していません。<br />
+                パスワードを確認してください。
                 </div>
                 <div className="form-tit">企業名 <span>*</span></div>
                 <input ref={cpUserNameRef} type="text" className="form-control" maxLength={50} placeholder="企業名入力" onChange={(e) => setCpUserName(e.target.value)} />

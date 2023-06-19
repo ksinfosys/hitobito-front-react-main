@@ -15,6 +15,7 @@ import Search from "@/assets/images/search.svg";
 import MessageBoxList01 from "./message-box-list01";
 import ServiceFetch from "../../../util/ServiceFetch";
 import { useRecoilState } from "recoil";
+import $ from "jquery";
 
 function MessageReceptionBusiness() {
   const [disable, setDisable] = React.useState(false);
@@ -232,6 +233,12 @@ function MessageReceptionBusiness() {
     msgState ? getMsgSearch() : getReceptionMsg();
     setAllCheckbox(false);
   }, [currentPageIdx]);
+
+  useEffect(() => {
+    $(".tab-active").on("click", function(){
+        location.reload();
+    })
+}, []);
 
   return (
     <>
@@ -644,8 +651,7 @@ function MessageReceptionBusiness() {
               <span className="text-slate-400">{editorData?.replace(/<[^>]*>|&nbsp;/g, '').trim().length}</span><span className="word-limit text-slate-400">/3000</span>
             </span>
           </div>
-        </ModalBody>
-        <ModalFooter>
+
           <div id="detail-modal-btn" className="flex gap-2 space-between pt-5">
             <div className="flex items-center gap-2">
               <button
@@ -685,6 +691,9 @@ function MessageReceptionBusiness() {
               送信
             </button>
           </div>
+        </ModalBody>
+        <ModalFooter>
+          
         </ModalFooter>
       </Modal >
       {/* 메세지 전송 성공 모달 */}

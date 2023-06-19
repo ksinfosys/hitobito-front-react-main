@@ -9,6 +9,7 @@ import MessageBoxList02 from './message-box-list02';
 import Search from "@/assets/images/search.svg";
 import ServiceFetch from "../../../util/ServiceFetch";
 import { useRecoilState } from "recoil";
+import $ from "jquery";
 
 function MessageBoxBusiness() {
     const [disable, setDisable] = React.useState(false);
@@ -215,6 +216,12 @@ function MessageBoxBusiness() {
         msgState ? searchList() : getList();
         setAllCheckbox(false);
     }, [currentPageIdx]);
+
+    useEffect(() => {
+        $(".tab-active").on("click", function(){
+            location.reload();
+        })
+    }, []);
 
     return (
         <>
@@ -538,8 +545,6 @@ function MessageBoxBusiness() {
                         </span>
                     </div>
 
-                </ModalBody>
-                <ModalFooter>
                     <div id="detail-modal-btn" className="flex gap-2 space-between pt-5 detail-modal-cont">
                         <div className="flex items-center gap-2">
                             <button
@@ -575,6 +580,9 @@ function MessageBoxBusiness() {
                             送信
                         </button>
                     </div>
+                </ModalBody>
+                <ModalFooter>
+                    
                 </ModalFooter>
             </Modal>
             {/* 메세지 전송 성공 모달 */}
