@@ -155,7 +155,7 @@ const PlanDetail = () => {
 
                 <div>
                   <br />アプリ運営会社　：　KS情報システム株式会社
-                  <br />運営会社住所　　：　〒103-0003 東京都中央区日本橋横山町９−１３ 岩本ビル ２階
+                  <br />運営会社住所　　：　〒103-0003 東京都中央区日本橋横山町９−１３ イワモトビル ２階
                   <br />サポート対応時間：　09:00 - 18:00
                   <br />電話番号　　　　：　03-6380-4603
                   <br />メールアドレス　：　ksinfosys.co.ltd@gmail.com
@@ -165,7 +165,7 @@ const PlanDetail = () => {
           </div>
         </div>
         <div className="flex items-center justify-center">
-            <button type="button" className="btn btn-pending w-80 mt-10 h-48" onClick={()=>navigate('/')}>
+            <button type="button" className="btn btn-pending w-80 m-5 h-48" onClick={()=>navigate('/')}>
               確認</button>
           </div>
       </div>
