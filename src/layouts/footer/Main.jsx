@@ -30,7 +30,7 @@ function Footer() {
         </Link>
       </div>
       <div className="text-center" style={{fontSize:"12px"}}>
-      © 2022 KS Information System Co. Ltd. All Rights Reserved.
+      © 2023 KS Information System Co. Ltd. All Rights Reserved.
       </div>
     </div>
   );
