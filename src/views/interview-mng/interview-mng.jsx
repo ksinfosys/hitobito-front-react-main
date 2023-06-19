@@ -162,7 +162,12 @@ const InterviewMng = () => {
             },
             withCredentials: true,
         }).then((response) => {
-            setReportReasonList(response.data.result.reportReasonList)
+            let reportReasonList = response.data.result.reportReasonList;
+            let temp = reportReasonList[0];
+            reportReasonList.splice(0,1);
+            reportReasonList.push(temp);
+            
+            setReportReasonList(reportReasonList)
         }).catch((error) => {
             console.error(error);
         });
@@ -423,7 +428,7 @@ const InterviewMng = () => {
                                                                     面接実施確認
                                                                 </button>
                                                                 :
-                                                                !data.pointAcceptFlag && data.rqStatus !== "20102" 
+                                                                (!data.pointAcceptFlag && data.rqStatus !== "20102") || (data.requestPointStatus === "(承諾)") 
                                                                 ?
                                                                 ""
                                                                 :
@@ -433,7 +438,7 @@ const InterviewMng = () => {
                                                                 </button>
                                                             }
                                                             {
-                                                                data.rqStatus === "20102"
+                                                                data.rqStatus === "20102" && data.requestPointStatus !== "(承諾)"
                                                                 ?
                                                                 <button
                                                                     className="btn btn-sm btn-business ml-2 btn-message-write"
@@ -445,7 +450,7 @@ const InterviewMng = () => {
                                                                     メッセージ作成
                                                                 </button>
                                                                 :
-                                                                !data.pointAcceptFlag && data.rqStatus !== "20102" 
+                                                                (!data.pointAcceptFlag && data.rqStatus !== "20102") || (data.requestPointStatus === "(承諾)") 
                                                                 ?
                                                                 ""
                                                                 :
@@ -455,7 +460,7 @@ const InterviewMng = () => {
                                                                 </button>
                                                             }                                                        
                                                             {
-                                                                data.rqStatus === "20102"
+                                                                data.rqStatus === "20102" && data.requestPointStatus !== "(承諾)"
                                                                 ?
                                                                 <button
                                                                     className="btn btn-sm btn-business ml-2"
@@ -468,7 +473,7 @@ const InterviewMng = () => {
                                                                     通報
                                                                 </button>
                                                                 :
-                                                                !data.pointAcceptFlag && data.rqStatus !== "20102" 
+                                                                (!data.pointAcceptFlag && data.rqStatus !== "20102") || (data.requestPointStatus === "(承諾)")
                                                                 ?
                                                                 ""
                                                                 :
@@ -634,6 +639,7 @@ const InterviewMng = () => {
                         </a>
                     </div>
                 </ModalBody>
+                <ModalFooter></ModalFooter>
             </Modal>
             {/* 신고 체크 모달 */}
             <Modal

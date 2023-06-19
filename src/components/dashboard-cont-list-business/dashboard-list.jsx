@@ -381,7 +381,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <></>
                             ) : (
                                 <>
-                                    <div className="color-a8">面談依頼有効期限</div>
+                                    <div className="color-a8">面談要請承諾期間</div>
                                     <div className="minus-plus-wrap flex items-center">
                                         <button className="minus-gray-btn" onClick={handleClickMinus}>
                                             <img src={MinusGrayBtn} alt="" />
@@ -762,7 +762,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                             <>
                                 <div className=" flex items-center gap-3 mt-10 border-t py-3 justify-center bg-slate-50">
                                     <div className="exp-date-tit">
-                                        面談依頼有効期間
+                                        面談要請承諾期間
                                     </div>
                                     <div className="list-all-wrap flex items-center gap-4">
                                         <div className="minus-plus-wrap flex items-center">

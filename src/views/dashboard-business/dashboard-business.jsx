@@ -449,7 +449,7 @@ const DashboardBusiness = () => {
                                     id="texttest"
                                     className="form-control pr-5"
                                     autocomplete="off"
-                                    style={{width: 300 + 'px'}}
+                                    style={{width: 300 + 'px',height: 36 + 'px'}}
                                     placeholder="全体を確認するためには「Space」を押す"                                    
                                     value={inputValue}
                                     onFocus={searchTags}
@@ -505,7 +505,7 @@ const DashboardBusiness = () => {
                                     );
                                 })}
                             </select>
-                            <button className="btn-lg btn btn-pending w-20" onClick={() => {   
+                            <button className="btn-lg btn btn-pending w-20" style={{height: 36 + 'px'}}  onClick={() => {   
                                 if(inputValue.length === 0){
                                     setInputModal(true);
                                     return false;
@@ -532,25 +532,27 @@ const DashboardBusiness = () => {
                             }}>
                                 追加
                             </button>
-                            <button
-                                className="btn btn-lg btn-cancle-type1 w-32"
-                                onClick={() => {
-                                    setSelectTags([]), setSelectCode([]), setTagsFilter([]);
-                                }}>
-                                条件クリア
-                            </button>
+                            <button className="btn-lg btn btn-pending w-32" style={{height: 36 + 'px'}} 
+                            onClick={() => {
+                                if (currentPageIdx && currentPageIdx === 1) {
+                                    searchFind();
+                                }else{
+                                    setCurrentPageIdx(1);
+                                }
+                            }}>
+                            <img src={Search} alt="" />　検&nbsp;索</button>    
                         </div>
                     </div>
                     <div className="flex gap-3 flex-row-reverse">
-                    <div><button className="btn-lg btn btn-pending w-32" style={{height: 60 + 'px', float : 'right', marginRight : 20 + 'px'}} 
-                        onClick={() => {
-                            if (currentPageIdx && currentPageIdx === 1) {
-                                searchFind();
-                            }else{
-                                setCurrentPageIdx(1);
-                            }
-                        }}>
-                        <img src={Search} alt="" />　検&nbsp;索</button></div>
+                    <div style={{display:"flex",alignItems: "center"}}>
+                        <button
+                            className="btn btn-lg btn-cancle-type1 w-32" style={{height: 36 + 'px', float : 'right', marginRight : 20 + 'px'}}
+                            onClick={() => {
+                                setSelectTags([]), setSelectCode([]), setTagsFilter([]);
+                            }}>
+                            条件クリア
+                        </button>
+                    </div>
                     {selectTags?.length > 0 && (
                         <div className="skill-list-wrap business2">
                             <div className="skill-list-cont">
@@ -665,7 +667,7 @@ const DashboardBusiness = () => {
                     <div className="flex space-between p_20" style={{marginTop : 10 + 'px'}}>
                         <div className="flex items-center">対象者：{searchCount}人</div>
                         <div className="dash-cont-cont3 flex items-center">
-                            <div className="color-a8">面談依頼有効期限</div>
+                            <div className="color-a8">面談要請承諾期間</div>
                             <div className="minus-plus-wrap flex items-center">
                                 <button className="minus-gray-btn" onClick={handleClickMinus}>
                                     <img src={MinusGrayBtn} alt="" />
@@ -677,6 +679,7 @@ const DashboardBusiness = () => {
                             </div>
                             <button
                                 className="btn btn-sm btn-business w-80"
+                                disabled={checkId.length == 0}
                                 onClick={() => {
                                     checkId.length > 0 && setRequestModal(true);
                                 }}>
@@ -841,7 +844,7 @@ const DashboardBusiness = () => {
                 }}>
                 <ModalBody className="p-10 text-center">
                     <div className="modal-tit">依頼失敗</div>
-                    <div className="modal-subtit">依頼期限は最大3日です。</div>
+                    <div className="modal-subtit">依頼期限は最大7日です。</div>
                     <div className="flex flex-end gap-3">
                         <a href="#" className="btn btn-pending" onClick={() => setModalState05(false)}>
                             確認

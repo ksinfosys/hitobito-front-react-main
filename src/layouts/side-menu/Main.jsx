@@ -117,7 +117,7 @@ function Main() {
       const {
         data: { resultCode, resultMessage, result },
       } = response;
-      resultCode === "200"
+      resultMessage === "OK"
         ? (() => {
           console.log(result.notificationList);
           setNotiList(result.notificationList);

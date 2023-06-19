@@ -1688,7 +1688,7 @@ tr.table-content:hover td {
 
 .modal .modal-body {
   padding: 20px;
-  max-height: 500px;
+  max-height: 450px;
   overflow-y: auto;
 }
 

@@ -15,6 +15,7 @@ import MessageTableSentM from './message-table-sent-mobile';
 import { isMobile } from "react-device-detect";
 import { getTimeFormatMsg } from "../../utils/utils";
 import { useDidMountEffect } from "../../utils/customHooks";
+import $ from "jquery";
 
 const MessageSent = () => {
     const [disable, setDisable] = React.useState(false);
@@ -341,6 +342,12 @@ const MessageSent = () => {
     useDidMountEffect(() => {
         msgIdxes.length === messageListMob.length ? setAllCheckboxMob(true) : setAllCheckboxMob(false)
     }, [msgIdxes])
+
+    useEffect(() => {
+        $(".tab-active").on("click", function(){
+            location.reload();
+        })
+    }, []);
 
     return (
         <>
@@ -877,8 +884,7 @@ const MessageSent = () => {
                             <span className="text-slate-400">{editorData?.replace(/<[^>]*>|&nbsp;/g, '').trim().length}</span><span className="word-limit text-slate-400">/3000</span>
                         </span>
                     </div>
-                </ModalBody>
-                <ModalFooter>
+
                     <div id="detail-modal-btn" className="flex gap-2 space-between pt-5">
                         <div className="flex items-center gap-2">
                             <button
@@ -913,9 +919,12 @@ const MessageSent = () => {
                             className="btn btn-sm btn-primary w-24"
                             onClick={msgSend}
                         >
-                            送信
+                            再信
                         </button>
                     </div>
+                </ModalBody>
+                <ModalFooter>
+                    
                 </ModalFooter>
             </Modal>
 
