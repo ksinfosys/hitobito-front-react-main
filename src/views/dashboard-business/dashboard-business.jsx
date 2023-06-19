@@ -2,6 +2,7 @@ import { Modal, ModalBody } from "@/base-components";
 import { useState, useEffect, useRef } from "react";
 import Search from "@/assets/images/search.svg";
 import blueX from "@/assets/images/gray-x-btn.svg";
+import { Link } from "react-router-dom";
 
 import Pagination from "../../components/pagination";
 import DashboardListBusiness from "../../components/dashboard-cont-list-business/dashboard-list";
@@ -822,10 +823,23 @@ const DashboardBusiness = () => {
                 show={requestFailModal}
                 onHidden={() => {
                     setRequestFailModal(false);
-                }}>
+                }}
+                size="lg" >
                 <ModalBody className="p-10 text-center">
-                    <div className="modal-tit">依頼失敗</div>
-                    <div className="modal-subtit">ポイント残高が不足しています。</div>
+                    <div className="modal-tit">依頼について</div>
+                    <div className="modal-subtit">依頼するにはポイントが必要になります。
+                                                <br />
+                                                プランを設定するともっと安く依頼が可能です。
+                                                <br />
+                                                詳しくは
+                                                <span style={{ fontWeight: 'bold', color: 'blue' , textDecoration: 'underline'}}>
+                                                <Link to="/user-guide-business">利用ガイド</Link>
+                                                </span>をご参考お願い致します。
+                                                <br />
+                                                <span style={{ fontSize: 'small' }}>
+                                                    ※求職者が依頼を承諾すると求職者の詳細情報（写真、連絡先、添付ファイル）が確認できます。
+                                                </span>
+                                                </div>
                     <div className="flex flex-end gap-3">
                         <a href="#" className="btn btn-pending" onClick={() => setRequestFailModal(false)}>
                             確認
