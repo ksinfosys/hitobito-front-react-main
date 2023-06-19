@@ -667,7 +667,7 @@ const DashboardBusiness = () => {
                     <div className="flex space-between p_20" style={{marginTop : 10 + 'px'}}>
                         <div className="flex items-center">対象者：{searchCount}人</div>
                         <div className="dash-cont-cont3 flex items-center">
-                            <div className="color-a8">面談要請承諾期間</div>
+                            <div className="color-a8">面談要請承諾期間（日）</div>
                             <div className="minus-plus-wrap flex items-center">
                                 <button className="minus-gray-btn" onClick={handleClickMinus}>
                                     <img src={MinusGrayBtn} alt="" />
