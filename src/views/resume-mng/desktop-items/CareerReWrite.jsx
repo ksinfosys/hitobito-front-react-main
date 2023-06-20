@@ -23,9 +23,6 @@ const CareerReWrite = ({
   role,
   period,
   process_re,
-  projectNameError,
-  projectRoleError,
-  projectPeriodError,
   crwProject,
 }) => {
   const [selectPop, setSelectPop] = useState(false);
@@ -104,13 +101,15 @@ const CareerReWrite = ({
         <div className="form-tit">プロジェクト名 <span>*</span></div>
         <input id={"projectNameSelect"} type="text" className={"form-control projectName_"+index} placeholder="プロジェクト名入力" maxLength={100}
           onChange={(e) => handleCareerChange(e, index)}   value={name || ""}  ref={crwProjectRef}/>
-
+        <div className={'projectName-error-text'+index} style={{display:"none",color:"red",fontSize:"12px"}}>
+              
+        </div>
       </div>
       <div className="form-flex-box flex space-between items-start">
         <div className="box-item flex flex-col">
           <div className="form-tit">役割 <span>*</span></div>
           <SelectBox id={'projectRoleSelect'} data={projectRoleList} 
-            className={projectRoleError? "error" : ""}
+            className={"projectRole_"+index}
             onChange={async (e) => {
             const arr = projectProcessDefault[e.target.value].split(',')
             const value = e.target.value
@@ -134,17 +133,23 @@ const CareerReWrite = ({
             handleCareerChangeAndProcess(e, index, tempArr, value)
             setRoleSelect(false)
           }} defaultValue={role || ""} />
+          <div className={'projectRole-error-text'+index} style={{display:"none",color:"red",fontSize:"12px"}}>
+              
+          </div>
         </div>
         <div className="box-item flex flex-col">
           <div className="form-tit">期間(月数) <span>*</span></div>
           {/* select > input 변경 */}
           <input id="projectPeriodSelect" type="number" min="0"
-            className={projectPeriodError ? "form-control error" : "form-control"} 
+            className={"form-control projectPeriod_"+index} 
             placeholder="カ月(数字で入力してください)"
 
             onChange={(e) => 
             {e.target.value = e.target.value.replaceAll(".", "").replaceAll("-", "");
             handleCareerChange(e, index)}} value={period} />
+            <div className={'projectPeriod-error-text'+index} style={{display:"none",color:"red",fontSize:"12px"}}>
+            
+            </div>
         </div>
       </div>
     </div>
