@@ -8,7 +8,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getCookie } from "../../utils/cookie";
-import { replaceSlashToHypen, todayReplaceSlashToHypen } from "../../utils/utils";
+import { namedColor, replaceSlashToHypen, todayReplaceSlashToHypen } from "../../utils/utils";
 import ServiceFetch from "../../../util/ServiceFetch";
 import Xicon from "@/assets/images/x_ic.svg"
 import FileDown from "@/assets/images/file-down.svg";
@@ -189,6 +189,13 @@ const DashboardList = (props) => {
             const infoValue = props.info.projectRoleNameArr[infoKey];
             return (
                 <span className="btn-lang" key={index}>{infoValue}</span>
+            );
+        }
+        if(name.includes('ageName')){
+            const currentYear = new Date().getFullYear();
+            const infoValue = String(currentYear - props.info.ageName)
+            return (
+                <span className="btn-lang" key={index}>{infoValue}歳</span>
             );
         }
         return props.info ? <span className="btn-lang" key={index}>{props.info[name]}</span> : null
