@@ -521,6 +521,7 @@ const ResumeChange = () => {
     }
 
     if (!body.majorNameSelect) {
+
       // setResumeLabel("専攻を入力してください");
       // setResumeAlert(true); 
       $(".majorNameSelect-error-text").css("display","block");

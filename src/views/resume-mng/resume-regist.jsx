@@ -556,6 +556,7 @@ const ResumeRegist = () => {
     }
 
     if (!body.majorName) {
+
       // setResumeLabel("専攻を入力してください。");
       // setResumeAlert(true); 
       $(".majorNameSelect-error-text").css("display","block");
