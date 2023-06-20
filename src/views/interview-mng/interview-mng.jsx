@@ -419,16 +419,39 @@ const InterviewMng = () => {
                                                     </td>
                                                     <td className="pdrl-ad">
                                                         {
-                                                            data.requestPointStatus === "(承諾)" && !data.pointAcceptFlag
-                                                            ?
-                                                            <div></div>
-                                                            :
-                                                            data.requestPointStatus === "(承諾)"
+                                                            data.requestPointStatus === "(承諾)" && data.pointAcceptFlag
                                                             ?
                                                             <div>
                                                                 <button
                                                                     className="btn btn-sm btn-business"
                                                                     onClick={() => data.pointAcceptFlag && handleSubmit(data.rqIdx, data.rqReceiveUserId)}>
+                                                                    面接実施確認
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-sm btn-business ml-2 btn-message-write"
+                                                                    onClick={() => {
+                                                                        setMessageSendId(data.rqReceiveUserId)
+                                                                        setDeclarationUser(data.nickname)
+                                                                        data.rqStatus === "20102" && setMessageReply(true)
+                                                                    }}>
+                                                                    メッセージ作成
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-sm btn-business ml-2"
+                                                                    onClick={() => {                                                                
+                                                                        data.rqStatus === "20102" && setreportRequestModal1(true)
+                                                                        reportGet()
+                                                                        setDeclarationUser(data.nickname)
+                                                                        setDeclaration({ ...declaration, reportTargetId: data.rqReceiveUserId })
+                                                                    }}>
+                                                                    通報
+                                                                </button>
+                                                            </div>
+                                                            :
+                                                            data.requestPointStatus === "(承諾)" && !data.pointAcceptFlag
+                                                            ?
+                                                            <div>
+                                                                <button className="btn btn-sm btn-gray-business" disabled={true}>
                                                                     面接実施確認
                                                                 </button>
                                                                 <button

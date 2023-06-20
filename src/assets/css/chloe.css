@@ -4075,3 +4075,9 @@ td.table-br-tab {
 .error {
   border-color: red;
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

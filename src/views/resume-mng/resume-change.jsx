@@ -168,12 +168,14 @@ const ResumeChange = () => {
         // setResumeLabel("入力形式:abc@test.com.に合わせてください。");
         // setResumeAlert(true); 
         $(".email-error-text").css("display","block");
+        $(".email-error-text").text("入力形式:abc@test.com.に合わせてください。");
         e.target.value = ''
         setBody({
           ...body,
           [key]: ''
         })
         setEmailError(true);
+        return false
       } else if (key === 'userEmailSelect' && emailCheck.test(value)) {
         $(".email-error-text").css("display","none");
       }
@@ -181,17 +183,17 @@ const ResumeChange = () => {
         // setResumeLabel("電話番号の形式を確認してください。");
         // setResumeAlert(true); 
         $(".phone-error-text").css("display","block");
+        $(".phone-error-text").text("電話番号の形式を確認してください。");
         e.target.value = ''
         setBody({
           ...body,
           [key]: ''
         })
         setPhoneError(true);
+        return false
       } else if (key === 'phoneNumberSelect' && phoneCheck.test(value)) {
         $(".phone-error-text").css("display","none");
-      }
-
-      return false
+      }  
     }
 
   }
@@ -497,56 +499,69 @@ const ResumeChange = () => {
     const formData = new FormData()
     const blob = new Blob([JSON.stringify(temp)], {type: 'application/json'});
     // await formData.append('request', JSON.stringify(temp))
+    let errorCount = 0;
 
     await formData.append('request', blob)
     rsFilePhoto.length > 0 ? rsFilePhoto.map(item => formData.append('rsFilePhoto', item)) : formData.append('rsFilePhoto', new File([], 'photo.png'))
     rsFileDocument.length > 0 ? rsFileDocument.map(item => formData.append('rsFileDocument', item)) : formData.append('rsFileDocument', new File([], 'document.pdf'))
 
     if (!body.schoolNameSelect) {
-      setResumeLabel("最終学校名を入力してください。");
-      setResumeAlert(true); 
+      // setResumeLabel("最終学校名を入力してください。");
+      // setResumeAlert(true); 
+      $(".schoolNameSelect-error-text").css("display","block");
+      $(".schoolNameSelect-error-text").text("最終学校名を入力してください。");
       if (schoolNameRef.current) {
         schoolNameRef.current.focus();
         setSchoolNameError(true);
       }
-      return false;
+      errorCount++;
     } else {
+      $(".schoolNameSelect-error-text").css("display","none");
       setSchoolNameError(false);
     }
 
     if (!body.majorNameSelect) {
-      setResumeLabel("専攻を入力してください");
-      setResumeAlert(true); 
+      // setResumeLabel("専攻を入力してください");
+      // setResumeAlert(true); 
+      $(".majorNameSelect-error-text").css("display","block");
+      $(".majorNameSelect-error-text").text("専攻を入力してください");
       if (majorNameRef.current) {
         majorNameRef.current.focus();
         setMajorNameError(true);
       }
-      return false;
+      errorCount++;
     } else {
+      $(".majorNameSelect-error-text").css("display","none");
       setMajorNameError(false);
     }
 
     if (!body.userEmailSelect) {
-      setResumeLabel("イーメールを入力してください。");
-      setResumeAlert(true); 
+      // setResumeLabel("イーメールを入力してください。");
+      // setResumeAlert(true); 
+      $(".none-email-error-text").css("display","block");
+      $(".none-email-error-text").text("イーメールを入力してください。");
       if (userEmailRef.current) {
         userEmailRef.current.focus();
         setEmailError(true);
       }
-      return false;
+      errorCount++;
     } else {
+      $(".none-email-error-text").css("display","none");
       setEmailError(false);
     }
 
     if (!body.phoneNumberSelect) {
-      setResumeLabel("電話番号を入力してください。");
-      setResumeAlert(true); 
+      // setResumeLabel("電話番号を入力してください。");
+      // setResumeAlert(true); 
+      $(".none-phone-error-text").css("display","block");
+      $(".none-phone-error-text").text("電話番号を入力してください。");
       if (phoneNumberRef.current) {
         phoneNumberRef.current.focus();
         setPhoneError(true);
       }
-      return false;
+      errorCount++;
     } else {
+      $(".none-phone-error-text").css("display","none");
       setPhoneError(false);
     }
     
@@ -572,64 +587,93 @@ const ResumeChange = () => {
     //  console.log("career:::",career)
     //  console.log("body:::",body)
     //  console.log("max:::",max)
-    
+
     for(let i = 0; i < max; i++){
       if (typeof body.projectNameSelect[i] !== "string" || body.projectNameSelect[i] == "") {
-        const errorMessage = i === 0 ? "プロジェクト名を入力してください。" : (i + 1) + "番目のプロジェクト名を入力してください。";
-        setResumeLabel(errorMessage);
-        setResumeAlert(true); 
+        // const errorMessage = i === 0 ? "プロジェクト名を入力してください。" : (i + 1) + "番目のプロジェクト名を入力してください。";
+        // setResumeLabel(errorMessage);
+        // setResumeAlert(true); 
+        $(".projectName-error-text"+i).css("display","block");
+        $(".projectName-error-text"+i).text("プロジェクト名を入力してください。");
+        $(".projectName_"+i).addClass("error");
         if (projectRef.current) {
           projectRef.current.focus();
         }
-        return false;
+        errorCount++;
+      } else {
+        $(".projectName-error-text"+i).css("display","none");
+        $(".projectName_"+i).removeClass("error");
       } 
     }
 
     for(let i = 0; i < max; i++){
       if (typeof body.projectPeriodSelect[i] !== "number" || isNaN(body.projectPeriodSelect[i]) ) {
-        const errorMessage = i === 0 ? "プロジェクト期間を入力してください。" : (i + 1) + "番目のプロジェクト期間を入力してください。";
-        setResumeLabel(errorMessage);
-        setResumeAlert(true); 
+        // const errorMessage = i === 0 ? "プロジェクト期間を入力してください。" : (i + 1) + "番目のプロジェクト期間を入力してください。";
+        // setResumeLabel(errorMessage);
+        // setResumeAlert(true); 
+        $(".projectPeriod-error-text"+i).css("display","block");
+        $(".projectPeriod-error-text"+i).text("プロジェクト期間を入力してください。");
+        $(".projectPeriod_"+i).addClass("error");
         if (projectRef.current) {
           projectRef.current.focus();
         }
-        return false;
+        errorCount++;
+      } else {
+        $(".projectPeriod-error-text"+i).css("display","none");
+        $(".projectPeriod_"+i).removeClass("error");
       } 
     }
 
     for(let i = 0; i < max; i++){
       if (typeof body.projectRoleSelect[i] !== "string" || body.projectRoleSelect[i] == "") {
-        const errorMessage = i === 0 ? "プロジェクト役割を入力してください。" : (i + 1) + "番目のプロジェクト役割を入力してください。";
-        setResumeLabel(errorMessage);
-        setResumeAlert(true); 
+        // const errorMessage = i === 0 ? "プロジェクト役割を入力してください。" : (i + 1) + "番目のプロジェクト役割を入力してください。";
+        // setResumeLabel(errorMessage);
+        // setResumeAlert(true); 
+        $(".projectRole-error-text"+i).css("display","block");
+        $(".projectRole-error-text"+i).text("プロジェクト役割を入力してください。");
+        $(".projectRole_"+i).addClass("error");
         if (projectRef.current) {
           projectRef.current.focus();
         }
-        return false;
+        errorCount++;
+      } else {
+        $(".projectRole-error-text"+i).css("display","none");
+        $(".projectRole_"+i).removeClass("error");
       } 
     }
     
     if(skillItem.arr.length == 0){
-      setResumeLabel("スキルを選択してください。");
-      setResumeAlert(true); 
+      // setResumeLabel("スキルを選択してください。");
+      // setResumeAlert(true); 
+      $(".skillItem-error-text").css("display","block");
+      $(".skillItem-error-text").text("スキルを選択してください。");
       skillCodeRef.current.focus();
       setSkillCodeError(true);
       setSkillCarrerError(true);
-      return false;
+      errorCount++;
     } else {
+      $(".skillItem-error-text").css("display","none");
       setSkillCodeError(false);
       setSkillCarrerError(false);
     }
     
     //전화번호 이메일 모두 비 공개시 뜨는 팝업
     if(body.userEmailFlag === '0' && body.phoneNumberFlag === '0'){
-      setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
-      setResumeAlert(true); 
+      // setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
+      // setResumeAlert(true); 
+      $(".emailPhoneFlag-error-text").css("display","block");
+      $(".emailPhoneFlag-error-text").text("メールアドレスと連絡先電話番号の中で一つは公開してください。");
       userEmailClosedRef.current.focus();
       phoneNumberClosedRef.current.focus();
-      return false;
+      errorCount++;
+    } else {
+      $(".emailPhoneFlag-error-text").css("display","none");
     }
 
+    if(errorCount !== 0){
+      return false;
+    }
+    
     //서버로 보내기
     axios.put('/api/resume/modify',
       formData,
@@ -1252,7 +1296,6 @@ const ResumeChange = () => {
                   <div className='form-tit'>国籍 <span>*</span></div>
                   <SelectBox id={'countrySelect'} data={data && data.countryList} onChange={handleSelectChangeEvent}
                              defaultValue={body.countrySelect}/>
-
                 </div>
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>学歴 <span>*</span></div>
@@ -1279,6 +1322,9 @@ const ResumeChange = () => {
                     }
                   }}
                   value={body.schoolNameSelect}/>
+                  <div className='schoolNameSelect-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
+                  
+                  </div>
                 </div>
               </div>
               <div className='form-flex-box flex space-between items-start'>
@@ -1304,6 +1350,9 @@ const ResumeChange = () => {
                     }
                   }}
                   value={body.majorNameSelect}/>
+                  <div className='majorNameSelect-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
+                  
+                  </div>
                 </div>
               </div>
               <div className='form-flex-box flex space-between items-start'>
@@ -1350,7 +1399,10 @@ const ResumeChange = () => {
                     </div>
                   </div>
                   <div className='email-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
-                  入力形式:abc@test.com.に合わせてください。
+                  
+                  </div>
+                  <div className='none-email-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
+                  
                   </div>
                 </div>
                 <div className='box-item flex flex-col'>
@@ -1359,13 +1411,13 @@ const ResumeChange = () => {
                     <input id='phoneNumberSelect regular-form-1' type='text' className={phoneError ? 'form-control error' : 'form-control'}
                            value={body.phoneNumberSelect}
                            placeholder='-なしで数字だけ入力してください。'
-                           maxLength={20}
+                           maxLength={13}
                            onChange={(e) => {
+                            handlePhone(e);
                             handleInputTextChangeEvent(e);
                             if (phoneError) {
                               setPhoneError(false);
                             }
-                            handlePhone(e);
                           }}
                            onBlur={handleCheckText}
                            ref={phoneNumberRef}
@@ -1384,9 +1436,15 @@ const ResumeChange = () => {
                     </div>
                   </div>
                   <div className='phone-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
-                  電話番号の形式を確認してください。
+                  
+                  </div>
+                  <div className='none-phone-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
+                  
                   </div>
                 </div>
+              </div>
+              <div className='emailPhoneFlag-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
+              
               </div>
 
               <div className='divider'/>
@@ -1536,6 +1594,9 @@ const ResumeChange = () => {
                                 }}/>
                     </div>
                   </div>
+                </div>
+                <div className='skillItem-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
+                  
                 </div>
                 <div>
             検索ボックスに、言語名、フレームワーク名、DB名などの頭文字を入力し、
@@ -1735,6 +1796,11 @@ const ResumeChange = () => {
               </ModalBody>
               <ModalFooter>
                 <div className="sel-btn-wrap flex-row-reverse gap-2">
+                  <button className='btn btn-outline-secondary'
+                    onClick={() => {setHopeCareerModal(false)}}
+                  >
+                    閉じる
+                  </button>
                   <button className="btn btn-primary" onClick={() => {
                     let getHopeCareer2 = document.getElementById('hopeCareer dropdown-button-dark-example1').value
                     console.log(getHopeCareer2);
@@ -1743,7 +1809,8 @@ const ResumeChange = () => {
                       return false;
                     }
                     setHopeCareerModal(false)
-                  }}>
+                  }}
+                  disabled={!body.hopeCareer}>
                    確定 
                   </button>
                 </div>
@@ -1789,6 +1856,11 @@ const ResumeChange = () => {
               </ModalBody>
               <ModalFooter>
                 <div className="sel-btn-wrap flex-row-reverse gap-2">
+                  <button className='btn btn-outline-secondary'
+                    onClick={() => {setJobTypeModal(false)}}
+                  >
+                    閉じる
+                  </button>
                   <button className="btn btn-primary" onClick={() => {
                     let getJobType1 = document.getElementById('jobTypeOneDeps dropdown-button-dark-example1').value
                     let getJobType2 = document.getElementById('jobType dropdown-button-dark-example1').value
@@ -1804,7 +1876,8 @@ const ResumeChange = () => {
                       return true;
                     }
                     setJobTypeModal(false)
-                  }}>
+                  }}
+                  disabled={!body.jobType}>
                     確定
                   </button>
                 </div>
@@ -1850,6 +1923,11 @@ const ResumeChange = () => {
               </ModalBody>
               <ModalFooter>
                 <div className="sel-btn-wrap flex-row-reverse gap-2">
+                  <button className='btn btn-outline-secondary'
+                    onClick={() => {setBusinessTypeModal(false)}}
+                  >
+                    閉じる
+                  </button>
                   <button className="btn btn-primary" onClick={() => {
                     let businessType1 = document.getElementById('businessTypeOneDeps dropdown-button-dark-example1').value
                     let businessType2 = document.getElementById('businessType dropdown-button-dark-example1').value
@@ -1864,7 +1942,8 @@ const ResumeChange = () => {
                       return true;
                     }
                     setBusinessTypeModal(false)
-                  }}>
+                  }}
+                  disabled={!body.businessType}>
                     確定
                   </button>
                 </div>
@@ -2121,6 +2200,7 @@ const ResumeChange = () => {
           </button>
         </div>
       </ModalBody>
+      <ModalFooter></ModalFooter>
     </Modal>
 
         {/* 이력서 알림 모달창*/}
