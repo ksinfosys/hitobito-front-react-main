@@ -950,7 +950,7 @@ const InterviewMng = () => {
                             </div>
                             <div className="col-box flex gap-5">
                                 <div className="modal-subtit1">
-                                    専攻
+                                    学部/学科
                                 </div>
                                 <div className="modal-subtit2">
                                     {userDetailInfo && userDetailInfo.resume.majorName}
@@ -1182,7 +1182,7 @@ const InterviewMng = () => {
                             </div>
                             <div className="col-box flex gap-5">
                                 <div className="modal-subtit1">
-                                    専攻
+                                    学部/学科
                                 </div>
                                 <div className="modal-subtit2">
                                     {userDetailInfo && userDetailInfo.resume.majorName}

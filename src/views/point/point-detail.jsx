@@ -97,47 +97,43 @@ function PointDetail() {
           data: { result },
         } = response;
         console.log(response);
-        (() => {
-          switch (response.data.resultCode) {
-            case "200":
-              navigate("/giftcard-regist", {
-                state: {
-                  agc: {
-                    amount: response.data.result.agc.amount,
-                    gcClaimCode: response.data.result.agc.gcClaimCode,
-                  },
-                  historyBalance: response.data.result.agc.historyBalance,
+        switch (response.data.resultCode) {
+          case "200":
+            navigate("/giftcard-regist", {
+              state: {
+                agc: {
+                  amount: response.data.result.agc.amount,
+                  gcClaimCode: response.data.result.agc.gcClaimCode,
                 },
-              });
-              // FIXME: 포인트 있는경우 확인 필요.
-              setUserInfoV(prev => ({
-                ...prev,
-                historyBalance: historyBalance - response.data.result.agc.historyBalance,
-              }))
-              break;
-            case "602":
-              // 602에러시
-              // setGcCardFail(true);
-              break;
-            case "606":
-              setMinusNumberFail(true);
-              break;
-            case "605":
-              setErrorLimitFail(true);
-              break;
-            case "601":
-              setCreateIdFail(true);
-              break;
-            case "603":
-              setRegistCardFail(true);
-              break;
-          }
-        })();
-        // response.data.resultCode === "200"
-        //   ? (() => {
-        //       console.log(response);
-        //     })()
-        //   : console.log("fetching error:::", response);
+                historyBalance: response.data.result.agc.historyBalance,
+              },
+            });
+            // FIXME: 포인트 있는 경우 확인 필요.
+            setUserInfoV((prev) => ({
+              ...prev,
+              historyBalance: historyBalance - response.data.result.agc.historyBalance,
+            }));
+            break;
+          case "602":
+            // 602에러시
+            setGcCardFail(true);
+            break;
+          case "606":
+            setMinusNumberFail(true);
+            break;
+          case "605":
+            setErrorLimitFail(true);
+            break;
+          case "601":
+            setCreateIdFail(true);
+            break;
+          case "603":
+            setRegistCardFail(true);
+            break;
+          default:
+            // 다른 모든 경우에 대한 처리
+            console.log("resultCode:", response.data.resultCode);
+        }
       });
   };
 
@@ -417,7 +413,9 @@ function PointDetail() {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit mb-5">
-            ギフトカード生成に失敗しました。再度ためしてください。
+            ギフトカード生成に失敗しました。
+            <br />
+            再度試してください。
           </div>
           {/* <div className="modal-subtit">管理者に問い合わせしてください。</div> */}
           <div className="flex flex-end gap-3">

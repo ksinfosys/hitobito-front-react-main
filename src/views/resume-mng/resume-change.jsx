@@ -515,7 +515,7 @@ const ResumeChange = () => {
     }
 
     if (!body.majorNameSelect) {
-      setResumeLabel("専攻を入力してください");
+      setResumeLabel("学部/学科を入力してください");
       setResumeAlert(true); 
       if (majorNameRef.current) {
         majorNameRef.current.focus();
@@ -1292,10 +1292,10 @@ const ResumeChange = () => {
                   </div>
                 </div>
                 <div className='box-item flex flex-col'>
-                  <div className='form-tit'>専攻 <span>*</span></div>
+                  <div className='form-tit'>学部/学科 <span>*</span></div>
                   <input id='majorNameSelect regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} 
                   maxLength={200}
-                  placeholder='専攻入力' 
+                  placeholder='学部/学科入力' 
                   ref={majorNameRef}
                   onChange={(e) => {
                     handleInputTextChangeEvent(e);
