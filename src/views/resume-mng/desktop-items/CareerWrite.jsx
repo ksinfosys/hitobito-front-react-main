@@ -86,16 +86,20 @@ const CareerWrite = ({
       }
     </div>
 
-    <div className="flex-box2-cont form-flex-box">
+    <div className="flex-box2-cont form-flex-box project-count">
       <div className="box-item2 flex flex-col">
         <div className="form-tit">プロジェクト名 <span>*</span></div>
         <input id="projectName" type="text" className={"form-control projectName_"+index} placeholder="プロジェクト名入力" maxLength={100}
           onChange={(e) => handleCareerChange(e, index)} value={name || ""} ref={crwProjectRef}/>
+        <div className={'projectName-error-text'+index} style={{display:"none",color:"red",fontSize:"12px"}}>
+              
+        </div>
       </div>
       <div className="form-flex-box flex space-between items-start">
         <div className="box-item flex flex-col">
           <div className="form-tit">役割 <span>*</span></div>
           <SelectBox id={'projectRole'}
+            className={"projectRole_"+index}
             onChange={async (e) => {
               setRole(e.target.value)
               const value = e.target.value
@@ -121,15 +125,21 @@ const CareerWrite = ({
             }}
             defaultValue={processRole || ""}
             data={projectRoleList}  />
+            <div className={'projectRole-error-text'+index} style={{display:"none",color:"red",fontSize:"12px"}}>
+              
+            </div>
         </div>
         <div className="box-item flex flex-col">
           <div className="form-tit">期間(月数) <span>*</span></div>
           {/* select > input 변경 */}
-          <input id="projectPeriod" type="number" min={0} className="form-control" placeholder="カ月(数字で入力してください)"
+          <input id="projectPeriod" type="number" min={0} className={"form-control projectPeriod_"+index} placeholder="カ月(数字で入力してください)"
 
             onChange={(e) => 
             {e.target.value = e.target.value.replaceAll(".", "").replaceAll("-", "");
             handleCareerChange(e, index)}} value={period} />
+          <div className={'projectPeriod-error-text'+index} style={{display:"none",color:"red",fontSize:"12px"}}>
+            
+          </div>
         </div>
       </div>
       
