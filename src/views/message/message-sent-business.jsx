@@ -462,7 +462,7 @@ function MessageSentBusiness() {
                             }}
                             className="btn btn-sm btn-pending w-24"
                         >
-                            返信
+                            再信
                         </button>
                     </div>
                 </ModalBody>

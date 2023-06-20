@@ -713,7 +713,7 @@ const MessageSent = () => {
                             }}
                             className="btn btn-sm btn-primary w-24"
                         >
-                            返信
+                            再信
                         </button>
                     </div>
                 </ModalBody>

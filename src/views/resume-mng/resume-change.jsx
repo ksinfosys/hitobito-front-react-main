@@ -165,30 +165,44 @@ const ResumeChange = () => {
 
     if (e.target.value !== '') {
       if (key === 'userEmailSelect' && !emailCheck.test(value)) {
-        setResumeLabel("入力形式:abc@test.com.に合わせてください。");
-        setResumeAlert(true); 
+        // setResumeLabel("入力形式:abc@test.com.に合わせてください。");
+        // setResumeAlert(true); 
+        $(".email-error-text").css("display","block");
         e.target.value = ''
         setBody({
           ...body,
           [key]: ''
         })
         setEmailError(true);
+      } else if (key === 'userEmailSelect' && emailCheck.test(value)) {
+        $(".email-error-text").css("display","none");
       }
       if (key === 'phoneNumberSelect' && !phoneCheck.test(value)) {
-        setResumeLabel("電話番号の形式を確認してください。");
-        setResumeAlert(true); 
+        // setResumeLabel("電話番号の形式を確認してください。");
+        // setResumeAlert(true); 
+        $(".phone-error-text").css("display","block");
         e.target.value = ''
         setBody({
           ...body,
           [key]: ''
         })
         setPhoneError(true);
+      } else if (key === 'phoneNumberSelect' && phoneCheck.test(value)) {
+        $(".phone-error-text").css("display","none");
       }
 
       return false
     }
 
   }
+  // 연락처 하이픈 추가
+  const handlePhone = (e) => {
+    let newValue = e.target.value;
+    newValue = newValue.replace(/-/g, ''); // 입력값에서 하이픈 제거
+
+    e.target.value = newValue.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{4})(\d{4})$/, `$1-$2-$3`);
+
+  };
   //이미지 업로드
   const handleChangeImage = async (e, index) => {
     const file = e.target.files
@@ -1335,6 +1349,9 @@ const ResumeChange = () => {
                       />
                     </div>
                   </div>
+                  <div className='email-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
+                  入力形式:abc@test.com.に合わせてください。
+                  </div>
                 </div>
                 <div className='box-item flex flex-col'>
                   <div className='form-tit'>連絡先 <span>*</span></div>
@@ -1348,6 +1365,7 @@ const ResumeChange = () => {
                             if (phoneError) {
                               setPhoneError(false);
                             }
+                            handlePhone(e);
                           }}
                            onBlur={handleCheckText}
                            ref={phoneNumberRef}
@@ -1364,6 +1382,9 @@ const ResumeChange = () => {
                         checked={body.phoneNumberFlag === '1'}
                       />
                     </div>
+                  </div>
+                  <div className='phone-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
+                  電話番号の形式を確認してください。
                   </div>
                 </div>
               </div>

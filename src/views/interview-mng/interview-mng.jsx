@@ -420,7 +420,7 @@ const InterviewMng = () => {
                                                     <td className="pdrl-ad">
                                                         <div>
                                                             {
-                                                                data.pointAcceptFlag
+                                                                data.pointAcceptFlag 
                                                                 ?
                                                                 <button
                                                                     className="btn btn-sm btn-business"
@@ -428,17 +428,10 @@ const InterviewMng = () => {
                                                                     面接実施確認
                                                                 </button>
                                                                 :
-                                                                (!data.pointAcceptFlag && data.rqStatus !== "20102") || (data.requestPointStatus === "(承諾)") 
-                                                                ?
                                                                 ""
-                                                                :
-                                                                <button
-                                                                    className="btn btn-sm btn-gray-business" disabled={true}>
-                                                                    面接実施確認
-                                                                </button>
                                                             }
                                                             {
-                                                                data.rqStatus === "20102" && data.requestPointStatus !== "(承諾)"
+                                                                data.pointAcceptFlag
                                                                 ?
                                                                 <button
                                                                     className="btn btn-sm btn-business ml-2 btn-message-write"
@@ -450,17 +443,10 @@ const InterviewMng = () => {
                                                                     メッセージ作成
                                                                 </button>
                                                                 :
-                                                                (!data.pointAcceptFlag && data.rqStatus !== "20102") || (data.requestPointStatus === "(承諾)") 
-                                                                ?
                                                                 ""
-                                                                :
-                                                                <button
-                                                                    className="btn btn-sm btn-gray-business ml-2 btn-message-write" disabled={true}>
-                                                                    メッセージ作成
-                                                                </button>
                                                             }                                                        
                                                             {
-                                                                data.rqStatus === "20102" && data.requestPointStatus !== "(承諾)"
+                                                                data.pointAcceptFlag
                                                                 ?
                                                                 <button
                                                                     className="btn btn-sm btn-business ml-2"
@@ -473,14 +459,7 @@ const InterviewMng = () => {
                                                                     通報
                                                                 </button>
                                                                 :
-                                                                (!data.pointAcceptFlag && data.rqStatus !== "20102") || (data.requestPointStatus === "(承諾)")
-                                                                ?
                                                                 ""
-                                                                :
-                                                                <button
-                                                                    className="btn btn-sm btn-gray-business ml-2" disabled={true}>
-                                                                    通報
-                                                                </button>
                                                             }
                                                         </div>
 
@@ -748,9 +727,6 @@ const InterviewMng = () => {
                             <span className="text-slate-400">{editorData?.replace(/<[^>]*>|&nbsp;/g, '').trim().length}</span><span className="word-limit text-slate-400">/3000</span>
                         </span>
                     </div>
-
-                </ModalBody>
-                <ModalFooter>
                     <div id="detail-modal-btn" className="flex gap-2 space-between pt-5">
                         <div className="flex items-center gap-2">
                             <button
@@ -780,6 +756,9 @@ const InterviewMng = () => {
                         </div>
                         <button type="button" className="btn btn-sm btn-business w-24" onClick={msgSubmit}>送信</button>
                     </div>
+                </ModalBody>
+                <ModalFooter>
+                    
                 </ModalFooter>
             </Modal>
 
