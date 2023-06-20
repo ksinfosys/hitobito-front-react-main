@@ -418,21 +418,19 @@ const InterviewMng = () => {
                                                         {console.log(data)}
                                                     </td>
                                                     <td className="pdrl-ad">
-                                                        <div>
-                                                            {
-                                                                data.pointAcceptFlag 
-                                                                ?
+                                                        {
+                                                            data.requestPointStatus === "(承諾)" && !data.pointAcceptFlag
+                                                            ?
+                                                            <div></div>
+                                                            :
+                                                            data.requestPointStatus === "(承諾)"
+                                                            ?
+                                                            <div>
                                                                 <button
                                                                     className="btn btn-sm btn-business"
                                                                     onClick={() => data.pointAcceptFlag && handleSubmit(data.rqIdx, data.rqReceiveUserId)}>
                                                                     面接実施確認
                                                                 </button>
-                                                                :
-                                                                ""
-                                                            }
-                                                            {
-                                                                data.pointAcceptFlag
-                                                                ?
                                                                 <button
                                                                     className="btn btn-sm btn-business ml-2 btn-message-write"
                                                                     onClick={() => {
@@ -442,12 +440,6 @@ const InterviewMng = () => {
                                                                     }}>
                                                                     メッセージ作成
                                                                 </button>
-                                                                :
-                                                                ""
-                                                            }                                                        
-                                                            {
-                                                                data.pointAcceptFlag
-                                                                ?
                                                                 <button
                                                                     className="btn btn-sm btn-business ml-2"
                                                                     onClick={() => {                                                                
@@ -458,14 +450,11 @@ const InterviewMng = () => {
                                                                     }}>
                                                                     通報
                                                                 </button>
-                                                                :
-                                                                ""
-                                                            }
-                                                        </div>
-
-
-
-
+                                                            </div>
+                                                            :
+                                                            <div></div>
+                                                        }
+                                                        
                                                         {/* <button
                                                             className={
                                                                 data.pointAcceptFlag
