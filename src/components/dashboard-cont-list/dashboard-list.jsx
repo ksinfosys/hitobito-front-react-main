@@ -8,7 +8,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getCookie } from "../../utils/cookie";
-import { namedColor, replaceSlashToHypen, todayReplaceSlashToHypen } from "../../utils/utils";
+import {　replaceSlashToHypen, todayReplaceSlashToHypen } from "../../utils/utils";
 import ServiceFetch from "../../../util/ServiceFetch";
 import Xicon from "@/assets/images/x_ic.svg"
 import FileDown from "@/assets/images/file-down.svg";
