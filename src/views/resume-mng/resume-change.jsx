@@ -1460,7 +1460,7 @@ const ResumeChange = () => {
                       setHopeCareerModal(true),
                       setModalFlag({ ...modalFlag, main: true, goal: true})
                     }}
-                  >{depthMenu.hopeCareer.depth_first} {' > ' + depthMenu.hopeCareer.depth_seconds}</button>
+                  >{depthMenu.hopeCareer.depth_first} {'\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0' + depthMenu.hopeCareer.depth_seconds}</button>
                 </div>
               </div>
 
@@ -1482,7 +1482,7 @@ const ResumeChange = () => {
                     }}
                   >
                     {depthMenu.jobType.depth_first} {
-                    depthMenu.jobType.depth_first === 'なし'? '' : ' > ' + depthMenu.jobType.depth_seconds}
+                    depthMenu.jobType.depth_first === 'なし'? '' : '\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0' + depthMenu.jobType.depth_seconds}
                   </button>
                 </div>
                 <div className="box-item flex flex-col">
@@ -1498,7 +1498,7 @@ const ResumeChange = () => {
 
                   >
                     {depthMenu.businessType.depth_first} {
-                    depthMenu.businessType.depth_first === 'なし'? '' : ' > '+ depthMenu.businessType.depth_seconds}
+                    depthMenu.businessType.depth_first === 'なし'? '' : '\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0'+ depthMenu.businessType.depth_seconds}
                   </button>
                 </div>
               </div>

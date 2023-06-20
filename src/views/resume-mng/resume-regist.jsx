@@ -1407,10 +1407,8 @@ const ResumeRegist = () => {
                     setHopeCareerError(false);
                   }
                 }}
-              >{depthMenu.hopeCareer.depth_first} {' > ' + depthMenu.hopeCareer.depth_seconds}</button>
-              <div className='hopeCareer-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
-              
-              </div>
+              >{depthMenu.hopeCareer.depth_first} {'\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0' + depthMenu.hopeCareer.depth_seconds}</button>
+              <div className='hopeCareer-error-text' style={{display:"none",color:"red",fontSize:"12px"}}></div>
             </div>
           </div>
 
@@ -1445,7 +1443,7 @@ const ResumeRegist = () => {
                 }}
               >
                 {depthMenu.jobType.depth_first} {
-                depthMenu.jobType.depth_first === 'なし'? '' : ' > ' + depthMenu.jobType.depth_seconds}
+                depthMenu.jobType.depth_first === 'なし'? '' : '\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0' + depthMenu.jobType.depth_seconds}
               </button>
               <div className='jobType-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
               
@@ -1466,7 +1464,7 @@ const ResumeRegist = () => {
                 }}
               >
                 {depthMenu.businessType.depth_first} {
-                depthMenu.businessType.depth_first === 'なし'? '' : ' > '+ depthMenu.businessType.depth_seconds}
+                depthMenu.businessType.depth_first === 'なし'? '' : '\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0'+ depthMenu.businessType.depth_seconds}
               </button>
               <div className='businessType-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
               
