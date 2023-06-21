@@ -186,6 +186,23 @@ const ResumeRegist = () => {
     })
 
   }
+    //자기소개
+    const handleInputTextIntroduceChangeEvent = (e) => {
+      const key = e.target.id.replaceAll(' regular-form-1', '')
+      const value = e.target.value
+  
+      if (value.length >= 2001) {
+        // console.log(value.length)
+        value.toString().substr(0, 2000);
+        // console.log(value.length)
+      }
+  
+      setBody({
+        ...body,
+        [key]: value
+      })
+  
+    }
 
   //이미지 업로드
   const handleChangeImage = async (e, index) => {
@@ -1672,11 +1689,11 @@ const ResumeRegist = () => {
           {/* 簡単な自己紹介 */}
           <div className='flex-box2-tit flex space-between mt-16'>
             <div className='box2-tit'>自己紹介</div>
-            <div className='text-slate-400'>{body.additionalComment === "" ? "0" : body.additionalComment.length} / 200字</div>
+            <div className='text-slate-400'>{body.additionalComment === "" ? "0" : body.additionalComment.length} / 2000字</div>
           </div>
           <div className='flex-box2-cont textarea_style'>
             <textarea name='' id='additionalComment' cols='' rows='10' className='w-full resize-none'
-              maxLength={200} placeholder='自由に自己紹介をしてください。' onChange={handleInputTextChangeEvent} />
+              maxLength={2000} placeholder='自由に自己紹介してください。（2,000字以内）' onChange={handleInputTextIntroduceChangeEvent} />
           </div>
 
           <div className='attach-wrap flex'>

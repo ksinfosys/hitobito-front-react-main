@@ -302,6 +302,21 @@ const InterviewMng = () => {
         transition: "transform 0.1s ease-in-out",
     };
 
+    function calculatePeriod(months) {
+        const years = Math.floor(months / 12); 
+        const remainingMonths = months % 12; 
+    
+        let result = "";
+        if (years > 0) {
+            result += years + "年 ";
+        }
+        if (remainingMonths > 0) {
+            result += remainingMonths + "ヶ月";
+        }
+    
+        return result;
+    }
+
     return (
         <>
             <div className="dashboard orange">
@@ -546,7 +561,9 @@ const InterviewMng = () => {
             </div>
 
             {/* 신고 모달 */}
-            <Modal backdrop="static"
+            <Modal 
+                className="interview-mng-report"
+                backdrop="static"
                 show={reportRequestModal1}
                 onHidden={() => {
                     setreportRequestModal1(false);
@@ -707,6 +724,7 @@ const InterviewMng = () => {
 
             {/* 답장 */}
             <Modal
+                className="interview-mng-msg"
                 size="modal-lg"
                 backdrop="static"
                 show={messageReplyModal}
@@ -1055,7 +1073,7 @@ const InterviewMng = () => {
                                                         期間
                                                     </div>
                                                     <div className="modal-subtit2">
-                                                        {project.projectPeriod} カ月
+                                                        {calculatePeriod(project.projectPeriod)} 
                                                     </div>
                                                 </div>
                                             </div>
@@ -1311,7 +1329,7 @@ const InterviewMng = () => {
                                                         期間
                                                     </div>
                                                     <div className="modal-subtit2">
-                                                        {project.projectPeriod} カ月
+                                                        {calculatePeriod(project.projectPeriod)} 
                                                     </div>
                                                 </div>
                                             </div>
