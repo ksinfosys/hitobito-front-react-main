@@ -4080,6 +4080,11 @@ td.table-br-tab {
   border-color: red;
 }
 
+.period-error {
+  border: 1px solid red;
+  border-radius: 0.375rem;
+}
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
