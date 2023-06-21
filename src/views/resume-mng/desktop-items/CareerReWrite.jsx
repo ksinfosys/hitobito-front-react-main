@@ -158,7 +158,7 @@ const CareerReWrite = ({
         <div className="box-item flex flex-col">
           <div className="form-tit">期間(月数) <span>*</span></div>
           {/* select > input 변경 */}
-          <div className={"minus-plus-wrap flex items-center input-group"}>
+          <div className={"minus-plus-wrap flex items-center input-group periodInputGroup_"+index}>
             <button className="minus-gray-btn" onClick={() => {handleClickMinus(index),handlePeriodChange(index)}}>
                 <img src={MinusGrayBtn} alt="" />
             </button>

@@ -524,14 +524,14 @@ const ResumeRegist = () => {
         // setResumeAlert(true); 
         $(".projectPeriod-error-text"+i).css("display","block");
         $(".projectPeriod-error-text"+i).text("プロジェクト期間を入力してください。");
-        $(".projectPeriod_"+i).addClass("error");
+        $(".periodInputGroup_"+i).addClass("period-error");
         if (projectRef.current) {
           projectRef.current.focus();
         }
         errorCount++;
       } else {
         $(".projectPeriod-error-text"+i).css("display","none");
-        $(".projectPeriod_"+i).removeClass("error");
+        $(".periodInputGroup_"+i).removeClass("period-error");
       }
     }
 
