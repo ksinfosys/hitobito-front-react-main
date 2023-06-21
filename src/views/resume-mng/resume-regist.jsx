@@ -195,24 +195,26 @@ const ResumeRegist = () => {
     })
 
   }
-    //자기소개
-    const handleInputTextIntroduceChangeEvent = (e) => {
-      const key = e.target.id.replaceAll(' regular-form-1', '')
-      const value = e.target.value
 
-      if (value.length >= 2001) {
-        // console.log(value.length)
-        value.toString().substr(0, 2000);
-        // console.log(value.length)
-      }
+  //자기소개
+  const handleInputTextIntroduceChangeEvent = (e) => {
+    const key = e.target.id.replaceAll(' regular-form-1', '')
+    const value = e.target.value
 
-      setBody({
-        ...body,
-        [key]: value
-      })
-
+    if (value.length >= 2001) {
+      // console.log(value.length)
+      value.toString().substr(0, 2000);
+      // console.log(value.length)
     }
-    
+
+    setBody({
+      ...body,
+      [key]: value
+    })
+
+  }
+
+
   //이미지 업로드
   const handleChangeImage = async (e, index) => {
     const file = e.target.files

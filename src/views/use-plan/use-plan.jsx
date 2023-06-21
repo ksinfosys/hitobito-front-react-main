@@ -760,6 +760,7 @@ const UsePlan = () => {
 
       {/* 결제하기 */}
       <Modal
+        className="use-plan-buy"
         size="modal-lg"
         backdrop="static"
         show={PlanPaymentModal}
