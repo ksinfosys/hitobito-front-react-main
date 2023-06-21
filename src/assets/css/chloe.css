@@ -1713,6 +1713,10 @@ tr.table-content:hover td {
   max-height: 550px !important;
 }
 
+.point-request-modal .modal-body {
+  max-height: 680px !important;
+}
+
 .modal .modal-tit {
   font-weight: 700;
   font-size: 16px;
