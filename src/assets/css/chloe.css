@@ -1688,12 +1688,28 @@ tr.table-content:hover td {
 
 .modal .modal-body {
   padding: 20px;
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
 .em-info-modal .modal-body {
+  max-height: 450px !important;
+}
+
+.interview-mng-report .modal-body {
+  max-height: 400px !important;
+}
+
+.interview-mng-msg .modal-body {
+  max-height: 400px !important;
+}
+
+.point-detail-business-buy .modal-body {
   max-height: 500px !important;
+}
+
+.use-plan-buy .modal-body {
+  max-height: 550px !important;
 }
 
 .modal .modal-tit {

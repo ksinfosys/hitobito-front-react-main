@@ -343,6 +343,21 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
         };
       }, []);
 
+      function calculatePeriod(months) {
+        const years = Math.floor(months / 12); 
+        const remainingMonths = months % 12; 
+    
+        let result = "";
+        if (years > 0) {
+            result += years + "年 ";
+        }
+        if (remainingMonths > 0) {
+            result += remainingMonths + "ヶ月";
+        }
+    
+        return result;
+    }
+
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
@@ -687,7 +702,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                                         期間
                                                     </div>
                                                     <div className="modal-subtit2">
-                                                        {project.projectPeriod} カ月
+                                                        {calculatePeriod(project.projectPeriod)} 
                                                     </div>
                                                 </div>
                                             </div>

@@ -153,6 +153,23 @@ const ResumeChange = () => {
     })
 
   }
+  //자기소개
+  const handleInputTextIntroduceChangeEvent = (e) => {
+    const key = e.target.id.replaceAll(' regular-form-1', '')
+    const value = e.target.value
+
+    if (value.length >= 2001) {
+      // console.log(value.length)
+      value.toString().substr(0, 2000);
+      // console.log(value.length)
+    }
+
+    setBody({
+      ...body,
+      [key]: value
+    })
+
+  }
 
   const handleCheckText = (e) => {
     const key = e.target.id.replaceAll(' regular-form-1', '')
@@ -1682,13 +1699,13 @@ const ResumeChange = () => {
                 <div className='box2-tit'>自己紹介</div>
                 <div
                   className='text-slate-400'>{body.additionalCommentSelect === "" ? "0" : body.additionalCommentSelect.length} /
-                  200字
+                  2000字
                 </div>
               </div>
               <div className='flex-box2-cont textarea_style'>
                 <textarea name='' id='additionalCommentSelect' cols='' rows='10' className='w-full resize-none'
-                          maxLength={200}
-                          placeholder='自由に自己紹介してください。（200字以内）' onChange={handleInputTextChangeEvent}
+                          maxLength={2000}
+                          placeholder='自由に自己紹介してください。（2,000字以内）' onChange={handleInputTextIntroduceChangeEvent}
                           value={body.additionalCommentSelect}
                 />
               </div>
