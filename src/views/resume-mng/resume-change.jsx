@@ -323,6 +323,14 @@ const ResumeChange = () => {
     tempArr[index] = id === 'projectPeriodSelect' ? parseInt(e.target.value) : e.target.value
     setBody({...body, [id]: tempArr})
   }
+
+  const handlePeriodChange = (index) => {
+    const id = 'projectPeriodSelect';
+    const tempArr = [...body[id]]
+    tempArr[index] = id === 'projectPeriodSelect' ? parseInt($(`.projectPeriod_${index}`).val()) : $(`.projectPeriod_${index}`).val()
+    setBody({...body, [id]: tempArr})
+  }
+
   const handleProjectProcessAdd = (e, index) => {
     const temp = [...career]
     if (e.target.checked) {
@@ -505,80 +513,20 @@ const ResumeChange = () => {
     rsFilePhoto.length > 0 ? rsFilePhoto.map(item => formData.append('rsFilePhoto', item)) : formData.append('rsFilePhoto', new File([], 'photo.png'))
     rsFileDocument.length > 0 ? rsFileDocument.map(item => formData.append('rsFileDocument', item)) : formData.append('rsFileDocument', new File([], 'document.pdf'))
 
-    if (!body.schoolNameSelect) {
-      // setResumeLabel("最終学校名を入力してください。");
+    if(skillItem.arr.length == 0){
+      // setResumeLabel("スキルを選択してください。");
       // setResumeAlert(true); 
-      $(".schoolNameSelect-error-text").css("display","block");
-      $(".schoolNameSelect-error-text").text("最終学校名を入力してください。");
-      if (schoolNameRef.current) {
-        schoolNameRef.current.focus();
-        setSchoolNameError(true);
-      }
+      $(".skillItem-error-text").css("display","block");
+      $(".skillItem-error-text").text("スキルを選択してください。");
+      skillCodeRef.current.focus();
+      setSkillCodeError(true);
+      setSkillCarrerError(true);
       errorCount++;
     } else {
-      $(".schoolNameSelect-error-text").css("display","none");
-      setSchoolNameError(false);
+      $(".skillItem-error-text").css("display","none");
+      setSkillCodeError(false);
+      setSkillCarrerError(false);
     }
-
-    if (!body.majorNameSelect) {
-
-      // setResumeLabel("専攻を入力してください");
-      // setResumeAlert(true); 
-      $(".majorNameSelect-error-text").css("display","block");
-      $(".majorNameSelect-error-text").text("学部/学科を入力してください");
-
-      if (majorNameRef.current) {
-        majorNameRef.current.focus();
-        setMajorNameError(true);
-      }
-      errorCount++;
-    } else {
-      $(".majorNameSelect-error-text").css("display","none");
-      setMajorNameError(false);
-    }
-
-    if (!body.userEmailSelect) {
-      // setResumeLabel("イーメールを入力してください。");
-      // setResumeAlert(true); 
-      $(".none-email-error-text").css("display","block");
-      $(".none-email-error-text").text("イーメールを入力してください。");
-      if (userEmailRef.current) {
-        userEmailRef.current.focus();
-        setEmailError(true);
-      }
-      errorCount++;
-    } else {
-      $(".none-email-error-text").css("display","none");
-      setEmailError(false);
-    }
-
-    if (!body.phoneNumberSelect) {
-      // setResumeLabel("電話番号を入力してください。");
-      // setResumeAlert(true); 
-      $(".none-phone-error-text").css("display","block");
-      $(".none-phone-error-text").text("電話番号を入力してください。");
-      if (phoneNumberRef.current) {
-        phoneNumberRef.current.focus();
-        setPhoneError(true);
-      }
-      errorCount++;
-    } else {
-      $(".none-phone-error-text").css("display","none");
-      setPhoneError(false);
-    }
-    
-    // console.log("body.projectProcessSelect:::",body.projectProcessSelect)
-
-    // console.log("RCcareer:::",career)
-    // if (career.map.length == 1 && career[0].process.length == 0) {
-    //   setResumeLabel("主要経歴を入力してください。");
-    //   setResumeAlert(true); 
-    //   if (projectRef.current) {
-    //     projectRef.current.focus();
-    //   }
-    //   return false;
-    // } else {
-    // }
 
     const max = Math.max(
       body.projectNameSelect.length || 0,
@@ -589,24 +537,6 @@ const ResumeChange = () => {
     //  console.log("career:::",career)
     //  console.log("body:::",body)
     //  console.log("max:::",max)
-
-    for(let i = 0; i < max; i++){
-      if (typeof body.projectNameSelect[i] !== "string" || body.projectNameSelect[i] == "") {
-        // const errorMessage = i === 0 ? "プロジェクト名を入力してください。" : (i + 1) + "番目のプロジェクト名を入力してください。";
-        // setResumeLabel(errorMessage);
-        // setResumeAlert(true); 
-        $(".projectName-error-text"+i).css("display","block");
-        $(".projectName-error-text"+i).text("プロジェクト名を入力してください。");
-        $(".projectName_"+i).addClass("error");
-        if (projectRef.current) {
-          projectRef.current.focus();
-        }
-        errorCount++;
-      } else {
-        $(".projectName-error-text"+i).css("display","none");
-        $(".projectName_"+i).removeClass("error");
-      } 
-    }
 
     for(let i = 0; i < max; i++){
       if (typeof body.projectPeriodSelect[i] !== "number" || isNaN(body.projectPeriodSelect[i]) ) {
@@ -643,22 +573,55 @@ const ResumeChange = () => {
         $(".projectRole_"+i).removeClass("error");
       } 
     }
-    
-    if(skillItem.arr.length == 0){
-      // setResumeLabel("スキルを選択してください。");
+
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectNameSelect[i] !== "string" || body.projectNameSelect[i] == "") {
+        // const errorMessage = i === 0 ? "プロジェクト名を入力してください。" : (i + 1) + "番目のプロジェクト名を入力してください。";
+        // setResumeLabel(errorMessage);
+        // setResumeAlert(true); 
+        $(".projectName-error-text"+i).css("display","block");
+        $(".projectName-error-text"+i).text("プロジェクト名を入力してください。");
+        $(".projectName_"+i).addClass("error");
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        errorCount++;
+      } else {
+        $(".projectName-error-text"+i).css("display","none");
+        $(".projectName_"+i).removeClass("error");
+      } 
+    }
+
+    if (!body.phoneNumberSelect) {
+      // setResumeLabel("電話番号を入力してください。");
       // setResumeAlert(true); 
-      $(".skillItem-error-text").css("display","block");
-      $(".skillItem-error-text").text("スキルを選択してください。");
-      skillCodeRef.current.focus();
-      setSkillCodeError(true);
-      setSkillCarrerError(true);
+      $(".none-phone-error-text").css("display","block");
+      $(".none-phone-error-text").text("電話番号を入力してください。");
+      if (phoneNumberRef.current) {
+        phoneNumberRef.current.focus();
+        setPhoneError(true);
+      }
       errorCount++;
     } else {
-      $(".skillItem-error-text").css("display","none");
-      setSkillCodeError(false);
-      setSkillCarrerError(false);
+      $(".none-phone-error-text").css("display","none");
+      setPhoneError(false);
     }
-    
+
+    if (!body.userEmailSelect) {
+      // setResumeLabel("イーメールを入力してください。");
+      // setResumeAlert(true); 
+      $(".none-email-error-text").css("display","block");
+      $(".none-email-error-text").text("イーメールを入力してください。");
+      if (userEmailRef.current) {
+        userEmailRef.current.focus();
+        setEmailError(true);
+      }
+      errorCount++;
+    } else {
+      $(".none-email-error-text").css("display","none");
+      setEmailError(false);
+    }
+
     //전화번호 이메일 모두 비 공개시 뜨는 팝업
     if(body.userEmailFlag === '0' && body.phoneNumberFlag === '0'){
       // setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
@@ -671,6 +634,39 @@ const ResumeChange = () => {
     } else {
       $(".emailPhoneFlag-error-text").css("display","none");
     }
+
+    
+    if (!body.majorNameSelect) {
+      // setResumeLabel("学部/学科を入力してください");
+      // setResumeAlert(true); 
+      $(".majorNameSelect-error-text").css("display","block");
+      $(".majorNameSelect-error-text").text("学部/学科を入力してください");
+      if (majorNameRef.current) {
+        majorNameRef.current.focus();
+        setMajorNameError(true);
+      }
+      errorCount++;
+    } else {
+      $(".majorNameSelect-error-text").css("display","none");
+      setMajorNameError(false);
+    }
+
+    if (!body.schoolNameSelect) {
+      // setResumeLabel("最終学校名を入力してください。");
+      // setResumeAlert(true); 
+      $(".schoolNameSelect-error-text").css("display","block");
+      $(".schoolNameSelect-error-text").text("最終学校名を入力してください。");
+      if (schoolNameRef.current) {
+        schoolNameRef.current.focus();
+        setSchoolNameError(true);
+      }
+      errorCount++;
+    } else {
+      $(".schoolNameSelect-error-text").css("display","none");
+      setSchoolNameError(false);
+    }
+    
+    
 
     if(errorCount !== 0){
       return false;
@@ -1530,6 +1526,7 @@ const ResumeChange = () => {
                     process_re={body.projectProcessSelect[key] ? body.projectProcessSelect[key] : []}
                     crwProject = {crwProject}
                     processTemp1 = {body.projectProcessSelect[key] ? body.projectProcessSelect[key] : []}
+                    handlePeriodChange={handlePeriodChange}
                   />
                 })
               }

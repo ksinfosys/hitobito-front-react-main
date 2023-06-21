@@ -5,6 +5,9 @@ import MinusBtn from "@/assets/images/minus-icon.svg";
 import blueX from "@/assets/images/blue-x.svg";
 import SelectBox from "./SelectBox";
 import Index from "../../../components/resume-mobile/MobileCareer";
+import MinusGrayBtn from "@/assets/images/minus-gray-btn.svg";
+import PlusGrayBtn from "@/assets/images/plus-gray-btn.svg";
+import $ from "jquery";
 
 
 const CareerReWrite = ({
@@ -24,6 +27,7 @@ const CareerReWrite = ({
   period,
   process_re,
   crwProject,
+  handlePeriodChange
 }) => {
   const [selectPop, setSelectPop] = useState(false);
   const [process, setProcess] = useState([])
@@ -79,7 +83,21 @@ const CareerReWrite = ({
     }
   }, [crwProject]);
   
-
+  // Plus Button Click Event
+  const handleClickPlus = (index) => {
+    let inputNumber = $(`.projectPeriod_${index}`);
+    if(isNaN(inputNumber.val()) || inputNumber.val() === ""){
+      Number(inputNumber.val(0));
+    }
+    inputNumber.val(Number(inputNumber.val()) + 1);
+  };
+  // Minus Button Click Event
+  const handleClickMinus = (index) => {
+    let inputNumber = $(`.projectPeriod_${index}`);
+    if(inputNumber.val() > 0) {
+      inputNumber.val(inputNumber.val() - 1);
+    }
+  };
 
   return <>
     <div className="flex-box2-tit flex space-between">
@@ -140,13 +158,19 @@ const CareerReWrite = ({
         <div className="box-item flex flex-col">
           <div className="form-tit">期間(月数) <span>*</span></div>
           {/* select > input 변경 */}
-          <input id="projectPeriodSelect" type="number" min="0"
-            className={"form-control projectPeriod_"+index} 
-            placeholder="カ月(数字で入力してください)"
+          <div className={"minus-plus-wrap flex items-center input-group"}>
+            <button className="minus-gray-btn" onClick={() => {handleClickMinus(index),handlePeriodChange(index)}}>
+                <img src={MinusGrayBtn} alt="" />
+            </button>
+            <input id="projectPeriod" type="number" min={0} className={"form-control projectPeriod_"+index} placeholder="カ月(数字で入力してください)"
 
             onChange={(e) => 
             {e.target.value = e.target.value.replaceAll(".", "").replaceAll("-", "");
-            handleCareerChange(e, index)}} value={period} />
+            handlePeriodChange(index)}} value={period} />
+            <button className="plus-gray-btn" onClick={() => {handleClickPlus(index),handlePeriodChange(index)}}>
+                <img src={PlusGrayBtn} alt="" />
+            </button>
+          </div>
             <div className={'projectPeriod-error-text'+index} style={{display:"none",color:"red",fontSize:"12px"}}>
             
             </div>
