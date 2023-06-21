@@ -583,7 +583,7 @@ const ResumeRegist = () => {
       $(".businessType-error-text").css("display","none");
       setBusinessTypeError(false);
     }
-    
+
     if (!body.jobType) {
       // setResumeLabel("現在の職種を選択してください。");
       // setResumeAlert(true); 
@@ -596,7 +596,7 @@ const ResumeRegist = () => {
       $(".jobType-error-text").css("display","none");
       setJobTypeError(false);
     }
-    
+
     if (!body.career) {
       // setResumeLabel("経歴を選択してください。");
       // setResumeAlert(true); 
@@ -609,7 +609,33 @@ const ResumeRegist = () => {
       $(".career-error-text").css("display","none");
       setCareerError(false);
     }
+
+    if(!body.education){
+      // setResumeLabel("学歴を選択してください。");
+      // setResumeAlert(true); 
+      $(".education-error-text").css("display","block");
+      $(".education-error-text").text("学歴を選択してください。");
+      selectEducationRef.current.focus();
+      setEducationError(true);
+      errorCount++;
+    } else {
+      $(".education-error-text").css("display","none");
+      setEducationError(false);
+    }
     
+    if (!body.userGender) {
+      // setResumeLabel("性別を選択してください。");
+      // setResumeAlert(true); 
+      $(".userGender-error-text").css("display","block");
+      $(".userGender-error-text").text("性別を選択してください。");
+      selectGenderRef.current.focus();
+      setGenderError(true);
+      errorCount++;
+    } else {
+      $(".userGender-error-text").css("display","none");
+      setGenderError(false);
+    }
+
     if (!body.hopeCareer) {
       // setResumeLabel("将来の目標を選択してください。");
       // setResumeAlert(true); 
@@ -622,7 +648,20 @@ const ResumeRegist = () => {
       $(".hopeCareer-error-text").css("display","none");
       setHopeCareerError(false);
     }
-    
+
+    //전화번호 이메일 모두 비 공개시 뜨는 팝업
+    if(body.userEmailFlag === '0' && body.phoneNumberFlag === '0'){
+      // setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
+      // setResumeAlert(true); 
+      $(".emailPhoneFlag-error-text").css("display","block");
+      $(".emailPhoneFlag-error-text").text("メールアドレスと連絡先電話番号の中で一つは公開してください。");
+      userEmailClosedRef.current.focus();
+      phoneNumberClosedRef.current.focus();
+      errorCount++;
+    } else {
+      $(".emailPhoneFlag-error-text").css("display","none");
+    }
+
     if (!body.phoneNumber) {
       // setResumeLabel("電話番号を入力してください。");
       // setResumeAlert(true); 
@@ -637,7 +676,7 @@ const ResumeRegist = () => {
       $(".none-phone-error-text").css("display","none");
       setPhoneError(false);
     }
-    
+
     if (!body.userEmail) {
       // setResumeLabel("イーメールを入力してください。");
       // setResumeAlert(true); 
@@ -666,9 +705,6 @@ const ResumeRegist = () => {
       setHopeIncomeError(false);
     }
 
-
-    
-
     if (!body.residentialArea) {
       // setResumeLabel("居住地を選択してください。");
       // setResumeAlert(true); 
@@ -683,10 +719,12 @@ const ResumeRegist = () => {
     }
 
     if (!body.majorName) {
-      // setResumeLabel("専攻を入力してください。");
+
+      // setResumeLabel("学部/学科を入力してください。");
       // setResumeAlert(true); 
       $(".majorNameSelect-error-text").css("display","block");
-      $(".majorNameSelect-error-text").text("専攻を入力してください。");
+      $(".majorNameSelect-error-text").text("学部/学科を入力してください。");
+
       if (majorNameRef.current) {
         majorNameRef.current.focus();
         setMajorNameError(true);
@@ -738,17 +776,6 @@ const ResumeRegist = () => {
       setGenderError(false);
     }
     
-    // console.log("body.projectProcessSelect:::",body.projectProcessSelect)
-    // if (career.map.length == 1 && career[0].process.length == 0) {
-    //   setResumeLabel("主要経歴を入力してください。");
-    //   setResumeAlert(true); 
-    //   if (projectRef.current) {
-    //     projectRef.current.focus();
-    //   }
-    //   return false;
-    // } else {
-    // }
-
     if(!body.education){
       // setResumeLabel("学歴を選択してください。");
       // setResumeAlert(true); 
@@ -774,20 +801,7 @@ const ResumeRegist = () => {
       $(".country-error-text").css("display","none");
       setCountryError(false);
     }
-
-    //전화번호 이메일 모두 비 공개시 뜨는 팝업
-    if(body.userEmailFlag === '0' && body.phoneNumberFlag === '0'){
-      // setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
-      // setResumeAlert(true); 
-      $(".emailPhoneFlag-error-text").css("display","block");
-      $(".emailPhoneFlag-error-text").text("メールアドレスと連絡先電話番号の中で一つは公開してください。");
-      userEmailClosedRef.current.focus();
-      phoneNumberClosedRef.current.focus();
-      errorCount++;
-    } else {
-      $(".emailPhoneFlag-error-text").css("display","none");
-    }
-    
+ 
     rsFileDocument.length > 0 ? rsFileDocument.map(item => formData.append('rsFileDocument', item)) : formData.append('rsFileDocument', new File([], 'photo.jpg'))
     rsFilePhoto.length > 0 ? rsFilePhoto.map(item => formData.append('rsFilePhoto', item)) : formData.append('rsFilePhoto', new File([], 'document.pdf'))
 
@@ -1278,8 +1292,8 @@ const ResumeRegist = () => {
               </div>
             </div>
             <div className='box-item flex flex-col'>
-              <div className='form-tit'>専攻 <span>*</span></div>
-              <input id='majorName regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} placeholder='専攻入力' ref={majorNameRef}
+              <div className='form-tit'>学部/学科 <span>*</span></div>
+              <input id='majorName regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} placeholder='学部/学科入力' ref={majorNameRef}
               maxLength={200}
               onChange={(e) => {
                 handleInputTextChangeEvent(e);
@@ -1416,10 +1430,8 @@ const ResumeRegist = () => {
                     setHopeCareerError(false);
                   }
                 }}
-              >{depthMenu.hopeCareer.depth_first} {' > ' + depthMenu.hopeCareer.depth_seconds}</button>
-              <div className='hopeCareer-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
-              
-              </div>
+              >{depthMenu.hopeCareer.depth_first} {'\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0' + depthMenu.hopeCareer.depth_seconds}</button>
+              <div className='hopeCareer-error-text' style={{display:"none",color:"red",fontSize:"12px"}}></div>
             </div>
           </div>
 
@@ -1454,7 +1466,7 @@ const ResumeRegist = () => {
                 }}
               >
                 {depthMenu.jobType.depth_first} {
-                depthMenu.jobType.depth_first === 'なし'? '' : ' > ' + depthMenu.jobType.depth_seconds}
+                depthMenu.jobType.depth_first === 'なし'? '' : '\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0' + depthMenu.jobType.depth_seconds}
               </button>
               <div className='jobType-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
               
@@ -1475,7 +1487,7 @@ const ResumeRegist = () => {
                 }}
               >
                 {depthMenu.businessType.depth_first} {
-                depthMenu.businessType.depth_first === 'なし'? '' : ' > '+ depthMenu.businessType.depth_seconds}
+                depthMenu.businessType.depth_first === 'なし'? '' : '\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0'+ depthMenu.businessType.depth_seconds}
               </button>
               <div className='businessType-error-text' style={{display:"none",color:"red",fontSize:"12px"}}>
               

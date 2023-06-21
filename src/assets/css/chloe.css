@@ -1692,6 +1692,10 @@ tr.table-content:hover td {
   overflow-y: auto;
 }
 
+.em-info-modal .modal-body {
+  max-height: 500px !important;
+}
+
 .modal .modal-tit {
   font-weight: 700;
   font-size: 16px;

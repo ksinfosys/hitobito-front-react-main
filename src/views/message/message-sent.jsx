@@ -713,7 +713,7 @@ const MessageSent = () => {
                             }}
                             className="btn btn-sm btn-primary w-24"
                         >
-                            再信
+                            再送
                         </button>
                     </div>
                 </ModalBody>
@@ -919,7 +919,7 @@ const MessageSent = () => {
                             className="btn btn-sm btn-primary w-24"
                             onClick={msgSend}
                         >
-                            再信
+                            再送
                         </button>
                     </div>
                 </ModalBody>

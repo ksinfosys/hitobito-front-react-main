@@ -462,7 +462,7 @@ function MessageSentBusiness() {
                             }}
                             className="btn btn-sm btn-pending w-24"
                         >
-                            再信
+                            再送
                         </button>
                     </div>
                 </ModalBody>
@@ -676,7 +676,7 @@ function MessageSentBusiness() {
                             className="btn btn-sm btn-pending w-24"
                             onClick={msgSend}
                         >
-                            再信
+                            再送
                         </button>
                     </div>
                 </ModalBody>

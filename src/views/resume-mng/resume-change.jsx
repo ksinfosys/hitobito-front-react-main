@@ -591,19 +591,6 @@ const ResumeChange = () => {
         $(".projectName_"+i).removeClass("error");
       } 
     }
-    
-    // console.log("body.projectProcessSelect:::",body.projectProcessSelect)
-
-    // console.log("RCcareer:::",career)
-    // if (career.map.length == 1 && career[0].process.length == 0) {
-    //   setResumeLabel("主要経歴を入力してください。");
-    //   setResumeAlert(true); 
-    //   if (projectRef.current) {
-    //     projectRef.current.focus();
-    //   }
-    //   return false;
-    // } else {
-    // }
 
     if (!body.phoneNumberSelect) {
       // setResumeLabel("電話番号を入力してください。");
@@ -634,12 +621,26 @@ const ResumeChange = () => {
       $(".none-email-error-text").css("display","none");
       setEmailError(false);
     }
+
+    //전화번호 이메일 모두 비 공개시 뜨는 팝업
+    if(body.userEmailFlag === '0' && body.phoneNumberFlag === '0'){
+      // setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
+      // setResumeAlert(true); 
+      $(".emailPhoneFlag-error-text").css("display","block");
+      $(".emailPhoneFlag-error-text").text("メールアドレスと連絡先電話番号の中で一つは公開してください。");
+      userEmailClosedRef.current.focus();
+      phoneNumberClosedRef.current.focus();
+      errorCount++;
+    } else {
+      $(".emailPhoneFlag-error-text").css("display","none");
+    }
+
     
     if (!body.majorNameSelect) {
-      // setResumeLabel("専攻を入力してください");
+      // setResumeLabel("学部/学科を入力してください");
       // setResumeAlert(true); 
       $(".majorNameSelect-error-text").css("display","block");
-      $(".majorNameSelect-error-text").text("専攻を入力してください");
+      $(".majorNameSelect-error-text").text("学部/学科を入力してください");
       if (majorNameRef.current) {
         majorNameRef.current.focus();
         setMajorNameError(true);
@@ -665,18 +666,7 @@ const ResumeChange = () => {
       setSchoolNameError(false);
     }
     
-    //전화번호 이메일 모두 비 공개시 뜨는 팝업
-    if(body.userEmailFlag === '0' && body.phoneNumberFlag === '0'){
-      // setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
-      // setResumeAlert(true); 
-      $(".emailPhoneFlag-error-text").css("display","block");
-      $(".emailPhoneFlag-error-text").text("メールアドレスと連絡先電話番号の中で一つは公開してください。");
-      userEmailClosedRef.current.focus();
-      phoneNumberClosedRef.current.focus();
-      errorCount++;
-    } else {
-      $(".emailPhoneFlag-error-text").css("display","none");
-    }
+    
 
     if(errorCount !== 0){
       return false;
@@ -1346,10 +1336,10 @@ const ResumeChange = () => {
                   </div>
                 </div>
                 <div className='box-item flex flex-col'>
-                  <div className='form-tit'>専攻 <span>*</span></div>
+                  <div className='form-tit'>学部/学科 <span>*</span></div>
                   <input id='majorNameSelect regular-form-1' type='text' className={majorNameError ? 'form-control error' : 'form-control'} 
                   maxLength={200}
-                  placeholder='専攻入力' 
+                  placeholder='学部/学科入力' 
                   ref={majorNameRef}
                   onChange={(e) => {
                     handleInputTextChangeEvent(e);
@@ -1468,7 +1458,7 @@ const ResumeChange = () => {
                       setHopeCareerModal(true),
                       setModalFlag({ ...modalFlag, main: true, goal: true})
                     }}
-                  >{depthMenu.hopeCareer.depth_first} {' > ' + depthMenu.hopeCareer.depth_seconds}</button>
+                  >{depthMenu.hopeCareer.depth_first} {'\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0' + depthMenu.hopeCareer.depth_seconds}</button>
                 </div>
               </div>
 
@@ -1490,7 +1480,7 @@ const ResumeChange = () => {
                     }}
                   >
                     {depthMenu.jobType.depth_first} {
-                    depthMenu.jobType.depth_first === 'なし'? '' : ' > ' + depthMenu.jobType.depth_seconds}
+                    depthMenu.jobType.depth_first === 'なし'? '' : '\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0' + depthMenu.jobType.depth_seconds}
                   </button>
                 </div>
                 <div className="box-item flex flex-col">
@@ -1506,7 +1496,7 @@ const ResumeChange = () => {
 
                   >
                     {depthMenu.businessType.depth_first} {
-                    depthMenu.businessType.depth_first === 'なし'? '' : ' > '+ depthMenu.businessType.depth_seconds}
+                    depthMenu.businessType.depth_first === 'なし'? '' : '\u00a0\u00a0\u00a0➡\u00a0\u00a0\u00a0\u00a0'+ depthMenu.businessType.depth_seconds}
                   </button>
                 </div>
               </div>
