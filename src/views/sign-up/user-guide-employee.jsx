@@ -11,7 +11,13 @@ import { Link, useNavigate } from "react-router-dom";
 function UserGuideEmployee() {
 
 //navigate
-const navigate = useNavigate();
+const navigate = () => {
+  if(document.referrer){
+    window.close();
+  } else {
+    location.href = "/";
+  }
+}
   
   return (
     <>
@@ -95,7 +101,7 @@ const navigate = useNavigate();
             </div>
           </div>
           <div className="flex items-center justify-center">
-            <button type="button" className="btn btn-primary w-80 mt-10 h-48" onClick={()=>navigate('/')}>
+            <button type="button" className="btn btn-primary w-80 mt-10 h-48" onClick={()=>navigate()}>
               確認</button>
           </div>
         </div>

@@ -3,7 +3,14 @@ import { color } from "../../utils/utils";
 import { Link, useNavigate } from "react-router-dom";
 
 const PointDetailRule = () => {
-  const navigate = useNavigate();
+  const navigate = () => {
+    if(document.referrer){
+      window.close();
+    } else {
+      location.href = "/";
+    }
+  }
+  
   return(<> 
     <div className="find-wrap flex flex-col items-center">
       <div className="box-type-default">
@@ -165,7 +172,7 @@ const PointDetailRule = () => {
           </div>
         </div>
         <div className="flex items-center justify-center">
-            <button type="button" className="btn btn-pending w-80 m-5 h-48" onClick={()=>navigate('/')}>
+            <button type="button" className="btn btn-pending w-80 m-5 h-48" onClick={()=>navigate()}>
               確認</button>
           </div>
       </div>

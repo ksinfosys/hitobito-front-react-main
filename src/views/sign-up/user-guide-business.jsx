@@ -10,7 +10,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 function UserGuideBusiness() {
   // navigate
-  const navigate = useNavigate();
+  const navigate = () => {
+    if(document.referrer){
+      window.close();
+    } else {
+      location.href = "/";
+    }
+  }
 
   return (
     <>
@@ -314,7 +320,7 @@ function UserGuideBusiness() {
               </div>
             </div>*/}
           <div className="flex items-center justify-center">
-            <button type="button" className="btn btn-pending w-80 m-5 h-48" onClick={()=>navigate('/')}>
+            <button type="button" className="btn btn-pending w-80 m-5 h-48" onClick={()=>navigate()}>
               確認</button>
           </div> 
 
