@@ -636,6 +636,7 @@ function MessageBox() {
 
             {/* 메시지 내용 */}
             <Modal
+                className="message-in-modal"
                 size="modal-lg"
                 backdrop="static"
                 show={msgModal}
@@ -740,6 +741,7 @@ function MessageBox() {
 
             {/* 답장 */}
             <Modal
+                className ="mail-js-modal"
                 size="modal-lg"
                 backdrop="static"
                 show={messageReplyModal}

@@ -669,6 +669,7 @@ const MessageSent = () => {
 
             {/* 메시지 내용 */}
             <Modal
+                className="message-in-modal"
                 size="modal-lg"
                 backdrop="static"
                 show={msgModal}
@@ -839,6 +840,7 @@ const MessageSent = () => {
 
             {/* 답장 */}
             <Modal
+                className ="mail-js-modal"
                 size="modal-lg"
                 backdrop="static"
                 show={messageReplyModal}
