@@ -50,6 +50,15 @@ const ResumeRegist = () => {
       depth_seconds: '業種 2',
     },
   })
+  const [tempHopeCareerFirstDepth, setTempHopeCareerFirstDepth] = useState('目標 1')
+  const [tempJobTypeFirstDepth, setTempJobTypeFirstDepth] = useState('職種 1')
+  const [tempBusinessTypeFirstDepth, setTempBusinessTypeFirstDepth] = useState('業種 1')
+  const [tempHopeCareerSecondDepth, setTempHopeCareerSecondDepth] = useState('目標 2')
+  const [tempJobTypeSecondDepth, setTempJobTypeSecondDepth] = useState('職種 2')
+  const [tempBusinessTypeSecondDepth, setTempBusinessTypeSecondDepth] = useState('業種 2')
+  const [tempHopeCareerSecondCode, setTempHopeCareerSecondCode] = useState('')
+  const [tempJobTypeSecondCode, setTempJobTypeSecondCode] = useState('')
+  const [tempBusinessTypeSecondCode, setTempBusinessTypeSecondCode] = useState('')
 
   const [data, setListData] = useState()
   const [skillList, setSkillList] = useState({
@@ -186,7 +195,24 @@ const ResumeRegist = () => {
     })
 
   }
+    //자기소개
+    const handleInputTextIntroduceChangeEvent = (e) => {
+      const key = e.target.id.replaceAll(' regular-form-1', '')
+      const value = e.target.value
 
+      if (value.length >= 2001) {
+        // console.log(value.length)
+        value.toString().substr(0, 2000);
+        // console.log(value.length)
+      }
+
+      setBody({
+        ...body,
+        [key]: value
+      })
+
+    }
+    
   //이미지 업로드
   const handleChangeImage = async (e, index) => {
     const file = e.target.files
@@ -1672,11 +1698,11 @@ const ResumeRegist = () => {
           {/* 簡単な自己紹介 */}
           <div className='flex-box2-tit flex space-between mt-16'>
             <div className='box2-tit'>自己紹介</div>
-            <div className='text-slate-400'>{body.additionalComment === "" ? "0" : body.additionalComment.length} / 200字</div>
+            <div className='text-slate-400'>{body.additionalComment === "" ? "0" : body.additionalComment.length} / 2000字</div>
           </div>
           <div className='flex-box2-cont textarea_style'>
             <textarea name='' id='additionalComment' cols='' rows='10' className='w-full resize-none'
-              maxLength={200} placeholder='自由に自己紹介をしてください。' onChange={handleInputTextChangeEvent} />
+              maxLength={2000} placeholder='自由に自己紹介してください。（2,000字以内）' onChange={handleInputTextIntroduceChangeEvent} />
           </div>
 
           <div className='attach-wrap flex'>
@@ -1756,18 +1782,49 @@ const ResumeRegist = () => {
           </ModalBody>
           <ModalFooter>
             <div className="sel-btn-wrap flex-row-reverse gap-2">
-              <button className='btn btn-outline-secondary'
-                onClick={() => {setHopeCareerModal(false)}}
+              <button className='btn btn-outline-secondary me-3'
+                onClick={() => {
+                  setDepthMenu({
+                    ...depthMenu,
+                    ['hopeCareer']:{
+                      ...depthMenu['hopeCareer'],
+                      depth_first: tempHopeCareerFirstDepth,
+                      depth_seconds: tempHopeCareerSecondDepth,
+                    }
+                  })
+                  setBody({
+                    ...body,
+                    ['hopeCareer']: tempHopeCareerSecondCode
+                  })
+
+                  setHopeCareerModal(false)
+                }}
               >
                 閉じる
               </button>
               <button className="btn btn-primary" onClick={() => {
+                let getHopeCareer1 = document.getElementById('hopeCareerOneDeps dropdown-button-dark-example1').value
                 let getHopeCareer2 = document.getElementById('hopeCareer dropdown-button-dark-example1').value
                 console.log(getHopeCareer2);
                 if(getHopeCareer2 === "{'DEFAULT'}"){
                   setHopeOptionSelectFail(true);
                   return false;
                 }
+                let tempFirstName = '';
+                let tempSecondName = '';
+                
+                for(let i = 0 ; i < data.hopeCareerList.length; i++){
+                  if(data.hopeCareerList[i].hopeCareer === getHopeCareer1){
+                    tempFirstName = data.hopeCareerList[i].hopeCareerName;
+                  }
+                  else if(data.hopeCareerList[i].hopeCareer === getHopeCareer2){
+                    tempSecondName = data.hopeCareerList[i].hopeCareerName;
+                  }
+                }
+
+                setTempHopeCareerFirstDepth(tempFirstName)
+                setTempHopeCareerSecondDepth(tempSecondName)
+                setTempHopeCareerSecondCode(getHopeCareer2)
                 setHopeCareerModal(false)
               }}
               disabled={!body.hopeCareer}
@@ -1817,8 +1874,23 @@ const ResumeRegist = () => {
           </ModalBody>
           <ModalFooter>
             <div className="sel-btn-wrap flex-row-reverse gap-2">
-              <button className='btn btn-outline-secondary'
-                onClick={() => {setJobTypeModal(false)}}
+              <button className='btn btn-outline-secondary me-3'
+                onClick={() => {
+                  setDepthMenu({
+                    ...depthMenu,
+                    ['jobType']:{
+                      ...depthMenu['jobType'],
+                      depth_first: tempJobTypeFirstDepth,
+                      depth_seconds: tempJobTypeSecondDepth,
+                    }
+                  })
+                  setBody({
+                    ...body,
+                    ['jobType']: tempJobTypeSecondCode
+                  })
+
+                  setJobTypeModal(false)
+                }}
               >
                 閉じる
               </button>
@@ -1837,6 +1909,21 @@ const ResumeRegist = () => {
                     setJobTypeModal(false);
                     return true;
                   }
+                  let tempFirstName = '';
+                  let tempSecondName = '';
+                  
+                  for(let i = 0 ; i < data.jobTypeList.length; i++){
+                    if(data.jobTypeList[i].jobType === getJobType1){
+                      tempFirstName = data.jobTypeList[i].jobTypeName;
+                    }
+                    else if(data.jobTypeList[i].jobType === getJobType2){
+                      tempSecondName = data.jobTypeList[i].jobTypeName;
+                    }
+                  }
+
+                  setTempJobTypeFirstDepth(tempFirstName)
+                  setTempJobTypeSecondDepth(tempSecondName)
+                  setTempJobTypeSecondCode(getJobType2)
                   setJobTypeModal(false)
                 }}
                 disabled={!body.jobType}>
@@ -1885,8 +1972,23 @@ const ResumeRegist = () => {
           </ModalBody>
           <ModalFooter>
             <div className="sel-btn-wrap flex-row-reverse gap-2">
-              <button className='btn btn-outline-secondary'
-                onClick={() => {setBusinessTypeModal(false)}}
+              <button className='btn btn-outline-secondary me-3'
+                onClick={() => {
+                  setDepthMenu({
+                    ...depthMenu,
+                    ['businessType']:{
+                      ...depthMenu['businessType'],
+                      depth_first: tempBusinessTypeFirstDepth,
+                      depth_seconds: tempBusinessTypeSecondDepth,
+                    }
+                  })
+                  setBody({
+                    ...body,
+                    ['businessType']: tempBusinessTypeSecondCode
+                  })
+
+                  setBusinessTypeModal(false)
+                }}
               >
                 閉じる
               </button>
@@ -1903,6 +2005,21 @@ const ResumeRegist = () => {
                   setBusinessTypeModal(false);
                   return true;
                 }
+                let tempFirstName = '';
+                let tempSecondName = '';
+                
+                for(let i = 0 ; i < data.businessTypeList.length; i++){
+                  if(data.businessTypeList[i].businessType === businessType1){
+                    tempFirstName = data.businessTypeList[i].businessTypeName;
+                  }
+                  else if(data.businessTypeList[i].businessType === businessType2){
+                    tempSecondName = data.businessTypeList[i].businessTypeName;
+                  }
+                }
+
+                setTempJobTypeFirstDepth(tempFirstName)
+                setTempJobTypeSecondDepth(tempSecondName)
+                setTempJobTypeSecondCode(businessType2)
                 setBusinessTypeModal(false)
               }}
               disabled={!body.businessType}>
