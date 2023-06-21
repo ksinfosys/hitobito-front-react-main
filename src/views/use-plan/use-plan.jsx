@@ -902,7 +902,7 @@ const UsePlan = () => {
               </span>
             </div> */}
             <div ref={termsRef} className="agree-text text-slate-300 p-2 border-b text-sm" >
-              <a onClick={() => {window.open('/plan-detail');}} style={{cursor:"pointer"}}>
+              <a onClick={() => {window.open('/plan-detail-new');}} style={{cursor:"pointer"}}>
                 ＜決済規約を確認するにはクリック＞
               </a>              
             </div>

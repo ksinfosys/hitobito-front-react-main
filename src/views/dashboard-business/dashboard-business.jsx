@@ -837,7 +837,7 @@ const DashboardBusiness = () => {
                         <br />
                         詳しくは
                         <span style={{ fontWeight: 'bold', color: 'blue' , textDecoration: 'underline'}}>
-                        <a href="/user-guide-business" target="_blank" rel="noopener noreferrer">
+                        <a href="/user-guide-business-new" target="_blank" rel="noopener noreferrer">
                             利用ガイド
                         </a>
                         </span>をご参考お願い致します。
