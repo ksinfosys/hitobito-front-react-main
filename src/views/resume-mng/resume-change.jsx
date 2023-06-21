@@ -69,6 +69,16 @@ const ResumeChange = () => {
       depth_seconds: '',
     },
   })
+  const [tempHopeCareerFirstDepth, setTempHopeCareerFirstDepth] = useState('')
+  const [tempJobTypeFirstDepth, setTempJobTypeFirstDepth] = useState('')
+  const [tempBusinessTypeFirstDepth, setTempBusinessTypeFirstDepth] = useState('')
+  const [tempHopeCareerSecondDepth, setTempHopeCareerSecondDepth] = useState('')
+  const [tempJobTypeSecondDepth, setTempJobTypeSecondDepth] = useState('')
+  const [tempBusinessTypeSecondDepth, setTempBusinessTypeSecondDepth] = useState('')
+  const [tempHopeCareerSecondCode, setTempHopeCareerSecondCode] = useState('')
+  const [tempJobTypeSecondCode, setTempJobTypeSecondCode] = useState('')
+  const [tempBusinessTypeSecondCode, setTempBusinessTypeSecondCode] = useState('')
+  
   const [data, setListData] = useState()
   const [body, setBody] = useState({
     countrySelect: '',
@@ -791,6 +801,16 @@ const ResumeChange = () => {
         },
         
       })
+
+      setTempHopeCareerFirstDepth(hopeCareerDepthFirst)
+      setTempJobTypeFirstDepth(jobTypeDepthFirst)
+      setTempBusinessTypeFirstDepth(businessTypeDepthFirst)
+      setTempHopeCareerSecondDepth(hopeCareerDepthSeconds)
+      setTempJobTypeSecondDepth(jobTypeDepthSeconds)
+      setTempBusinessTypeSecondDepth(businessTypeDepthSeconds)
+      setTempHopeCareerSecondCode(res.data.result.hopeCareerSelect)
+      setTempJobTypeSecondCode(res.data.result.jobTypeSelect)
+      setTempBusinessTypeSecondCode(res.data.result.businessTypeSelect)
 
       if (res.data.result.regiInfoDto) {
         // console.log(res.data.result.regiInfoDto)
@@ -1812,21 +1832,52 @@ const ResumeChange = () => {
               </ModalBody>
               <ModalFooter>
                 <div className="sel-btn-wrap flex-row-reverse gap-2">
-                  <button className='btn btn-outline-secondary'
-                    onClick={() => {setHopeCareerModal(false)}}
+                  <button className='btn btn-outline-secondary me-3'
+                    onClick={() => {
+                      setDepthMenu({
+                        ...depthMenu,
+                        ['hopeCareer']:{
+                          ...depthMenu['hopeCareer'],
+                          depth_first: tempHopeCareerFirstDepth,
+                          depth_seconds: tempHopeCareerSecondDepth,
+                        }
+                      })
+                      setBody({
+                        ...body,
+                        ['hopeCareer']: tempHopeCareerSecondCode
+                      })
+
+                      setHopeCareerModal(false)
+                    }}
                   >
                     閉じる
                   </button>
                   <button className="btn btn-primary" onClick={() => {
+                    let getHopeCareer1 = document.getElementById('hopeCareerOneDeps dropdown-button-dark-example1').value
                     let getHopeCareer2 = document.getElementById('hopeCareer dropdown-button-dark-example1').value
                     console.log(getHopeCareer2);
                     if(getHopeCareer2 === "{'DEFAULT'}"){
                       setHopeOptionSelectFail(true);
                       return false;
                     }
+                    let tempFirstName = '';
+                    let tempSecondName = '';
+                    
+                    for(let i = 0 ; i < data.hopeCareerList.length; i++){
+                      if(data.hopeCareerList[i].hopeCareer === getHopeCareer1){
+                        tempFirstName = data.hopeCareerList[i].hopeCareerName;
+                      }
+                      else if(data.hopeCareerList[i].hopeCareer === getHopeCareer2){
+                        tempSecondName = data.hopeCareerList[i].hopeCareerName;
+                      }
+                    }
+
+                    setTempHopeCareerFirstDepth(tempFirstName)
+                    setTempHopeCareerSecondDepth(tempSecondName)
+                    setTempHopeCareerSecondCode(getHopeCareer2)
                     setHopeCareerModal(false)
                   }}
-                  disabled={!body.hopeCareer}>
+                  disabled={!body.hopeCareerSelect}>
                    確定 
                   </button>
                 </div>
@@ -1872,8 +1923,23 @@ const ResumeChange = () => {
               </ModalBody>
               <ModalFooter>
                 <div className="sel-btn-wrap flex-row-reverse gap-2">
-                  <button className='btn btn-outline-secondary'
-                    onClick={() => {setJobTypeModal(false)}}
+                  <button className='btn btn-outline-secondary me-3'
+                    onClick={() => {
+                      setDepthMenu({
+                        ...depthMenu,
+                        ['jobType']:{
+                          ...depthMenu['jobType'],
+                          depth_first: tempJobTypeFirstDepth,
+                          depth_seconds: tempJobTypeSecondDepth,
+                        }
+                      })
+                      setBody({
+                        ...body,
+                        ['jobType']: tempJobTypeSecondCode
+                      })
+
+                      setJobTypeModal(false);
+                    }}
                   >
                     閉じる
                   </button>
@@ -1891,9 +1957,24 @@ const ResumeChange = () => {
                       setJobTypeModal(false);
                       return true;
                     }
+                    let tempFirstName = '';
+                    let tempSecondName = '';
+                    
+                    for(let i = 0 ; i < data.jobTypeList.length; i++){
+                      if(data.jobTypeList[i].jobType === getJobType1){
+                        tempFirstName = data.jobTypeList[i].jobTypeName;
+                      }
+                      else if(data.jobTypeList[i].jobType === getJobType2){
+                        tempSecondName = data.jobTypeList[i].jobTypeName;
+                      }
+                    }
+
+                    setTempJobTypeFirstDepth(tempFirstName)
+                    setTempJobTypeSecondDepth(tempSecondName)
+                    setTempJobTypeSecondCode(getJobType2)
                     setJobTypeModal(false)
                   }}
-                  disabled={!body.jobType}>
+                  disabled={!body.jobTypeSelect}>
                     確定
                   </button>
                 </div>
@@ -1939,8 +2020,23 @@ const ResumeChange = () => {
               </ModalBody>
               <ModalFooter>
                 <div className="sel-btn-wrap flex-row-reverse gap-2">
-                  <button className='btn btn-outline-secondary'
-                    onClick={() => {setBusinessTypeModal(false)}}
+                  <button className='btn btn-outline-secondary me-3'
+                    onClick={() => {
+                      setDepthMenu({
+                        ...depthMenu,
+                        ['businessType']:{
+                          ...depthMenu['businessType'],
+                          depth_first: tempBusinessTypeFirstDepth,
+                          depth_seconds: tempBusinessTypeSecondDepth,
+                        }
+                      })
+                      setBody({
+                        ...body,
+                        ['businessType']: tempBusinessTypeSecondCode
+                      })
+
+                      setBusinessTypeModal(false)
+                    }}
                   >
                     閉じる
                   </button>
@@ -1957,9 +2053,24 @@ const ResumeChange = () => {
                       setBusinessTypeModal(false);
                       return true;
                     }
+                    let tempFirstName = '';
+                    let tempSecondName = '';
+                    
+                    for(let i = 0 ; i < data.businessTypeList.length; i++){
+                      if(data.businessTypeList[i].businessType === businessType1){
+                        tempFirstName = data.businessTypeList[i].businessTypeName;
+                      }
+                      else if(data.businessTypeList[i].businessType === businessType2){
+                        tempSecondName = data.businessTypeList[i].businessTypeName;
+                      }
+                    }
+
+                    setTempJobTypeFirstDepth(tempFirstName)
+                    setTempJobTypeSecondDepth(tempSecondName)
+                    setTempJobTypeSecondCode(businessType2)
                     setBusinessTypeModal(false)
                   }}
-                  disabled={!body.businessType}>
+                  disabled={!body.businessTypeSelect}>
                     確定
                   </button>
                 </div>
