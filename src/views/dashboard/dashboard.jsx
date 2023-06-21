@@ -553,6 +553,7 @@ const Dashboard = () => {
 
       {/* ****************** 신고 모달 시작 ****************** */}
       <Modal
+          className ="report-check-modal"
           show={reportRequestModal1}
           onHidden={() => {
               setreportRequestModal1(false);
