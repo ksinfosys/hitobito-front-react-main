@@ -330,6 +330,7 @@ function PointDetailBusiness() {
 
       {/* 포인트 구매하기 */}
       <Modal
+        className="point-detail-business-buy"
         size="modal-lg"
         backdrop="static"
         show={PointPaymentModal}

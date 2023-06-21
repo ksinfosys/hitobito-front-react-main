@@ -1307,7 +1307,9 @@ const CorpInfoMng = () => {
                     }}
                     disabled={isDisabled}
                   >
-                    認証コード送信
+                    認証コード
+                    <br/>
+                    送信
                   </button>
                 </div>
               </div>

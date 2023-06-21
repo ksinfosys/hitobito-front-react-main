@@ -50,6 +50,15 @@ const ResumeRegist = () => {
       depth_seconds: '業種 2',
     },
   })
+  const [tempHopeCareerFirstDepth, setTempHopeCareerFirstDepth] = useState('目標 1')
+  const [tempJobTypeFirstDepth, setTempJobTypeFirstDepth] = useState('職種 1')
+  const [tempBusinessTypeFirstDepth, setTempBusinessTypeFirstDepth] = useState('業種 1')
+  const [tempHopeCareerSecondDepth, setTempHopeCareerSecondDepth] = useState('目標 2')
+  const [tempJobTypeSecondDepth, setTempJobTypeSecondDepth] = useState('職種 2')
+  const [tempBusinessTypeSecondDepth, setTempBusinessTypeSecondDepth] = useState('業種 2')
+  const [tempHopeCareerSecondCode, setTempHopeCareerSecondCode] = useState('')
+  const [tempJobTypeSecondCode, setTempJobTypeSecondCode] = useState('')
+  const [tempBusinessTypeSecondCode, setTempBusinessTypeSecondCode] = useState('')
 
   const [data, setListData] = useState()
   const [skillList, setSkillList] = useState({
@@ -187,6 +196,25 @@ const ResumeRegist = () => {
 
   }
 
+  //자기소개
+  const handleInputTextIntroduceChangeEvent = (e) => {
+    const key = e.target.id.replaceAll(' regular-form-1', '')
+    const value = e.target.value
+
+    if (value.length >= 2001) {
+      // console.log(value.length)
+      value.toString().substr(0, 2000);
+      // console.log(value.length)
+    }
+
+    setBody({
+      ...body,
+      [key]: value
+    })
+
+  }
+
+
   //이미지 업로드
   const handleChangeImage = async (e, index) => {
     const file = e.target.files
@@ -295,6 +323,14 @@ const ResumeRegist = () => {
     tempArr[index] = id === 'projectPeriod' ? parseInt(e.target.value) : e.target.value
     setBody({...body, [id]: tempArr})
   }
+
+  const handlePeriodChange = (index) => {
+    const id = 'projectPeriod';
+    const tempArr = [...body[id]]
+    tempArr[index] = id === 'projectPeriod' ? parseInt($(`.projectPeriod_${index}`).val()) : $(`.projectPeriod_${index}`).val()
+    setBody({...body, [id]: tempArr})
+  }
+
   const handleProjectProcessAdd = (e, index) => {
     const temp = [...career]
     if (e.target.checked) {
@@ -488,17 +524,118 @@ const ResumeRegist = () => {
     let errorCount = 0;
     await formData.append('request', blob)
     
-    if (!body.country) {
-      // setResumeLabel("国籍を選択してください。");
+    if(skillItem.arr.length == 0){
+      // setResumeLabel("スキルを選択してください。");
       // setResumeAlert(true); 
-      $(".country-error-text").css("display","block");
-      $(".country-error-text").text("国籍を選択してください。");
-      selectCountryRef.current.focus();
-      setCountryError(true);
+      $(".skillItem-error-text").css("display","block");
+      $(".skillItem-error-text").text("スキルを選択してください。");
+      skillCodeRef.current.focus();
+      setSkillCodeError(true);
+      setSkillCarrerError(true)
       errorCount++;
     } else {
-      $(".country-error-text").css("display","none");
-      setCountryError(false);
+      $(".skillItem-error-text").css("display","none");
+      setSkillCodeError(false);
+      setSkillCarrerError(false)
+    }
+
+    const max = $(".project-count").length;
+    
+      // console.log("career:::",career)
+      // console.log("body:::",body)
+      // console.log("max:::",max)
+
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectPeriod[i] !== "number" || isNaN(body.projectPeriod[i])) {
+        // const errorMessage = i === 0 ? "プロジェクト期間を入力してください。" : (i + 1) + "番目のプロジェクト期間を入力してください。";
+        // setResumeLabel(errorMessage);
+        // setResumeAlert(true); 
+        $(".projectPeriod-error-text"+i).css("display","block");
+        $(".projectPeriod-error-text"+i).text("プロジェクト期間を入力してください。");
+        $(".periodInputGroup_"+i).addClass("period-error");
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        errorCount++;
+      } else {
+        $(".projectPeriod-error-text"+i).css("display","none");
+        $(".periodInputGroup_"+i).removeClass("period-error");
+      }
+    }
+
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectRole[i] !== "string" || body.projectRole[i] == "") {
+        // const errorMessage = i === 0 ? "プロジェクト役割を入力してください。" : (i + 1) + "番目のプロジェクト役割を入力してください。";
+        // setResumeLabel(errorMessage);
+        // setResumeAlert(true); 
+        $(".projectRole-error-text"+i).css("display","block");
+        $(".projectRole-error-text"+i).text("プロジェクト役割を入力してください。");
+        $(".projectRole_"+i).addClass("error");
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        errorCount++;
+      } else {
+        $(".projectRole-error-text"+i).css("display","none");
+        $(".projectRole_"+i).removeClass("error");
+      }
+    }
+
+    for(let i = 0; i < max; i++){
+      if (typeof body.projectName[i] !== "string" || body.projectName[i] == "") {
+        // const errorMessage = i === 0 ? "プロジェクト名を入力してください。" : (i + 1) + "番目のプロジェクト名を入力してください。";
+        // setResumeLabel(errorMessage);
+        // setResumeAlert(true); 
+        $(".projectName-error-text"+i).css("display","block");
+        $(".projectName-error-text"+i).text("プロジェクト名を入力してください。");
+        $(".projectName_"+i).addClass("error");
+        if (projectRef.current) {
+          projectRef.current.focus();
+        }
+        errorCount++;
+      } else {
+        $(".projectName-error-text"+i).css("display","none");
+        $(".projectName_"+i).removeClass("error");
+      }
+    }
+
+    if (!body.businessType) {
+      // setResumeLabel("所属会社の業種を選択してください。");
+      // setResumeAlert(true); 
+      $(".businessType-error-text").css("display","block");
+      $(".businessType-error-text").text("所属会社の業種を選択してください。");
+      selectbusinessTypeRef.current.focus();
+      setBusinessTypeError(true);
+      errorCount++;
+    } else {
+      $(".businessType-error-text").css("display","none");
+      setBusinessTypeError(false);
+    }
+
+    if (!body.jobType) {
+      // setResumeLabel("現在の職種を選択してください。");
+      // setResumeAlert(true); 
+      $(".jobType-error-text").css("display","block");
+      $(".jobType-error-text").text("現在の職種を選択してください。");
+      selectJobTypeRef.current.focus();
+      setJobTypeError(true);
+      errorCount++;
+    } else {
+      $(".jobType-error-text").css("display","none");
+      setJobTypeError(false);
+    }
+
+    if (!body.career) {
+      // setResumeLabel("経歴を選択してください。");
+      // setResumeAlert(true); 
+      $(".career-error-text").css("display","block");
+      $(".career-error-text").text("経歴を選択してください。");
+      selectCareerRef.current.focus();
+      setCareerError(true);
+      errorCount++;
+    } else {
+      $(".career-error-text").css("display","none");
+      setCareerError(false);
     }
 
     if(!body.education){
@@ -527,92 +664,30 @@ const ResumeRegist = () => {
       setGenderError(false);
     }
 
-    if (!body.schoolName) {
-      // setResumeLabel("最終学校名を入力してください。");
+    if (!body.hopeCareer) {
+      // setResumeLabel("将来の目標を選択してください。");
       // setResumeAlert(true); 
-      $(".schoolNameSelect-error-text").css("display","block");
-      $(".schoolNameSelect-error-text").text("最終学校名を入力してください。");
-      if (schoolNameRef.current) {
-        schoolNameRef.current.focus();
-        setSchoolNameError(true);
-      }
+      $(".hopeCareer-error-text").css("display","block");
+      $(".hopeCareer-error-text").text("将来の目標を選択してください。");
+      selectHopeCareerRef.current.focus();
+      setHopeCareerError(true);
       errorCount++;
     } else {
-      $(".schoolNameSelect-error-text").css("display","none");
-      setSchoolNameError(false);
+      $(".hopeCareer-error-text").css("display","none");
+      setHopeCareerError(false);
     }
 
-    if (!body.userAge) {
-      // setResumeLabel("生年を選択してください。");
+    //전화번호 이메일 모두 비 공개시 뜨는 팝업
+    if(body.userEmailFlag === '0' && body.phoneNumberFlag === '0'){
+      // setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
       // setResumeAlert(true); 
-      $(".userAge-error-text").css("display","block");
-      $(".userAge-error-text").text("生年を選択してください。");
-      selectAgeRef.current.focus();
-      setAgeError(true);
+      $(".emailPhoneFlag-error-text").css("display","block");
+      $(".emailPhoneFlag-error-text").text("メールアドレスと連絡先電話番号の中で一つは公開してください。");
+      userEmailClosedRef.current.focus();
+      phoneNumberClosedRef.current.focus();
       errorCount++;
     } else {
-      $(".userAge-error-text").css("display","none");
-      setAgeError(false);
-    }
-
-    if (!body.majorName) {
-
-      // setResumeLabel("専攻を入力してください。");
-      // setResumeAlert(true); 
-      $(".majorNameSelect-error-text").css("display","block");
-      $(".majorNameSelect-error-text").text("学部/学科を入力してください。");
-
-      if (majorNameRef.current) {
-        majorNameRef.current.focus();
-        setMajorNameError(true);
-      }
-      errorCount++;
-    } else {
-      $(".majorNameSelect-error-text").css("display","none");
-      setMajorNameError(false);
-    }
-
-    if (!body.residentialArea) {
-      // setResumeLabel("居住地を選択してください。");
-      // setResumeAlert(true); 
-      $(".residentialArea-error-text").css("display","block");
-      $(".residentialArea-error-text").text("居住地を選択してください。");
-      selectResidentialAreaRef.current.focus();
-      setResidentialAreaError(true);
-      errorCount++;
-    } else {
-      $(".residentialArea-error-text").css("display","none");
-      setResidentialAreaError(false);
-    }
-
-
-    if (!body.hopeIncome) {
-      // setResumeLabel("希望年収を選択してください。");
-      // setResumeAlert(true); 
-      $(".hopeIncome-error-text").css("display","block");
-      $(".hopeIncome-error-text").text("希望年収を選択してください。");
-      selectHopeIncomeRef.current.focus();
-      setHopeIncomeError(true);
-      errorCount++;
-    } else {
-      $(".hopeIncome-error-text").css("display","none");
-      setHopeIncomeError(false);
-    }
-
-
-    if (!body.userEmail) {
-      // setResumeLabel("イーメールを入力してください。");
-      // setResumeAlert(true); 
-      $(".none-email-error-text").css("display","block");
-      $(".none-email-error-text").text("イーメールを入力してください。");
-      if (userEmailRef.current) {
-        userEmailRef.current.focus();
-        setEmailError(true);
-      }
-      errorCount++;
-    } else {
-      $(".none-email-error-text").css("display","none");
-      setEmailError(false);
+      $(".emailPhoneFlag-error-text").css("display","none");
     }
 
     if (!body.phoneNumber) {
@@ -630,157 +705,131 @@ const ResumeRegist = () => {
       setPhoneError(false);
     }
 
-    if (!body.hopeCareer) {
-      // setResumeLabel("将来の目標を選択してください。");
+    if (!body.userEmail) {
+      // setResumeLabel("イーメールを入力してください。");
       // setResumeAlert(true); 
-      $(".hopeCareer-error-text").css("display","block");
-      $(".hopeCareer-error-text").text("将来の目標を選択してください。");
-      selectHopeCareerRef.current.focus();
-      setHopeCareerError(true);
+      $(".none-email-error-text").css("display","block");
+      $(".none-email-error-text").text("イーメールを入力してください。");
+      if (userEmailRef.current) {
+        userEmailRef.current.focus();
+        setEmailError(true);
+      }
       errorCount++;
     } else {
-      $(".hopeCareer-error-text").css("display","none");
-      setHopeCareerError(false);
+      $(".none-email-error-text").css("display","none");
+      setEmailError(false);
     }
 
-    if (!body.career) {
-      // setResumeLabel("経歴を選択してください。");
+    if (!body.hopeIncome) {
+      // setResumeLabel("希望年収を選択してください。");
       // setResumeAlert(true); 
-      $(".career-error-text").css("display","block");
-      $(".career-error-text").text("経歴を選択してください。");
-      selectCareerRef.current.focus();
-      setCareerError(true);
+      $(".hopeIncome-error-text").css("display","block");
+      $(".hopeIncome-error-text").text("希望年収を選択してください。");
+      selectHopeIncomeRef.current.focus();
+      setHopeIncomeError(true);
       errorCount++;
     } else {
-      $(".career-error-text").css("display","none");
-      setCareerError(false);
+      $(".hopeIncome-error-text").css("display","none");
+      setHopeIncomeError(false);
     }
 
-    if (!body.jobType) {
-      // setResumeLabel("現在の職種を選択してください。");
+    if (!body.residentialArea) {
+      // setResumeLabel("居住地を選択してください。");
       // setResumeAlert(true); 
-      $(".jobType-error-text").css("display","block");
-      $(".jobType-error-text").text("現在の職種を選択してください。");
-      selectJobTypeRef.current.focus();
-      setJobTypeError(true);
+      $(".residentialArea-error-text").css("display","block");
+      $(".residentialArea-error-text").text("居住地を選択してください。");
+      selectResidentialAreaRef.current.focus();
+      setResidentialAreaError(true);
       errorCount++;
     } else {
-      $(".jobType-error-text").css("display","none");
-      setJobTypeError(false);
+      $(".residentialArea-error-text").css("display","none");
+      setResidentialAreaError(false);
     }
 
-    if (!body.businessType) {
-      // setResumeLabel("所属会社の業種を選択してください。");
+    if (!body.majorName) {
+
+      // setResumeLabel("学部/学科を入力してください。");
       // setResumeAlert(true); 
-      $(".businessType-error-text").css("display","block");
-      $(".businessType-error-text").text("所属会社の業種を選択してください。");
-      selectbusinessTypeRef.current.focus();
-      setBusinessTypeError(true);
+      $(".majorNameSelect-error-text").css("display","block");
+      $(".majorNameSelect-error-text").text("学部/学科を入力してください。");
+
+      if (majorNameRef.current) {
+        majorNameRef.current.focus();
+        setMajorNameError(true);
+      }
       errorCount++;
     } else {
-      $(".businessType-error-text").css("display","none");
-      setBusinessTypeError(false);
+      $(".majorNameSelect-error-text").css("display","none");
+      setMajorNameError(false);
+    }
+
+    if (!body.userAge) {
+      // setResumeLabel("生年を選択してください。");
+      // setResumeAlert(true); 
+      $(".userAge-error-text").css("display","block");
+      $(".userAge-error-text").text("生年を選択してください。");
+      selectAgeRef.current.focus();
+      setAgeError(true);
+      errorCount++;
+    } else {
+      $(".userAge-error-text").css("display","none");
+      setAgeError(false);
+    }
+
+    if (!body.schoolName) {
+      // setResumeLabel("最終学校名を入力してください。");
+      // setResumeAlert(true); 
+      $(".schoolNameSelect-error-text").css("display","block");
+      $(".schoolNameSelect-error-text").text("最終学校名を入力してください。");
+      if (schoolNameRef.current) {
+        schoolNameRef.current.focus();
+        setSchoolNameError(true);
+      }
+      errorCount++;
+    } else {
+      $(".schoolNameSelect-error-text").css("display","none");
+      setSchoolNameError(false);
+    }
+
+    if (!body.userGender) {
+      // setResumeLabel("性別を選択してください。");
+      // setResumeAlert(true); 
+      $(".userGender-error-text").css("display","block");
+      $(".userGender-error-text").text("性別を選択してください。");
+      selectGenderRef.current.focus();
+      setGenderError(true);
+      errorCount++;
+    } else {
+      $(".userGender-error-text").css("display","none");
+      setGenderError(false);
     }
     
-    // console.log("body.projectProcessSelect:::",body.projectProcessSelect)
-    // if (career.map.length == 1 && career[0].process.length == 0) {
-    //   setResumeLabel("主要経歴を入力してください。");
-    //   setResumeAlert(true); 
-    //   if (projectRef.current) {
-    //     projectRef.current.focus();
-    //   }
-    //   return false;
-    // } else {
-    // }
-
-    const max = $(".project-count").length;
-    
-      // console.log("career:::",career)
-      // console.log("body:::",body)
-      // console.log("max:::",max)
-
-    for(let i = 0; i < max; i++){
-      if (typeof body.projectName[i] !== "string" || body.projectName[i] == "") {
-        // const errorMessage = i === 0 ? "プロジェクト名を入力してください。" : (i + 1) + "番目のプロジェクト名を入力してください。";
-        // setResumeLabel(errorMessage);
-        // setResumeAlert(true); 
-        $(".projectName-error-text"+i).css("display","block");
-        $(".projectName-error-text"+i).text("プロジェクト名を入力してください。");
-        $(".projectName_"+i).addClass("error");
-        if (projectRef.current) {
-          projectRef.current.focus();
-        }
-        errorCount++;
-      } else {
-        $(".projectName-error-text"+i).css("display","none");
-        $(".projectName_"+i).removeClass("error");
-      }
-    }
-
-    for(let i = 0; i < max; i++){
-      if (typeof body.projectPeriod[i] !== "number" || isNaN(body.projectPeriod[i])) {
-        // const errorMessage = i === 0 ? "プロジェクト期間を入力してください。" : (i + 1) + "番目のプロジェクト期間を入力してください。";
-        // setResumeLabel(errorMessage);
-        // setResumeAlert(true); 
-        $(".projectPeriod-error-text"+i).css("display","block");
-        $(".projectPeriod-error-text"+i).text("プロジェクト期間を入力してください。");
-        $(".projectPeriod_"+i).addClass("error");
-        if (projectRef.current) {
-          projectRef.current.focus();
-        }
-        errorCount++;
-      } else {
-        $(".projectPeriod-error-text"+i).css("display","none");
-        $(".projectPeriod_"+i).removeClass("error");
-      }
-    }
-
-    for(let i = 0; i < max; i++){
-      if (typeof body.projectRole[i] !== "string" || body.projectRole[i] == "") {
-        // const errorMessage = i === 0 ? "プロジェクト役割を入力してください。" : (i + 1) + "番目のプロジェクト役割を入力してください。";
-        // setResumeLabel(errorMessage);
-        // setResumeAlert(true); 
-        $(".projectRole-error-text"+i).css("display","block");
-        $(".projectRole-error-text"+i).text("プロジェクト役割を入力してください。");
-        $(".projectRole_"+i).addClass("error");
-        if (projectRef.current) {
-          projectRef.current.focus();
-        }
-        errorCount++;
-      } else {
-        $(".projectRole-error-text"+i).css("display","none");
-        $(".projectRole_"+i).removeClass("error");
-      }
+    if(!body.education){
+      // setResumeLabel("学歴を選択してください。");
+      // setResumeAlert(true); 
+      $(".education-error-text").css("display","block");
+      $(".education-error-text").text("学歴を選択してください。");
+      selectEducationRef.current.focus();
+      setEducationError(true);
+      errorCount++;
+    } else {
+      $(".education-error-text").css("display","none");
+      setEducationError(false);
     }
   
-    if(skillItem.arr.length == 0){
-      // setResumeLabel("スキルを選択してください。");
+    if (!body.country) {
+      // setResumeLabel("国籍を選択してください。");
       // setResumeAlert(true); 
-      $(".skillItem-error-text").css("display","block");
-      $(".skillItem-error-text").text("スキルを選択してください。");
-      skillCodeRef.current.focus();
-      setSkillCodeError(true);
-      setSkillCarrerError(true)
+      $(".country-error-text").css("display","block");
+      $(".country-error-text").text("国籍を選択してください。");
+      selectCountryRef.current.focus();
+      setCountryError(true);
       errorCount++;
     } else {
-      $(".skillItem-error-text").css("display","none");
-      setSkillCodeError(false);
-      setSkillCarrerError(false)
+      $(".country-error-text").css("display","none");
+      setCountryError(false);
     }
-
-    //전화번호 이메일 모두 비 공개시 뜨는 팝업
-    if(body.userEmailFlag === '0' && body.phoneNumberFlag === '0'){
-      // setResumeLabel("メールアドレスと連絡先電話番号の中で一つは公開してください。");
-      // setResumeAlert(true); 
-      $(".emailPhoneFlag-error-text").css("display","block");
-      $(".emailPhoneFlag-error-text").text("メールアドレスと連絡先電話番号の中で一つは公開してください。");
-      userEmailClosedRef.current.focus();
-      phoneNumberClosedRef.current.focus();
-      errorCount++;
-    } else {
-      $(".emailPhoneFlag-error-text").css("display","none");
-    }
-    
+ 
     rsFileDocument.length > 0 ? rsFileDocument.map(item => formData.append('rsFileDocument', item)) : formData.append('rsFileDocument', new File([], 'photo.jpg'))
     rsFilePhoto.length > 0 ? rsFilePhoto.map(item => formData.append('rsFilePhoto', item)) : formData.append('rsFilePhoto', new File([], 'document.pdf'))
 
@@ -1498,6 +1547,7 @@ const ResumeRegist = () => {
                 processRole={body.projectRole[key]}
                 period={body.projectPeriod[key]}
                 process_re={body.projectProcess[key] ? body.projectProcess[key] : []}
+                handlePeriodChange={handlePeriodChange}
               />
             })
           }
@@ -1650,11 +1700,11 @@ const ResumeRegist = () => {
           {/* 簡単な自己紹介 */}
           <div className='flex-box2-tit flex space-between mt-16'>
             <div className='box2-tit'>自己紹介</div>
-            <div className='text-slate-400'>{body.additionalComment === "" ? "0" : body.additionalComment.length} / 200字</div>
+            <div className='text-slate-400'>{body.additionalComment === "" ? "0" : body.additionalComment.length} / 2000字</div>
           </div>
           <div className='flex-box2-cont textarea_style'>
             <textarea name='' id='additionalComment' cols='' rows='10' className='w-full resize-none'
-              maxLength={200} placeholder='自由に自己紹介をしてください。' onChange={handleInputTextChangeEvent} />
+              maxLength={2000} placeholder='自由に自己紹介してください。（2,000字以内）' onChange={handleInputTextIntroduceChangeEvent} />
           </div>
 
           <div className='attach-wrap flex'>
@@ -1734,18 +1784,49 @@ const ResumeRegist = () => {
           </ModalBody>
           <ModalFooter>
             <div className="sel-btn-wrap flex-row-reverse gap-2">
-              <button className='btn btn-outline-secondary'
-                onClick={() => {setHopeCareerModal(false)}}
+              <button className='btn btn-outline-secondary me-3'
+                onClick={() => {
+                  setDepthMenu({
+                    ...depthMenu,
+                    ['hopeCareer']:{
+                      ...depthMenu['hopeCareer'],
+                      depth_first: tempHopeCareerFirstDepth,
+                      depth_seconds: tempHopeCareerSecondDepth,
+                    }
+                  })
+                  setBody({
+                    ...body,
+                    ['hopeCareer']: tempHopeCareerSecondCode
+                  })
+
+                  setHopeCareerModal(false)
+                }}
               >
                 閉じる
               </button>
               <button className="btn btn-primary" onClick={() => {
+                let getHopeCareer1 = document.getElementById('hopeCareerOneDeps dropdown-button-dark-example1').value
                 let getHopeCareer2 = document.getElementById('hopeCareer dropdown-button-dark-example1').value
                 console.log(getHopeCareer2);
                 if(getHopeCareer2 === "{'DEFAULT'}"){
                   setHopeOptionSelectFail(true);
                   return false;
                 }
+                let tempFirstName = '';
+                let tempSecondName = '';
+                
+                for(let i = 0 ; i < data.hopeCareerList.length; i++){
+                  if(data.hopeCareerList[i].hopeCareer === getHopeCareer1){
+                    tempFirstName = data.hopeCareerList[i].hopeCareerName;
+                  }
+                  else if(data.hopeCareerList[i].hopeCareer === getHopeCareer2){
+                    tempSecondName = data.hopeCareerList[i].hopeCareerName;
+                  }
+                }
+
+                setTempHopeCareerFirstDepth(tempFirstName)
+                setTempHopeCareerSecondDepth(tempSecondName)
+                setTempHopeCareerSecondCode(getHopeCareer2)
                 setHopeCareerModal(false)
               }}
               disabled={!body.hopeCareer}
@@ -1795,8 +1876,23 @@ const ResumeRegist = () => {
           </ModalBody>
           <ModalFooter>
             <div className="sel-btn-wrap flex-row-reverse gap-2">
-              <button className='btn btn-outline-secondary'
-                onClick={() => {setJobTypeModal(false)}}
+              <button className='btn btn-outline-secondary me-3'
+                onClick={() => {
+                  setDepthMenu({
+                    ...depthMenu,
+                    ['jobType']:{
+                      ...depthMenu['jobType'],
+                      depth_first: tempJobTypeFirstDepth,
+                      depth_seconds: tempJobTypeSecondDepth,
+                    }
+                  })
+                  setBody({
+                    ...body,
+                    ['jobType']: tempJobTypeSecondCode
+                  })
+
+                  setJobTypeModal(false)
+                }}
               >
                 閉じる
               </button>
@@ -1815,6 +1911,21 @@ const ResumeRegist = () => {
                     setJobTypeModal(false);
                     return true;
                   }
+                  let tempFirstName = '';
+                  let tempSecondName = '';
+                  
+                  for(let i = 0 ; i < data.jobTypeList.length; i++){
+                    if(data.jobTypeList[i].jobType === getJobType1){
+                      tempFirstName = data.jobTypeList[i].jobTypeName;
+                    }
+                    else if(data.jobTypeList[i].jobType === getJobType2){
+                      tempSecondName = data.jobTypeList[i].jobTypeName;
+                    }
+                  }
+
+                  setTempJobTypeFirstDepth(tempFirstName)
+                  setTempJobTypeSecondDepth(tempSecondName)
+                  setTempJobTypeSecondCode(getJobType2)
                   setJobTypeModal(false)
                 }}
                 disabled={!body.jobType}>
@@ -1863,8 +1974,23 @@ const ResumeRegist = () => {
           </ModalBody>
           <ModalFooter>
             <div className="sel-btn-wrap flex-row-reverse gap-2">
-              <button className='btn btn-outline-secondary'
-                onClick={() => {setBusinessTypeModal(false)}}
+              <button className='btn btn-outline-secondary me-3'
+                onClick={() => {
+                  setDepthMenu({
+                    ...depthMenu,
+                    ['businessType']:{
+                      ...depthMenu['businessType'],
+                      depth_first: tempBusinessTypeFirstDepth,
+                      depth_seconds: tempBusinessTypeSecondDepth,
+                    }
+                  })
+                  setBody({
+                    ...body,
+                    ['businessType']: tempBusinessTypeSecondCode
+                  })
+
+                  setBusinessTypeModal(false)
+                }}
               >
                 閉じる
               </button>
@@ -1881,6 +2007,21 @@ const ResumeRegist = () => {
                   setBusinessTypeModal(false);
                   return true;
                 }
+                let tempFirstName = '';
+                let tempSecondName = '';
+                
+                for(let i = 0 ; i < data.businessTypeList.length; i++){
+                  if(data.businessTypeList[i].businessType === businessType1){
+                    tempFirstName = data.businessTypeList[i].businessTypeName;
+                  }
+                  else if(data.businessTypeList[i].businessType === businessType2){
+                    tempSecondName = data.businessTypeList[i].businessTypeName;
+                  }
+                }
+
+                setTempJobTypeFirstDepth(tempFirstName)
+                setTempJobTypeSecondDepth(tempSecondName)
+                setTempJobTypeSecondCode(businessType2)
                 setBusinessTypeModal(false)
               }}
               disabled={!body.businessType}>
