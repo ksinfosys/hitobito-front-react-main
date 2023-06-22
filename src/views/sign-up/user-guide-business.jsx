@@ -9,9 +9,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function UserGuideBusiness() {
+  const url = window.location.pathname;
   // navigate
   const navigate = () => {
-    if(document.referrer){
+    if(url === "/user-guide-business-new"){
       window.close();
     } else {
       location.href = "/";

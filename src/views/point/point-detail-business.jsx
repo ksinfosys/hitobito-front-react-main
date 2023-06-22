@@ -530,7 +530,7 @@ function PointDetailBusiness() {
                   決済規約に同意{" "}
                 </div>
                 <div ref={termsRef} className="agree-text text-slate-300 p-2 border-b text-sm" >
-                  <a onClick={() => {window.open('/point-detail-rule');}} style={{cursor:"pointer"}}>
+                  <a onClick={() => {window.open('/point-detail-rule-new');}} style={{cursor:"pointer"}}>
                   ＜決済規約を確認するにはクリック＞
                   </a> 
                   {/* ＜決済規約＞

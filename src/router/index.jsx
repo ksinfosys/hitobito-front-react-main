@@ -102,6 +102,16 @@ function Router() {
           },
         ],
       },
+      {
+        path: "/user-guide-business-new",
+        element: <TopMenu/>,
+        children: [
+          {
+            path: "/user-guide-business-new",
+            element: <UserGuideBusiness/>,
+          },
+        ],
+      },
 
       //플랜 -결제규약
       {
@@ -110,6 +120,16 @@ function Router() {
         children:[
           {
             path: "/plan-detail",
+            element: <PlanDetail/>,
+          },
+        ]    
+      },
+      {
+        path: "/plan-detail-new",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/plan-detail-new",
             element: <PlanDetail/>,
           },
         ]    
@@ -126,6 +146,16 @@ function Router() {
           },
         ]          
       },
+      {
+        path: "/terms-of-use-new",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/terms-of-use-new",
+            element: <TermsOfUse/>,
+          },
+        ]          
+      },
 
       //프라이버시 규약
       {
@@ -134,6 +164,16 @@ function Router() {
         children:[
           {
             path: "/terms-of-privacy",
+            element: <TermsOfPrivacy/>,
+          },
+        ]          
+      },
+      {
+        path: "/terms-of-privacy-new",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/terms-of-privacy-new",
             element: <TermsOfPrivacy/>,
           },
         ]          
@@ -260,8 +300,28 @@ function Router() {
           },
         ],
       },
+      {
+        path: "/user-guide-business-new",
+        element: <TopMenu/>,
+        children: [
+          {
+            path: "/user-guide-business-new",
+            element: <UserGuideBusiness/>,
+          },
+        ],
+      },
 
       //플랜 -결제규약
+      {
+        path: "/plan-detail-new",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/plan-detail-new",
+            element: <PlanDetail/>,
+          }
+        ]          
+      },
       {
         path: "/plan-detail",
         element: <TopMenu/>,
@@ -274,6 +334,16 @@ function Router() {
       },
 
       //포인트 -결제규약
+      {
+        path: "/point-detail-rule-new",
+        element: <TopMenu/>,
+        children:[
+          {
+            path: "/point-detail-rule-new",
+            element:<PointDetailRule/>
+          }
+        ]          
+      },
       {
         path: "/point-detail-rule",
         element: <TopMenu/>,
@@ -441,6 +511,17 @@ function Router() {
             },
           ],
         },
+        // 이용가이드
+        {
+          path: "/user-guide-employee-new",
+          element: <TopMenu/>,
+          children: [
+            {
+              path: "/user-guide-employee-new",
+              element: <UserGuideEmployee/>,
+            },
+          ],
+        },
       ]
       : [
         //이용규약
@@ -450,6 +531,16 @@ function Router() {
           children:[
             {
               path: "/terms-of-use",
+              element: <TermsOfUse/>,
+            }
+          ]          
+        },
+        {
+          path: "/terms-of-use-new",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/terms-of-use-new",
               element: <TermsOfUse/>,
             }
           ]          
@@ -466,6 +557,16 @@ function Router() {
             }
           ]          
         },
+        {
+          path: "/terms-of-privacy-new",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/terms-of-privacy-new",
+              element: <TermsOfPrivacy/>,
+            }
+          ]          
+        },
         // 기업 이용가이드
         {
           path: "/user-guide-business",
@@ -473,6 +574,16 @@ function Router() {
           children: [
             {
               path: "/user-guide-business",
+              element: <UserGuideBusiness/>,
+            },
+          ],
+        },
+        {
+          path: "/user-guide-business-new",
+          element: <TopMenu/>,
+          children: [
+            {
+              path: "/user-guide-business-new",
               element: <UserGuideBusiness/>,
             },
           ],
@@ -489,14 +600,34 @@ function Router() {
             }
           ]          
         },
+        {
+          path: "/plan-detail-new",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/plan-detail-new",
+              element: <PlanDetail/>,
+            }
+          ]          
+        },
 
         //포인트 -결제규약
+        {
+          path: "/point-detail-rule",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/point-detail-rule",
+              element: <PointDetailRule/>,
+            }
+          ]          
+        },
       {
-        path: "/point-detail-rule",
+        path: "/point-detail-rule-new",
         element: <TopMenu/>,
         children:[
           {
-            path: "/point-detail-rule",
+            path: "/point-detail-rule-new",
             element: <PointDetailRule/>,
           }
         ]          

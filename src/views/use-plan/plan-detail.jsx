@@ -3,8 +3,10 @@ import { color } from "../../utils/utils";
 import { Link, useNavigate } from "react-router-dom";
 
 const PlanDetail = () => {
+  const url = window.location.pathname;
+
   const navigate = () => {
-    if(document.referrer){
+    if(url === "/plan-detail-new"){
       window.close();
     } else {
       location.href = "/";
@@ -64,7 +66,7 @@ const PlanDetail = () => {
                       2.3 支払済の利用料については、一度支払った利用料の払い戻しはできません。ご注意ください。
                       </li>
                       <li>
-                      　（注）ポイントおよび有料プランの詳細については、<a href="/user-guide-business" target="_blank" rel="noopener noreferrer" style={{color:"orange", fontWeight:"bold"}}>利用ガイド</a>を参照してください。
+                      　（注）ポイントおよび有料プランの詳細については、<a href="/user-guide-business-new" target="_blank" rel="noopener noreferrer" style={{color:"orange", fontWeight:"bold"}}>利用ガイド</a>を参照してください。
                       </li>
                     </ul>
                   </div>

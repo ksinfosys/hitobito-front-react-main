@@ -13,6 +13,7 @@ import { useNavigate } from "react-router";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { userInfo } from "../../stores/user-info";
 import { regexUserPoint } from "../../utils/utils";
+import $ from "jquery";
 
 const CorpInfoMng = () => {
   const [isActive, setIsActive] = useState(false);
@@ -117,6 +118,7 @@ const CorpInfoMng = () => {
 
   // 파일 형식 안맞음
   const [regFile, setRegFile] = useState(false);
+  const [txtFile, setTxtFile] = useState(false);
 
   /* E: 유효성 검사 모달 상태 */
 
@@ -446,6 +448,13 @@ const CorpInfoMng = () => {
   // 파일첨부
   const handleFileChange = async (e, index) => {
     const file = e.target.files
+    const filePath = e.target.value
+    const reg = /(.*?)\.(txt)$/;
+
+    if(filePath.match(reg)){
+      setTxtFile(true)
+      return false
+    }
     
     if (rsDocumentFile.length + file.length > 2) {
       setDocumentFileFail(true)
@@ -468,6 +477,9 @@ const CorpInfoMng = () => {
     setRsDocumentFile([...tempForm])
   }
 
+  const fileDownload = (i) => {
+    window.location = documentFile[i]
+  }
 
   // 회사 이미지 업로드
   const handleChangeImage = async (e, index) => {
@@ -1108,7 +1120,7 @@ const CorpInfoMng = () => {
                 </div>
                 {/* 파일첨부 */}
                 <div className="attach-wrap flex">
-                  <label htmlFor="file01" className="attach-tit-wrap mt-3 flex items-center gap-2">
+                  <label htmlFor="file01" className="attach-tit-wrap mt-3 flex items-center gap-2" style={{cursor:"pointer"}}>
                     <div className="attach-tit">
                       ファイル添付
                     </div>
@@ -1120,9 +1132,10 @@ const CorpInfoMng = () => {
                   <div className="flex flex-col attach-cont-wrap">
                     {
                       rsDocumentFile?.length > 0 && rsDocumentFile.map((file, index) => {
+                        console.log(file)
                         return (
                           <div className="attach-cont-item flex items-center space-between" key={index}>
-                            <div className="attach-cont-file">
+                            <div className="attach-cont-file" onClick={() => fileDownload(index)}>
                               {file.name}
                             </div>
                             <button className="attach-cont-btn" onClick={() => handleFileDelete(index)}>
@@ -1839,6 +1852,31 @@ const CorpInfoMng = () => {
               className="btn btn-pending"
               onClick={() => {
                 setRegFile(false);
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
+
+      {/* txt파일 첨부 실패 모달 */}
+      <Modal
+        show={txtFile}
+        onHidden={() => {
+          setRegFile(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit">TXT ファイルは登録できません。</div>
+          <div className="modal-subtit">
+
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              className="btn btn-pending"
+              onClick={() => {
+                setTxtFile(false);
               }}
             >
               確認

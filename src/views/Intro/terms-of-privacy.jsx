@@ -3,8 +3,10 @@ import { color } from "../../utils/utils";
 import { Link, useNavigate } from "react-router-dom";
 
 const TermsOfPrivacy = () => {
+  const url = window.location.pathname;
+
   const navigate = () => {
-    if(document.referrer){
+    if(url === "/terms-of-privacy-new"){
       window.close();
     } else {
       location.href = "/";

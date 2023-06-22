@@ -9,15 +9,15 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function UserGuideEmployee() {
-
-//navigate
-const navigate = () => {
-  if(document.referrer){
-    window.close();
-  } else {
-    location.href = "/";
+  const url = window.location.pathname;
+  // navigate
+  const navigate = () => {
+    if(url === "/user-guide-employee-new"){
+      window.close();
+    } else {
+      location.href = "/";
+    }
   }
-}
   
   return (
     <>
