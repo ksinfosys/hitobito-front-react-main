@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import moment from "moment";
 import Search from "@/assets/images/search.svg";
 
-import UserBlank from "@/assets/images/user-blank.png";
+import UserBlank from "@/assets/images/defaultjobseeker.png";
 import FileDown from "@/assets/images/file-down.svg";
 
 import Pagination from "../../components/pagination";
@@ -1148,7 +1148,7 @@ const InterviewMng = () => {
                         {
                             userDetailInfo && userDetailInfo.photoFile ?
                                 <img src={`https://hitobito-net.com/api${userDetailInfo.photoFile.fileURL}`} alt={userDetailInfo.photoFile.fileName} style={{ width: '100px', height: 'auto' }}/> :
-                                <img src={UserBlank} alt="noImage" />
+                                <img src={UserBlank} alt="noImage" style={{ width: '100px', height: 'auto' }}/>
                         }
                     </div>
                     <div className="flex gap-5 items-center space-between">
