@@ -216,8 +216,8 @@ const CorpInfoMng = () => {
 
             // 파일첨부
             if (result.attahcedList !== null) {
-              setTempDocumentFile(result.attahcedList)
               setFetchDocument(result.attahcedList)
+              setTempDocumentFile(result.attahcedList)
             }
             // console.log(fetchImage)
             // if (result.imageFile.split(",") !== fetchImage) {
@@ -517,32 +517,6 @@ const CorpInfoMng = () => {
     }
   }
 
-  // function saveOrOpenBlob(url, blobName) {
-  //   var blob;
-  //   var xmlHTTP = new XMLHttpRequest();
-  //   xmlHTTP.open('GET', url, true);
-  //   xmlHTTP.responseType = 'arraybuffer';
-  //   xmlHTTP.onload = function(e) {
-  //       blob = new Blob([this.response]);   
-  //   };
-  //   xmlHTTP.onprogress = function(pr) {
-  //     var progress = document.createElement("p"); progress.innerText = "Downloaded: " + pr.loaded + "/" + pr.total; 
-  //     document.body.appendChild(progress);
-  //   };
-  //   xmlHTTP.onloadend = function(e){
-  //       var fileName = blobName;
-  //       var tempEl = document.createElement("a");
-  //       document.body.appendChild(tempEl);
-  //       tempEl.style = "display: none";
-  //       url = window.URL.createObjectURL(blob);
-  //       tempEl.href = url;
-  //       tempEl.download = fileName;
-  //       tempEl.click();
-  //       window.URL.revokeObjectURL(url);
-  //   }
-  //   xmlHTTP.send();
-  // }
-
   // 회사 이미지 업로드
   const handleChangeImage = async (e, index) => {
     const file = e.target.files
@@ -802,9 +776,10 @@ const CorpInfoMng = () => {
     }
   }, [fetchLogo])
 
+  const [endCount, setEndCount] = useState(0)
+  
   // 파일첨부
   useEffect(() => {
-
     setRsDocumentFile([])
     fetchDocument?.map((document) => {
       axios.get('/api' + document.cpFileIdx, {
@@ -812,17 +787,35 @@ const CorpInfoMng = () => {
         headers: {
           accessToken: getCookie('accessToken').toString(),
           lastLoginTime: getCookie('lastLoginTime').toString()
-        }
+        },
+        // onDownloadProgress: (progressEvent) => {
+        //   let percent = (progressEvent.loaded / progressEvent.total * 100).toFixed(1);
+        //   let idx = document.cpFileIdx.split("/")
+        //   let fileId = idx[2]          
+        // }
       }).then(res => {
+        
         if (rsDocumentFile.length > 1) {
           return false
         } else {
           const file = new File([res.data], document.cpFileIdxName)
           setRsDocumentFile(prev => [...prev, file])
+          setEndCount((prevState) => prevState + 1)
         }
       })
     })
   }, [fetchDocument])
+
+  useEffect(() => {
+    console.log(endCount)
+    if(endCount === rsDocumentFile.length){
+      $(".attach-cont-btn").css("display", "block");
+    }
+  }, [endCount])
+
+  useEffect(() => {
+    $(".attach-cont-btn").css("display", "block");
+  }, [rsDocumentFile])
 
   // 값 비어있는지 검사
   useEffect(() => {
@@ -1217,7 +1210,7 @@ const CorpInfoMng = () => {
                             <div className="attach-cont-file" style={{cursor:"pointer"}} onClick={(e) => fileDownload(e)}>
                               {file.cpFileIdxName}
                             </div>
-                            <button className="attach-cont-btn" onClick={() => handleFileDelete(index)}>
+                            <button className="attach-cont-btn" onClick={() => handleFileDelete(index)} style={{display:"none"}}>
                               <img src={blacksmallX} alt="" />
                             </button>
                           </div>
