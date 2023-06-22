@@ -89,6 +89,7 @@ const CorpInfoMng = () => {
   // 파일 관련 state
   const [documentFile, setDocumentFile] = useState([]);
   const [rsDocumentFile, setRsDocumentFile] = useState([]);
+  const [tempDocumentFile, setTempDocumentFile] = useState([]);
 
   // 회사이미지 관련 state
   const [image, setImage] = useState([]);
@@ -215,9 +216,9 @@ const CorpInfoMng = () => {
 
             // 파일첨부
             if (result.attahcedList !== null) {
+              setTempDocumentFile(result.attahcedList)
               setFetchDocument(result.attahcedList)
             }
-
             // console.log(fetchImage)
             // if (result.imageFile.split(",") !== fetchImage) {
             // }
@@ -448,12 +449,13 @@ const CorpInfoMng = () => {
   // 파일첨부
   const handleFileChange = async (e, index) => {
     const file = e.target.files
-    const filePath = e.target.value
     const reg = /(.*?)\.(txt)$/;
 
-    if(filePath.match(reg)){
-      setTxtFile(true)
-      return false
+    for(let i = 0; i < file.length; i++){
+      if(file[i].name.match(reg)){
+        setTxtFile(true)
+        return false
+      }
     }
     
     if (rsDocumentFile.length + file.length > 2) {
@@ -463,23 +465,83 @@ const CorpInfoMng = () => {
       for (let i = 0; i < file.length; i++) {
         const reader = new FileReader()
         reader.readAsDataURL(file[i])
-        reader.onload = (res) => setDocumentFile(prevState => [...prevState, res.target.result])
-        setRsDocumentFile(prev => [...prev, file[i]]);
+        reader.onload = (res) => {
+          setDocumentFile(prevState => [...prevState, res.target.result])
+          file[i].path = res.target.result;
+          setRsDocumentFile(prev => [...prev, file[i]]);
+          const tempFetch = {
+            cpFileIdxName : file[i].name,
+            cpFileIdx: "",
+            cpFileIdxUrl: ""
+          };
+          setTempDocumentFile(prev => [...prev, tempFetch]);
+        }
       }
     }
   }
   const handleFileDelete = (i) => {
     const newImages = [...documentFile];
-    const tempForm = [...rsDocumentFile]
+    const tempForm = [...rsDocumentFile];
+    const tempFetch = [...tempDocumentFile];
     newImages.splice(i, 1);
-    tempForm.splice(i, 1)
+    tempForm.splice(i, 1);
+    tempFetch.splice(i, 1);
     setDocumentFile(newImages);
-    setRsDocumentFile([...tempForm])
+    setRsDocumentFile([...tempForm]);
+    setTempDocumentFile([...tempFetch]);
   }
 
-  const fileDownload = (i) => {
-    window.location = documentFile[i]
+  const fileDownload = (e) => {
+    const fileName = e.target.textContent;
+
+    for(let i = 0; i < rsDocumentFile.length; i++){
+      if(tempDocumentFile[i].cpFileIdx === "" && fileName === rsDocumentFile[i].name){
+        let file = rsDocumentFile[i];
+        let link = document.createElement("a");
+        link.download = file.name;
+        link.href = file.path;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        link.remove();
+      } else if(fileName === tempDocumentFile[i].cpFileIdxName){
+        let file = tempDocumentFile[i];
+        let link = document.createElement("a");
+        link.download = file.cpFileIdxName;
+        link.href = "/api"+file.cpFileIdx;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        link.remove();
+      }
+    }
   }
+
+  // function saveOrOpenBlob(url, blobName) {
+  //   var blob;
+  //   var xmlHTTP = new XMLHttpRequest();
+  //   xmlHTTP.open('GET', url, true);
+  //   xmlHTTP.responseType = 'arraybuffer';
+  //   xmlHTTP.onload = function(e) {
+  //       blob = new Blob([this.response]);   
+  //   };
+  //   xmlHTTP.onprogress = function(pr) {
+  //     var progress = document.createElement("p"); progress.innerText = "Downloaded: " + pr.loaded + "/" + pr.total; 
+  //     document.body.appendChild(progress);
+  //   };
+  //   xmlHTTP.onloadend = function(e){
+  //       var fileName = blobName;
+  //       var tempEl = document.createElement("a");
+  //       document.body.appendChild(tempEl);
+  //       tempEl.style = "display: none";
+  //       url = window.URL.createObjectURL(blob);
+  //       tempEl.href = url;
+  //       tempEl.download = fileName;
+  //       tempEl.click();
+  //       window.URL.revokeObjectURL(url);
+  //   }
+  //   xmlHTTP.send();
+  // }
 
   // 회사 이미지 업로드
   const handleChangeImage = async (e, index) => {
@@ -1127,16 +1189,33 @@ const CorpInfoMng = () => {
                     <div className="attach-icon">
                       <img src={attachIcon} alt="" />
                     </div>
-                    <input type="file" name="file01" id="file01" accept="pdf" multiple onChange={(e) => handleFileChange(e)} />
+                    <input type="file" name="file01" id="file01" accept="pdf" multiple 
+                      onChange={(e) => handleFileChange(e)}
+                      onClick={(e) => {e.target.value = ""}}/>
                   </label>
                   <div className="flex flex-col attach-cont-wrap">
-                    {
+                    {/* {
                       rsDocumentFile?.length > 0 && rsDocumentFile.map((file, index) => {
-                        console.log(file)
                         return (
                           <div className="attach-cont-item flex items-center space-between" key={index}>
-                            <div className="attach-cont-file" onClick={() => fileDownload(index)}>
+                            <a href={file.path} download={file.name} style={{cursor:"pointer"}}>
+                            <div className="attach-cont-file">
                               {file.name}
+                            </div>
+                            </a>
+                            <button className="attach-cont-btn" onClick={() => handleFileDelete(index)}>
+                              <img src={blacksmallX} alt="" />
+                            </button>
+                          </div>
+                        )
+                      })
+                    } */}
+                    {
+                      tempDocumentFile?.length > 0 && tempDocumentFile.map((file, index) => {
+                        return (
+                          <div className="attach-cont-item flex items-center space-between" key={index}>
+                            <div className="attach-cont-file" style={{cursor:"pointer"}} onClick={(e) => fileDownload(e)}>
+                              {file.cpFileIdxName}
                             </div>
                             <button className="attach-cont-btn" onClick={() => handleFileDelete(index)}>
                               <img src={blacksmallX} alt="" />
