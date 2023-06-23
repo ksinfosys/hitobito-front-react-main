@@ -41,9 +41,9 @@ function GiftcardRecord() {
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
 
-    if (scrollTop + clientHeight >= scrollHeight) {
-      !lastAgcFlag ? moGetAmazonList() : void 0;
-    }
+    // if (scrollTop + clientHeight >= scrollHeight) {
+    //   !lastAgcFlag ? moGetAmazonList() : void 0;
+    // }
   }, 300);
 
   useEffect(() => {
@@ -56,11 +56,11 @@ function GiftcardRecord() {
     getAmazonList();
   }, []);
 
-  useEffect(() => {
-    if (deviceFlag === "mo") {
-      moGetAmazonList();
-    }
-  }, [deviceFlag]);
+  // useEffect(() => {
+  //   if (deviceFlag === "mo") {
+  //     moGetAmazonList();
+  //   }
+  // }, [deviceFlag]);
 
   // useEffect(() => {
   //   moGetAmazonList(lastDataIdx);
@@ -100,9 +100,9 @@ function GiftcardRecord() {
     getAmazonList();
   }, [currentPageIdx]);
 
-  useDidMountEffect(() => {
-    moGetAmazonList(); //최초 진입시 2회 api 통신
-  }, [isFirstRenderMob]);
+  // useDidMountEffect(() => {
+  //   moGetAmazonList(); //최초 진입시 2회 api 통신
+  // }, [isFirstRenderMob]);
 
   function handleResize() {
     if (window.innerWidth > 1024) {
@@ -121,39 +121,40 @@ function GiftcardRecord() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const moGetAmazonList = () => {
-    let params =
-      curPage === null
-        ? {}
-        : {
-          page: curPage,
-        };
-    axios
-      .post("/api/app/agc/find", params, {
-        withCredentials: true,
-        headers: {
-          accessToken: getCookie("accessToken"),
-          lastLoginTime: getCookie("lastLoginTime"),
-        },
-      })
-      .then((response) => {
-        // response넣기
-        console.log("mo Response", response);
-        const {
-          data: {
-            result: { fegcList },
-          },
-        } = response;
-        response.data.resultCode === "200"
-          ? (() => {
-            setMoResult((prevList) => [...prevList, ...fegcList]);
-            setLastAgcFlag(response.data.result.lastAgcFlag);
-            setCurPage(response.data.result.page);
-            setIsFirstRenderMob(false);
-          })()
-          : console.log("fetching error:::", response);
-      });
-  };
+  // const moGetAmazonList = () => {
+  //   let params =
+  //     curPage === null
+  //       ? {}
+  //       : {
+  //         page: curPage,
+  //       };
+  //   axios
+  //     .post("/api/app/agc/find", params, {
+  //       withCredentials: true,
+  //       headers: {
+  //         accessToken: getCookie("accessToken"),
+  //         lastLoginTime: getCookie("lastLoginTime"),
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // response넣기
+  //       //consoel.log("mo value: ", response.data);
+  //       console.log("mo Response", response);
+  //       const {
+  //         data: {
+  //           result: { fegcList },
+  //         },
+  //       } = response;
+  //       response.data.resultCode === "200"
+  //         ? (() => {
+  //           setMoResult((prevList) => [...prevList, ...fegcList]);
+  //           setLastAgcFlag(response.data.result.lastAgcFlag);
+  //           setCurPage(response.data.result.page);
+  //           setIsFirstRenderMob(false);
+  //         })()
+  //         : console.log("fetching error:::", response);
+  //     });
+  // };
 
   return (
     <>

@@ -57,20 +57,20 @@ const sideMenu = atom({
                     },
                 ],
             },
-            {
-                pathname: "/suspension",
-                title: "利用停止/脱退",
-                subMenu: [
-                    {
-                        pathname: "/suspension",
-                        title: "利用停止",
-                    },
-                    {
-                        pathname: "/withdraw",
-                        title: "会員退会",
-                    },
-                ],
-            },
+            // {
+            //     pathname: "/suspension",
+            //     title: "利用停止/脱退",
+            //     subMenu: [
+            //         {
+            //             pathname: "/suspension",
+            //             title: "利用停止",
+            //         },
+            //         {
+            //             pathname: "/withdraw",
+            //             title: "会員退会",
+            //         },
+            //     ],
+            // },
             // {
             //     pathname: "",
             //     title: "ログアウト",
