@@ -290,6 +290,15 @@ const DashboardList = (props) => {
       };
     }, []);
       
+    const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+    const [imageModal, setImageModal] = useState(false);
+
+    const handleImageClick = (imageUrl) => {
+        setSelectedImageUrl(imageUrl);
+        setImageModal(true);
+    };
+
+
     return (
         <>
             <div className="dashboard-cont-cont flex flex-col">
@@ -508,9 +517,7 @@ const DashboardList = (props) => {
                                                             style={{ cursor: "pointer", backgroundColor: "white" }} 
                                                             src={`https://hitobito-net.com/api${v}`} 
                                                             alt={'company image'}
-                                                            onClick={() => {
-                                                                window.open(`https://hitobito-net.com/api${v}`, "_blank");
-                                                            }}
+                                                            onClick={() => handleImageClick(`https://hitobito-net.com/api${v}`)}
                                                         />
                                                     ) : (
                                                         <img
@@ -781,6 +788,25 @@ const DashboardList = (props) => {
                             className="btn btn-primary"
                             onClick={() => { setDeleteSuccessModal(false) }}
                         >確認</button>
+                    </div>
+                </ModalBody>
+            </Modal>
+
+            <Modal
+                className="company-info-image"
+                show={imageModal}
+                onHidden={() => {
+                    setImageModal(false);
+                }}
+            >
+                <ModalBody className="p-10 text-center">
+                    <div>
+                    <a href="#"
+                        className="half-div-right"
+                        onClick={() => {setImageModal(false);}}><img src={Xicon} alt="" /></a>
+                    </div>
+                    <div className="modal-tit mb-5">
+                        <img src={selectedImageUrl} alt="company image" />
                     </div>
                 </ModalBody>
             </Modal>
