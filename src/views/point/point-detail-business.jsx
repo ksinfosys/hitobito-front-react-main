@@ -700,7 +700,7 @@ function PointDetailBusiness() {
       >
         <ModalBody className="p-10 text-center">
           <div className="modal-tit">購入金額超過</div>
-          <div className="modal-subtit">最大30万円まで購入できます</div>
+          <div className="modal-subtit">1日最大33万円まで購入できます</div>
           <div className="flex flex-end gap-3">
             <a
               href="#"

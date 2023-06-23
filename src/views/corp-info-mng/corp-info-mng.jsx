@@ -781,18 +781,23 @@ const CorpInfoMng = () => {
   // 파일첨부
   useEffect(() => {
     setRsDocumentFile([])
-    fetchDocument?.map((document) => {
+    fetchDocument?.map((document, index) => {
+      $("#prog_"+index).css("display","block")
+      $(".attach-cont-btn").css("display", "none");
       axios.get('/api' + document.cpFileIdx, {
         responseType: 'blob',
         headers: {
           accessToken: getCookie('accessToken').toString(),
           lastLoginTime: getCookie('lastLoginTime').toString()
         },
-        // onDownloadProgress: (progressEvent) => {
-        //   let percent = (progressEvent.loaded / progressEvent.total * 100).toFixed(1);
-        //   let idx = document.cpFileIdx.split("/")
-        //   let fileId = idx[2]          
-        // }
+        onDownloadProgress: (progressEvent) => {
+          let percent = (progressEvent.loaded / progressEvent.total * 100).toFixed(1);
+          $("#progBar_"+index).css("width", percent+"%")
+
+          if(percent >= 99.9) {
+            $("#prog_"+index).remove()
+          }
+        }
       }).then(res => {
         
         if (rsDocumentFile.length > 1) {
@@ -807,15 +812,10 @@ const CorpInfoMng = () => {
   }, [fetchDocument])
 
   useEffect(() => {
-    console.log(endCount)
-    if(endCount === rsDocumentFile.length){
+    if(endCount === tempDocumentFile.length){
       $(".attach-cont-btn").css("display", "block");
     }
   }, [endCount])
-
-  useEffect(() => {
-    $(".attach-cont-btn").css("display", "block");
-  }, [rsDocumentFile])
 
   // 값 비어있는지 검사
   useEffect(() => {
@@ -1206,11 +1206,14 @@ const CorpInfoMng = () => {
                     {
                       tempDocumentFile?.length > 0 && tempDocumentFile.map((file, index) => {
                         return (
-                          <div className="attach-cont-item flex items-center space-between" key={index}>
+                          <div className="attach-cont-item flex items-center space-between" key={index} style={{height: "48px"}}>
                             <div className="attach-cont-file" style={{cursor:"pointer"}} onClick={(e) => fileDownload(e)}>
                               {file.cpFileIdxName}
                             </div>
-                            <button className="attach-cont-btn" onClick={() => handleFileDelete(index)} style={{display:"none"}}>
+                            <div class={"progress"} id={"prog_"+index} style={{display:"none", width:"40%", float:"right"}}>
+                              <div class={"progress-bar progress-bar-striped bg-warning"} id={"progBar_"+index} role="progressbar" aria-label="Warning striped example" style={{width: "0%"}} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <button className="attach-cont-btn" onClick={() => handleFileDelete(index)} style={{display:"block"}}>
                               <img src={blacksmallX} alt="" />
                             </button>
                           </div>
