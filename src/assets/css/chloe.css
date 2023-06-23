@@ -1717,6 +1717,10 @@ tr.table-content:hover td {
   max-height: 680px !important;
 }
 
+.company-info-image .modal-body {
+  max-height: 680px !important;
+}
+
 .report-check-modal .modal-body {
   max-height: 800px !important;
 }
