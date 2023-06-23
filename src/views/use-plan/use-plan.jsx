@@ -80,6 +80,10 @@ const UsePlan = () => {
   const [paymentProcessFail, setPaymentProcessFail] = useState(false);
   // 약관 동의 안할시 나오는 모달
   const [policyProcessFail, setPolicyProcessFail] = useState(false);
+  // {/* 1일 결제 한도 초과 */}
+  const [dayLimitFail, setDayLimitFail] = useState(false);
+  // {/* 한달 결제 한도 초과 */}
+  const [monthLimitFail, setMonthLimitFail] = useState(false);
 
   // ** checkout API
   const getCheckOut = (isplanCode, isPaymentMethod) => {
@@ -119,6 +123,11 @@ const UsePlan = () => {
             case "616":
               setSamePlanFail(true);
               break;
+            case "617":
+              setDayLimitFail(true);
+              break;
+            case "618":
+              setMonthLimitFail(true);
             default:
               break;
           }
@@ -177,6 +186,11 @@ const UsePlan = () => {
             case "616":
               setSamePlanFail(true);
               break;
+            case "617":
+              setDayLimitFail(true);
+              break;
+            case "618":
+              setMonthLimitFail(true);
             default:
               break;
           }
@@ -985,6 +999,58 @@ const UsePlan = () => {
             >
               キャンセル
             </button> */}
+          </div>
+        </ModalBody>
+      </Modal>
+
+      {/* 1일 결제 한도 초과 */}
+      <Modal
+        show={dayLimitFail}
+        onHidden={() => {
+          setDayLimitFail(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit">決済に失敗しました。</div>
+          <div className="modal-subtit">
+            1日最大33万円まで購入できます。
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-business"
+              onClick={() => {
+                setDayLimitFail(false);
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
+
+      {/* 한달 결제 한도 초과 */}
+      <Modal
+        show={monthLimitFail}
+        onHidden={() => {
+          setMonthLimitFail(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit">決済に失敗しました。</div>
+          <div className="modal-subtit">
+            1ヶ月最大330万円まで購入できます。
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-business"
+              onClick={() => {
+                setMonthLimitFail(false);
+              }}
+            >
+              確認
+            </a>
           </div>
         </ModalBody>
       </Modal>

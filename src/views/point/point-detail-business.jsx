@@ -37,6 +37,10 @@ function PointDetailBusiness() {
   const [idResponseFail, setIdResponseFail] = useState(false);
   // {/* 결제 최대 금액 초과 */}
   const [maxPriceFail, setMaxPriceFail] = useState(false);
+  // {/* 1일 결제 한도 초과 */}
+  const [dayLimitFail, setDayLimitFail] = useState(false);
+  // {/* 한달 결제 한도 초과 */}
+  const [monthLimitFail, setMonthLimitFail] = useState(false);
   // {/* 포인트는 1000포인트 단위 */}
   const [pointUnitFail, setPointUnitFail] = useState(false);
   // 직접입력 포인트 없음
@@ -164,6 +168,12 @@ function PointDetailBusiness() {
             break;
           case "615":
             setPointNullFail(true);
+            break;
+          case "617":
+            setDayLimitFail(true);
+            break;
+          case "618":
+            setMonthLimitFail(true);
           default:
             break;
         }
@@ -807,6 +817,58 @@ function PointDetailBusiness() {
               className="btn btn-business"
               onClick={() => {
                 setPointUnitFail(false);
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
+
+      {/* 1일 결제 한도 초과 */}
+      <Modal
+        show={dayLimitFail}
+        onHidden={() => {
+          setDayLimitFail(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit">決済に失敗しました。</div>
+          <div className="modal-subtit">
+            1日最大33万円まで購入できます。
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-business"
+              onClick={() => {
+                setDayLimitFail(false);
+              }}
+            >
+              確認
+            </a>
+          </div>
+        </ModalBody>
+      </Modal>
+
+      {/* 한달 결제 한도 초과 */}
+      <Modal
+        show={monthLimitFail}
+        onHidden={() => {
+          setMonthLimitFail(false);
+        }}
+      >
+        <ModalBody className="p-10 text-center">
+          <div className="modal-tit">決済に失敗しました。</div>
+          <div className="modal-subtit">
+            1ヶ月最大330万円まで購入できます。
+          </div>
+          <div className="flex flex-end gap-3">
+            <a
+              href="#"
+              className="btn btn-business"
+              onClick={() => {
+                setMonthLimitFail(false);
               }}
             >
               確認
