@@ -295,10 +295,15 @@ function MessageBoxBusiness() {
                                         <button
                                             className="btn btn-sm btn-pending w-27 mr-2"
                                             onClick={() => {
-                                                msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
-                                                    msgIdxes.length > 1 ? setMessageReplyFail(true) :
-                                                        setMessageReplyModal(true);
-                                            }}>メッセージ作成</button>
+                                                if (msgIdxes.length < 1) {
+                                                  setMessageReplyCheckFail(true);
+                                                } else if (msgIdxes.length > 1) {
+                                                  setMessageReplyFail(true);
+                                                } else {
+                                                  setMessageReplyModal(true);
+                                                  setMsgSendTitle(msgData[0] && "Re: " + msgData[0].msgTitle);
+                                                }
+                                              }}>メッセージ作成</button>
                                         <button
                                             className="btn btn-sm btn-outline-secondary w-24"
                                             onClick={() => {
@@ -419,6 +424,7 @@ function MessageBoxBusiness() {
                             onClick={() => {
                                 setMessageReplyModal(true);
                                 setMsgModal(false);
+                                setMsgSendTitle("Re: " + receptionState.msgTitle);
                             }}
                             className="btn btn-sm btn-pending w-24"
                         >

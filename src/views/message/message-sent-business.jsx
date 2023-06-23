@@ -321,10 +321,15 @@ function MessageSentBusiness() {
                                         <button
                                             className="btn btn-sm btn-pending w-27 mr-2"
                                             onClick={() => {
-                                                msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
-                                                    msgIdxes.length > 1 ? setMessageReplyFail(true) :
-                                                        setMessageReplyModal(true);
-                                            }}
+                                                if (msgIdxes.length < 1) {
+                                                  setMessageReplyCheckFail(true);
+                                                } else if (msgIdxes.length > 1) {
+                                                  setMessageReplyFail(true);
+                                                } else {
+                                                  setMessageReplyModal(true);
+                                                  setMsgSendTitle(msgData[0] && "Re: " + msgData[0].msgTitle);
+                                                }
+                                              }}
                                         >メッセージ作成</button>
                                         <button
                                             className="btn btn-sm btn-outline-pending w-27 mr-2"
@@ -459,6 +464,7 @@ function MessageSentBusiness() {
                             onClick={() => {
                                 setMessageReplyModal(true);
                                 setMsgModal(false);
+                                setMsgSendTitle("Re: " + receptionState.msgTitle);
                             }}
                             className="btn btn-sm btn-pending w-24"
                         >
