@@ -782,6 +782,7 @@ function Main() {
           className={
             sidesMenu ? "side-nav on shrink-0 tr" : "side-nav shrink-0 tr"
           }
+          style={{position:"relative"}}
         >
           <ul>
             {/* BEGIN: First Child */}
@@ -962,6 +963,18 @@ function Main() {
                 <img src="/images/ad-3.png" alt="" />
               </Link>
             </div>
+          </div>
+
+          <div className="ml-5 mb-5" style={{position:"absolute", bottom:"0", justifyContent: "center"}}>
+
+              <Link
+                to="/withdraw-business"
+                content="会員退会"
+                className="cursor-pointer"
+              >
+                <div className="btn btn-sm btn-outline-pending bg-white">会員退会</div>
+              </Link>
+
           </div>
         </nav>
         {/* END: Side Menu */}

@@ -45,10 +45,10 @@ const sideMenu = atom({
                 pathname: "/password-change",
                 title: "パスワード変更",
             },
-            {
-                pathname: "/withdraw-business",
-                title: "会員退会",
-            },
+            // {
+            //     pathname: "/withdraw-business",
+            //     title: "会員退会",
+            // },
             // {
             //     pathname: "",
             //     title: "ログアウト",
