@@ -522,10 +522,15 @@ function MessageReception() {
                                             <button
                                                 className="btn btn-sm btn-primary sm:w-24 w-16 hidden lg:inline-block"
                                                 onClick={() => {
-                                                    msgIdxes.length < 1 ? setMessageReplyCheckFail(true) :
-                                                        msgIdxes.length > 1 ? setMessageReplyFail(true) :
-                                                            setMessageReply(true);
-                                                }}
+                                                    if (msgIdxes.length < 1) {
+                                                      setMessageReplyCheckFail(true);
+                                                    } else if (msgIdxes.length > 1) {
+                                                      setMessageReplyFail(true);
+                                                    } else {
+                                                      setMessageReply(true);
+                                                      setMsgSendTitle(msgData[0] && "Re: " + msgData[0].msgTitle);
+                                                    }
+                                                  }}
                                             >
                                                 返信
                                             </button>
@@ -844,6 +849,7 @@ function MessageReception() {
                             onClick={() => {
                                 setMessageReply(true);
                                 setMsgModal(false);
+                                setMsgSendTitle("Re: " + receptionState.msgTitle);
                             }}
                             className="btn btn-sm btn-primary w-24"
                         >返信</button>
