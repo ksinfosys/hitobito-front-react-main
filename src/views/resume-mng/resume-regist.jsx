@@ -1563,6 +1563,9 @@ const ResumeRegist = () => {
                <p className='blue-tit mt-0'>複数のスキルを一度に登録できます。</p>
               </div>
               <button className="btn btn-primary items-center shrink-0 w-30 pl-5 pr-5 btn-age" onClick={() => {
+                  if(multipleSkills.selector.arr.length == 0){
+                    $("#registbtn").css({'cursor': 'not-allowed','pointerEvents':'none','color':'#808386', 'backgroundColor': '#E4E7EA', 'border': 'none'});
+                  }
                   setskillPlusModal(true);
                 }}>拡張検索</button>
             </div>
