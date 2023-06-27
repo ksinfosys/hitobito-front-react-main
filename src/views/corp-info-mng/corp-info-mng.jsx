@@ -1171,6 +1171,7 @@ const CorpInfoMng = () => {
                         cpAd: e.currentTarget.value,
                       });
                     }}
+                    value={updateData.cpAd}
                   ></textarea>
                 </div>
                 {/* 파일첨부 */}
