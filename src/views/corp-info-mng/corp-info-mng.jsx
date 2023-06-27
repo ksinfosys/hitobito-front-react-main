@@ -859,7 +859,7 @@ const CorpInfoMng = () => {
                   placeholder="企業名入力"
                   maxLength={50}
                   defaultValue={userInfoV.cpUserName}
-                  onChange={e => {
+                  onKeyUp={e => {
                     if (e.currentTarget.value.length > 200) {
                       alert("入力内容が多すぎます。");
                     } else if (e.currentTarget.value === '') {
@@ -950,7 +950,7 @@ const CorpInfoMng = () => {
                     placeholder="企業ホームページ入力"
                     maxLength={50}
                     defaultValue={result?.joinList?.homepage}
-                    onChange={e => {
+                    onKeyUp={e => {
                       if (e.currentTarget.value.length > 200) {
                         alert("入力内容が多すぎます。");
                       } else if (e.currentTarget.value === '') {
@@ -983,7 +983,7 @@ const CorpInfoMng = () => {
                   placeholder="企業名（カタカナ） 入力"
                   maxLength={50}
                   defaultValue={result?.joinList?.cpUserKana}
-                  onChange={e => {
+                  onKeyUp={e => {
                     if (e.currentTarget.value.length > 200) {
                       alert("入力内容が多すぎます。");
                     } else if (e.currentTarget.value === '') {
@@ -1039,7 +1039,7 @@ const CorpInfoMng = () => {
                     maxLength={13}
                     placeholder="-なしで数字だけ入力してください。（例：12345678)"
                     defaultValue={result?.joinList?.phoneNumber}
-                    onChange={(e) => {
+                    onKeyUp={(e) => {
                       if (e.currentTarget.value.length >= 3) {
                         handlePhone(e)
                       } else {
@@ -1093,7 +1093,7 @@ const CorpInfoMng = () => {
                       placeholder="数字入力"
                       maxLength={10}
                       defaultValue={result?.joinList?.empCount}
-                      onChange={e => {
+                      onKeyUp={e => {
                         if (e.currentTarget.value.length > 10) {
                           alert("入力内容が多すぎます。");
                         } else if (e.currentTarget.value === '') {
@@ -1126,7 +1126,7 @@ const CorpInfoMng = () => {
                       placeholder="数字、少数入力"
                       maxLength={20}
                       defaultValue={result?.joinList?.salesAmount && regexUserPoint(result?.joinList?.salesAmount)}
-                      onChange={e => {
+                      onKeyUp={e => {
                         if (e.currentTarget.value.length > 20) {
                           alert("入力内容が多すぎます。");
                         } else if (e.currentTarget.value === '') {
@@ -1165,13 +1165,12 @@ const CorpInfoMng = () => {
                     placeholder="求人公告入力"
                     maxLength={3000}
                     defaultValue={result?.joinList?.cpAd}
-                    onChange={e => {
+                    onKeyUp={e => {
                       setUpdateData({
                         ...updateData,
                         cpAd: e.currentTarget.value,
                       });
                     }}
-                    value={updateData.cpAd}
                   ></textarea>
                 </div>
                 {/* 파일첨부 */}
