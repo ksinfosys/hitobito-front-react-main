@@ -130,6 +130,7 @@ function Main() {
   }, []);
 
   const notiReadAll = () => {
+    setUnreadNotiCnt(0);
     axios
       .put("/api" + "/notification/readall", {}, { ...config })
       .then((response) => {
@@ -148,6 +149,7 @@ function Main() {
   };
 
   const notiDelAll = () => {
+    setUnreadNotiCnt(0);
     axios
       .put("/api" + "/notification/deleteall", {}, { ...config })
       .then((response) => {

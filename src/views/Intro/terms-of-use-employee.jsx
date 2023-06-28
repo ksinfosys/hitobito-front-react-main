@@ -6,7 +6,7 @@ const TermsOfUse = () => {
   const url = window.location.pathname;
 
   const navigate = () => {
-    if(url === "/terms-of-use-new"){
+    if(url === "/terms-of-use-employee-new"){
       window.close();
     } else {
       location.href = "/";
