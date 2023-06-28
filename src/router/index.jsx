@@ -78,6 +78,7 @@ import PlanDetail from "../views/use-plan/plan-detail";
 import PointDetailRule from "../views/point/point-detail-rule";
 
 import TermsOfUse from "../views/Intro/terms-of-use";
+import TermsOfUseEmployee from "../views/Intro/terms-of-use-employee";
 import TermsOfPrivacy from "../views/Intro/terms-of-privacy";
 
 function Router() {
@@ -521,6 +522,49 @@ function Router() {
               element: <UserGuideEmployee/>,
             },
           ],
+        },
+        //이용규약
+        {
+          path: "/terms-of-use-employee",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/terms-of-use-employee",
+              element: <TermsOfUseEmployee/>,
+            }
+          ]          
+        },
+        {
+          path: "/terms-of-use-employee-new",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/terms-of-use-employee-new",
+              element: <TermsOfUseEmployee/>,
+            }
+          ]          
+        },
+
+        //프라이버시 규약
+        {
+          path: "/terms-of-privacy",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/terms-of-privacy",
+              element: <TermsOfPrivacy/>,
+            }
+          ]          
+        },
+        {
+          path: "/terms-of-privacy-new",
+          element: <TopMenu/>,
+          children:[
+            {
+              path: "/terms-of-privacy-new",
+              element: <TermsOfPrivacy/>,
+            }
+          ]          
         },
       ]
       : [
