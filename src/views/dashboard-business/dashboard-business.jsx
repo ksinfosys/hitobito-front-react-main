@@ -133,8 +133,8 @@ const DashboardBusiness = () => {
             const filteredArr1 = res.result.searchTags.filter((item) => !shortenedArr.includes(item.code));
             const now = new Date();
             const year = now.getFullYear();
-            for(var i = 0; i < filteredArr1.length; i++){
-                if(filteredArr1[i].codeType === '51'){
+            for (var i = 0; i < filteredArr1.length; i++) {
+                if (filteredArr1[i].codeType === '51') {
                     let keisanCodename = Number(year) - Number(filteredArr1[i].codeName);
                     filteredArr1[i].codeName = keisanCodename + '歳';
                 }
@@ -148,7 +148,7 @@ const DashboardBusiness = () => {
     const keisanAge = (searchYear) => {
         const now = new Date();
         const year = now.getFullYear();
-        
+
         let keisanCodename = Number(year) - Number(searchYear);
         return keisanCodename + '歳';
     }
@@ -222,8 +222,7 @@ const DashboardBusiness = () => {
             curPage: currentPageIdx,
             selectCode: selectCode,
         }).then((res) => {
-            console.log(res.result);
-            setUserCountV({searchCount : res.result.searchCount});
+            setUserCountV({ searchCount: res.result.searchCount });
             res.resultCode === '200' ? (
                 setListState(res.result.searchList),
                 setPgnInfo(res.result.pageItem),
@@ -305,8 +304,8 @@ const DashboardBusiness = () => {
             setSelectTags([...selectTags, tag]);
             setSelectCode([...selectCode, tag.code]);
         }
-        document.getElementById('texttest').value = ""; 
-        setInputValue(""); 
+        document.getElementById('texttest').value = "";
+        setInputValue("");
         setTagActive("");
     };
     const handleSkillSelect = (value) => {
@@ -322,8 +321,8 @@ const DashboardBusiness = () => {
             setSelectCode([...selectCode, skillTagActive.code]);
         }
         //setCareerActive(false);
-        document.getElementById('texttest').value = ""; 
-        setInputValue(""); 
+        document.getElementById('texttest').value = "";
+        setInputValue("");
         document.getElementById('skillBox').value = "";
         skillBox.disabled = true;
         setSkillTagActive({});
@@ -401,15 +400,14 @@ const DashboardBusiness = () => {
 
     const setCount = () => {
         let count = document.querySelectorAll("input[name='chkInput']:checked");
-        document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
+        document.querySelector('.chkCount').innerText = '(選択者数：' + count.length + ')';
     }
 
     const setAllCount = (allCheck) => {
-        console.log(allCheck);
-        if(allCheck == false){
+        if (allCheck == false) {
             let count = document.querySelectorAll("input[name='chkInput']");
-            document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
-        }else if(allCheck == true){    
+            document.querySelector('.chkCount').innerText = '(選択者数：' + count.length + ')';
+        } else if (allCheck == true) {
             document.querySelector('.chkCount').innerText = '(選択者数：0)';
         }
     }
@@ -420,14 +418,14 @@ const DashboardBusiness = () => {
                     <div className="dashboard-top p-5 border-b border-slate-200/60 text-sm">求職者検索一覧</div>
                     <div className="list-top flex justify-end items-center mt-10 mb-5 px-5">
                         <div className="flex gap-2">
-                            <select id="selectBox" className="form-select w-32" onChange={(e) => setSelectValue(e.target.value)} 
-                            onClick={()=>{
-                                let skillBox = document.getElementById('skillBox');
-                                setInputValue("");
-                                setTagActive("");
-                                skillBox.disabled = true;
-                                skillBox.value = "";
-                            }}> 
+                            <select id="selectBox" className="form-select w-32" onChange={(e) => setSelectValue(e.target.value)}
+                                onClick={() => {
+                                    let skillBox = document.getElementById('skillBox');
+                                    setInputValue("");
+                                    setTagActive("");
+                                    skillBox.disabled = true;
+                                    skillBox.value = "";
+                                }}>
                                 <option value="000">全て</option>
                                 <option value="101">スキル</option>
                                 <option value="51">年齢</option>
@@ -450,8 +448,8 @@ const DashboardBusiness = () => {
                                     id="texttest"
                                     className="form-control pr-5"
                                     autocomplete="off"
-                                    style={{width: 300 + 'px',height: 36 + 'px'}}
-                                    placeholder="全体を確認するためには「Space」を押す"                                    
+                                    style={{ width: 300 + 'px', height: 36 + 'px' }}
+                                    placeholder="全体を確認するためには「Space」を押す"
                                     value={inputValue}
                                     onFocus={searchTags}
                                     onChange={(e) => setInputValue(e.target.value)
@@ -470,27 +468,27 @@ const DashboardBusiness = () => {
                                         <ul>
                                             {tagsList.map((code, index) => {
                                                 return (
-                                                    <li key={index} 
-                                                    className={tagActive === code ? "orange" : ""}>
-                                                    <button type="button" onClick={() => {
-                                                        let selectSkillCode = code.code;
-                                                         let selectBox = document.getElementById('selectBox');
-                                                         let skillBox = document.getElementById('skillBox');
-                                                        // if (selectBox.value !== "101" ||code.code.length === 5) {
-                                                        if (!selectSkillCode.includes("101") ||code.code.length === 5) {
-                                                             setTagActive(code);
-                                                             skillBox.disabled = true;
-                                                             skillBox.value = "";
-                                                        } else {
-                                                             setSkillTagActive(code);
-                                                             skillBox.disabled = false;
-                                                        }     
-                                                        document.getElementById('texttest').value = code.codeName; 
-                                                        setInputValue(code.codeName); 
+                                                    <li key={index}
+                                                        className={tagActive === code ? "orange" : ""}>
+                                                        <button type="button" onClick={() => {
+                                                            let selectSkillCode = code.code;
+                                                            let selectBox = document.getElementById('selectBox');
+                                                            let skillBox = document.getElementById('skillBox');
+                                                            // if (selectBox.value !== "101" ||code.code.length === 5) {
+                                                            if (!selectSkillCode.includes("101") || code.code.length === 5) {
+                                                                setTagActive(code);
+                                                                skillBox.disabled = true;
+                                                                skillBox.value = "";
+                                                            } else {
+                                                                setSkillTagActive(code);
+                                                                skillBox.disabled = false;
+                                                            }
+                                                            document.getElementById('texttest').value = code.codeName;
+                                                            setInputValue(code.codeName);
                                                         }}>
-                                                        {code.codeName}
-                                                    </button>
-                                                </li>
+                                                            {code.codeName}
+                                                        </button>
+                                                    </li>
                                                 );
                                             })}
                                         </ul>
@@ -506,15 +504,15 @@ const DashboardBusiness = () => {
                                     );
                                 })}
                             </select>
-                            <button className="btn-lg btn btn-pending w-20" style={{height: 36 + 'px'}}  onClick={() => {   
-                                if(inputValue.length === 0){
+                            <button className="btn-lg btn btn-pending w-20" style={{ height: 36 + 'px' }} onClick={() => {
+                                if (inputValue.length === 0) {
                                     setInputModal(true);
                                     return false;
                                 }
-                                let selectBox = document.getElementById('selectBox');      
-                                if(selectBox.value === "101") {
+                                let selectBox = document.getElementById('selectBox');
+                                if (selectBox.value === "101") {
                                     let skillBox = document.getElementById('skillBox');
-                                    if(skillBox.value === ""){
+                                    if (skillBox.value === "") {
                                         setOptionModal(true);
                                         setTagActive("");
                                         return false;
@@ -524,148 +522,148 @@ const DashboardBusiness = () => {
                                     handleSelectTags(tagActive);
                                 } else {
                                     let targetValue = document.getElementById('skillBox').value;
-                                    if(targetValue === ""){
+                                    if (targetValue === "") {
                                         setOptionModal(true);
                                         return false;
                                     }
                                     handleSkillSelect(targetValue);
-                                }                               
+                                }
                             }}>
                                 追加
                             </button>
-                            <button className="btn-lg btn btn-pending w-32" style={{height: 36 + 'px'}} 
-                            onClick={() => {
-                                if (currentPageIdx && currentPageIdx === 1) {
-                                    searchFind();
-                                }else{
-                                    setCurrentPageIdx(1);
-                                }
-                            }}>
-                            <img src={Search} alt="" />　検&nbsp;索</button>    
+                            <button className="btn-lg btn btn-pending w-32" style={{ height: 36 + 'px' }}
+                                onClick={() => {
+                                    if (currentPageIdx && currentPageIdx === 1) {
+                                        searchFind();
+                                    } else {
+                                        setCurrentPageIdx(1);
+                                    }
+                                }}>
+                                <img src={Search} alt="" />　検&nbsp;索</button>
                         </div>
                     </div>
                     <div className="flex gap-3 flex-row-reverse">
-                    <div style={{display:"flex",alignItems: "center"}}>
-                        <button
-                            className="btn btn-lg btn-cancle-type1 w-32" style={{height: 36 + 'px', float : 'right', marginRight : 20 + 'px'}}
-                            onClick={() => {
-                                setSelectTags([]), setSelectCode([]), setTagsFilter([]);
-                            }}>
-                            条件クリア
-                        </button>
-                    </div>
-                    {selectTags?.length > 0 && (
-                        <div className="skill-list-wrap business2">
-                            <div className="skill-list-cont">
-                                <div className="blue-btn-wrap flex gap-2 items-center justify-end flex-wrap" style={{paddingRight : 10 + 'px'}}>
-                                    {tagsList01.map((tag, index) => {
-                                        const codeName = tag.codeName;
-                                        const slicedStr01 = codeName && codeName.includes(":") && codeName.split(":")[0].trim();
-                                        const slicedStr02 = codeName && codeName.includes(":") && codeName.split(":")[1].trim();
-                                        return (
-                                            <div className="blue-btn gray-change" key={index}>
-                                                <span>{tag.categoryName}</span>
-                                                <span>{slicedStr01 ? slicedStr01 : tag.codeName}</span>
-                                                {slicedStr02 && <span>{slicedStr02}</span>}
-                                                {tag.career && <span>{tag.career[0].text}</span>}
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <button
+                                className="btn btn-lg btn-cancle-type1 w-32" style={{ height: 36 + 'px', float: 'right', marginRight: 20 + 'px' }}
+                                onClick={() => {
+                                    setSelectTags([]), setSelectCode([]), setTagsFilter([]);
+                                }}>
+                                条件クリア
+                            </button>
+                        </div>
+                        {selectTags?.length > 0 && (
+                            <div className="skill-list-wrap business2">
+                                <div className="skill-list-cont">
+                                    <div className="blue-btn-wrap flex gap-2 items-center justify-end flex-wrap" style={{ paddingRight: 10 + 'px' }}>
+                                        {tagsList01.map((tag, index) => {
+                                            const codeName = tag.codeName;
+                                            const slicedStr01 = codeName && codeName.includes(":") && codeName.split(":")[0].trim();
+                                            const slicedStr02 = codeName && codeName.includes(":") && codeName.split(":")[1].trim();
+                                            return (
+                                                <div className="blue-btn gray-change" key={index}>
+                                                    <span>{tag.categoryName}</span>
+                                                    <span>{slicedStr01 ? slicedStr01 : tag.codeName}</span>
+                                                    {slicedStr02 && <span>{slicedStr02}</span>}
+                                                    {tag.career && <span>{tag.career[0].text}</span>}
+                                                    <button
+                                                        className="blue-x-btn"
+                                                        onClick={() => {
+                                                            deleteTags(tag.code);
+                                                        }}>
+                                                        <img src={blueX} alt="" />
+                                                    </button>
+                                                </div>
+                                            );
+                                        })}
+                                        {tagsList02?.length > 0 && (
+                                            <div className="blue-btn gray-change">
+                                                <span>{tagsList02[0].categoryName}</span>
+                                                {
+                                                    (tagsList02[0].codeName).indexOf('歳') == 2
+                                                        ?
+                                                        <span>
+                                                            {tagsList02[0].codeName}
+                                                            {tagsList02[1] ? tagsList02[1].codeName && " ~ " : ""}
+                                                            {tagsList02[1] ? tagsList02[1]?.codeName : ""}
+                                                        </span>
+                                                        :
+                                                        <span>
+                                                            {keisanAge(tagsList02[0].codeName)}
+                                                            {tagsList02[1] ? keisanAge(tagsList02[1].codeName) && " ~ " : ""}
+                                                            {tagsList02[1] ? keisanAge(tagsList02[1]?.codeName) : ""}
+                                                        </span>
+                                                }
                                                 <button
                                                     className="blue-x-btn"
                                                     onClick={() => {
-                                                        deleteTags(tag.code);
+                                                        deleteTags(codeList02);
                                                     }}>
                                                     <img src={blueX} alt="" />
                                                 </button>
                                             </div>
-                                        );
-                                    })}
-                                    {tagsList02?.length > 0 && (
-                                        <div className="blue-btn gray-change">
-                                            <span>{tagsList02[0].categoryName}</span>
-                                            {
-                                                (tagsList02[0].codeName).indexOf('歳') == 2
-                                                ?
+                                        )}
+                                        {tagsList03?.length > 0 && (
+                                            <div className="blue-btn gray-change">
+                                                <span>{tagsList03[0].categoryName}</span>
                                                 <span>
-                                                    {tagsList02[0].codeName}
-                                                    {tagsList02[1] ? tagsList02[1].codeName && " ~ " : ""}
-                                                    {tagsList02[1] ? tagsList02[1]?.codeName : ""}
+                                                    {tagsList03[0].codeName}
+                                                    {tagsList03[1] && " ~ "}
+                                                    {tagsList03[1]?.codeName}
                                                 </span>
-                                                :
+                                                <button
+                                                    className="blue-x-btn"
+                                                    onClick={() => {
+                                                        deleteTags(codeList03);
+                                                    }}>
+                                                    <img src={blueX} alt="" />
+                                                </button>
+                                            </div>
+                                        )}
+                                        {tagsList04?.length > 0 && (
+                                            <div className="blue-btn gray-change">
+                                                <span>{tagsList04[0].categoryName}</span>
                                                 <span>
-                                                    {keisanAge(tagsList02[0].codeName)}
-                                                    {tagsList02[1] ? keisanAge(tagsList02[1].codeName) && " ~ " : ""}
-                                                    {tagsList02[1] ? keisanAge(tagsList02[1]?.codeName) : ""}
+                                                    {tagsList04[0].codeName}
+                                                    {tagsList04[1] && " ~ "}
+                                                    {tagsList04[1]?.codeName}
                                                 </span>
-                                            }
-                                            <button
-                                                className="blue-x-btn"
-                                                onClick={() => {
-                                                    deleteTags(codeList02);
-                                                }}>
-                                                <img src={blueX} alt="" />
-                                            </button>
-                                        </div>
-                                    )}
-                                    {tagsList03?.length > 0 && (
-                                        <div className="blue-btn gray-change">
-                                            <span>{tagsList03[0].categoryName}</span>
-                                            <span>
-                                                {tagsList03[0].codeName}
-                                                {tagsList03[1] && " ~ "}
-                                                {tagsList03[1]?.codeName}
-                                            </span>
-                                            <button
-                                                className="blue-x-btn"
-                                                onClick={() => {
-                                                    deleteTags(codeList03);
-                                                }}>
-                                                <img src={blueX} alt="" />
-                                            </button>
-                                        </div>
-                                    )}
-                                    {tagsList04?.length > 0 && (
-                                        <div className="blue-btn gray-change">
-                                            <span>{tagsList04[0].categoryName}</span>
-                                            <span>
-                                                {tagsList04[0].codeName}
-                                                {tagsList04[1] && " ~ "}
-                                                {tagsList04[1]?.codeName}
-                                            </span>
-                                            <button
-                                                className="blue-x-btn"
-                                                onClick={() => {
-                                                    deleteTags(codeList04);
-                                                }}>
-                                                <img src={blueX} alt="" />
-                                            </button>
-                                        </div>
-                                    )}
-                                    {tagsList05?.length > 0 && (
-                                        <div className="blue-btn gray-change">
-                                            <span>{tagsList05[0].categoryName}</span>
-                                            <span>
-                                                {tagsList05[0].codeName}
-                                                {tagsList05[1] && (
-                                                    <>
-                                                        {" ~ "}
-                                                        {tagsList05[1]?.codeName.slice(0, -2) + "以下"}
-                                                    </>
-                                                )}
-                                            </span>    
-                                            <button
-                                                className="blue-x-btn"
-                                                onClick={() => {
-                                                    deleteTags(codeList05);
-                                                }}>
-                                                <img src={blueX} alt="" />
-                                            </button>
-                                        </div>
-                                    )}
+                                                <button
+                                                    className="blue-x-btn"
+                                                    onClick={() => {
+                                                        deleteTags(codeList04);
+                                                    }}>
+                                                    <img src={blueX} alt="" />
+                                                </button>
+                                            </div>
+                                        )}
+                                        {tagsList05?.length > 0 && (
+                                            <div className="blue-btn gray-change">
+                                                <span>{tagsList05[0].categoryName}</span>
+                                                <span>
+                                                    {tagsList05[0].codeName}
+                                                    {tagsList05[1] && (
+                                                        <>
+                                                            {" ~ "}
+                                                            {tagsList05[1]?.codeName.slice(0, -2) + "以下"}
+                                                        </>
+                                                    )}
+                                                </span>
+                                                <button
+                                                    className="blue-x-btn"
+                                                    onClick={() => {
+                                                        deleteTags(codeList05);
+                                                    }}>
+                                                    <img src={blueX} alt="" />
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                     </div>
-                    <div className="flex space-between p_20" style={{marginTop : 10 + 'px'}}>
+                    <div className="flex space-between p_20" style={{ marginTop: 10 + 'px' }}>
                         <div className="flex items-center">対象者：{searchCount}人</div>
                         <div className="dash-cont-cont3 flex items-center">
                             <div className="color-a8">面談要請承諾期間（日）</div>
@@ -691,8 +689,8 @@ const DashboardBusiness = () => {
                     <div className="dashboard-cont pb-12">
                         <div className="flex items-center dashboard-cont-tit">
                             <div className="form-check w-24">
-                                <input id="vertical-form-3" className="form-check-input chkInput" 
-                                    type="checkbox" checked={allCheck} 
+                                <input id="vertical-form-3" className="form-check-input chkInput"
+                                    type="checkbox" checked={allCheck}
                                     onChange={() => setAllCheck(!allCheck)}
                                     onClick={() => setAllCount(allCheck)}
                                 />
@@ -700,7 +698,7 @@ const DashboardBusiness = () => {
                                     一括選択
                                 </label>
                             </div>
-                            <div className="chkCount" style={{width: 120 + 'px'}}>
+                            <div className="chkCount" style={{ width: 120 + 'px' }}>
                                 (選択者数：0)
                             </div>
                             <div className="dashboard-tit-list ml-auto flex flex-center w-full">LIST</div>
@@ -836,10 +834,10 @@ const DashboardBusiness = () => {
                         プランを設定するともっと安く依頼が可能です。
                         <br />
                         詳しくは
-                        <span style={{ fontWeight: 'bold', color: 'blue' , textDecoration: 'underline'}}>
-                        <a href="/user-guide-business-new" target="_blank" rel="noopener noreferrer">
-                            利用ガイド
-                        </a>
+                        <span style={{ fontWeight: 'bold', color: 'blue', textDecoration: 'underline' }}>
+                            <a href="/user-guide-business-new" target="_blank" rel="noopener noreferrer">
+                                利用ガイド
+                            </a>
                         </span>をご参考お願い致します。
                         <br />
                         <span style={{ fontSize: 'small' }}>
@@ -886,8 +884,8 @@ const DashboardBusiness = () => {
                 </ModalBody>
             </Modal>
 
-             {/* 검색창 공백상태 */}
-             <Modal
+            {/* 검색창 공백상태 */}
+            <Modal
                 show={inputModal}
                 onHidden={() => {
                     setInputModal(false);
@@ -913,7 +911,7 @@ const DashboardBusiness = () => {
                     <div className="modal-tit">追加失敗</div>
                     <div className="modal-subtit">経歴を選択してください。</div>
                     <div className="flex flex-end gap-3">
-                        <a href="#" className="btn btn-pending" onClick={() =>  setOptionModal(false)}>
+                        <a href="#" className="btn btn-pending" onClick={() => setOptionModal(false)}>
                             確認
                         </a>
                     </div>

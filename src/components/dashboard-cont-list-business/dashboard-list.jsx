@@ -48,47 +48,47 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
     let projectRoleNameArray = [];
     let eachGenderName = false;
 
-    $.each(representFlag, function(index, value){
-        if(value == "ageName"){
+    $.each(representFlag, function (index, value) {
+        if (value == "ageName") {
             eachAgeName = true;
         }
-        else if(value == "educationName"){
+        else if (value == "educationName") {
             eachEducationName = true;
         }
-        else if(value == "residentialAreaName"){
+        else if (value == "residentialAreaName") {
             eachResidentialAreaName = true;
         }
-        else if(value == "countryName"){
+        else if (value == "countryName") {
             eachCountryName = true;
         }
-        else if(value == "jobTypeName"){
+        else if (value == "jobTypeName") {
             eachJobTypeName = true;
         }
-        else if(value == "careerName"){
+        else if (value == "careerName") {
             eachCareerName = true;
         }
-        else if(value == "hopeIncomeName"){
+        else if (value == "hopeIncomeName") {
             eachHopeIncomeName = true;
         }
-        else if(value == "businessTypeName"){
+        else if (value == "businessTypeName") {
             eachBusinessTypeName = true;
         }
-        else if(value == "hopeCareerName"){
+        else if (value == "hopeCareerName") {
             eachHopeCareerName = true;
         }
-        else if(value.includes("skillCodeNameArr")){
+        else if (value.includes("skillCodeNameArr")) {
             let idx = value.split("skillCodeNameArr");
             skillCodeNameArray.push(skillCodeNameArr[Number(idx[1])]);
-        } 
-        else if(value.includes("projectProcessNameArr")){
+        }
+        else if (value.includes("projectProcessNameArr")) {
             let idx = value.split("projectProcessNameArr");
             projectProcessNameArray.push(projectProcessNameArr[Number(idx[1])]);
         }
-        else if(value.includes("projectRoleNameArr")){
+        else if (value.includes("projectRoleNameArr")) {
             let idx = value.split("projectRoleNameArr");
             projectRoleNameArray.push(projectRoleNameArr[Number(idx[1])]);
         }
-        else if(value == "genderName"){
+        else if (value == "genderName") {
             eachGenderName = true;
         }
     })
@@ -148,8 +148,8 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
     // 스킬 조건
     // const skillTagFilter = selectTags.filter((tag) => tag.codeType === '01' || tag.codeType === '02' || tag.codeType === '03' || tag.codeType === '04').map(tag => tag.codeName && tag.codeName.includes(":") ? tag.codeName.split(":")[0].trim() : tag.codeName);
     // const skillTag = skillCodeNameArr?.length > 0 && skillCodeNameArr.filter((item) => skillTagFilter.includes(item));
-    
-    
+
+
     const skillTag = skillCodeNameArray;
     // 担当工程 조건
     // const projectProcessTagFilter = selectTags.filter((tag) => tag.codeType === "63").map(tag => tag.codeName);
@@ -254,16 +254,16 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
 
     // 전체 체크 박스 동작
     useEffect(() => {
-        if(allCheck){
-            if(data.requestStatus == false){
+        if (allCheck) {
+            if (data.requestStatus == false) {
                 setIsChecked(true),
-                setCheckId((prev) => [...prev,data.jsUserId])
-            }else{
-                console.log("data.requestStatus:::",data.requestStatus);
+                    setCheckId((prev) => [...prev, data.jsUserId])
+            } else {
+                console.log("data.requestStatus:::", data.requestStatus);
             }
-        }else{
+        } else {
             setIsChecked(false),
-            setCheckId([])
+                setCheckId([])
         }
     }, [allCheck])
 
@@ -287,15 +287,14 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
 
     const setCount = () => {
         let count = document.querySelectorAll("input[name='chkInput']:checked");
-        document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
+        document.querySelector('.chkCount').innerText = '(選択者数：' + count.length + ')';
     }
 
     const setAllCount = (allCheck) => {
-        console.log(allCheck);
-        if(allCheck == false){
+        if (allCheck == false) {
             let count = document.querySelectorAll("input[name='chkInput']");
-            document.querySelector('.chkCount').innerText = '(選択者数：'+count.length+')';
-        }else if(allCheck == true){    
+            document.querySelector('.chkCount').innerText = '(選択者数：' + count.length + ')';
+        } else if (allCheck == true) {
             document.querySelector('.chkCount').innerText = '(選択者数：0)';
         }
     }
@@ -304,49 +303,49 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
     const scrollContainerRef = useRef(null);
     const scrollContainerRef2 = useRef(null);
     useEffect(() => {
-      const handleScroll = (event) => {
-        event.preventDefault();
+        const handleScroll = (event) => {
+            event.preventDefault();
+
+            if (scrollContainerRef.current) {
+                scrollContainerRef.current.scrollTop = 0;
+            }
+        };
 
         if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollTop = 0; 
+            scrollContainerRef.current.addEventListener('scroll', handleScroll);
         }
-      };
 
-        if (scrollContainerRef.current) {
-        scrollContainerRef.current.addEventListener('scroll', handleScroll);
-      }
-  
-      return () => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.removeEventListener('scroll', handleScroll);
-        }
-      };
+        return () => {
+            if (scrollContainerRef.current) {
+                scrollContainerRef.current.removeEventListener('scroll', handleScroll);
+            }
+        };
     }, []);
 
     useEffect(() => {
         const handleScroll2 = (event) => {
-          event.preventDefault();
-  
-          if (scrollContainerRef2.current) {
-            scrollContainerRef2.current.scrollTop = 0; 
-          }
+            event.preventDefault();
+
+            if (scrollContainerRef2.current) {
+                scrollContainerRef2.current.scrollTop = 0;
+            }
         };
-  
-          if (scrollContainerRef2.current) {
+
+        if (scrollContainerRef2.current) {
             scrollContainerRef2.current.addEventListener('scroll', handleScroll2);
         }
-    
-        return () => {
-          if (scrollContainerRef2.current) {
-            scrollContainerRef2.current.removeEventListener('scroll', handleScroll2);
-          }
-        };
-      }, []);
 
-      function calculatePeriod(months) {
-        const years = Math.floor(months / 12); 
-        const remainingMonths = months % 12; 
-    
+        return () => {
+            if (scrollContainerRef2.current) {
+                scrollContainerRef2.current.removeEventListener('scroll', handleScroll2);
+            }
+        };
+    }, []);
+
+    function calculatePeriod(months) {
+        const years = Math.floor(months / 12);
+        const remainingMonths = months % 12;
+
         let result = "";
         if (years > 0) {
             result += years + "年 ";
@@ -354,7 +353,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
         if (remainingMonths > 0) {
             result += remainingMonths + "ヶ月";
         }
-    
+
         return result;
     }
 
@@ -505,7 +504,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                             </div>
                         </div>
                         <div className="skill-box-wrap">
-                            
+
                             <div className="skill-box flex items-center">
                                 <div className="skill-tit">
                                     スキル
@@ -537,7 +536,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 更に詳細を表示
                             </button>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div className="accord-line"></div>
@@ -702,7 +701,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                                         期間
                                                     </div>
                                                     <div className="modal-subtit2">
-                                                        {calculatePeriod(project.projectPeriod)} 
+                                                        {calculatePeriod(project.projectPeriod)}
                                                     </div>
                                                 </div>
                                             </div>
@@ -769,7 +768,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         }
                     </div>
                     {
-                        requestStatus ? (
+                        data.requestStatus ? (
                             <button
                                 className="btn btn-sm btn-request btn-gray-business w-full"
                             >依頼完了</button>
@@ -797,8 +796,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                                 <button
                                     className="btn btn-sm btn-request btn-business w-full"
                                     onClick={() => {
-                                        offer(),
-                                            setCountState(1)
+                                        offer()
                                     }}
                                 >
                                     依頼
