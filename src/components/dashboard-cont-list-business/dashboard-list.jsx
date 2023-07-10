@@ -768,7 +768,7 @@ const DashboardListBusiness = ({ data, allCheck, checkId, setCheckId, onChange, 
                         }
                     </div>
                     {
-                        requestStatus ? (
+                        data.requestStatus ? (
                             <button
                                 className="btn btn-sm btn-request btn-gray-business w-full"
                             >依頼完了</button>
