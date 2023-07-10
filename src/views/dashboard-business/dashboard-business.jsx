@@ -245,7 +245,7 @@ const DashboardBusiness = () => {
     const offer = () => {
         ServiceFetch("/search/offer", "post", {
             userId: checkId,
-            rqLimit: checkId.length > 3 ? allCountState : countState,
+            rqLimit: checkId.length > 1 ? allCountState : countState,
             srchId: searchId,
         })
             .then((res) => {
